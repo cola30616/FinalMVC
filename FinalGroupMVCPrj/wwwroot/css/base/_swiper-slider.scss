@@ -1,0 +1,115 @@
+/* -----------------------------------------
+    Swiper Slider CSS
+----------------------------------------- */
+.swiper-slide{
+    -webkit-backface-visibility: hidden;
+    -webkit-transform: translate3d(0,0,0);
+}
+.swiper-wrapper{
+    -webkit-transform-style: preserve-3d;
+}
+
+.swiper-pagination {
+    .swiper-pagination-bullet {
+        width: 24px;
+        height: 6px;
+        border-radius: 3px;
+        opacity: 1;
+        background-color: var(--color-primary);
+        opacity: .3;
+        transition: all .3s ease-in-out;
+        &-active,
+        &:hover {
+            background-color: var(--color-primary);
+            opacity: 1;
+        }
+    }
+
+    &_gradient{
+        .swiper-pagination-bullet {
+            &-active,
+            &:hover {
+                background-image: var(--gradient-1);
+            }
+        }
+    }
+}
+
+.swiper-horizontal>.swiper-pagination-bullets,
+.swiper-pagination-bullets.swiper-pagination-horizontal,
+.swiper-pagination-custom,
+.swiper-pagination-fraction {
+    line-height: 1;
+    bottom: 0;
+}
+
+.slider-navigation {
+    z-index: 3;
+
+    .slider-btn {
+        --size: 40px;
+        width: var(--size);
+        height: var(--size);
+        text-align: center;
+        background-color: var(--color-primary);
+        -webkit-backdrop-filter: blur(20px);
+        backdrop-filter: blur(20px);
+        color: var(--text-white);
+        font-size: 24px;
+        transition: all .3s ease-out;
+
+        &:last-child {
+            margin-inline-start: 10px;
+        }
+
+        i {
+            transition: transform .3s ease-out;
+        }
+
+        &.btn-outline {
+            background: transparent;
+            color: var(--color-primary);
+            border-color: var(--color-primary);
+
+            &:hover {
+                color: var(--text-white);
+                background: var(--color-primary);
+            }
+        }
+
+        &:disabled {
+            cursor: not-allowed;
+        }
+    }
+
+    &.position-middle{
+        .slider-btn{
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            z-index: 4;
+            margin: 0;
+
+            &.slider-btn-prev {
+                left: 0%;
+            }
+            &.slider-btn-next {
+                right: 0%;
+            }
+        }
+    }
+
+    &.style-2 {
+        .slider-btn {
+            background-color: var(--bg-4);
+            color: var(--color-primary);
+        }
+    }
+}
+
+.swiper-lazy{
+    background-color: var(--text-light);
+}
+.swiper-lazy-loaded.blur-up{
+    filter: blur(0);
+}

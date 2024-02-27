@@ -1,0 +1,10 @@
+// Transition
+@mixin transition($property, $duration, $timing-function) {
+    transition: $property $duration $timing-function;
+}
+// Flex Box
+@mixin make-flex($align, $justify) {
+    display: flex;
+    align-items: $align;
+    justify-content: $justify;
+}

@@ -1,0 +1,21 @@
+/* -----------------------------------------
+    Banner CSS
+----------------------------------------- */
+.action-banner{
+    position: relative;
+    overflow: hidden;
+
+    .content-title{
+        max-width: 540px;
+        p{
+            max-width: 500px;
+        }
+    }
+}
+
+.banner-img {
+    position: relative;
+    .video-btn {
+        z-index: 5;
+    }
+}

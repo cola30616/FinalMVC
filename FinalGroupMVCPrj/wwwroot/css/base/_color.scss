@@ -1,0 +1,112 @@
+/* -----------------------------------------
+	Color CSS
+----------------------------------------- */
+/* Theme Color CSS */
+.theme-color-1{
+    --color-primary: #30C2EC;
+    --color-primary-rgb: 48, 194, 236;
+}
+.theme-color-2{
+    --color-primary: #0166FF;
+    --color-primary-rgb: 1, 102, 255;
+}
+.theme-color-3{
+    --color-primary: #5041E1;
+    --color-secondary: #F560FF;
+    --color-primary-rgb: 80, 65, 225;
+    --color-secondary-rgb: 245, 96, 255;
+    // Gradient
+    --gradient-1: linear-gradient(125deg, var(--color-secondary) 0%, var(--color-primary) 100%);
+}
+/* Color CSS */
+.color-primary {
+    color: var(--color-primary) !important;
+}
+
+.color-white {
+    color: var(--text-white) !important;
+}
+
+.color-light {
+    color: var(--text-light) !important;
+}
+
+.color-dark {
+    color: var(--color-dark) !important;
+}
+
+.color-medium {
+    color: var(--text-medium) !important;
+}
+
+.color-blue {
+    color: var(--color-blue) !important;
+}
+
+.color-green {
+    color: var(--color-green) !important;
+}
+
+.color-red {
+    color: var(--color-red) !important;
+}
+
+.color-yellow {
+    color: var(--color-yellow) !important;
+}
+
+.color-purple {
+    color: var(--color-primary) !important;
+}
+
+.color-orange {
+    color: var(--color-orange) !important;
+}
+
+.bg-primary {
+    background-color: var(--color-primary) !important;
+}
+.bg-primary-light {
+    --bg-primary-light: rgba(var(--color-primary-rgb), .05);
+    background-color: var(--bg-primary-light) !important;
+}
+.bg-secondary {
+    background-color: var(--color-secondary) !important;
+}
+.bg-secondary-light {
+    --bg-secondary-light: rgba(var(--color-secondary-rgb), .05);
+    background-color: var(--bg-secondary-light) !important;
+}
+.bg-white {
+    background-color: var(--bg-white) !important;
+}
+.bg-light {
+    background-color: var(--bg-1) !important;
+}
+.bg-light-2 {
+    background-color: var(--bg-2) !important;
+}
+.bg-dark {
+    background-color: var(--bg-1) !important;
+}
+.bg-gradient {
+    background-image: var(--gradient-1) !important;
+}
+.border-primary {
+    border-color: var(--color-primary) !important;
+}
+.text-gradient{
+    background: var(--gradient-1);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+.stroke-gradient {
+    -webkit-text-fill-color: transparent;
+    -webkit-text-stroke-color: var(--gradient-1);
+    -webkit-text-stroke-width: 1px;
+}
+.bg-none{
+    background-color: transparent !important;
+    background: transparent !important;
+}

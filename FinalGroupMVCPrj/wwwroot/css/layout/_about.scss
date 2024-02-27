@@ -1,0 +1,121 @@
+/* -----------------------------------------
+    About CSS
+----------------------------------------- */
+.about-area {
+    position: relative;
+    overflow: hidden;
+
+    .card {
+        .card-text {
+            flex: auto;
+        }
+        
+        &:hover {
+            i{
+                transform: scale(1.2);
+                transition-timing-function: cubic-bezier(0.47, 2.02, 0.31, -0.36);
+            }
+        }
+    }
+
+    .card-icon {
+        --size: 70px;
+        flex: 0 0 auto;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: var(--size);
+        height: var(--size);
+        font-size: 30px;
+        color: var(--color-primary);
+
+        i{
+            display: inline-block;
+            transform: translateZ(0);
+            backface-visibility: hidden;
+            transition-duration: 0.5s;
+        }
+    }
+
+    .image {
+        position: relative;
+    }
+
+    .client {
+        @include make-flex(center, start);
+        gap: 15px;
+
+        .client-img {
+            max-width: 60px;
+        }
+    }
+
+    .info-list {
+        .card {
+            max-width: 400px;
+            overflow: hidden;
+            z-index: 1;
+            align-items: center;
+            flex-direction: row;
+            flex-wrap: wrap;
+            gap: 16px;
+        }
+
+        .card-icon {
+            color: var(--color-primary);
+        }
+    }
+
+    &_v1 {
+        .info-list {
+            .card-icon {
+                background-color: var(--bg-white);
+            }
+            $colors: (
+                "1"#30C2EC,
+                "2"#FDC501,
+                "3"#FF782D,
+                "4"#0084FE,
+                "5"#18D174,
+                "6"#FF60A8,
+                "7"#E74C3C,
+                "8"#3C8CE7,
+                "9"#FFAA85,
+                "10"#3C8CE7
+            );
+    
+            @each $i, $color in $colors {
+                .card:nth-child(#{$i}) {
+                    .card-icon {
+                        color: $color;
+                    }
+                }
+            }
+        }
+
+        .shape {
+            img {
+                position: absolute;
+                z-index: -1;
+    
+                &.shape-1 {
+                    top: 15%;
+                    left: 8%;
+                    animation: moveLeftRight 10s linear infinite;
+                }
+    
+                &.shape-2 {
+                    left: 45%;
+                    bottom: 5%;
+                    animation: moveUpDown 5s linear infinite;
+                }
+    
+                &.shape-3 {
+                    bottom: 15%;
+                    right: 5%;
+                    animation: moveUpDown 20s linear infinite;
+                }
+            }
+        }
+    }
+}

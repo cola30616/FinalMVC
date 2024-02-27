@@ -1,0 +1,165 @@
+/* -----------------------------------------
+    Category CSS
+----------------------------------------- */
+.category-area {
+    position: relative;
+    overflow: hidden;
+    z-index: 1;
+
+    .card {
+
+        &-image {
+            position: relative;
+        }
+
+        &-icon {
+            --size: 75px;
+            width: var(--size);
+            height: var(--size);
+            display: grid;
+            place-items: center;
+            font-size: 34px;
+            color: var(--text-white);
+            background-color: var(--color-primary);
+            box-shadow: 0 15px 30px -12px rgba($color: var(--color-primary-rgb), $alpha: .5);
+
+            i {
+                display: block;
+                transform: translateZ(0);
+                backface-visibility: hidden;
+                transition-duration: 0.5s;
+            }
+        }
+
+        &:hover {
+            .card-icon {
+                i {
+                    transform: scale(1.2);
+                    transition-timing-function: cubic-bezier(0.47, 2.02, 0.31, -0.36);
+                }
+            }
+
+            .card-title {
+                color: var(--color-primary);
+            }
+        }
+    }
+}
+
+.category-area_v1{
+    $colors: (
+        "1"#30C2EC,
+        "2"#FDC501,
+        "3"#FF782D,
+        "4"#0084FE,
+        "5"#18D174,
+        "6"#FF60A8,
+        "7"#E74C3C,
+        "8"#3C8CE7,
+        "9"#FFAA85,
+        "10"#3C8CE7
+        );
+
+    @each $i, $color1 in $colors {
+        .swiper-slide:nth-child(#{$i}) {
+            .card {
+                &-icon {
+                    background-color: $color1;
+                    box-shadow: 0 15px 30px -12px rgba($color: $color1, $alpha: .5);
+                }
+                .card-title a:hover{
+                    color: $color1;
+                }
+                &:hover{
+                    .card-title {
+                        color: $color1;
+                    }
+                }
+            }
+        }
+    }
+
+    .shape {
+        img {
+            position: absolute;
+            z-index: -1;
+
+            &.shape-1 {
+                top: 20%;
+                left: 28%;
+                animation: moveLeftRight 10s linear infinite;
+            }
+
+            &.shape-2 {
+                top: 4%;
+                right: 6%;
+                animation: moveUpDown 5s linear infinite;
+            }
+
+            &.shape-3 {
+                bottom: 0%;
+                left: 5%;
+                animation: moveUpDown 20s linear infinite;
+            }
+
+            &.shape-4 {
+                bottom: 10%;
+                right: 25%;
+                animation: moveLeftRight 8s linear infinite;
+            }
+        }
+    }
+}
+
+.category-area_v2 {
+    .card {
+        overflow: hidden;
+        &::before{
+            position: absolute;
+            content: '';
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: var(--color-primary);
+            opacity: .70;
+            z-index: 2;
+            @include transition(opacity, .3s, ease-out);
+        }
+
+        .card-img{
+            img{
+                @include transition(transform, .3s, ease-out);
+            }
+        }
+
+        .card-text {
+            position: absolute;
+            top: 0;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            padding: 15px 0;
+            z-index: 2;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+
+            span{
+                color: var(--text-white);
+            }
+        }
+
+        &:hover{
+            &::before{
+                opacity: 1;
+            }
+            .card-img {
+                img {
+                    transform: scale3d(1.05, 1.05, 1.05);
+                }
+            }
+        }
+    }
+}

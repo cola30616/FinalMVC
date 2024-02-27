@@ -1,0 +1,41 @@
+/* -----------------------------------------
+    Magic Cursor CSS
+----------------------------------------- */
+.cursor {
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 1070;
+    width: 20px;
+    height: 20px;
+    pointer-events: none;
+    border-radius: 50%;
+    border: 1px solid var(--color-primary);
+    transition: all 0.2s ease-out;
+
+    &::before {
+        position: absolute;
+        // content: '';
+        top: 50%;
+        left: 50%;
+        width: 3px;
+        height: 3px;
+        border-radius: inherit;
+        transform: translate(-50%, -50%);
+        background: var(--color-primary);
+        transition: all 0.2s ease-out;
+    }
+}
+
+.cursor.hover {
+    width: 60px;
+    height: 60px;
+    margin-left: -30px;
+    margin-top: -30px;
+    border-color: transparent;
+    background: rgba(var(--color-dark-rgb), 0.1);
+
+    &::before {
+        opacity: 0;
+    }
+}

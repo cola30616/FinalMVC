@@ -1,0 +1,232 @@
+﻿<!DOCTYPE html>
+<html lang="zh-tw">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="author" content="KreativDev">
+    <meta name="description" content="Multi-Tenant, Course, Course Selling">
+
+    <!-- Title -->
+    <title>Oppida - Online Course & Education HTML Template</title>
+    <!-- Favicon -->
+    <link rel="shortcut icon" href="~/images/logo/fav.png" type="image/x-icon">
+
+    <!-- Google font -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="~/css/vendors/bootstrap.min.css">
+    <!-- Fontawesome Icon CSS -->
+    <link rel="stylesheet" href="~/fonts/fontawesome/css/all.min.css">
+    <!-- Icomoon Icon CSS -->
+    <link rel="stylesheet" href="~/fonts/icomoon/style.css">
+    <!-- Magnific Popup CSS -->
+    <link rel="stylesheet" href="~/css/vendors/magnific-popup.min.css">
+    <!-- NoUi Range Slider -->
+    <link rel="stylesheet" href="~/css/vendors/nouislider.min.css">
+    <!-- Swiper Slider -->
+    <link rel="stylesheet" href="~/css/vendors/swiper-bundle.min.css">
+    <!-- Nice Select -->
+    <link rel="stylesheet" href="~/css/vendors/nice-select.css">
+    <!-- AOS Animation CSS -->
+    <link rel="stylesheet" href="~/css/vendors/aos.min.css">
+    <!-- Animate CSS -->
+    <link rel="stylesheet" href="~/css/vendors/animate.min.css">
+    <!-- Main Style CSS -->
+    <link rel="stylesheet" href="~/css/style.css">
+    <!-- Responsive CSS -->
+    <link rel="stylesheet" href="~/css/responsive.css">
+</head>
+
+<body class="theme-color-1">
+    <!-- Preloader start -->
+    <div id="preLoader">
+        <div class="loader"></div>
+    </div>
+    <!-- Preloader end -->
+    <!-- Header-area start -->
+    <header class="header-area">
+        <!-- Start mobile menu -->
+        <div class="mobile-menu">
+            <div class="container">
+                <div class="mobile-menu-wrapper"></div>
+            </div>
+        </div>
+        <!-- End mobile menu -->
+
+        <div class="main-responsive-nav">
+            <div class="container">
+                <!-- Mobile Logo -->
+                <div class="logo">
+                    <a href="index.html" target="_self" title="Oppida">
+                        <img class="lazyload" src="~/images/placeholder.png" data-src="~/images/logo/logo-1.png" alt="Brand Logo">
+                    </a>
+                </div>
+                <!-- Menu toggle button -->
+                <button class="menu-toggler" type="button">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </button>
+            </div>
+        </div>
+
+        <div class="main-navbar">
+            @* <div class="header-top bg-white py-3 mobile-item border-bottom">
+            <div class="container">
+            <div class="d-flex flex-wrap justify-content-between gap-15 align-items-center">
+            <a href="mailTo:examle@email.com" class="icon-start" target="_self" title="example@email.com">
+            <i class="fal fa-envelope"></i>
+            example@email.com
+            </a>
+            <div class="social-link style-2 size-md">
+            <a class="rounded-pill" href="https://www.instagram.com/" target="_blank" title="instagram"><i class="fab fa-instagram"></i></a>
+            <a class="rounded-pill" href="https://www.dribbble.com/" target="_blank" title="dribbble"><i class="fab fa-dribbble"></i></a>
+            <a class="rounded-pill" href="https://www.twitter.com/" target="_blank" title="twitter"><i class="fab fa-twitter"></i></a>
+            <a class="rounded-pill" href="https://www.youtube.com/" target="_blank" title="youtube"><i class="fab fa-youtube"></i></a>
+            </div>
+            </div>
+            </div>
+            </div> *@
+            <div class="header-bottom">
+                <div class="container">
+                    <nav class="navbar navbar-expand-lg">
+                        <!-- Logo -->
+                        <a class="navbar-brand" href="index.html" target="_self" title="Oppida">
+                            <img class="" src="~/images/logo/logo-1.png" alt="Brand Logo">
+                        </a>
+                        <!-- Navigation items -->
+                        <div class="collapse navbar-collapse">
+                            <ul id="mainMenu" class="navbar-nav mobile-item mx-auto">
+                                
+                                <li class="nav-item">
+                                    <a href="#mentors" class="nav-link toggle">Mentors <i class="fal fa-plus"></i></a>
+                                    <ul class="menu-dropdown">
+                                        <li class="nav-item">
+                                            <a class="nav-link" href="mentors.html">Mentors</a>
+                                        </li>
+                                        <li class="nav-item">
+                                            <a class="nav-link" href="mentor-details.html">Mentor Details</a>
+                                        </li>
+                                    </ul>
+                                </li>
+                               
+                               
+                            </ul>
+                        </div>
+                        <div class="more-option mobile-item">
+                            @* <div class="item">
+                                <div class="language">
+                                    <select class="niceselect">
+                                        <option value="1">English</option>
+                                        <option value="2">Chinese</option>
+                                        <option value="3">French</option>
+                                    </select>
+                                </div>
+                            </div> *@
+
+                            <div class="item">
+                                <a href="login.html" class="btn-icon-text" target="_self" aria-label="User" title="User">
+                                    <i class="fal fa-user"></i>
+                                    <span>Login</span>
+                                </a>
+                            </div>
+                            <div class="item">
+                                <div class="nav-item dropdown ">
+
+                                    <a class="nav-link nav-profile d-flex align-items-center pe-0" href="#" data-bs-toggle="dropdown">
+                                        <img src="~/assets/img/profile-img.jpg" alt="Profile" class="rounded-circle" style="width: 36px; height:36px">
+                                        <span class="d-none d-md-block dropdown-toggle ps-2">K. Anderson</span>
+                                    </a><!-- End Profile Iamge Icon -->
+
+                                    <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow profile">
+                                        <li class="dropdown-header">
+                                            <h6>Kevin Anderson</h6>
+                                            <span>Web Designer</span>
+                                        </li>
+                                        <li>
+                                            <hr class="dropdown-divider">
+                                        </li>
+
+                                        <li>
+                                            <a class="dropdown-item d-flex align-items-center" href="users-profile.html">
+                                                <i class="bi bi-person"></i>
+                                                <span>My Profile</span>
+                                            </a>
+                                        </li>
+                                        <li>
+                                            <hr class="dropdown-divider">
+                                        </li>
+
+                                        <li>
+                                            <a class="dropdown-item d-flex align-items-center" href="users-profile.html">
+                                                <i class="bi bi-gear"></i>
+                                                <span>Account Settings</span>
+                                            </a>
+                                        </li>
+                                        <li>
+                                            <hr class="dropdown-divider">
+                                        </li>
+
+                                        <li>
+                                            <a class="dropdown-item d-flex align-items-center" href="pages-faq.html">
+                                                <i class="bi bi-question-circle"></i>
+                                                <span>Need Help?</span>
+                                            </a>
+                                        </li>
+                                        <li>
+                                            <hr class="dropdown-divider">
+                                        </li>
+
+                                        <li>
+                                            <a class="dropdown-item d-flex align-items-center" href="#">
+                                                <i class="bi bi-box-arrow-right"></i>
+                                                <span>Sign Out</span>
+                                            </a>
+                                        </li>
+
+                                    </ul><!-- End Profile Dropdown Items -->
+                                </div>
+                            </div>
+                        </div>
+                    </nav>
+                </div>
+            </div>
+        </div>
+    </header>
+    <!-- Header-area end -->
+    @RenderBody()
+    <!-- Go top -->
+    <div class="go-top"><i class="fal fa-long-arrow-up"></i></div>
+
+    <!-- Magic Cursor -->
+    <div class="cursor"></div>
+
+    <!-- Lazysizes -->
+    <script src="~/js/vendors/lazysizes.min.js"></script>
+    <!-- Jquery JS -->
+    <script src="~/js/vendors/jquery.min.js"></script>
+    <!-- Bootstrap JS -->
+    <script src="~/js/vendors/bootstrap.min.js"></script>
+    <!-- Counter JS -->
+    <script src="~/js/vendors/jquery.counterup.min.js"></script>
+    <!-- Nice Select JS -->
+    <script src="~/js/vendors/jquery.nice-select.min.js"></script>
+    <!-- Magnific Popup JS -->
+    <script src="~/js/vendors/jquery.magnific-popup.min.js"></script>
+    <!-- Noui Range Slider JS -->
+    <script src="~/js/vendors/nouislider.min.js"></script>
+    <!-- Swiper Slider JS -->
+    <script src="~/js/vendors/swiper-bundle.min.js"></script>
+    <!-- AOS JS -->
+    <script src="~/js/vendors/aos.min.js"></script>
+    <!-- Mouse Hover JS -->
+    <script src="~/js/vendors/mouse-hover-move.js"></script>
+    <!-- Main script JS -->
+    <script src="~/js/script.js"></script>
+    @await RenderSectionAsync("Scripts", required: false)
+
+</body>

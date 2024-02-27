@@ -1,0 +1,98 @@
+/* -----------------------------------------
+	Footer CSS
+----------------------------------------- */
+.footer-area {
+    position: relative;
+    overflow: hidden;
+    z-index: 1;
+    margin-top: -80px;
+    padding-top: 80px;
+
+    :is(p, a, span) {
+        color: var(--text-medium);
+    }
+
+    .footer-widget {
+        margin-bottom: 30px;
+
+        ul {
+            padding: 0;
+            margin: 0;
+            list-style-type: none;
+        }
+
+        h5 {
+            text-transform: capitalize;
+            margin-bottom: 25px;
+        }
+
+        p {
+            margin-bottom: 25px;
+        }
+    }
+
+    .info-list,
+    .footer-links {
+        li {
+            position: relative;
+            overflow: hidden;
+            font-size: var(--font-sm);
+
+            &:not(:last-child) {
+                margin-bottom: 10px;
+            }
+
+            a {
+                display: block;
+
+                &:hover {
+                    color: var(--color-primary);
+                }
+            }
+        }
+    }
+
+    .footer-links {
+        a {
+            position: relative;
+            overflow: hidden;
+            display: block;
+            transition: all .3s linear;
+        }
+    }
+
+    .copy-right-area {
+        text-align: center;
+    }
+
+    .shape {
+        img {
+            position: absolute;
+            z-index: -1;
+
+            &.shape-1 {
+                top: 20%;
+                left: 28%;
+                animation: moveLeftRight 10s linear infinite;
+            }
+
+            &.shape-2 {
+                top: 4%;
+                right: 6%;
+                animation: moveUpDown 5s linear infinite;
+            }
+
+            &.shape-3 {
+                bottom: 0%;
+                left: 5%;
+                animation: moveUpDown 20s linear infinite;
+            }
+
+            &.shape-4 {
+                bottom: 10%;
+                right: 25%;
+                animation: moveLeftRight 8s linear infinite;
+            }
+        }
+    }
+}

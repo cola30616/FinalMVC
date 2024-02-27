@@ -1,0 +1,147 @@
+/* -----------------------------------------
+    Nav Tabs CSS
+----------------------------------------- */
+.tabs-navigation {
+    &::-webkit-scrollbar {
+        height: 5px;
+    }
+    .nav {
+        display: inline-flex;
+        border: none;
+        gap: 20px;
+        z-index: 1;
+        position: relative;
+        overflow: hidden;
+
+        li{
+            flex: 0 0 auto;
+        }
+        
+        .nav-link {
+            color: var(--text-dark);
+            font-weight: var(--font-medium);
+            margin: 0;
+            z-index: 999;
+            border: 0;
+            cursor: pointer;
+            background-color: var(--bg-primary-light);
+
+            &:is(.active){
+                color: var(--text-white);
+                background-color: var(--color-primary);
+                border-radius: 0;
+            }
+        }
+        
+        &[data-hover="fancyHover"] {
+            .nav-link:is(.active, :hover){
+                color: var(--color-primary);
+                background-color: var(--bg-primary-light);
+                border-color: var(--color-primary);
+            }
+            .nav-item{
+                z-index: 2;
+                &:is(.active) {
+                    .nav-link{
+                        color: var(--text-white);
+                        background-color: var(--color-primary) !important;
+                        border-color: transparent;
+                        &:is(:hover){
+                            background: transparent !important;
+                        }
+                    }
+                }
+            }
+        }
+    }
+    .target {
+        position: absolute;
+        z-index: 1;
+        transform: translateX(-50%);
+        background-color: var(--color-primary);
+        transition: all .2s;
+    }
+
+    &_gradient{
+        .nav {
+            .nav-link {
+                &:is(.active){
+                    background-image: var(--gradient-1);
+                }
+            }
+            
+            &[data-hover="fancyHover"] {
+                .nav-link:is(.active, :hover){
+                    background-image: none;
+                }
+                .nav-item{
+                    z-index: 2;
+                    &:is(.active) {
+                        .nav-link{
+                            background-image: var(--gradient-1);
+                        }
+                    }
+                }
+            }
+        }
+        .target{
+            background-image: var(--gradient-1);
+        }
+    }
+}
+.tabs-navigation-2 {
+    .nav {
+        gap: 0;
+        .nav-link {
+            color: var(--text-medium);
+            border-radius: 0 !important;
+            background-color: transparent !important;
+            &:is(.active, :hover){
+                color: var(--color-primary) !important;
+                border-color: transparent !important;
+                background-color: transparent !important;
+            }
+        }
+        &[data-hover="fancyHover"] {
+            .nav-link{
+                border: 0;
+                border-bottom: 3px solid transparent;
+                &:is(.active, :hover){
+                    color: var(--color-primary);
+                    border-color: transparent !important;
+                }
+            }
+            .nav-item{
+                &:is(.active) {
+                    .nav-link{
+                        &.active{
+                            color: var(--color-primary);
+                            background-color: var(--bg-4) !important;
+                            border-color: transparent !important;
+                            border-bottom-color: var(--color-primary) !important;
+                        }
+                    }
+                }
+            }
+        }
+        .target{
+            border-radius: 0 !important;
+            top: auto !important;
+            bottom: 0 !important;
+            height: 3px !important;
+            border: none;
+        }
+    }
+}
+
+.tab-pane.fade {
+    transition: all .3s;
+    transform: translateY(.5rem);
+}
+.tab-pane.fade.show {
+    transform: translateY(0rem);
+}
+
+.tab-pane.slide.show {
+    animation: slideUp 1 .4s;
+}

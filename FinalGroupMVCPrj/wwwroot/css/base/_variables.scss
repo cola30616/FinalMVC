@@ -1,0 +1,82 @@
+/* -----------------------------------------
+    Variables CSS
+----------------------------------------- */
+:root {
+    // Default Fonts
+    --font-heading: 'Plus Jakarta Sans', sans-serif;
+    --font-body: var(--font-heading);
+    --font-icon: "Font Awesome 5 Pro";
+    --font-base: 16px;
+    --font-sm: 14px;
+    --font-xsm: 12px;
+    --font-lg: 18px;
+    --font-normal: 400;
+    --font-medium: 500;
+    --font-semi-bold: 600;
+    --font-bold: 700;
+    --font-size--h1: 64px;
+    --font-size--h2: 48px;
+    --font-size--h3: 32px;
+    --font-size--h4: 24px;
+    --font-size--h5: 20px;
+    --font-size--h6: 18px;
+    // Base Colors
+    --color-primary: #30C2EC;
+    --color-secondary: #00b4e6;
+    --color-red: #EB4C4C;
+    --color-yellow: #e59819;
+    --color-green: #00B67A;
+    --color-blue: #0d6efd;
+    --color-white: #ffffff;
+    --color-black: #000000;
+    --color-dark: #121212;
+    --color-light: #dcdcdc;
+    --color-medium: #666666;
+    --color-primary-rgb: 48, 194, 236;
+    --color-secondary-rgb: 0, 180, 230;
+    --color-red-rgb: 235, 76, 76;
+    --color-green-rgb: 0, 182, 122;
+    --color-blue-rgb: 13, 110, 253;
+    --color-white-rgb: 255, 255, 255;
+    --color-black-rgb: 0,0,0;
+    --color-dark-rgb: 18, 18, 18;
+    --color-medium-rgb: 141, 141, 141;
+    --color-light-rgb: 242, 242, 242;
+    --border-color: #e8e8e8;
+    --border-color-2: #a7a7a7;
+    // Text Color
+    --text-dark: var(--color-dark);
+    --text-medium: var(--color-medium);
+    --text-white: var(--color-white);
+    --text-light: var(--color-light);
+    // Btn color
+	--btn-color: var(--text-white);
+	--btn-hover-color: var(--text-white);
+    // Background Colors
+    --bg-1: #F3F3F3;
+    --bg-2: #F8F8F8;
+    --bg-white: var(--color-white);
+    --bg-dark: var(--color-dark);
+    --bg-primary-light: rgba(var(--color-primary-rgb), .05);
+    // Gradient
+    --gradient-1: linear-gradient(145deg, var(--color-primary) 0%, var(--color-secondary) 100%);
+    // Box Shadow
+    --shadow-md: 0 5px 30px -5px rgba(8, 0, 42, .1);
+    --shadow-round: 0 15px 30px -15px rgba(8, 0, 42, .5);
+    // Border Radius
+    --radius-sm: 5px;
+    --radius-md: 10px;
+    --radius-lg: 15px;
+    --radius-xl: 20px;
+    --radius-pill: 50rem;
+
+}
+// Responsive Sass Variables
+$lg: '(max-width: 1199.98px)';
+$md: '(max-width: 991.98px)';
+$sm: '(max-width: 767.98px)';
+$xsm: '(max-width: 575.98px)';
+$tiny: '(max-width: 399.98px)';
+$xl-up: '(min-width: 1200px)';
+$lg-up: '(min-width: 992px)';
+$md-up: '(min-width: 768px)';

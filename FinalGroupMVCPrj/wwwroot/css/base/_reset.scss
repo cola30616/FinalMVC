@@ -1,0 +1,39 @@
+/* -----------------------------------------
+    Reset CSS
+----------------------------------------- */
+:focus {
+    outline: none;
+}
+
+img{
+    max-width: 100%;
+}
+
+.form-control {
+    &:focus {
+        box-shadow: none;
+    }
+}
+
+ul{
+    padding: 0;
+}
+
+figure,
+blockquote,
+ul {
+    margin-bottom: 0;
+}
+
+table, th, td{
+    vertical-align: middle;
+}
+
+::-webkit-scrollbar-track {
+    background-color: var(--bg-1);
+}
+
+::-webkit-scrollbar-thumb {
+    border-radius: 30px;
+    background: rgba($color: var(--color-dark-rgb), $alpha: .2);
+}

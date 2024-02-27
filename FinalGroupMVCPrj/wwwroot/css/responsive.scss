@@ -1,0 +1,339 @@
+/* X-Large devices (large desktops, 1200px and up) */
+@media only screen and (min-width: 1200px) and (max-width: 1399.98px) {
+    :root {
+        --font-base: 15px;
+    }
+    .hero-banner {
+        &.hero-banner_v2 {
+            background-position-y: 50px !important;
+        }
+    }
+}
+
+/* Medium devices (tablets, laptops between 992px to 1200px) */
+@media only screen and (min-width: 992px) and (max-width: 1199.98px) {
+    :root {
+        --font-size--h1: 44px;
+        --font-size--h2: 32px;
+        --font-base: 15px;
+    }
+
+    .hero-banner {
+        &.hero-banner_v1 {
+            padding-top: 100px;
+        }
+        &.hero-banner_v2 {
+            padding-top: 150px;
+            padding-bottom: 100px;
+        }
+
+        .banner-filter-form {
+            .btn{
+                padding-inline: 0;
+
+                span{
+                    display: none;
+                }
+                i{
+                    display: inline-block;
+                }
+            }
+        }
+    }
+
+    .breadcrumb-area{
+        padding: 120px 0 70px;
+    }
+    .course-details-area {
+        .course-banner{
+            padding-top: 125px;
+        }
+    }
+    .contact-area .card{
+        padding: 20px;
+    }
+}
+
+/* Medium devices (tablets, Between 768px to 992px) */
+@media only screen and (min-width: 768px) and (max-width: 991.98px) {
+    :root {
+        --font-size--h1: 44px;
+        --font-size--h2: 38px;
+        --font-size--h3: 22px;
+        --font-size--h4: 22px;
+    }
+
+    .hero-banner{
+        &.hero-banner_v1 {
+            padding-top: 100px;
+        }
+        &.hero-banner_v2 {
+            padding-top: 150px;
+            padding-bottom: 100px;
+        }
+    }
+
+    .breadcrumb-area{
+        padding: 140px 0 90px;
+    }
+
+    .course-details-area {
+        .course-banner{
+            padding-top: 145px;
+        }
+    }
+}
+
+/* Small devices (landscape phones, less than 768px) */
+@media only screen and (max-width: 767.98px) {
+    /* Reset CSS */
+    :root {
+        --font-base: 15px;
+        --font-sm: 12px;
+        --font-xsm: 10px;
+        --font-lg: 16px;
+        --font-size--h1: 36px;
+        --font-size--h2: 32px;
+        --font-size--h3: 22px;
+        --font-size--h4: 22px;
+        --font-size--h5: 18px;
+        --font-size--h6: 15px;
+        --radius-md: 8px;
+        --radius-lg: 12px;
+        --radius-xl: 15px;
+    }
+
+    .ptb-100 {
+        padding-top: 70px;
+        padding-bottom: 70px;
+    }
+
+    .ptb-70 {
+        padding-top: 70px;
+        padding-bottom: 70px;
+    }
+
+    .pt-100 {
+        padding-top: 70px;
+    }
+
+    .pt-70 {
+        padding-top: 40px;
+    }
+
+    .pt-60 {
+        padding-top: 30px !important;
+    }
+
+    .pb-100 {
+        padding-bottom: 70px;
+    }
+
+    .pb-75 {
+        padding-bottom: 45px;
+    }
+
+    .pb-70 {
+        padding-bottom: 40px;
+    }
+
+    .pb-60 {
+        padding-bottom: 30px !important;
+    }
+
+    .pb-30 {
+        padding-bottom: 20px !important;
+    }
+
+    .px-5 {
+        padding-left: 20px !important;
+        padding-right: 20px !important;
+    }
+
+    .px-60 {
+        padding-inline: 20px;
+    }
+
+    .btn-lg,
+    .btn-md {
+        padding: 12px 26px;
+        font-size: var(--font-base);
+    }
+
+    .w-sm-100 {
+        width: 100% !important;
+    }
+
+    .w-sm-75 {
+        width: 100% !important;
+    }
+
+    .go-top {
+        width: 35px;
+        height: 35px;
+        font-size: 22px;
+    }
+
+    .section-title .title,
+    .content-title h2 {
+        margin-top: -4px;
+    }
+
+    .title-shape{
+        display: none;
+    }
+
+    .title-md {
+        font-size: 22px;
+    }
+
+    // Header area
+    .header-area {
+        .main-responsive-nav {
+            .logo {
+                max-width: 120px;
+            }
+        }
+    }    
+
+    // Hero banner
+    .hero-banner{
+        &.hero-banner_v1 {
+            padding-top: 70px;
+        }
+
+        &.hero-banner_v2{
+            padding-top: 130px;
+            padding-bottom: 70px;
+        }
+
+        &.hero-banner_v3{
+            padding-top: 70px;
+        }
+
+        .form-wrapper {
+            border: none !important;
+            border-radius: 0 !important;
+            background-color: transparent !important;
+        }
+
+        .banner-filter-form {
+            .input-group{
+                height: 50px;
+                line-height: 50px;
+                padding-inline-start: 15px;
+                border: 1px solid var(--border-color);
+                margin-bottom: 20px;
+                border-radius: 5px;
+                background-color: var(--bg-white) !important;
+
+                .nice-select{
+                    line-height: 48px;
+                }
+
+                .vr{
+                    display: none;
+                }
+            }
+        }
+    }
+
+    .feature-area {
+        .ratio.ratio-21-8::before{
+            padding-bottom: 50%;
+        }
+    }
+
+    .mentor-area_v1,
+    .mentor-area_v2 {
+        .card {
+            .card-content {
+                width: 100%;
+            }
+        }
+    }
+
+    .spacer {
+        padding: 10px 0;
+    }
+
+    .tabs-navigation {
+        overflow: hidden;
+        overflow-x: auto;
+        .nav {
+            flex-wrap: nowrap;
+            justify-content: flex-start;
+            overflow: unset;
+            li {
+                flex: 0 0 auto;
+            }
+        }
+    }
+
+    .footer-area {
+        .footer-links {
+            gap: 15px;
+        }
+        .footer-widget {
+            h5 {
+                margin-bottom: 20px;
+            }
+        }
+    }
+
+    .breadcrumb-area{
+        padding-top: 125px;
+        padding-bottom: 70px;
+    }
+
+    .course-details-area {
+        .course-banner {
+            padding: 120px 0 70px;
+            .list-group {
+                li {
+                    &:not(:first-child) {
+                        padding-inline-start: 0;
+                        margin-inline-start: 0;
+                        border: none;
+                    }
+                }
+                flex-wrap: wrap;
+                gap: 20px;
+            }
+        }
+        .mentor {
+            .mentor-info {
+                flex-wrap: wrap;
+            }
+        }
+    }
+
+    .newsletter-area_v1{
+        .input-inline {
+            .form-control{
+                border-radius: var(--radius-pill) !important;
+            }
+            .btn{
+                border-radius: var(--radius-pill) !important;
+            }
+        }
+    }
+}
+
+/* Small devices (landscape phones, less than 576px) */
+@media only screen and (max-width: 575.98px) {
+    .p-30{
+        padding: 20px !important;
+    }
+    .p-20, .p-25{
+        padding: 15px !important;
+    }
+    .feature-area {
+        .ratio.ratio-21-8::before{
+            padding-bottom: 100%;
+        }
+    }
+    .contact-area .card{
+        padding: 20px;
+    }
+}

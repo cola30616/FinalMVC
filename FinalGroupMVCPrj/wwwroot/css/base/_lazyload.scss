@@ -1,0 +1,104 @@
+/* -----------------------------------------
+Lazyload CSS
+----------------------------------------- */
+.lazy-container {
+	position: relative;
+    overflow: hidden;
+    display: table;
+    table-layout: fixed;
+    width: 100%;
+    background-color: var(--bg-1);
+	z-index: 1;
+	&::after {
+		position: absolute;
+		content: '\f03e';
+		font-family: "Font Awesome 5 Pro";
+		top: 0;
+		left: 0;
+		right: 0;
+		bottom: 0;
+		display: grid;
+		place-items: center;
+		font-size: 25px;
+		color: var(--text-medium);
+		z-index: -1;
+	}
+	img {
+		position: absolute;
+		top: 0;
+		left: 0;
+		width: 0px;
+		height: 0px;
+		max-width: 100%;
+		min-width: 100%;
+		max-height: 100%;
+		min-height: 100%;
+		object-fit: cover;
+		&.lazy-load{
+			filter: blur(5px);
+			transition: filter 400ms;
+		}
+		&.lazyloaded{
+			filter: blur(0);
+		}
+	}
+
+	&.bg-none::after {
+		opacity: 0;
+	}
+}
+
+.ratio{
+	&::before{
+		content: '';
+		display: block;
+		padding-bottom: 56.25%;
+	}
+	&.ratio-1-1::before {
+		padding-bottom: calc(1 / 1 * 100%)
+	}
+	&.ratio-1-2::before {
+		padding-bottom: 114%
+	}
+	&.ratio-1-3::before {
+		padding-bottom: 126.14%
+	}
+	&.ratio-2-3::before {
+		padding-bottom: 66.67%
+	}
+	&.ratio-16-11::before {
+		padding-bottom: 53.57%
+	}
+	&.ratio-16-8::before {
+		padding-bottom: 50%
+	}
+	&.ratio-21-9::before {
+		padding-bottom: 42.85%
+	}
+	&.ratio-21-8::before {
+		padding-bottom: calc(8 / 21 * 100%)
+	}
+	&.ratio-5-3::before {
+		padding-bottom: 60%
+	}
+	&.ratio-5-4::before {
+		padding-bottom: 80%
+	}
+	&.ratio-4-3::before {
+		padding-bottom: calc(4 / 3 * 100%)
+	}
+	&.ratio-3-4::before {
+		padding-bottom: calc(3 / 4 * 100%)
+	}
+	&.ratio-vertical::before {
+		padding-bottom: 164%
+	}
+}
+
+.blur-up{
+	filter: blur(5px);
+	transition: filter 400ms;
+}
+.lazyloaded.blur-up{
+	filter: blur(0);
+}

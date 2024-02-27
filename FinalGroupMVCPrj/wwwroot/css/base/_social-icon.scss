@@ -1,0 +1,72 @@
+/* -----------------------------------------
+    Social Link CSS
+----------------------------------------- */
+.social-link {
+    --size: 36px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    a {
+        text-align: center;
+        width: var(--size);
+        height: var(--size);
+        line-height: var(--size);
+        background-color: var(--color-primary);
+        color: var(--text-white);
+        font-size: var(--font-base);
+
+        &:last-child {
+            margin: 0;
+        }
+
+        &:hover {
+            color: var(--text-white);
+            background-color: var(--color-primary);
+        }
+    }
+
+    &.style-2{
+        a{
+            background-color: rgba(var(--color-primary-rgb), 0.1);
+            color: var(--color-primary);
+        }
+
+        &.social-link_gradient {
+            a{
+                background-image: none;
+                i{
+                    background: var(--gradient-1);
+                    -webkit-background-clip: text;
+                    -webkit-text-fill-color: transparent;
+                    background-clip: text;
+                }
+            }
+        }
+    }
+
+    &.icon-only {
+        --size: auto;
+        a{
+            background-color: transparent;
+        }
+    }
+
+    &.size-md{
+        --size: 30px;
+        --font-base: 14px;
+    }
+    &.size-lg{
+        --size: 50px;
+    }
+    &.rounded{
+        a {
+            border-radius: 50%;
+        }
+    }
+
+    &_gradient {
+        a{
+            background-image: var(--gradient-1);
+        }
+    }
+}

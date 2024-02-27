@@ -1,0 +1,66 @@
+/* -----------------------------------------
+    Counter CSS
+----------------------------------------- */
+.counter-area {
+    position: relative;
+    z-index: 1;
+    .card {
+        &-icon {
+            position: relative;
+            z-index: 1;
+            font-size: 36px;
+        }
+    }
+
+    &_v1{
+        .counter-inner{
+            position: relative;
+            overflow: hidden;
+        }
+        .card {
+            &-icon {
+                padding-bottom: 10px;
+                &::after{
+                    position: absolute;
+                    content: '';
+                    top: auto;
+                    left: 0;
+                    bottom: 0;
+                    right: 0;
+                    --size: 70px;
+                    width: var(--size);
+                    height: var(--size);
+                    margin-inline: auto;
+                    border-radius: 50%;
+                    background-color: var(--bg-white);
+                    z-index: -1;
+                }
+            }
+        }
+        .arrows {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            height: 100%;
+            z-index: -1;
+        
+            .arrow {
+                position: absolute;
+                width: auto;
+                top: 50%;
+                left: 50%;
+                transform: translate(-50%, -50%);
+                width: 120px;
+        
+                &:nth-child(1) {
+                    margin-inline-start: -25%;
+                }
+                &:nth-child(3) {
+                    margin-inline-start: 25%;
+                }
+            }
+        }
+    }
+}

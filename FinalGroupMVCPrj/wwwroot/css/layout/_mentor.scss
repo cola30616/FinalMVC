@@ -1,0 +1,135 @@
+/* -----------------------------------------
+    Mentor CSS
+----------------------------------------- */
+.mentor-area {
+    position: relative;
+    overflow: hidden;
+    z-index: 1;
+    .card{
+        overflow: hidden;
+    }
+
+    &_v1{
+        .card{
+            .card-content {
+                position: absolute;
+                bottom: 0;
+                left: 0;
+                right: 0;
+                width: calc(100% - 40px);
+                margin-inline: auto;
+                padding: 40px 20px 20px;
+                z-index: 3;
+    
+                &::after{
+                    position: absolute;
+                    content: '';
+                    top: 0;
+                    left: 0;
+                    right: 0;
+                    width: 100%;
+                    height: 300%;
+                    border-radius: 50%;
+                    background-color: var(--bg-white);
+                    z-index: -1;
+                }
+    
+                p{
+                    margin-bottom: 0;
+                }
+    
+                .social-link {
+                    position: absolute;
+                    top: 0;
+                    left: 0;
+                    right: 0;
+                    gap: 15px;
+                    opacity: 0;
+                    transform: translateY(-35px);
+                    transition: all .3s;
+    
+                    a{
+                        border-radius: 50%;
+    
+                        &:nth-child(2) {
+                            transform: translateY(-15px);
+                        }
+                        &:nth-child(3) {
+                            transform: translateY(-15px);
+                        }
+                    }
+                }
+            }
+    
+            &:hover{
+                .card-content{
+                    .social-link {
+                        opacity: 1;
+                        transform: translateY(-5px);
+                    }
+                }
+            }
+        }
+
+        .shape {
+            img {
+                position: absolute;
+                z-index: -1;
+    
+                &.shape-1 {
+                    top: 15%;
+                    left: 8%;
+                    animation: moveLeftRight 10s linear infinite;
+                }
+    
+                &.shape-2 {
+                    left: 45%;
+                    bottom: 5%;
+                    animation: moveUpDown 5s linear infinite;
+                }
+    
+                &.shape-3 {
+                    bottom: 15%;
+                    right: 5%;
+                    animation: moveUpDown 20s linear infinite;
+                }
+            }
+        }
+    }
+
+    &_v2{
+        @extend .mentor-area_v1;
+        .card{
+            padding-bottom: 30px;
+            .card-content {
+                width: 100%;
+                padding: 20px;
+                background-color: var(--bg-white);
+    
+                &::after{
+                    content: none;
+                }
+    
+                .social-link {
+    
+                    a{
+                        &:nth-child(2) {
+                            transform: unset;
+                        }
+                        &:nth-child(3) {
+                            transform: unset;
+                        }
+                    }
+                }
+            }
+            &:hover{
+                .card-content{
+                    .social-link {
+                        opacity: 1;
+                        transform: translateY(-25px);
+                    }
+                }
+            }
+        }
+    }
+}

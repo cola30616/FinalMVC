@@ -1,0 +1,41 @@
+/* -----------------------------------------
+  	Go top CSS
+----------------------------------------- */
+.go-top {
+    --size: 40px;
+    position: fixed;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    bottom: 15px;
+    right: 0;
+    left: 0;
+    margin-inline-start: auto;
+    margin-inline-end: 0;
+    width: var(--size);
+    height: var(--size);
+    opacity: 0;
+    cursor: pointer;
+    text-decoration: none;
+    color: var(--text-white);
+    font-size: 20px;
+    background-color: var(--color-primary);
+    transition: 0.4s;
+    transform: translateX(15%);
+    border-start-start-radius: var(--radius-sm);
+    border-end-start-radius: var(--radius-sm);
+    z-index: 100;
+
+    &.active {
+        opacity: 1;
+        transform: none;
+    }
+
+    &:hover {
+        transform: translateY(-3px);
+    }
+
+    &_gradient{
+        background-image: var(--gradient-1);
+    }
+}

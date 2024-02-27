@@ -1,0 +1,31 @@
+/* -----------------------------------------
+	Price Range Slider CSS
+----------------------------------------- */
+.noUi-target{
+    border: none;
+    box-shadow: none;
+    border-radius: 30px;
+    height: 6px;
+    padding-inline: 8px;
+    background: rgba($color: var(--color-primary-rgb), $alpha: .19);
+}
+
+.noUi-connect{
+    background: var(--color-primary);
+}
+
+.noUi-horizontal .noUi-handle{
+    width: 15px;
+    height: 15px;
+    right: -8px;
+    top: -5px;
+    border-radius: 50%;
+    box-shadow: none;
+    background: var(--color-white);
+    border-width: 3px;
+    border-color: var(--color-primary);
+    cursor: grab;
+    &::before, &::after{
+        content: none;
+    }
+}

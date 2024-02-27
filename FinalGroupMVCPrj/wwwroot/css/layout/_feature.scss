@@ -1,0 +1,97 @@
+/* -----------------------------------------
+    Feature CSS
+----------------------------------------- */
+.feature-area {
+    position: relative;
+    .feature-cards {
+        position: relative;
+        z-index: 2;
+
+        .wrapper {
+            position: relative;
+            z-index: 1;
+        }
+    }
+
+    &_v1{
+        .shape {
+            img {
+                position: absolute;
+                z-index: -1;
+    
+                &.shape-1 {
+                    top: 10%;
+                    left: 2%;
+                    animation: moveLeftRight 10s linear infinite;
+                }
+    
+                &.shape-2 {
+                    top: 24%;
+                    right: 16%;
+                    animation: moveUpDown 5s linear infinite;
+                }
+    
+                &.shape-3 {
+                    bottom: 5%;
+                    left: 5%;
+                    animation: moveUpDown 20s linear infinite;
+                }
+    
+                &.shape-4 {
+                    bottom: 10%;
+                    right: 25%;
+                    animation: moveLeftRight 8s linear infinite;
+                }
+            }
+        }
+    }
+
+    &_v2 {
+        .feature-cards {
+
+            .card-icon {
+                max-width: 60px;
+            }
+
+            h6 {
+                font-size: var(--font-base);
+            }
+
+            .arrows {
+                z-index: -1;
+
+                .arrow {
+                    position: absolute;
+                    width: auto;
+                    top: 50%;
+                    left: 50%;
+                    transform: translate(-50%, -50%);
+
+                    &:nth-child(1) {
+                        margin-left: -32.66666667%;
+                    }
+
+                    &:nth-child(2) {
+                        margin-left: -16.66666667%;
+                    }
+
+                    &:nth-child(4) {
+                        margin-left: 16.66666667%;
+                    }
+
+                    &:nth-child(5) {
+                        margin-left: 32.66666667%;
+                    }
+                }
+            }
+        }
+    }
+    &_v3 {
+        .feature-cards {
+
+            .card-icon {
+                max-width: 80px;
+            }
+        }
+    }
+}

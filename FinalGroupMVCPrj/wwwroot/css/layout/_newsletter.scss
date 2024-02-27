@@ -1,0 +1,25 @@
+/* -----------------------------------------
+    Newsletter CSS
+----------------------------------------- */
+
+.newsletter-area {
+    position: relative;
+    z-index: 2;
+
+    .newsletter-inner {
+        position: relative;
+        overflow: hidden;
+        z-index: 1;
+    }
+
+    .newsletter-form{
+        max-width: 500px;
+    }
+    .overlay{
+        background-color: transparent;
+    }
+
+    h2{
+        margin-top: -8px;
+    }
+}

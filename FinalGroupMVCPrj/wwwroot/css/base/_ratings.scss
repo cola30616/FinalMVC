@@ -1,0 +1,54 @@
+/* -----------------------------------------
+    Ratings CSS
+----------------------------------------- */
+.ratings {
+	display: flex;
+	align-items: center;
+    flex-wrap: wrap;
+	margin-inline-start: -3px;
+	gap: 5px;
+	.rate{
+		background-position: 0 -13px;
+		background-repeat: repeat-x !important;
+		height: 13px;
+		transition: all 0.5s ease-out 0s;
+		width: 90px;
+	}
+	.rating-icon{
+		background-position: 0 0;
+		background-repeat: repeat-x !important;
+		height: 13px;
+        width: 80%;
+	}
+	.ratings-total{
+		font-size: 12px;
+		line-height: 1;
+	}
+
+	&.size-md {
+		.rate{
+			background-position: 0 -15px;
+			height: 15px;
+			width: 115px;
+		}
+		.rating-icon{
+			height: 15px;
+		}
+		.ratings-total{
+			font-size: 14px;
+		}
+	}
+	&.size-lg {
+		.rate{
+			background-position: 0 -20px;
+			height: 20px;
+			width: 145px;
+		}
+		.rating-icon{
+			height: 20px;
+		}
+		.ratings-total{
+			font-size: 16px;
+		}
+	}
+}
