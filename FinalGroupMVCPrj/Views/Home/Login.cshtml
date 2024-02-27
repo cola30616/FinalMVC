@@ -3,5 +3,76 @@
     ViewData["Title"] = "Login";
 }
 
-<h1>Login</h1>
+<!-- Breadcrumb start -->
+    <div class="breadcrumb-area bg-img bg-cover" data-bg-image="/images/breadcrumb-bg.jpg">
+        <div class="container">
+            <div class="content text-center">
+                <h2>Login</h2>
+                <nav aria-label="breadcrumb">
+                    <ol class="breadcrumb">
+                        <li class="breadcrumb-item"><a href="index.html">Home</a></li>
+                        <li class="breadcrumb-item active" aria-current="page">Login</li>
+                    </ol>
+                </nav>
+            </div>
+        </div>
+    </div>
+    <!-- Breadcrumb end -->
+
+    <!-- Authentication Start -->
+    <div class="authentication-area ptb-100">
+        <div class="container">
+            <div class="row">
+                <div class="col-12">
+                    <div class="main-form">
+
+                        <h3 class="title mb-30" data-splitting="" data-aos="">Login to Oppida</h3>
+                        <form id="#authForm">
+                            <div class="row">
+                                <div class="col-12">
+                                    <div class="form-group mb-20">
+                                        <label for="userName" class="form-label">Username<span class="color-red">*</span></label>
+                                        <input type="text" name="user_name" id="userName" class="form-control" placeholder="Enter username" required>
+                                    </div>
+                                </div>
+                                <div class="col-12">
+                                    <div class="form-group mb-20">
+                                        <label for="password" class="form-label">Password<span class="color-red">*</span></label>
+                                        <div class="position-relative">
+                                            <input type="password" name="password" id="password" class="form-control" placeholder="Enter password" required>
+                                            <span class="show-password-field">
+                                                <i class="show-icon"></i>
+                                            </span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-12">
+                                    <div class="custom-checkbox mb-10 font-sm">
+                                        <input class="input-checkbox" type="checkbox" name="checkbox" id="checkbox4" value="">
+                                        <label class="form-check-label" for="checkbox4"><span> I agree with Oppida's <a href="terms-conditions.html">Terms & Conditions</a></span></label>
+                                    </div>
+                                    <div class="custom-checkbox mb-10 font-sm">
+                                        <input class="input-checkbox" type="checkbox" name="checkbox" id="checkbox5" value="">
+                                        <label class="form-check-label" for="checkbox5"><span>I’d like being informed about latest news and tips</span></label>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="text-center mt-10">
+                                <button class="btn btn-lg btn-primary rounded-pill w-100" type="submit" aria-label="Login">Login</button>
+                            </div>
+                            <div class="d-flex justify-content-between flex-wrap gap-2 mt-30">
+                                <div class="link font-sm">
+                                    <a href="error-404.html" title="Forgot Password">Forgot password?</a>
+                                </div>
+                                <div class="link font-sm">
+                                    Don't have an account? <a href="signup.html" title="Go Signup" target="_self">Click Here</a> to Signup
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Authentication End -->
 
