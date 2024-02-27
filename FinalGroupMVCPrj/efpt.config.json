@@ -1,0 +1,182 @@
+﻿{
+   "CodeGenerationMode": 3,
+   "ContextClassName": "LifeShareLearnContext",
+   "ContextNamespace": null,
+   "DefaultDacpacSchema": null,
+   "FilterSchemas": false,
+   "IncludeConnectionString": true,
+   "ModelNamespace": null,
+   "OutputContextPath": null,
+   "OutputPath": "Models",
+   "PreserveCasingWithRegex": true,
+   "ProjectRootNamespace": "FinalGroupMVCPrj",
+   "Schemas": null,
+   "SelectedHandlebarsLanguage": 2,
+   "SelectedToBeGenerated": 0,
+   "T4TemplatePath": null,
+   "Tables": [
+      {
+         "Name": "[dbo].[tAdmins]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[tChatMessageTeacher]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[tChatRoomTeacher]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[tCity]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[tCityDistricts]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[tCoupon]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[tCouponConditionList]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[tCourseFields]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[tCourseSubjects]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[tCoursework]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[tCourseworkFile]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[tLessonCourse]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[tLessonEvaluation]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[tMember]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[tMemberCitiesList]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[tMemberFavCourses]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[tMemberFavTeachers]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[tMemberGetPush]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[tMemberLoginLog]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[tMemberWishFields]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[tOrder]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[tOrderDetail]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[tPushLayout]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[tPushMessage]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[tServiceForm]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[tTeacher]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[tTeacherApplyLog]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[tTeacherImages]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[tTeacherSubjects]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[tVenue]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[tVenueProviderInfo]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[tVideoCourse]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[tVideoCourseEvaluation]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[tVideoCourseQA]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[tVideoUploadUrl]",
+         "ObjectType": 0
+      }
+   ],
+   "UiHint": "desktop-rae7e6c.LifeShareLearn.dbo",
+   "UncountableWords": null,
+   "UseBoolPropertiesWithoutDefaultSql": false,
+   "UseDatabaseNames": false,
+   "UseDateOnlyTimeOnly": false,
+   "UseDbContextSplitting": false,
+   "UseDecimalDataAnnotationForSprocResult": true,
+   "UseFluentApiOnly": false,
+   "UseHandleBars": false,
+   "UseHierarchyId": false,
+   "UseInflector": true,
+   "UseLegacyPluralizer": false,
+   "UseManyToManyEntity": false,
+   "UseNoDefaultConstructor": false,
+   "UseNoNavigations": false,
+   "UseNoObjectFilter": false,
+   "UseNodaTime": false,
+   "UseNullableReferences": false,
+   "UsePrefixNavigationNaming": false,
+   "UseSchemaFolders": false,
+   "UseSchemaNamespaces": false,
+   "UseSpatial": false,
+   "UseT4": false
+}
