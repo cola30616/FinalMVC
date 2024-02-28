@@ -1,6 +1,8 @@
 using FinalGroupMVCPrj.Data;
 using FinalGroupMVCPrj.Models;
+using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Mvc.Authorization;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -17,6 +19,17 @@ builder.Services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.Requ
     .AddEntityFrameworkStores<ApplicationDbContext>();
 builder.Services.AddControllersWithViews();
 
+builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
+    .AddCookie(option =>
+    {
+        //未登入時會自動導到這個網址
+        option.LoginPath = new PathString("/Home/Login");
+        //登入但沒有權限會導到這個網址
+        option.AccessDeniedPath = new PathString("/Home/AccessDenied");
+    });
+
+//全部的控制器預設要有登入狀態，除非[AllowAnonymous]
+builder.Services.AddMvc(options => options.Filters.Add(new AuthorizeFilter()));
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.

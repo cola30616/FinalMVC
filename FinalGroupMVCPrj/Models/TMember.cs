@@ -44,7 +44,7 @@ public partial class TMember
     public string FPassword { get; set; }
 
     [Column("fEmailVerification")]
-    public bool? FEmailVerification { get; set; }
+    public bool FEmailVerification { get; set; }
 
     [Column("fMemberProfilePic")]
     public byte[] FMemberProfilePic { get; set; }

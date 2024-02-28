@@ -1,4 +1,4 @@
-﻿
+﻿@model TMember
 @{
     ViewData["Title"] = "Login";
 }
@@ -21,19 +21,19 @@
                     <div class="main-form">
 
 @*                         <h3 class="title mb-30" data-splitting="" data-aos="">登入來學樂帳號</h3> *@
-                        <form id="#authForm">
+                    <form asp-controller="Home" asp-action="Login" >
                             <div class="row">
                                 <div class="col-12">
                                     <div class="form-group mb-20">
-                                        <label for="userName" class="form-label">電子信箱<span class="color-red">*</span></label>
-                                        <input type="text" name="user_name" id="userName" class="form-control" placeholder="" required>
+                                    <label asp-for="FEmail" class="form-label">電子信箱<span class="color-red">*</span></label>
+                                    <input asp-for="FEmail" class="form-control" placeholder="" value="caixiaofang@email.com">
                                     </div>
                                 </div>
                                 <div class="col-12">
                                     <div class="form-group mb-20">
-                                        <label for="password" class="form-label">密碼<span class="color-red">*</span></label>
+                                    <label asp-for="FPassword" class="form-label">密碼<span class="color-red">*</span></label>
                                         <div class="position-relative">
-                                            <input type="password" name="password" id="password" class="form-control" placeholder="" required>
+                                        <input asp-for ="FPassword" type="password" class="form-control" placeholder="" value="123456">
                                             <span class="show-password-field">
                                             <i class="fa-solid fa-eye"></i>
                                             </span>
@@ -43,7 +43,7 @@
                                 <div class="col-12">
                                     <div class="custom-checkbox mb-10 font-sm">
                                         <input class="input-checkbox" type="checkbox" name="checkbox" id="checkbox4" value="">
-                                    <label class="form-check-label" for="checkbox4"><span> 我同意來學樂平台的<a href="terms-conditions.html"> 服務條款 及 隱私政策</a></span></label>
+                         @*            <label class="form-check-label" for="checkbox4"><span> 我同意來學樂平台的<a href="terms-conditions.html"> 服務條款＆隱私政策</a></span></label> *@
                                     </div>
                                 </div>
                             </div>

@@ -40,7 +40,7 @@
     <!-- Responsive CSS -->
     <link rel="stylesheet" href="~/css/responsive.css">
     <!--調整前台右上角下拉選單和後台樣式相近-->
-    <link href="~/assets/css/adjustdropdown.css" rel="stylesheet" />
+    <link href="~/css/adjustdropdown.css" rel="stylesheet" />
 </head>
 
 <body class="theme-color-1">
@@ -93,9 +93,9 @@
             </div>
             </div>
             </div> *@
-            <div class="header-bottom">
+            <div class="header-bottom ">
                 <div class="container">
-                    <nav class="navbar navbar-expand-lg">
+                    <nav class="navbar navbar-expand-lg p-3">
                         <!-- Logo -->
                         <a class="navbar-brand" href="index.html" target="_self" title="Oppida">
                             <img class="" src="/Images/logo/logo-1.png" alt="Brand Logo">
@@ -104,7 +104,7 @@
                         <div class="collapse navbar-collapse">
                             <ul id="mainMenu" class="navbar-nav mobile-item mx-auto">
                                 
-                                <li class="nav-item">
+                               @*  <li class="nav-item">
                                     <a href="#mentors" class="nav-link toggle">Mentors <i class="fal fa-plus"></i></a>
                                     <ul class="menu-dropdown">
                                         <li class="nav-item">
@@ -115,11 +115,11 @@
                                         </li>
                                     </ul>
                                 </li>
-                               
+                                *@
                                
                             </ul>
                         </div>
-                        <div class="more-option mobile-item">
+                        <div class="more-option  ">
                             @* <div class="item">
                                 <div class="language">
                                     <select class="niceselect">
@@ -129,55 +129,60 @@
                                     </select>
                                 </div>
                             </div> *@
-
                             <div class="item">
-                                <a asp-controller="Home" asp-action="Login" class="btn-icon-text" target="_self" aria-label="User" title="User">
-                                    <i class="fa-solid fa-user"></i>
-                                    <span>登入／註冊</span>
+                                <a asp-controller="Teacher" asp-action="List" target="_self">
+                                    <i class="fa-solid fa-user-tie color-primary"></i>
+                                    <span>認識我們的老師</span>
                                 </a>
                             </div>
-                            <div class="item">
+                            <div id="toLogin" style="display:block" class="item">
+                                <a asp-controller="Home" asp-action="Login" class="btn-icon-text" target="_self" aria-label="User" title="User">
+                                    <i class="fa-solid fa-user"></i>
+                                    <span id="testspan">登入／註冊</span>
+                                </a>
+                            </div>
+                            <div id="isLogin"style="display:none" class="item">
                                 <div class="nav-item dropdown ">
 
-                                    <a class="nav-link nav-profile d-flex align-items-center pe-0" href="#" data-bs-toggle="dropdown">
-                                        <img src="~/images/owenadd/membernophoto.jpg" alt="Profile" class="rounded-circle" style="width: 36px; height:36px">
-                                        <span class="d-none d-md-block dropdown-toggle ps-2">K. Anderson</span>
+                                    <a class="nav-link nav-profile d-flex align-items-center p-0" href="#" data-bs-toggle="dropdown">
+                                        <img id="memberPic" src="~/images/owenadd/membernophoto.jpg" alt="Profile" class="rounded-circle" style="width: 36px; height:36px">
+                                        <span id="navShowName" class="d-none d-md-block dropdown-toggle ps-2">K. Anderson</span>
                                     </a><!-- End Profile Iamge Icon -->
-                                    <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow profile mt-0">
+                                    <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow profile mt-2">
                                         <li class="dropdown-header">
-                                            <h6 id="userShowName">Kevin Anderson</h6>
-                                            <span id="userEmail">Web Designer</span>
+                                            <h6 id="userShowName" class="text-start">Kevin Anderson</h6>
+                                            <span id="userEmail" class="text-start">Web Designer</span>
                                         </li>
                                         <li>
                                             <hr class="dropdown-divider">
                                         </li>
 
-                                        <li id="toTeacherAdmin">
-                                            <a class="dropdown-item d-flex align-items-center" href="users-profile.html">
+                                        <li class="toggleTAdmin" style="display:none">
+                                            <a asp-controller="TeacherAdmin" asp-action="LessonList" id="toTeacherAdmin" class="dropdown-item d-flex align-items-center">
                                                 <i class="fa-solid fa-chalkboard-user"></i>
                                                 <span>切換至老師後台</span>
                                             </a>
-                                        </li>
-                                        <li>
+                                        </li >
+                                        <li class="toggleTAdmin" style="display:none" >
                                             <hr class="dropdown-divider">
                                         </li>
 
                                         <li>
-                                            <a class="dropdown-item d-flex align-items-center" href="users-profile.html">
+                                            <a asp-controller="Member" asp-action="Setting" class="dropdown-item d-flex align-items-center">
                                                 <i class="fa-solid fa-gear"></i>
                                               <span>帳號設定</span>
                                             </a>
                                         </li>
 
                                         <li>
-                                            <a class="dropdown-item d-flex align-items-center" href="pages-faq.html">
+                                            <a asp-controller="Member" asp-action="Fav" class="dropdown-item d-flex align-items-center">
                                                 <i class="fa-solid fa-bookmark"></i>
                                              <span>我的收藏</span>
                                             </a>
                                         </li>
 
                                         <li>
-                                            <a class="dropdown-item d-flex align-items-center" href="pages-faq.html">
+                                            <a asp-controller="LessonHistory" asp-action="List" class="dropdown-item d-flex align-items-center" >
                                                 <i class="fa-solid fa-graduation-cap"></i>
                                                 <span>課程紀錄</span>
                                             </a>
@@ -188,7 +193,7 @@
                                         </li>
 
                                         <li>
-                                            <a class="dropdown-item d-flex align-items-center" href="#">
+                                            <a asp-controller="Home" asp-action="Logout" class="dropdown-item d-flex align-items-center" >
                                                 <i class="fa-solid fa-right-from-bracket"></i>
                                                 <span>登出</span>
                                             </a>
@@ -233,7 +238,9 @@
     <script src="~/js/vendors/mouse-hover-move.js"></script>
     <!-- Main script JS -->
     <script src="~/js/script.js"></script>
+    <!--根據登入狀態改變前台網頁-->
+    <script src="~/js/loginstatus.js"></script>
     @await RenderSectionAsync("Scripts", required: false)
-
+   
 </body>
 </html>
