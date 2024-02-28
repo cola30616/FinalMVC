@@ -6,6 +6,7 @@ namespace FinalGroupMVCPrj.Controllers
     [Authorize(Roles = "Teacher")]
     public class TeacherAdminController : UserInfoController
     {
+        //■ ==========================     翊妏作業區      ==========================■
         // GET: TeacherAdmin/LessonList
         //動作簡述：回傳老師課程清單資訊
         [HttpGet]
@@ -13,5 +14,11 @@ namespace FinalGroupMVCPrj.Controllers
         {
             return View();
         }
+        //■ ==========================     東霖作業區      ==========================■
+
+
+
+        //■ ==========================     子謙作業區      ==========================■
+
     }
 }

@@ -20,7 +20,7 @@ namespace FinalGroupMVCPrj.Controllers
             _logger = logger;
             _context = context;
         }
-
+        //■ ==========================     子謙作業區      ==========================■
         public IActionResult Index()
         {
             return View();
@@ -29,6 +29,12 @@ namespace FinalGroupMVCPrj.Controllers
         {
             return View();
         }
+
+
+
+
+
+        //■ ==========================     歐文作業區      ==========================■
         public IActionResult Login()
         {
 
