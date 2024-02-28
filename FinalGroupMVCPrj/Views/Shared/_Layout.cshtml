@@ -1,4 +1,5 @@
-﻿<!DOCTYPE html>
+﻿﻿
+<!DOCTYPE html>
 <html lang="zh-tw">
 
 <head>
@@ -9,9 +10,9 @@
     <meta name="description" content="Multi-Tenant, Course, Course Selling">
 
     <!-- Title -->
-    <title>Oppida - Online Course & Education HTML Template</title>
+    <title>來學樂 線下課程預約平台</title>
     <!-- Favicon -->
-    <link rel="shortcut icon" href="~/images/logo/fav.png" type="image/x-icon">
+    <link rel="shortcut icon" href="/images/logo/favicon.png" type="image/x-icon">
 
     <!-- Google font -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -39,6 +40,11 @@
     <link rel="stylesheet" href="~/css/style.css">
     <!-- Responsive CSS -->
     <link rel="stylesheet" href="~/css/responsive.css">
+    <!--中文字體-->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@100..900&display=swap" rel="stylesheet">
+    <link href="~/css/site.css" rel="stylesheet" />
 </head>
 
 <body class="theme-color-1">
@@ -61,8 +67,8 @@
             <div class="container">
                 <!-- Mobile Logo -->
                 <div class="logo">
-                    <a href="index.html" target="_self" title="Oppida">
-                        <img class="lazyload" src="~/images/placeholder.png" data-src="~/images/logo/logo-1.png" alt="Brand Logo">
+                    <a href="index.html" target="_self" title="LifeShareLearn">
+                        <img class="lazyload" src="/images/placeholder.png" data-src="/images/logo/favicon.png" alt="Brand Logo">
                     </a>
                 </div>
                 <!-- Menu toggle button -->
@@ -95,57 +101,61 @@
                 <div class="container">
                     <nav class="navbar navbar-expand-lg">
                         <!-- Logo -->
-                        <a class="navbar-brand" href="index.html" target="_self" title="Oppida">
-                            <img class="" src="~/images/logo/logo-1.png" alt="Brand Logo">
+                        <a class="navbar-brand" href="index.html" target="_self" title="LifeShareLearn">
+                            <img class="lazyload img-fluid img-fixed-size" src="/images/logo/logo_transparent.png" alt="Brand Logo">
                         </a>
                         <!-- Navigation items -->
                         <div class="collapse navbar-collapse">
                             <ul id="mainMenu" class="navbar-nav mobile-item mx-auto">
-                                
+                                <li class="nav-item p-3 ">
+                                    <div class="input-group" style="position: relative;">
+                                        <input type="text" id="search" class="form-control" placeholder="搜尋課程" style="width: 491px">
+                                        <button class="btn btn-light" type="button" style="position: absolute; top: 5px; right: 0;background-color: transparent;border-color: transparent;box-shadow: none">
+                                            <img src="~/images/search-alt-2-svgrepo-com.svg" style="height: 30px; width: 30px;" />
+                                        </button>
+                                    </div>
+                                </li>
                                 <li class="nav-item">
-                                    <a href="#mentors" class="nav-link toggle">Mentors <i class="fal fa-plus"></i></a>
+                                    <a href="#mentors" class="nav-link toggle">老師推薦 <i class="fal fa-plus"></i></a>
                                     <ul class="menu-dropdown">
                                         <li class="nav-item">
-                                            <a class="nav-link" href="mentors.html">Mentors</a>
+                                            <a class="nav-link" href="mentors.html">老師課程</a>
                                         </li>
                                         <li class="nav-item">
-                                            <a class="nav-link" href="mentor-details.html">Mentor Details</a>
+                                            <a class="nav-link" href="mentor-details.html">老師介紹</a>
                                         </li>
                                     </ul>
                                 </li>
-                               
-                               
                             </ul>
                         </div>
                         <div class="more-option mobile-item">
                             @* <div class="item">
-                                <div class="language">
-                                    <select class="niceselect">
-                                        <option value="1">English</option>
-                                        <option value="2">Chinese</option>
-                                        <option value="3">French</option>
-                                    </select>
-                                </div>
+                            <div class="language">
+                            <select class="niceselect">
+                            <option value="1">English</option>
+                            <option value="2">Chinese</option>
+                            <option value="3">French</option>
+                            </select>
+                            </div>
                             </div> *@
 
                             <div class="item">
                                 <a href="login.html" class="btn-icon-text" target="_self" aria-label="User" title="User">
                                     <i class="fal fa-user"></i>
-                                    <span>Login</span>
+                                    <span>登入</span>
                                 </a>
                             </div>
                             <div class="item">
                                 <div class="nav-item dropdown ">
 
                                     <a class="nav-link nav-profile d-flex align-items-center pe-0" href="#" data-bs-toggle="dropdown">
-                                        <img src="~/assets/img/profile-img.jpg" alt="Profile" class="rounded-circle" style="width: 36px; height:36px">
-                                        <span class="d-none d-md-block dropdown-toggle ps-2">K. Anderson</span>
+                                        <img src="~/assets/img/MMG.png" alt="Profile" class="rounded-circle" style="width: 36px; height:36px">
+                                        <span class="d-none d-md-block dropdown-toggle ps-2">喵喵怪</span>
                                     </a><!-- End Profile Iamge Icon -->
 
                                     <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow profile">
                                         <li class="dropdown-header">
-                                            <h6>Kevin Anderson</h6>
-                                            <span>Web Designer</span>
+                                            <h6>喵喵怪</h6>
                                         </li>
                                         <li>
                                             <hr class="dropdown-divider">
@@ -154,7 +164,7 @@
                                         <li>
                                             <a class="dropdown-item d-flex align-items-center" href="users-profile.html">
                                                 <i class="bi bi-person"></i>
-                                                <span>My Profile</span>
+                                                <span>切換到老師後台</span>
                                             </a>
                                         </li>
                                         <li>
@@ -164,27 +174,40 @@
                                         <li>
                                             <a class="dropdown-item d-flex align-items-center" href="users-profile.html">
                                                 <i class="bi bi-gear"></i>
-                                                <span>Account Settings</span>
+                                                <span>帳號設定</span>
                                             </a>
                                         </li>
                                         <li>
                                             <hr class="dropdown-divider">
                                         </li>
 
+
                                         <li>
-                                            <a class="dropdown-item d-flex align-items-center" href="pages-faq.html">
-                                                <i class="bi bi-question-circle"></i>
-                                                <span>Need Help?</span>
+                                            <a class="dropdown-item d-flex align-items-center" href="users-profile.html">
+                                                <i class="bi bi-gear"></i>
+                                                <span>我的收藏</span>
                                             </a>
+                                            <hr class="dropdown-divider">
                                         </li>
                                         <li>
+                                            <a class="dropdown-item d-flex align-items-center" href="users-profile.html">
+                                                <i class="bi bi-gear"></i>
+                                                <span>課程紀錄</span>
+                                            </a>
+                                            <hr class="dropdown-divider">
+                                        </li>
+                                        <li>
+                                            <a class="dropdown-item d-flex align-items-center" href="users-profile.html">
+                                                <i class="bi bi-gear"></i>
+                                                <span>我的作品</span>
+                                            </a>
                                             <hr class="dropdown-divider">
                                         </li>
 
                                         <li>
                                             <a class="dropdown-item d-flex align-items-center" href="#">
                                                 <i class="bi bi-box-arrow-right"></i>
-                                                <span>Sign Out</span>
+                                                <span>登出</span>
                                             </a>
                                         </li>
 
@@ -205,6 +228,107 @@
     <!-- Magic Cursor -->
     <div class="cursor"></div>
 
+
+
+
+    <!-- Footer-area start -->
+    <footer class="footer-area bg-primary-light">
+        <div class="footer-top pt-100 pb-70">
+            <div class="container">
+                <div class="row gx-xl-5 justify-content-between">
+                    <div class="col-lg-3 col-sm-6 col-sm-12">
+                        <div class="footer-widget" data-aos="fade-up" data-aos-delay="100">
+                            <!-- Logo -->
+                            <div class="logo mb-20">
+                                <a class="navbar-brand" href="index.html" target="_self" title="Link">
+                                    <img class="lazyload" src="/images/placeholder.png" data-src="/images/logo/logo-1.png" alt="Brand Logo">
+                                </a>
+                            </div>
+                            <p>
+                                來學樂
+                            </p>
+                            <p>
+                                全台最優質線下學習預約平台
+                            </p>
+                        </div>
+                    </div>
+                    <div class="col-lg-2 col-sm-4">
+                        <div class="footer-widget" data-aos="fade-up" data-aos-delay="200">
+                            <h5>關於</h5>
+                            <ul class="footer-links">
+                                <li>
+                                    <a href="signup.html" target="_self" title="link">註冊帳號</a>
+                                </li>
+                                <li>
+                                    <a href="mentors.html" target="_self" title="link">老師總覽</a>
+                                <li>
+                                    <a href="courses.html" target="_self" title="link">課程內容</a>
+                                </li>
+                                <li>
+                                    <a href="error-404.html" target="_self" title="link">隱私權政策</a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                   
+                    <div class="col-lg-2 col-sm-4">
+                        <div class="footer-widget" data-aos="fade-up" data-aos-delay="200">
+                            <h5>幫助</h5>
+                            <ul class="footer-links">
+                                
+                                <li>
+                                    <a href="error-404.html" target="_self" title="link">如何使用我們的服務</a>
+                                </li>
+                                <li>
+                                    <a href="error-404.html" target="_self" title="link">關於我們</a>
+                                </li>
+                                <li>
+                                    <a href="contact.html" target="_self" title="link">聯絡我們</a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="col-xl-3 col-sm-6">
+                        <div class="footer-widget" data-aos="fade-up" data-aos-delay="200">
+                            <h5>下載APP</h5>
+                            <div class="btn-groups">
+                                <a href="error-404.html" class="btn btn-img size-sm radius-sm" title="App Store" target="_blank">
+                                    <img class="lazyload blur-up" src="/images/placeholder.png" data-src="/images/app-store.png" alt="App Store">
+                                </a>
+                                <a href="error-404.html" class="btn btn-img size-sm radius-sm" title="Play Store" target="_blank">
+                                    <img class="lazyload blur-up" src="/images/placeholder.png" data-src="/images/play-store.png" alt="App Store">
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+        <div class="copy-right-area border-top ptb-30">
+            <div class="container">
+                <div class="copy-right-content">
+                    <div class="social-link rounded style-2 justify-content-center mb-10">
+                        <a href="https://www.instagram.com/" target="_blank" title="Link"><i class="fab fa-instagram"></i></a>
+                        <a href="https://www.dribbble.com/" target="_blank" title="Link"><i class="fab fa-dribbble"></i></a>
+                        <a href="https://www.twitter.com/" target="_blank" title="Link"><i class="fab fa-twitter"></i></a>
+                        <a href="https://www.youtube.com/" target="_blank" title="Link"><i class="fab fa-youtube"></i></a>
+                    </div>
+                    <span>
+                        Copyright <i class="fal fa-copyright"></i><span id="footerDate"></span> <a href="index.html" target="_self" title="Oppida" class="color-primary">LifeShareLearn</a> 版權所有
+                    </span>
+                </div>
+            </div>
+        </div>
+        <!-- Shapes -->
+        <div class="shape">
+            <img class="shape-1 lazyload" src="/images/placeholder.png" data-src="/images/shape/shape-3.png" alt="Shape">
+            <img class="shape-2 lazyload" src="/images/placeholder.png" data-src="/images/shape/shape-1.png" alt="Shape">
+            <img class="shape-3 lazyload" src="/images/placeholder.png" data-src="/images/shape/shape-6.png" alt="Shape">
+            <img class="shape-4 lazyload" src="/images/placeholder.png" data-src="/images/shape/shape-4.png" alt="Shape">
+        </div>
+    </footer>
+    <!-- Footer-area end-->
     <!-- Lazysizes -->
     <script src="~/js/vendors/lazysizes.min.js"></script>
     <!-- Jquery JS -->
@@ -230,3 +354,4 @@
     @await RenderSectionAsync("Scripts", required: false)
 
 </body>
+</html>
