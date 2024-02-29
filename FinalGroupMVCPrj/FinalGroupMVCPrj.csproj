@@ -22,6 +22,7 @@
 
   <ItemGroup>
     <Folder Include="Models\ViewModels\" />
+    <Folder Include="wwwroot\Index\" />
   </ItemGroup>
 
 </Project>
