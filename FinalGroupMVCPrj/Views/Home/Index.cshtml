@@ -82,9 +82,7 @@
                                         </h6>
                                     </div>
                                 </div>
-                            }
-                            
-                            
+                            }                                                   
                         </div>
                     }
                     
@@ -275,6 +273,7 @@
                             <!-- 這邊是課程的細節 用Razor 語法-->
                             @foreach(var course in Model)
                             {
+
                                 <div class="col-xl-3 col-lg-4 col-sm-6">
                                     <div class="course-default border radius-md mb-30">
                                         <figure class="course-img">
@@ -287,7 +286,7 @@
                                         </figure>
                                         <div class="course-details">
                                             <div class="p-3">
-                                                <a href="course-details.html" target="_self" title="Design" class="tag font-sm color-primary mb-1">@course.subjectName</a>
+                                                <a href="course-details.html" target="_self" title=@course.subjectName class="tag font-sm color-primary mb-1">@course.subjectName</a>
                                                 <h6 class="course-title lc-2 mb-0">
                                                     <a href="course-details.html" target="_self" title="Link">
                                                         @course.lessonCourse.FName
