@@ -118,16 +118,16 @@
                                         </button>
                                     </div>
                                 </li>
-                                <li class="nav-item">
-                                    <a href="#mentors" class="nav-link toggle">老師推薦 <i class="fal fa-plus"></i></a>
-                                    <ul class="menu-dropdown">
+                                <li class="nav-item p-3 ">
+                                    <a asp-controller="Teacher" asp-action="List" class="">  <i class="fa-solid fa-user-tie color-primary"></i>老師推薦 <i class="fal fa-plus"></i></a>
+@*                                     <ul class="menu-dropdown">
                                         <li class="nav-item">
                                             <a class="nav-link" href="mentors.html">老師課程</a>
                                         </li>
                                         <li class="nav-item">
                                             <a class="nav-link" href="mentor-details.html">老師介紹</a>
                                         </li>
-                                    </ul>
+                                    </ul> *@
                                 </li>
                                 
                                
@@ -143,12 +143,12 @@
                             </select>
                             </div>
                             </div> *@
-                            <div class="item">
+                     @*        <div class="item">
                                 <a asp-controller="Teacher" asp-action="List" target="_self">
                                     <i class="fa-solid fa-user-tie color-primary"></i>
                                     <span>認識我們的老師</span>
                                 </a>
-                            </div>
+                            </div> *@
                             <div id="toLogin" style="display:block" class="item">
                                 <a asp-controller="Home" asp-action="Login" class="btn-icon-text" target="_self" aria-label="User" title="User">
                                     <i class="fa-solid fa-user"></i>
