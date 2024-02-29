@@ -9,6 +9,11 @@ namespace FinalGroupMVCPrj.Controllers
     [Authorize(Roles = "Teacher")]
     public class TeacherAdminController : UserInfoController
     {
+        private readonly LifeShareLearnContext _lifeShareLearnContext;
+        public TeacherAdminController(LifeShareLearnContext lifeShareLearnContext)
+        {
+            _lifeShareLearnContext = lifeShareLearnContext;
+        }
         //■ ==========================     翊妏作業區      ==========================■
         // GET: TeacherAdmin/LessonList
         //動作簡述：回傳老師課程清單資訊
@@ -18,10 +23,7 @@ namespace FinalGroupMVCPrj.Controllers
             return View();
         }
         //■ ==========================     東霖作業區      ==========================■
-        private readonly LifeShareLearnContext _lifeShareLearnContext;
-        public TeacherAdminController(LifeShareLearnContext lifeShareLearnContext) {
-            _lifeShareLearnContext = lifeShareLearnContext;
-        }
+
         // GET: TeacherAdmin/L
         //動作簡述：回傳老師基本資訊
         [HttpGet]
