@@ -2,7 +2,7 @@
 
 namespace FinalGroupMVCPrj.Models.ViewModels
 {
-    public class Class
+    public class TeacherBasic
     {
         [Display(Name = "名字")]
         public string? TeacherName { get; set; }

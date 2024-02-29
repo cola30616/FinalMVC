@@ -1,0 +1,262 @@
+﻿@{
+    ViewData["Title"] = "TRelatedPic";
+    Layout = "~/Views/Shared/_LayoutTeacherAdmin.cshtml";
+}
+<style>
+    * {
+        padding: 0;
+        margin: 0;
+    }
+
+    /*	general	*/
+
+    section {
+        padding: 50px 0;
+    }
+
+    /*	gallery */
+
+    .gallery-title {
+        font-size: 36px;
+        color: #3F6184;
+        text-align: center;
+        font-weight: 500;
+        margin-bottom: 70px;
+    }
+
+    .filter-button {
+        font-size: 18px;
+        border: 2px solid #3F6184;
+        padding: 5px 10px;
+        text-align: center;
+        color: #3F6184;
+        margin-bottom: 30px;
+        background: transparent;
+    }
+
+        .filter-button:hover,
+        .filter-button:focus,
+        .filter-button.active {
+            color: #ffffff;
+            background-color: #3F6184;
+            outline: none;
+        }
+
+    .gallery_product {
+        margin: 0px;
+        padding: 0;
+        position: relative;
+    }
+
+        .gallery_product .img-info {
+            position: absolute;
+            background: rgba(0,0,0,0.5);
+            left: 0;
+            right: 0;
+            bottom: 0;
+            padding: 20px;
+            overflow: hidden;
+            color: #fff;
+            top: 0;
+            display: none;
+            -webkit-transition: 2s;
+            transition: 2s;
+        }
+
+        .gallery_product:hover .img-info {
+            display: block;
+            -webkit-transition: 2s;
+            transition: 2s;
+        }
+
+    /*	end gallery */
+</style>
+<link href="//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+<script src="//netdna.bootstrapcdn.com/bootstrap/3.0.0/js/bootstrap.min.js"></script>
+<script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
+<!------ Include the above in your HEAD tag ---------->
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.2.5/jquery.fancybox.min.css" />
+<link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet">
+<!-- html畫面start -->
+<div class="container-fluid">
+    <div class="row">
+        <!-- 新增圖片的按鈕 -->
+        <div class="text-center">
+            <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">新增圖片</button>
+        </div>
+
+        <div class="gallery col-lg-12 col-md-12 col-sm-12 col-xs-12">
+            <h1 class="gallery-title">h1</h1>
+        </div>
+
+        <div align="center">
+            <button class="filter-button" data-filter="all">All</button>
+            <button class="filter-button" data-filter="category1">Designing</button>
+            <button class="filter-button" data-filter="category2">Development</button>
+            <button class="filter-button" data-filter="category3">Graphics</button>
+        </div>
+
+        <br />
+
+        <div class="gallery_product col-sm-3 col-xs-6 filter category1">
+            <a class="fancybox" rel="ligthbox" href="https://picsum.photos/400/250?image=122">
+                <img class="img-responsive" alt="" src="https://picsum.photos/400/250?image=122" />
+                <div class='img-info'>
+                    <h4>Image Title 1</h4>
+                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+                </div>
+            </a>
+        </div>
+
+        <div class="gallery_product col-sm-3 col-xs-6 filter category2">
+            <a class="fancybox" rel="ligthbox" href="https://picsum.photos/400/250?image=526">
+                <img class="img-responsive" alt="" src="https://picsum.photos/400/250?image=526" />
+                <div class='img-info'>
+                    <h4>Image Title 2</h4>
+                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+                </div>
+            </a>
+        </div>
+
+        <div class="gallery_product col-sm-3 col-xs-6 filter category3">
+            <a class="fancybox" rel="ligthbox" href="https://picsum.photos/400/250?image=626">
+                <img class="img-responsive" alt="" src="https://picsum.photos/400/250?image=626" />
+                <div class='img-info'>
+                    <h4>Image Title 3</h4>
+                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+                </div>
+            </a>
+        </div>
+
+        <div class="gallery_product col-sm-3 col-xs-6 filter category1">
+            <a class="fancybox" rel="ligthbox" href="https://picsum.photos/400/250?image=626">
+                <img class="img-responsive" alt="" src="https://picsum.photos/400/250?image=626" />
+                <div class='img-info'>
+                    <h4>Image Title 4</h4>
+                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+                </div>
+            </a>
+        </div>
+
+        <div class="gallery_product col-sm-3 col-xs-6 filter category2">
+            <a class="fancybox" rel="ligthbox" href="https://picsum.photos/400/250?image=486">
+                <img class="img-responsive" alt="" src="https://picsum.photos/400/250?image=486" />
+                <div class='img-info'>
+                    <h4>Image Title 5</h4>
+                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+                </div>
+            </a>
+        </div>
+
+        <div class="gallery_product col-sm-3 col-xs-6 filter category3">
+            <a class="fancybox" rel="ligthbox" href="https://picsum.photos/400/250?image=846">
+                <img class="img-responsive" alt="" src="https://picsum.photos/400/250?image=846" />
+                <div class='img-info'>
+                    <h4>Image Title 6</h4>
+                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+                </div>
+            </a>
+        </div>
+
+        <div class="gallery_product col-sm-3 col-xs-6 filter category1">
+            <a class="fancybox" rel="ligthbox" href="https://picsum.photos/400/250?image=1066">
+                <img class="img-responsive" alt="" src="https://picsum.photos/400/250?image=1066" />
+                <div class='img-info'>
+                    <h4>Image Title 7</h4>
+                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+                </div>
+            </a>
+        </div>
+
+        <div class="gallery_product col-sm-3 col-xs-6 filter category2">
+            <a class="fancybox" rel="ligthbox" href="https://picsum.photos/400/250?image=506">
+                <img class="img-responsive" alt="" src="https://picsum.photos/400/250?image=506" />
+                <div class='img-info'>
+                    <h4>Image Title 8</h4>
+                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+                </div>
+            </a>
+        </div>
+
+        <div class="gallery_product col-sm-3 col-xs-6 filter category3">
+            <a class="fancybox" rel="ligthbox" href="https://picsum.photos/400/250?image=1026">
+                <img class="img-responsive" alt="" src="https://picsum.photos/400/250?image=1026" />
+                <div class='img-info'>
+                    <h4>Image Title 9</h4>
+                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+                </div>
+            </a>
+        </div>
+
+        <div class="gallery_product col-sm-3 col-xs-6 filter category1">
+            <a class="fancybox" rel="ligthbox" href="https://picsum.photos/400/250?image=1077">
+                <img class="img-responsive" alt="" src="https://picsum.photos/400/250?image=1077" />
+                <div class='img-info'>
+                    <h4>Image Title 10</h4>
+                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+                </div>
+            </a>
+        </div>
+
+        <div class="gallery_product col-sm-3 col-xs-6 filter category2">
+            <a class="fancybox" rel="ligthbox" href="https://picsum.photos/400/250?image=102">
+                <img class="img-responsive" alt="" src="https://picsum.photos/400/250?image=102" />
+                <div class='img-info'>
+                    <h4>Image Title 11</h4>
+                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+                </div>
+            </a>
+        </div>
+
+        <div class="gallery_product col-sm-3 col-xs-6 filter category3">
+            <a class="fancybox" rel="ligthbox" href="https://picsum.photos/400/250?image=106">
+                <img class="img-responsive" alt="" src="https://picsum.photos/400/250?image=106" />
+                <div class='img-info'>
+                    <h4>Image Title 12</h4>
+                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+                </div>
+            </a>
+        </div>
+
+    </div>
+</div>
+<!-- html畫面end -->
+<!-- 新增圖片的modal彈跳視窗-->
+<partial name="T_CreateTrPicPartial" model="new TTeacher()"></partial>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.2.5/jquery.fancybox.min.js"></script>
+
+<script>
+    /*	gallery */
+    $(document).ready(function () {
+
+        $(".filter-button").click(function () {
+            var value = $(this).attr('data-filter');
+
+            if (value == "all") {
+                $('.filter').show('1000');
+            }
+            else {
+                $(".filter").not('.' + value).hide('3000');
+                $('.filter').filter('.' + value).show('3000');
+
+            }
+
+            if ($(".filter-button").removeClass("active")) {
+                $(this).removeClass("active");
+            }
+            $(this).addClass("active");
+        });
+    });
+    /*	end gallery */
+
+    $(document).ready(function () {
+        $(".fancybox").fancybox({
+            openEffect: "none",
+            closeEffect: "none"
+        });
+    });
+
+</script>
+

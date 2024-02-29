@@ -23,16 +23,15 @@ namespace FinalGroupMVCPrj.Controllers
             return View();
         }
         //■ ==========================     東霖作業區      ==========================■
-
-        // GET: TeacherAdmin/L
+        // GET: TeacherAdmin/
         //動作簡述：回傳老師基本資訊
         [HttpGet]
-        public IActionResult BasicInfo( )
+        public IActionResult TBasicInfo( )
         {
             //取得所有db老師資料放到ViewModel
-            IEnumerable<Class> vBasicVMCollection = new List<Class>(
+            IEnumerable<TeacherBasic> vBasicVMCollection = new List<TeacherBasic>(
                     _lifeShareLearnContext.TTeachers
-                    .Select(tr =>new Class {
+                    .Select(tr =>new TeacherBasic {
                         TeacherName = tr.FTeacherName,
                         TeacherProfilePic = tr.FTeacherProfilePic,
                         Introduction = tr.FIntroduction,
@@ -40,12 +39,12 @@ namespace FinalGroupMVCPrj.Controllers
                         Note = tr.FNote,
                     })
                 );
-            return View("Basicinfo", vBasicVMCollection);
+            return View("TBasicinfo", vBasicVMCollection);
         }
         // GET: TeacherAdmin/
         //動作簡述：回傳老師相關圖片
         [HttpGet]
-        public IActionResult RelatedPic()
+        public IActionResult TRelatedPic()
         {
             return View();
         }
