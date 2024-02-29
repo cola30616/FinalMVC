@@ -98,6 +98,10 @@ public partial class TLessonCourse
     [StringLength(50)]
     public string FStatusNote { get; set; }
 
+    [ForeignKey("FTeacherId")]
+    [InverseProperty("TLessonCourses")]
+    public virtual TTeacher FTeacher { get; set; }
+
     [InverseProperty("FLessonCourse")]
     public virtual ICollection<TMemberFavCourse> TMemberFavCourses { get; set; } = new List<TMemberFavCourse>();
 

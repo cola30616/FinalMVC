@@ -88,8 +88,8 @@ public partial class LifeShareLearnContext : DbContext
     public virtual DbSet<TVideoUploadUrl> TVideoUploadUrls { get; set; }
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-//#warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see http://go.microsoft.com/fwlink/?LinkId=723263.
-        => optionsBuilder.UseSqlServer("Data Source=.;Initial Catalog=LifeShareLearn;Integrated Security=True;TrustServerCertificate=True;");
+        //#warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see http://go.microsoft.com/fwlink/?LinkId=723263.
+        => optionsBuilder.UseSqlServer("Data Source=.;Initial Catalog=LifeShareLearn;Integrated Security=True;Encrypt=False;TrustServerCertificate=True");
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
@@ -162,6 +162,13 @@ public partial class LifeShareLearnContext : DbContext
             entity.HasOne(d => d.FCoursework).WithMany(p => p.TCourseworkFiles)
                 .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("FK_tCourseworkFile_tCoursework");
+        });
+
+        modelBuilder.Entity<TLessonCourse>(entity =>
+        {
+            entity.HasOne(d => d.FTeacher).WithMany(p => p.TLessonCourses)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("FK_tLessonCourse_tTeacher");
         });
 
         modelBuilder.Entity<TLessonEvaluation>(entity =>

@@ -49,6 +49,9 @@ public partial class TTeacher
     public virtual ICollection<TChatRoomTeacher> TChatRoomTeachers { get; set; } = new List<TChatRoomTeacher>();
 
     [InverseProperty("FTeacher")]
+    public virtual ICollection<TLessonCourse> TLessonCourses { get; set; } = new List<TLessonCourse>();
+
+    [InverseProperty("FTeacher")]
     public virtual ICollection<TMemberFavTeacher> TMemberFavTeachers { get; set; } = new List<TMemberFavTeacher>();
 
     [InverseProperty("FTeacher")]
