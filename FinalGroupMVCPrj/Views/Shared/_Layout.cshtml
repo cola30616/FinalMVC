@@ -47,7 +47,8 @@
     <link href="~/css/site.css" rel="stylesheet" />
     <!--調整前台右上角下拉選單和後台樣式相近-->
     <link href="~/css/adjustdropdown.css" rel="stylesheet" />
-    
+
+    @await RenderSectionAsync("Style", required: false)
 </head>
 
 <body class="theme-color-1">
