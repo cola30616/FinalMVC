@@ -4,15 +4,32 @@
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+                <h5 class="modal-title" id="exampleModalLabel">上傳圖片</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-                ...
+                <div style=" display:flex ;">
+                    <div style="text-align: left; " >
+                        <select class="form-select" style="width:150px"><option value="" disabled selected hidden>選擇分類</option></select>
+                    </div>
+                    <div class="input-group mb-3">
+                        <input type="text" class="form-control" style="width:150px" placeholder="" aria-label="Recipient's username" aria-describedby="button-addon2">
+                        <button class="btn btn-outline-secondary" type="button" id="button-addon2">建立分類</button>
+                    </div>
+                </div>
+
+                <div style="text-align: center;">
+                    將你要上傳的圖片拖曳到這裡
+                </div>
+                <div style="text-align: center;">
+                    <button type="button" class="btn btn-primary">選取圖片</button>
+                </div>
+
             </div>
+
             <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                <button type="button" class="btn btn-primary">Save changes</button>
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">關閉</button>
+                
             </div>
         </div>
     </div>
