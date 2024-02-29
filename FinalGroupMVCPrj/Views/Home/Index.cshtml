@@ -1,70 +1,53 @@
-﻿
- <!-- Home-area start-->
+﻿@using FinalGroupMVCPrj.Models.ViewModel
+@model IEnumerable<LessonCourseVM>
+
+<!-- Home-area start-->
 <section class="hero-banner hero-banner_v1 header-next pb-60">
     <div class="container">
         <div class="row align-items-center gx-xl-5">
             <div class="col-lg-6">
                 <div class="banner-content mb-40">
                     <h1 class="title mb-30" data-aos="fade-up" data-aos-delay="100">
-                        Upgrade Your Skills With <span>Oppida</span>
-                        <img class="title-shape lazyload" src="/Images/placeholder.png" data-src="/Images/shape/title-shape.png" alt="Shape">
+                        能力想更上層樓就要
+                        <span class="d-block text-center">來學樂</span>
+                        <img class="title-shape lazyload" src="/images/placeholder.png" data-src="/images/shape/title-shape.png" alt="Shape">
                     </h1>
-                    <p class="text" data-aos="fade-up" data-aos-delay="100">
-                        Welcome to Oppida, your online destination for high-quality
-                        education and professional development.
+                    <p class="text text-center" data-aos="fade-up" data-aos-delay="100">
+                        歡迎到來學樂，選擇全台最優質線下學習預約平台。
                     </p>
                     <div class="banner-filter-form mt-40" data-aos="fade-up" data-aos-delay="150">
                         <div class="form-wrapper border rounded-pill">
-                            <form>
-                                <div class="row align-items-center">
-                                    <div class="col-xl-4 col-lg-5 col-md-4 col-sm-6">
-                                        <div class="input-group">
-                                            <label for="search"><i class="fas fa-search"></i></label>
-                                            <input type="text" id="search" class="form-control" placeholder="Search course">
-                                            <div class="vr"></div>
-                                        </div>
-                                    </div>
-                                    <div class="col-xl-4 col-lg-5 col-md-4 col-sm-6">
-                                        <div class="input-group">
-                                            <label for="search"><i class="fas fa-th-large"></i></label>
-                                            <select class="niceselect">
-                                                <option data-display="Select Category">Select Category...</option>
-                                                <option value="1">Web Design</option>
-                                                <option value="2">UI Design</option>
-                                                <option value="3">UX Design</option>
-                                            </select>
-                                        </div>
-                                    </div>
-                                    <div class="col-xl-4 col-lg-2 col-md-4 col-sm-6">
+                            <div class="d-flex justify-content-center align-items-center ">
+                                <div class="col-xl-4 col-lg-2 col-md-4 col-sm-6">
                                         <button class="btn btn-lg btn-primary rounded-pill w-100" type="button" aria-label="Find Course">
-                                            <span>Find Course</span>
+                                            <span>來找課程</span>
                                             <i class="fal fa-search"></i>
                                         </button>
                                     </div>
                                 </div>
-                            </form>
+                            
                         </div>
                     </div>
                 </div>
             </div>
             <div class="col-lg-6" data-aos="fade-up">
                 <div class="banner-image mb-40">
-                    <img class="lazyload blur-up" src="/Images/placeholder.png" data-src="/Images/banner/hero-banner-1.png" alt="Banner Image">
+                    <img class="lazyload blur-up" src="/images/placeholder.png" data-src="/images/banner/hero-banner-1.png" alt="Banner Image">
                 </div>
             </div>
         </div>
     </div>
     <!-- Shapes -->
     <div class="shape">
-        <img class="shape-1 lazyload" src="/Images/placeholder.png" data-src="/Images/shape/shape-1.png" alt="Shape">
-        <img class="shape-2 lazyload" src="/Images/placeholder.png" data-src="/Images/shape/shape-2.png" alt="Shape">
-        <img class="shape-3 lazyload" src="/Images/placeholder.png" data-src="/Images/shape/shape-3.png" alt="Shape">
-        <img class="shape-4 lazyload" src="/Images/placeholder.png" data-src="/Images/shape/shape-4.png" alt="Shape">
-        <img class="shape-5 lazyload" src="/Images/placeholder.png" data-src="/Images/shape/shape-5.png" alt="Shape">
-        <img class="shape-6 lazyload" src="/Images/placeholder.png" data-src="/Images/shape/shape-6.png" alt="Shape">
-        <img class="shape-7 lazyload" src="/Images/placeholder.png" data-src="/Images/shape/shape-7.png" alt="Shape">
-        <img class="shape-8 lazyload" src="/Images/placeholder.png" data-src="/Images/shape/shape-8.png" alt="Shape">
-        <img class="shape-9 lazyload" src="/Images/placeholder.png" data-src="/Images/shape/shape-6.png" alt="Shape">
+        <img class="shape-1 lazyload" src="/images/placeholder.png" data-src="/images/shape/shape-1.png" alt="Shape">
+        <img class="shape-2 lazyload" src="/images/placeholder.png" data-src="/images/shape/shape-2.png" alt="Shape">
+        <img class="shape-3 lazyload" src="/images/placeholder.png" data-src="/images/shape/shape-3.png" alt="Shape">
+        <img class="shape-4 lazyload" src="/images/placeholder.png" data-src="/images/shape/shape-4.png" alt="Shape">
+        <img class="shape-5 lazyload" src="/images/placeholder.png" data-src="/images/shape/shape-5.png" alt="Shape">
+        <img class="shape-6 lazyload" src="/images/placeholder.png" data-src="/images/shape/shape-6.png" alt="Shape">
+        <img class="shape-7 lazyload" src="/images/placeholder.png" data-src="/images/shape/shape-7.png" alt="Shape">
+        <img class="shape-8 lazyload" src="/images/placeholder.png" data-src="/images/shape/shape-8.png" alt="Shape">
+        <img class="shape-9 lazyload" src="/images/placeholder.png" data-src="/images/shape/shape-6.png" alt="Shape">
     </div>
 </section>
 <!-- Home-area end -->
@@ -75,9 +58,8 @@
             <div class="col-12">
                 <div class="section-title title-center mb-50" data-aos="fade-up">
                     <h2 class="title mb-0">
-                        Explore Our Most Popular
-                        Course <span>Categories</span>
-                        <img class="title-shape lazyload" src="/Images/placeholder.png" data-src="/Images/shape/title-shape.png" alt="Shape">
+                        <span>探索現在最夯的領域</span>
+                        <img class="title-shape lazyload" src="/images/placeholder.png" data-src="/images/shape/title-shape.png" alt="Shape">
                     </h2>
                 </div>
             </div>
@@ -91,7 +73,7 @@
                                 </div>
                                 <h6 class="card-title lc-1 mb-0">
                                     <a href="courses.html" target="_self" title="Web UI Design">
-                                        Web UI Design
+                                        UI 設計
                                     </a>
                                 </h6>
                             </div>
@@ -103,7 +85,7 @@
                                 </div>
                                 <h6 class="card-title lc-1 mb-0">
                                     <a href="courses.html" target="_self" title="Web Development">
-                                        Web Development
+                                        網頁開發
                                     </a>
                                 </h6>
                             </div>
@@ -115,7 +97,7 @@
                                 </div>
                                 <h6 class="card-title lc-1 mb-0">
                                     <a href="courses.html" target="_self" title="App Development">
-                                        App Development
+                                        App 開發
                                     </a>
                                 </h6>
                             </div>
@@ -127,7 +109,7 @@
                                 </div>
                                 <h6 class="card-title lc-1 mb-0">
                                     <a href="courses.html" target="_self" title="Digital Marketing">
-                                        Digital Marketing
+                                        數位行銷
                                     </a>
                                 </h6>
                             </div>
@@ -139,7 +121,7 @@
                                 </div>
                                 <h6 class="card-title lc-1 mb-0">
                                     <a href="courses.html" target="_self" title="Graphics Design">
-                                        Graphics Design
+                                       美術設計
                                     </a>
                                 </h6>
                             </div>
@@ -151,7 +133,7 @@
                                 </div>
                                 <h6 class="card-title lc-1 mb-0">
                                     <a href="courses.html" target="_self" title="Self Development">
-                                        Self Development
+                                        目前熱門
                                     </a>
                                 </h6>
                             </div>
@@ -164,86 +146,85 @@
     </div>
     <!-- Shapes -->
     <div class="shape">
-        <img class="shape-1 lazyload" src="/Images/placeholder.png" data-src="/Images/shape/shape-3.png" alt="Shape">
-        <img class="shape-2 lazyload" src="/Images/placeholder.png" data-src="/Images/shape/shape-1.png" alt="Shape">
-        <img class="shape-3 lazyload" src="/Images/placeholder.png" data-src="/Images/shape/shape-6.png" alt="Shape">
-        <img class="shape-4 lazyload" src="/Images/placeholder.png" data-src="/Images/shape/shape-4.png" alt="Shape">
+        <img class="shape-1 lazyload" src="/images/placeholder.png" data-src="/images/shape/shape-3.png" alt="Shape">
+        <img class="shape-2 lazyload" src="/images/placeholder.png" data-src="/images/shape/shape-1.png" alt="Shape">
+        <img class="shape-3 lazyload" src="/images/placeholder.png" data-src="/images/shape/shape-6.png" alt="Shape">
+        <img class="shape-4 lazyload" src="/images/placeholder.png" data-src="/images/shape/shape-4.png" alt="Shape">
     </div>
 </section>
 <!-- Category-area end -->
-<!-- About-area start -->
-<section class="about-area about-area_v1 pt-100 pb-60 bg-primary-light">
+<!-- Counter-area start -->
+<div class="counter-area counter-area_v1 pt-100 pb-70 bg-img bg-cover" data-bg-image="/images/counter-bg.jpg">
+    <div class="overlay opacity-90 bg-primary"></div>
     <div class="container">
-        <div class="row align-items-center gx-xl-5">
-            <div class="col-lg-6" data-aos="fade-up">
-                <div class="image mb-40 img-left">
-                    <img class="lazyload blur-up" src="/Images/placeholder.png" data-src="/Images/about-1.png" alt="Image">
+        <div class="counter-inner">
+            <div class="row">
+                <div class="col-sm-6 col-lg-3 mb-30" data-aos="fade-up">
+                    <div class="card text-center bg-none">
+                        <div class="card-icon mx-auto mb-15">
+                            <img class="lazyload" src="/images/placeholder.png" data-src="/images/icon/counter-icon-1.png" alt="Image">
+                        </div>
+                        <div class="card-content">
+                            <span class="h3 font-medium color-white mb-2"><span class="counter">500</span>+</span>
+                            <p class="card-text color-white lh-1">好評不斷</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-6 col-lg-3 mb-30" data-aos="fade-up">
+                    <div class="card text-center bg-none">
+                        <div class="card-icon mx-auto mb-15">
+                            <img class="lazyload" src="/images/placeholder.png" data-src="/images/icon/counter-icon-2.png" alt="Image">
+                        </div>
+                        <div class="card-content">
+                            <span class="h3 font-medium color-white mb-2"><span class="counter">300</span>+</span>
+                            <p class="card-text color-white lh-1">優質課程</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-6 col-lg-3 mb-30" data-aos="fade-up">
+                    <div class="card text-center bg-none">
+                        <div class="card-icon mx-auto mb-15">
+                            <img class="lazyload" src="/images/placeholder.png" data-src="/images/icon/counter-icon-3.png" alt="Image">
+                        </div>
+                        <div class="card-content">
+                            <span class="h3 font-medium color-white mb-2"><span class="counter">240</span>+</span>
+                            <p class="card-text color-white lh-1">認證講師</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-6 col-lg-3 mb-30" data-aos="fade-up">
+                    <div class="card text-center bg-none">
+                        <div class="card-icon mx-auto mb-15">
+                            <img class="lazyload" src="/images/placeholder.png" data-src="/images/icon/counter-icon-4.png" alt="Image">
+                        </div>
+                        <div class="card-content">
+                            <span class="h3 font-medium color-white mb-2"><span class="counter">100</span>%</span>
+                            <p class="card-text color-white lh-1">值得信賴的平台</p>
+                        </div>
+                    </div>
                 </div>
             </div>
-            <div class="col-lg-6" data-aos="fade-up">
-                <div class="content-title pb-10">
-                    <h2 class="title mb-30">
-                        Transform Your Learning Experience <span>With Us</span>
-                        <img class="title-shape lazyload" src="/Images/placeholder.png" data-src="/Images/shape/title-shape.png" alt="Shape">
-                    </h2>
-                    <div class="content-text">
-                        <p>
-                            Lorem Ipsum is simply dummy text of the printing and typesetting lorem Ipsum has been the industrys standard dummy text ever since the when an unknown printer took a galley of type and dummy text Ipsum has.
-                        </p>
-                    </div>
-                    <div class="info-list mt-40">
-                        <div class="card bg-none mb-30">
-                            <div class="card-icon radius-md">
-                                <i class="ico-quality"></i>
-                            </div>
-                            <div class="card-content">
-                                <h6 class="card-title mb-2">Course Complete Certificate</h6>
-                                <p class="card-text">Completed course get certificate </p>
-                            </div>
-                        </div>
-                        <div class="card bg-none mb-30">
-                            <div class="card-icon radius-md">
-                                <i class="ico-video-screen"></i>
-                            </div>
-                            <div class="card-content">
-                                <h6 class="card-title mb-2">Quizzes, Videos, Code & More</h6>
-                                <p class="card-text">All materials quizzes,video & more</p>
-                            </div>
-                        </div>
-                        <div class="card bg-none mb-30">
-                            <div class="card-icon radius-md">
-                                <i class="ico-persons"></i>
-                            </div>
-                            <div class="card-content">
-                                <h6 class="card-title mb-2">Highly Qualified mentors</h6>
-                                <p class="card-text">All materials quizzes,video & more</p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+            <div class="arrows d-none d-lg-block">
+                <img class="arrow lazyload" src="/images/placeholder.png" data-src="/images/icon/line-arrow.png" alt="Image">
+                <img class="arrow lazyload" src="/images/placeholder.png" data-src="/images/icon/line-arrow.png" alt="Image">
+                <img class="arrow lazyload" src="/images/placeholder.png" data-src="/images/icon/line-arrow.png" alt="Image">
             </div>
         </div>
     </div>
-    <!-- Shapes -->
-    <div class="shape">
-        <img class="shape-1 lazyload" src="/Images/placeholder.png" data-src="/Images/shape/shape-1.png" alt="Shape">
-        <img class="shape-2 lazyload" src="/Images/placeholder.png" data-src="/Images/shape/shape-3.png" alt="Shape">
-        <img class="shape-3 lazyload" src="/Images/placeholder.png" data-src="/Images/shape/shape-4.png" alt="Shape">
-    </div>
-</section>
-<!-- About-area end -->
-<!-- Course-area start -->
+</div>
+<!-- Counter-area end -->
+<!-- Course-area start 熱門課程 -->
 <section class="course-area popular ptb-100">
     <div class="container">
         <div class="row">
             <div class="col-12">
                 <div class="section-title title-inline mb-50" data-aos="fade-up">
                     <h2 class="title">
-                        Most Popular <span>Course</span>
-                        <img class="title-shape lazyload" src="/Images/placeholder.png" data-src="/Images/shape/title-shape.png" alt="Shape">
+                         <span>近期熱門課程</span>
+                        <img class="title-shape lazyload" src="/images/placeholder.png" data-src="/images/shape/title-shape.png" alt="Shape">
                     </h2>
                     <div class="cta-btn">
-                        <a href="courses.html" class="btn btn-lg btn-primary rounded-pill" title="See All Course" target="_self">See All Course</a>
+                        <a href="courses.html" class="btn btn-lg btn-primary rounded-pill" title="See All Course" target="_self">所有課程</a>
                     </div>
                 </div>
             </div>
@@ -252,157 +233,47 @@
                 <div class="swiper course-slider" id="course-slider-1" data-slides-per-view="4" data-swiper-loop="true" data-aos="fade-up">
                     <!-- Additional required wrapper -->
                     <div class="swiper-wrapper">
-                        <!-- Slides -->
+                        <!-- 這邊是slide 之後要寫Razor 語法新增 -->
                         <div class="swiper-slide">
                             <div class="course-default border radius-md mb-30">
                                 <figure class="course-img">
                                     <a href="course-details.html" title="Image" target="_self" class="lazy-container ratio ratio-2-3">
-                                        <img class="lazyload" src="/Images/placeholder.png" data-src="/Images/course/pro-1.jpg" alt="course">
+                                        <img class="lazyload" src="/images/placeholder.png" data-src="/images/course/pro-1.jpg" alt="course">
                                     </a>
                                     <div class="hover-show">
-                                        <a href="course-details.html" class="btn btn-md btn-primary rounded-pill" title="Enroll Now" target="_self">Enroll Now</a>
+                                        <a href="course-details.html" class="btn btn-md btn-primary rounded-pill" title="Enroll Now" target="_self">立即預約</a>
                                     </div>
                                 </figure>
                                 <div class="course-details">
                                     <div class="p-3">
-                                        <a href="course-details.html" target="_self" title="Design" class="tag font-sm color-primary mb-1">Design</a>
+                                        <a href="course-details.html" target="_self" title="Design" class="tag font-sm color-primary mb-1">課程分類</a>
                                         <h6 class="course-title lc-2 mb-0">
                                             <a href="course-details.html" target="_self" title="Link">
-                                                The Complete 2023 Web Development Bootcamp
+                                                課程名稱
                                             </a>
                                         </h6>
                                         <div class="authors mt-15">
                                             <div class="author">
-                                                <img class="lazyload blur-up radius-sm" src="/Images/placeholder.png" data-src="/Images/avatar-1.jpg" alt="Image">
+                                                <img class="lazyload blur-up radius-sm" src="/images/placeholder.png" data-src="/images/avatar-1.jpg" alt="Image">
                                                 <span class="font-sm">
-                                                    <a href="course-details.html" target="_self" title="James Hobert">
-                                                        James Hobert
+                                                    <a href="course-details.html" target="_self" title="">
+                                                       老師名稱
                                                     </a>
                                                 </span>
                                             </div>
-                                            <span class="font-sm icon-start"><i class="fas fa-clock"></i>06h 00m</span>
+                                            <span class="font-sm icon-start"><i class="fas fa-clock"></i>課程時數</span>
                                         </div>
                                     </div>
                                     <div class="course-bottom-info px-3 py-2">
-                                        <span class="font-sm"><i class="fas fa-usd-circle"></i>$13.99</span>
-                                        <span class="font-sm"><i class="fas fa-book-alt"></i>21 Lessons</span>
+                                        <span class="font-sm"><i class="fas fa-usd-circle"></i>價格</span>
+                                        <span class="font-sm"><i class="fas fa-book-alt"></i>課程堂數</span>
                                     </div>
                                 </div>
                             </div>
                         </div>
-                        <div class="swiper-slide">
-                            <div class="course-default border radius-md mb-30">
-                                <figure class="course-img">
-                                    <a href="course-details.html" title="Image" target="_self" class="lazy-container ratio ratio-2-3">
-                                        <img class="lazyload" src="/Images/placeholder.png" data-src="/Images/course/pro-2.jpg" alt="course">
-                                    </a>
-                                    <div class="hover-show">
-                                        <a href="course-details.html" class="btn btn-md btn-primary rounded-pill" title="Enroll Now" target="_self">Enroll Now</a>
-                                    </div>
-                                </figure>
-                                <div class="course-details">
-                                    <div class="p-3">
-                                        <a href="course-details.html" target="_self" title="Development" class="tag font-sm color-primary mb-1">Development</a>
-                                        <h6 class="course-title lc-2 mb-0">
-                                            <a href="course-details.html" target="_self" title="Link">
-                                                100 Days of Code: The Complete Python Pro Bootcamp for 2023
-                                            </a>
-                                        </h6>
-                                        <div class="authors mt-15">
-                                            <div class="author">
-                                                <img class="lazyload blur-up radius-sm" src="/Images/placeholder.png" data-src="/Images/avatar-2.jpg" alt="Image">
-                                                <span class="font-sm">
-                                                    <a href="course-details.html" target="_self" title="Dr. Angela">
-                                                        Dr. Angela
-                                                    </a>
-                                                </span>
-                                            </div>
-                                            <span class="font-sm icon-start"><i class="fas fa-clock"></i>06h 00m</span>
-                                        </div>
-                                    </div>
-                                    <div class="course-bottom-info px-3 py-2">
-                                        <span class="font-sm"><i class="fas fa-usd-circle"></i>$12.99</span>
-                                        <span class="font-sm"><i class="fas fa-book-alt"></i>11 Lessons</span>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="swiper-slide">
-                            <div class="course-default border radius-md mb-30">
-                                <figure class="course-img">
-                                    <a href="course-details.html" title="Image" target="_self" class="lazy-container ratio ratio-2-3">
-                                        <img class="lazyload" src="/Images/placeholder.png" data-src="/Images/course/pro-3.jpg" alt="course">
-                                    </a>
-                                    <div class="hover-show">
-                                        <a href="course-details.html" class="btn btn-md btn-primary rounded-pill" title="Enroll Now" target="_self">Enroll Now</a>
-                                    </div>
-                                </figure>
-                                <div class="course-details">
-                                    <div class="p-3">
-                                        <a href="course-details.html" target="_self" title="Marketing" class="tag font-sm color-primary mb-1">Marketing</a>
-                                        <h6 class="course-title lc-2 mb-0">
-                                            <a href="course-details.html" target="_self" title="Link">
-                                                [NEW] Ultimate AWS Certified Cloud Practitioner - 2023
-                                            </a>
-                                        </h6>
-                                        <div class="authors mt-15">
-                                            <div class="author">
-                                                <img class="lazyload blur-up radius-sm" src="/Images/placeholder.png" data-src="/Images/avatar-3.jpg" alt="Image">
-                                                <span class="font-sm">
-                                                    <a href="course-details.html" target="_self" title="Kathy Jone">
-                                                        Kathy Jone
-                                                    </a>
-                                                </span>
-                                            </div>
-                                            <span class="font-sm icon-start"><i class="fas fa-clock"></i>06h 00m</span>
-                                        </div>
-                                    </div>
-                                    <div class="course-bottom-info px-3 py-2">
-                                        <span class="font-sm"><i class="fas fa-usd-circle"></i>$21.00</span>
-                                        <span class="font-sm"><i class="fas fa-book-alt"></i>31 Lessons</span>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="swiper-slide">
-                            <div class="course-default border radius-md mb-30">
-                                <figure class="course-img">
-                                    <a href="course-details.html" title="Image" target="_self" class="lazy-container ratio ratio-2-3">
-                                        <img class="lazyload" src="/Images/placeholder.png" data-src="/Images/course/pro-4.jpg" alt="course">
-                                    </a>
-                                    <div class="hover-show">
-                                        <a href="course-details.html" class="btn btn-md btn-primary rounded-pill" title="Enroll Now" target="_self">Enroll Now</a>
-                                    </div>
-                                </figure>
-                                <div class="course-details">
-                                    <div class="p-3">
-                                        <a href="course-details.html" target="_self" title="Business" class="tag font-sm color-primary mb-1">Business</a>
-                                        <h6 class="course-title lc-2 mb-0">
-                                            <a href="course-details.html" target="_self" title="Link">
-                                                React - The Complete Guide (incl Hooks, React Router, Redux)
-                                            </a>
-                                        </h6>
-                                        <div class="authors mt-15">
-                                            <div class="author">
-                                                <img class="lazyload blur-up radius-sm" src="/Images/placeholder.png" data-src="/Images/avatar-4.jpg" alt="Image">
-                                                <span class="font-sm">
-                                                    <a href="course-details.html" target="_self" title="Kyle Pew.">
-                                                        Kyle Pew.
-                                                    </a>
-                                                </span>
-                                            </div>
-                                            <span class="font-sm icon-start"><i class="fas fa-clock"></i>06h 00m</span>
-                                        </div>
-                                    </div>
-                                    <div class="course-bottom-info px-3 py-2">
-                                        <span class="font-sm"><i class="fas fa-usd-circle"></i>$09.00</span>
-                                        <span class="font-sm"><i class="fas fa-book-alt"></i>13 Lessons</span>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
+                        
                     </div>
-                    <!-- If we need pagination -->
+                    <!-- 分頁用 -->
                     <div class="swiper-pagination position-static" id="course-slider-1-pagination"></div>
                 </div>
             </div>
@@ -410,96 +281,37 @@
     </div>
     <!-- Shapes -->
     <div class="shape">
-        <img class="shape-1 lazyload" src="/Images/placeholder.png" data-src="/Images/shape/shape-4.png" alt="Shape">
-        <img class="shape-2 lazyload" src="/Images/placeholder.png" data-src="/Images/shape/shape-1.png" alt="Shape">
-        <img class="shape-3 lazyload" src="/Images/placeholder.png" data-src="/Images/shape/shape-3.png" alt="Shape">
-        <img class="shape-4 lazyload" src="/Images/placeholder.png" data-src="/Images/shape/shape-6.png" alt="Shape">
+        <img class="shape-1 lazyload" src="/images/placeholder.png" data-src="/images/shape/shape-4.png" alt="Shape">
+        <img class="shape-2 lazyload" src="/images/placeholder.png" data-src="/images/shape/shape-1.png" alt="Shape">
+        <img class="shape-3 lazyload" src="/images/placeholder.png" data-src="/images/shape/shape-3.png" alt="Shape">
+        <img class="shape-4 lazyload" src="/images/placeholder.png" data-src="/images/shape/shape-6.png" alt="Shape">
     </div>
 </section>
 <!-- Course-area end -->
-<!-- Counter-area start -->
-<div class="counter-area counter-area_v1 pt-100 pb-70 bg-img bg-cover" data-bg-image="/Images/counter-bg.jpg">
-    <div class="overlay opacity-90 bg-primary"></div>
-    <div class="container">
-        <div class="counter-inner">
-            <div class="row">
-                <div class="col-sm-6 col-lg-3 mb-30" data-aos="fade-up">
-                    <div class="card text-center bg-none">
-                        <div class="card-icon mx-auto mb-15">
-                            <img class="lazyload" src="/Images/placeholder.png" data-src="/Images/icon/counter-icon-1.png" alt="Image">
-                        </div>
-                        <div class="card-content">
-                            <span class="h3 font-medium color-white mb-2"><span class="counter">500</span>+</span>
-                            <p class="card-text color-white lh-1">Satisfied Students</p>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-sm-6 col-lg-3 mb-30" data-aos="fade-up">
-                    <div class="card text-center bg-none">
-                        <div class="card-icon mx-auto mb-15">
-                            <img class="lazyload" src="/Images/placeholder.png" data-src="/Images/icon/counter-icon-2.png" alt="Image">
-                        </div>
-                        <div class="card-content">
-                            <span class="h3 font-medium color-white mb-2"><span class="counter">300</span>+</span>
-                            <p class="card-text color-white lh-1">Online Courses</p>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-sm-6 col-lg-3 mb-30" data-aos="fade-up">
-                    <div class="card text-center bg-none">
-                        <div class="card-icon mx-auto mb-15">
-                            <img class="lazyload" src="/Images/placeholder.png" data-src="/Images/icon/counter-icon-3.png" alt="Image">
-                        </div>
-                        <div class="card-content">
-                            <span class="h3 font-medium color-white mb-2"><span class="counter">240</span>+</span>
-                            <p class="card-text color-white lh-1">Verified mentor</p>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-sm-6 col-lg-3 mb-30" data-aos="fade-up">
-                    <div class="card text-center bg-none">
-                        <div class="card-icon mx-auto mb-15">
-                            <img class="lazyload" src="/Images/placeholder.png" data-src="/Images/icon/counter-icon-4.png" alt="Image">
-                        </div>
-                        <div class="card-content">
-                            <span class="h3 font-medium color-white mb-2"><span class="counter">100</span>%</span>
-                            <p class="card-text color-white lh-1">Secure & Trusted Place</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="arrows d-none d-lg-block">
-                <img class="arrow lazyload" src="/Images/placeholder.png" data-src="/Images/icon/line-arrow.png" alt="Image">
-                <img class="arrow lazyload" src="/Images/placeholder.png" data-src="/Images/icon/line-arrow.png" alt="Image">
-                <img class="arrow lazyload" src="/Images/placeholder.png" data-src="/Images/icon/line-arrow.png" alt="Image">
-            </div>
-        </div>
-    </div>
-</div>
-<!-- Counter-area end -->
-<!-- Course-area start -->
+
+<!-- Course-area start 最新課程 -->
 <section class="course-area latest ptb-100">
     <div class="container">
         <div class="row">
             <div class="col-12">
                 <div class="section-title title-inline mb-30" data-aos="fade-up">
                     <h2 class="title mb-20">
-                        Our Latest <span>Courses</span>
-                        <img class="title-shape lazyload" src="/Images/placeholder.png" data-src="/Images/shape/title-shape.png" alt="Shape">
+                         <span>全新課程推薦</span>
+                        <img class="title-shape lazyload" src="/images/placeholder.png" data-src="/images/shape/title-shape.png" alt="Shape">
                     </h2>
                     <div class="tabs-navigation mb-20">
                         <ul class="nav nav-tabs" data-hover="fancyHover">
                             <li class="nav-item active">
-                                <button class="nav-link hover-effect btn-md rounded-pill active" data-bs-toggle="tab" data-bs-target="#tab1" type="button">Design</button>
+                                <button class="nav-link hover-effect btn-md rounded-pill active" data-bs-toggle="tab" data-bs-target="#tab1" type="button">科目分類1</button>
                             </li>
                             <li class="nav-item">
-                                <button class="nav-link hover-effect btn-md rounded-pill" data-bs-toggle="tab" data-bs-target="#tab2" type="button">Marketing</button>
+                                <button class="nav-link hover-effect btn-md rounded-pill" data-bs-toggle="tab" data-bs-target="#tab2" type="button">科目分類2</button>
                             </li>
                             <li class="nav-item">
-                                <button class="nav-link hover-effect btn-md rounded-pill" data-bs-toggle="tab" data-bs-target="#tab3" type="button">Development</button>
+                                <button class="nav-link hover-effect btn-md rounded-pill" data-bs-toggle="tab" data-bs-target="#tab3" type="button">科目分類3</button>
                             </li>
                             <li class="nav-item">
-                                <button class="nav-link hover-effect btn-md rounded-pill" data-bs-toggle="tab" data-bs-target="#tab4" type="button">Music</button>
+                                <button class="nav-link hover-effect btn-md rounded-pill" data-bs-toggle="tab" data-bs-target="#tab4" type="button"> 科目分類4</button>
                             </li>
                         </ul>
                     </div>
@@ -507,807 +319,94 @@
             </div>
             <div class="col-12">
                 <div class="tab-content" data-aos="fade-up">
+                    <!--依照tab 去做分類 用Razor 語法做分類 -->
                     <div class="tab-pane slide show active" id="tab1">
                         <div class="row">
-                            <div class="col-xl-3 col-lg-4 col-sm-6">
-                                <div class="course-default border radius-md mb-30">
-                                    <figure class="course-img">
-                                        <a href="course-details.html" title="Image" target="_self" class="lazy-container ratio ratio-2-3">
-                                            <img class="lazyload" src="/Images/placeholder.png" data-src="/Images/course/pro-5.jpg" alt="course">
-                                        </a>
-                                        <div class="hover-show">
-                                            <a href="course-details.html" class="btn btn-md btn-primary rounded-pill" title="Enroll Now" target="_self">Enroll Now</a>
-                                        </div>
-                                    </figure>
-                                    <div class="course-details">
-                                        <div class="p-3">
-                                            <a href="course-details.html" target="_self" title="Design" class="tag font-sm color-primary mb-1">Design</a>
-                                            <h6 class="course-title lc-2 mb-0">
-                                                <a href="course-details.html" target="_self" title="Link">
-                                                    Photoshop Master Course: From Beginner to Photoshop Pro
-                                                </a>
-                                            </h6>
-                                            <div class="authors mt-15">
-                                                <div class="author">
-                                                    <img class="lazyload blur-up radius-sm" src="/Images/placeholder.png" data-src="/Images/avatar-1.jpg" alt="Image">
-                                                    <span class="font-sm">
-                                                        <a href="course-details.html" target="_self" title="James Hobert">
-                                                            James Hobert
-                                                        </a>
-                                                    </span>
-                                                </div>
-                                                <span class="font-sm icon-start"><i class="fas fa-clock"></i>06h 00m</span>
+                            <!-- 這邊是課程的細節 用Razor 語法-->
+                            @foreach(var course in Model)
+                            {
+                                <div class="col-xl-3 col-lg-4 col-sm-6">
+                                    <div class="course-default border radius-md mb-30">
+                                        <figure class="course-img">
+                                            <a href="course-details.html" title="Image" target="_self" class="lazy-container ratio ratio-2-3">
+                                                <img class="lazyload" src="/images/placeholder.png" data-src="/images/course/pro-5.jpg" alt="course">
+                                            </a>
+                                            <div class="hover-show">
+                                                <a href="course-details.html" class="btn btn-md btn-primary rounded-pill" title="Enroll Now" target="_self">前往課程</a>
                                             </div>
-                                        </div>
-                                        <div class="course-bottom-info px-3 py-2">
-                                            <span class="font-sm"><i class="fas fa-usd-circle"></i>$13.99</span>
-                                            <span class="font-sm"><i class="fas fa-book-alt"></i>11 Lessons</span>
+                                        </figure>
+                                        <div class="course-details">
+                                            <div class="p-3">
+                                                <a href="course-details.html" target="_self" title="Design" class="tag font-sm color-primary mb-1">@course.subjectName</a>
+                                                <h6 class="course-title lc-2 mb-0">
+                                                    <a href="course-details.html" target="_self" title="Link">
+                                                        @course.lessonCourse.FName
+                                                    </a>
+                                                </h6>
+                                                <div class="authors mt-15">
+                                                    <div class="author">
+                                                        <img class="lazyload blur-up radius-sm" src="/images/placeholder.png" data-src="/images/avatar-1.jpg" alt="Image">
+                                                        <span class="font-sm">
+                                                            <a href="course-details.html" target="_self" title="James Hobert">
+                                                                @course.teacherName
+                                                            </a>
+                                                        </span>
+                                                    </div>
+                                                    <!--課程總小時數考慮新增嗎?-->
+                                                    @* <span class="font-sm icon-start"><i class="fas fa-clock"></i>06h 00m</span> *@
+                                                </div>
+                                            </div>
+                                            <div class="course-bottom-info px-3 py-2">
+                                                <span class="font-sm"><i class="fas fa-usd-circle"></i>NT @((decimal)Math.Floor((double)course.lessonCourse.FPrice))</span>
+                                                <!--這個堂數有考慮新增嗎-->
+                                                @* <span class="font-sm"><i class="fas fa-book-alt"></i>11 Lessons</span> *@
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
-                            </div>
-                            <div class="col-xl-3 col-lg-4 col-sm-6">
-                                <div class="course-default border radius-md mb-30">
-                                    <figure class="course-img">
-                                        <a href="course-details.html" title="Image" target="_self" class="lazy-container ratio ratio-2-3">
-                                            <img class="lazyload" src="/Images/placeholder.png" data-src="/Images/course/pro-6.jpg" alt="course">
-                                        </a>
-                                        <div class="hover-show">
-                                            <a href="course-details.html" class="btn btn-md btn-primary rounded-pill" title="Enroll Now" target="_self">Enroll Now</a>
-                                        </div>
-                                    </figure>
-                                    <div class="course-details">
-                                        <div class="p-3">
-                                            <a href="course-details.html" target="_self" title="Design" class="tag font-sm color-primary mb-1">Design</a>
-                                            <h6 class="course-title lc-2 mb-0">
-                                                <a href="course-details.html" target="_self" title="Link">
-                                                    User Experience (UX): The Ultimate Guide to Usability and UX
-                                                </a>
-                                            </h6>
-                                            <div class="authors mt-15">
-                                                <div class="author">
-                                                    <img class="lazyload blur-up radius-sm" src="/Images/placeholder.png" data-src="/Images/avatar-2.jpg" alt="Image">
-                                                    <span class="font-sm">
-                                                        <a href="course-details.html" target="_self" title="David Travis">
-                                                            David Travis
-                                                        </a>
-                                                    </span>
-                                                </div>
-                                                <span class="font-sm icon-start"><i class="fas fa-clock"></i>06h 00m</span>
-                                            </div>
-                                        </div>
-                                        <div class="course-bottom-info px-3 py-2">
-                                            <span class="font-sm"><i class="fas fa-usd-circle"></i>$79.00</span>
-                                            <span class="font-sm"><i class="fas fa-book-alt"></i>31 Lessons</span>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-xl-3 col-lg-4 col-sm-6">
-                                <div class="course-default border radius-md mb-30">
-                                    <figure class="course-img">
-                                        <a href="course-details.html" title="Image" target="_self" class="lazy-container ratio ratio-2-3">
-                                            <img class="lazyload" src="/Images/placeholder.png" data-src="/Images/course/pro-7.jpg" alt="course">
-                                        </a>
-                                        <div class="hover-show">
-                                            <a href="course-details.html" class="btn btn-md btn-primary rounded-pill" title="Enroll Now" target="_self">Enroll Now</a>
-                                        </div>
-                                    </figure>
-                                    <div class="course-details">
-                                        <div class="p-3">
-                                            <a href="course-details.html" target="_self" title="Design" class="tag font-sm color-primary mb-1">Design</a>
-                                            <h6 class="course-title lc-2 mb-0">
-                                                <a href="course-details.html" target="_self" title="Link">
-                                                    Anatomy for Figure Drawing: Mastering the Human Figure
-                                                </a>
-                                            </h6>
-                                            <div class="authors mt-15">
-                                                <div class="author">
-                                                    <img class="lazyload blur-up radius-sm" src="/Images/placeholder.png" data-src="/Images/avatar-3.jpg" alt="Image">
-                                                    <span class="font-sm">
-                                                        <a href="course-details.html" target="_self" title="Neil Fontaine">
-                                                            Neil Fontaine
-                                                        </a>
-                                                    </span>
-                                                </div>
-                                                <span class="font-sm icon-start"><i class="fas fa-clock"></i>06h 00m</span>
-                                            </div>
-                                        </div>
-                                        <div class="course-bottom-info px-3 py-2">
-                                            <span class="font-sm"><i class="fas fa-usd-circle"></i>$13.99</span>
-                                            <span class="font-sm"><i class="fas fa-book-alt"></i>08 Lessons</span>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-xl-3 col-lg-4 col-sm-6">
-                                <div class="course-default border radius-md mb-30">
-                                    <figure class="course-img">
-                                        <a href="course-details.html" title="Image" target="_self" class="lazy-container ratio ratio-2-3">
-                                            <img class="lazyload" src="/Images/placeholder.png" data-src="/Images/course/pro-8.jpg" alt="course">
-                                        </a>
-                                        <div class="hover-show">
-                                            <a href="course-details.html" class="btn btn-md btn-primary rounded-pill" title="Enroll Now" target="_self">Enroll Now</a>
-                                        </div>
-                                    </figure>
-                                    <div class="course-details">
-                                        <div class="p-3">
-                                            <a href="course-details.html" target="_self" title="Design" class="tag font-sm color-primary mb-1">Design</a>
-                                            <h6 class="course-title lc-2 mb-0">
-                                                <a href="course-details.html" target="_self" title="Link">
-                                                    Anatomy for Figure Drawing: Mastering the Human Figure
-                                                </a>
-                                            </h6>
-                                            <div class="authors mt-15">
-                                                <div class="author">
-                                                    <img class="lazyload blur-up radius-sm" src="/Images/placeholder.png" data-src="/Images/avatar-4.jpg" alt="Image">
-                                                    <span class="font-sm">
-                                                        <a href="course-details.html" target="_self" title="John Kolko">
-                                                            John Kolko
-                                                        </a>
-                                                    </span>
-                                                </div>
-                                                <span class="font-sm icon-start"><i class="fas fa-clock"></i>06h 00m</span>
-                                            </div>
-                                        </div>
-                                        <div class="course-bottom-info px-3 py-2">
-                                            <span class="font-sm"><i class="fas fa-usd-circle"></i>$64.99</span>
-                                            <span class="font-sm"><i class="fas fa-book-alt"></i>17 Lessons</span>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-xl-3 col-lg-4 col-sm-6">
-                                <div class="course-default border radius-md mb-30">
-                                    <figure class="course-img">
-                                        <a href="course-details.html" title="Image" target="_self" class="lazy-container ratio ratio-2-3">
-                                            <img class="lazyload" src="/Images/placeholder.png" data-src="/Images/course/pro-9.jpg" alt="course">
-                                        </a>
-                                        <div class="hover-show">
-                                            <a href="course-details.html" class="btn btn-md btn-primary rounded-pill" title="Enroll Now" target="_self">Enroll Now</a>
-                                        </div>
-                                    </figure>
-                                    <div class="course-details">
-                                        <div class="p-3">
-                                            <a href="course-details.html" target="_self" title="Design" class="tag font-sm color-primary mb-1">Design</a>
-                                            <h6 class="course-title lc-2 mb-0">
-                                                <a href="course-details.html" target="_self" title="Link">
-                                                    WordPress Development with Bootstrap: The Complete Course
-                                                </a>
-                                            </h6>
-                                            <div class="authors mt-15">
-                                                <div class="author">
-                                                    <img class="lazyload blur-up radius-sm" src="/Images/placeholder.png" data-src="/Images/avatar-5.jpg" alt="Image">
-                                                    <span class="font-sm">
-                                                        <a href="course-details.html" target="_self" title="Mike Russel">
-                                                            Mike Russel
-                                                        </a>
-                                                    </span>
-                                                </div>
-                                                <span class="font-sm icon-start"><i class="fas fa-clock"></i>06h 00m</span>
-                                            </div>
-                                        </div>
-                                        <div class="course-bottom-info px-3 py-2">
-                                            <span class="font-sm"><i class="fas fa-usd-circle"></i>$13.99</span>
-                                            <span class="font-sm"><i class="fas fa-book-alt"></i>11 Lessons</span>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-xl-3 col-lg-4 col-sm-6">
-                                <div class="course-default border radius-md mb-30">
-                                    <figure class="course-img">
-                                        <a href="course-details.html" title="Image" target="_self" class="lazy-container ratio ratio-2-3">
-                                            <img class="lazyload" src="/Images/placeholder.png" data-src="/Images/course/pro-10.jpg" alt="course">
-                                        </a>
-                                        <div class="hover-show">
-                                            <a href="course-details.html" class="btn btn-md btn-primary rounded-pill" title="Enroll Now" target="_self">Enroll Now</a>
-                                        </div>
-                                    </figure>
-                                    <div class="course-details">
-                                        <div class="p-3">
-                                            <a href="course-details.html" target="_self" title="Design" class="tag font-sm color-primary mb-1">Design</a>
-                                            <h6 class="course-title lc-2 mb-0">
-                                                <a href="course-details.html" target="_self" title="Link">
-                                                    Soundscaping for health, relationships and success
-                                                </a>
-                                            </h6>
-                                            <div class="authors mt-15">
-                                                <div class="author">
-                                                    <img class="lazyload blur-up radius-sm" src="/Images/placeholder.png" data-src="/Images/avatar-6.jpg" alt="Image">
-                                                    <span class="font-sm">
-                                                        <a href="course-details.html" target="_self" title="Julian">
-                                                            Julian
-                                                        </a>
-                                                    </span>
-                                                </div>
-                                                <span class="font-sm icon-start"><i class="fas fa-clock"></i>06h 00m</span>
-                                            </div>
-                                        </div>
-                                        <div class="course-bottom-info px-3 py-2">
-                                            <span class="font-sm"><i class="fas fa-usd-circle"></i>$19.99</span>
-                                            <span class="font-sm"><i class="fas fa-book-alt"></i>11 Lessons</span>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-xl-3 col-lg-4 col-sm-6">
-                                <div class="course-default border radius-md mb-30">
-                                    <figure class="course-img">
-                                        <a href="course-details.html" title="Image" target="_self" class="lazy-container ratio ratio-2-3">
-                                            <img class="lazyload" src="/Images/placeholder.png" data-src="/Images/course/pro-11.jpg" alt="course">
-                                        </a>
-                                        <div class="hover-show">
-                                            <a href="course-details.html" class="btn btn-md btn-primary rounded-pill" title="Enroll Now" target="_self">Enroll Now</a>
-                                        </div>
-                                    </figure>
-                                    <div class="course-details">
-                                        <div class="p-3">
-                                            <a href="course-details.html" target="_self" title="Design" class="tag font-sm color-primary mb-1">Design</a>
-                                            <h6 class="course-title lc-2 mb-0">
-                                                <a href="course-details.html" target="_self" title="Link">
-                                                    Web Design for Beginners: Real World Coding in HTML & CSS
-                                                </a>
-                                            </h6>
-                                            <div class="authors mt-15">
-                                                <div class="author">
-                                                    <img class="lazyload blur-up radius-sm" src="/Images/placeholder.png" data-src="/Images/avatar-7.jpg" alt="Image">
-                                                    <span class="font-sm">
-                                                        <a href="course-details.html" target="_self" title="Infinite Skills">
-                                                            Infinite Skills
-                                                        </a>
-                                                    </span>
-                                                </div>
-                                                <span class="font-sm icon-start"><i class="fas fa-clock"></i>06h 00m</span>
-                                            </div>
-                                        </div>
-                                        <div class="course-bottom-info px-3 py-2">
-                                            <span class="font-sm"><i class="fas fa-usd-circle"></i>$14.00</span>
-                                            <span class="font-sm"><i class="fas fa-book-alt"></i>11 Lessons</span>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-xl-3 col-lg-4 col-sm-6">
-                                <div class="course-default border radius-md mb-30">
-                                    <figure class="course-img">
-                                        <a href="course-details.html" title="Image" target="_self" class="lazy-container ratio ratio-2-3">
-                                            <img class="lazyload" src="/Images/placeholder.png" data-src="/Images/course/pro-12.jpg" alt="course">
-                                        </a>
-                                        <div class="hover-show">
-                                            <a href="course-details.html" class="btn btn-md btn-primary rounded-pill" title="Enroll Now" target="_self">Enroll Now</a>
-                                        </div>
-                                    </figure>
-                                    <div class="course-details">
-                                        <div class="p-3">
-                                            <a href="course-details.html" target="_self" title="Design" class="tag font-sm color-primary mb-1">Design</a>
-                                            <h6 class="course-title lc-2 mb-0">
-                                                <a href="course-details.html" target="_self" title="Link">
-                                                    Typographic Logos: Typography and Lettering for Logo Design
-                                                </a>
-                                            </h6>
-                                            <div class="authors mt-15">
-                                                <div class="author">
-                                                    <img class="lazyload blur-up radius-sm" src="/Images/placeholder.png" data-src="/Images/avatar-8.jpg" alt="Image">
-                                                    <span class="font-sm">
-                                                        <a href="course-details.html" target="_self" title="Brad Schiff">
-                                                            Brad Schiff
-                                                        </a>
-                                                    </span>
-                                                </div>
-                                                <span class="font-sm icon-start"><i class="fas fa-clock"></i>06h 00m</span>
-                                            </div>
-                                        </div>
-                                        <div class="course-bottom-info px-3 py-2">
-                                            <span class="font-sm"><i class="fas fa-usd-circle"></i>$17.99</span>
-                                            <span class="font-sm"><i class="fas fa-book-alt"></i>11 Lessons</span>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
+                            }
+                            
+                            
                         </div>
                         <div class="cta-btn text-center mt-15">
-                            <a href="courses.html" class="btn btn-lg btn-primary rounded-pill" title="View More" target="_self">View More</a>
+                            <a href="courses.html" class="btn btn-lg btn-primary rounded-pill" title="View More" target="_self">所有課程</a>
                         </div>
                     </div>
-                    <div class="tab-pane slide" id="tab2">
-                        <div class="row">
-                            <div class="col-xl-3 col-lg-4 col-sm-6">
-                                <div class="course-default border radius-md mb-30">
-                                    <figure class="course-img">
-                                        <a href="course-details.html" title="Image" target="_self" class="lazy-container ratio ratio-2-3">
-                                            <img class="lazyload" src="/Images/placeholder.png" data-src="/Images/course/pro-9.jpg" alt="course">
-                                        </a>
-                                        <div class="hover-show">
-                                            <a href="course-details.html" class="btn btn-md btn-primary rounded-pill" title="Enroll Now" target="_self">Enroll Now</a>
-                                        </div>
-                                    </figure>
-                                    <div class="course-details">
-                                        <div class="p-3">
-                                            <a href="course-details.html" target="_self" title="Marketing" class="tag font-sm color-primary mb-1">Marketing</a>
-                                            <h6 class="course-title lc-2 mb-0">
-                                                <a href="course-details.html" target="_self" title="Link">
-                                                    Digital Marketing: 14 Strategic and Tactical Courses in 1
-                                                </a>
-                                            </h6>
-                                            <div class="authors mt-15">
-                                                <div class="author">
-                                                    <img class="lazyload blur-up radius-sm" src="/Images/placeholder.png" data-src="/Images/avatar-5.jpg" alt="Image">
-                                                    <span class="font-sm">
-                                                        <a href="course-details.html" target="_self" title="Mike Russel">
-                                                            Mike Russel
-                                                        </a>
-                                                    </span>
-                                                </div>
-                                                <span class="font-sm icon-start"><i class="fas fa-clock"></i>06h 00m</span>
-                                            </div>
-                                        </div>
-                                        <div class="course-bottom-info px-3 py-2">
-                                            <span class="font-sm"><i class="fas fa-usd-circle"></i>$13.99</span>
-                                            <span class="font-sm"><i class="fas fa-book-alt"></i>11 Lessons</span>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-xl-3 col-lg-4 col-sm-6">
-                                <div class="course-default border radius-md mb-30">
-                                    <figure class="course-img">
-                                        <a href="course-details.html" title="Image" target="_self" class="lazy-container ratio ratio-2-3">
-                                            <img class="lazyload" src="/Images/placeholder.png" data-src="/Images/course/pro-10.jpg" alt="course">
-                                        </a>
-                                        <div class="hover-show">
-                                            <a href="course-details.html" class="btn btn-md btn-primary rounded-pill" title="Enroll Now" target="_self">Enroll Now</a>
-                                        </div>
-                                    </figure>
-                                    <div class="course-details">
-                                        <div class="p-3">
-                                            <a href="course-details.html" target="_self" title="Marketing" class="tag font-sm color-primary mb-1">Marketing</a>
-                                            <h6 class="course-title lc-2 mb-0">
-                                                <a href="course-details.html" target="_self" title="Link">
-                                                    How to Start a Podcast - Podcasting Made Easy
-                                                </a>
-                                            </h6>
-                                            <div class="authors mt-15">
-                                                <div class="author">
-                                                    <img class="lazyload blur-up radius-sm" src="/Images/placeholder.png" data-src="/Images/avatar-6.jpg" alt="Image">
-                                                    <span class="font-sm">
-                                                        <a href="course-details.html" target="_self" title="Julian">
-                                                            Julian
-                                                        </a>
-                                                    </span>
-                                                </div>
-                                                <span class="font-sm icon-start"><i class="fas fa-clock"></i>06h 00m</span>
-                                            </div>
-                                        </div>
-                                        <div class="course-bottom-info px-3 py-2">
-                                            <span class="font-sm"><i class="fas fa-usd-circle"></i>$19.99</span>
-                                            <span class="font-sm"><i class="fas fa-book-alt"></i>11 Lessons</span>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-xl-3 col-lg-4 col-sm-6">
-                                <div class="course-default border radius-md mb-30">
-                                    <figure class="course-img">
-                                        <a href="course-details.html" title="Image" target="_self" class="lazy-container ratio ratio-2-3">
-                                            <img class="lazyload" src="/Images/placeholder.png" data-src="/Images/course/pro-11.jpg" alt="course">
-                                        </a>
-                                        <div class="hover-show">
-                                            <a href="course-details.html" class="btn btn-md btn-primary rounded-pill" title="Enroll Now" target="_self">Enroll Now</a>
-                                        </div>
-                                    </figure>
-                                    <div class="course-details">
-                                        <div class="p-3">
-                                            <a href="course-details.html" target="_self" title="Marketing" class="tag font-sm color-primary mb-1">Marketing</a>
-                                            <h6 class="course-title lc-2 mb-0">
-                                                <a href="course-details.html" target="_self" title="Link">
-                                                    How to Market Yourself as a Coach or Consultant
-                                                </a>
-                                            </h6>
-                                            <div class="authors mt-15">
-                                                <div class="author">
-                                                    <img class="lazyload blur-up radius-sm" src="/Images/placeholder.png" data-src="/Images/avatar-7.jpg" alt="Image">
-                                                    <span class="font-sm">
-                                                        <a href="course-details.html" target="_self" title="Infinite Skills">
-                                                            Infinite Skills
-                                                        </a>
-                                                    </span>
-                                                </div>
-                                                <span class="font-sm icon-start"><i class="fas fa-clock"></i>06h 00m</span>
-                                            </div>
-                                        </div>
-                                        <div class="course-bottom-info px-3 py-2">
-                                            <span class="font-sm"><i class="fas fa-usd-circle"></i>$14.00</span>
-                                            <span class="font-sm"><i class="fas fa-book-alt"></i>11 Lessons</span>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-xl-3 col-lg-4 col-sm-6">
-                                <div class="course-default border radius-md mb-30">
-                                    <figure class="course-img">
-                                        <a href="course-details.html" title="Image" target="_self" class="lazy-container ratio ratio-2-3">
-                                            <img class="lazyload" src="/Images/placeholder.png" data-src="/Images/course/pro-12.jpg" alt="course">
-                                        </a>
-                                        <div class="hover-show">
-                                            <a href="course-details.html" class="btn btn-md btn-primary rounded-pill" title="Enroll Now" target="_self">Enroll Now</a>
-                                        </div>
-                                    </figure>
-                                    <div class="course-details">
-                                        <div class="p-3">
-                                            <a href="course-details.html" target="_self" title="Marketing" class="tag font-sm color-primary mb-1">Marketing</a>
-                                            <h6 class="course-title lc-2 mb-0">
-                                                <a href="course-details.html" target="_self" title="Link">
-                                                    Marketing Research: support your marketing decisions
-                                                </a>
-                                            </h6>
-                                            <div class="authors mt-15">
-                                                <div class="author">
-                                                    <img class="lazyload blur-up radius-sm" src="/Images/placeholder.png" data-src="/Images/avatar-8.jpg" alt="Image">
-                                                    <span class="font-sm">
-                                                        <a href="course-details.html" target="_self" title="Brad Schiff">
-                                                            Brad Schiff
-                                                        </a>
-                                                    </span>
-                                                </div>
-                                                <span class="font-sm icon-start"><i class="fas fa-clock"></i>06h 00m</span>
-                                            </div>
-                                        </div>
-                                        <div class="course-bottom-info px-3 py-2">
-                                            <span class="font-sm"><i class="fas fa-usd-circle"></i>$17.99</span>
-                                            <span class="font-sm"><i class="fas fa-book-alt"></i>11 Lessons</span>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="cta-btn text-center mt-15">
-                            <a href="courses.html" class="btn btn-lg btn-primary rounded-pill" title="View More" target="_self">View More</a>
-                        </div>
-                    </div>
-                    <div class="tab-pane slide" id="tab3">
-                        <div class="row">
-                            <div class="col-xl-3 col-lg-4 col-sm-6">
-                                <div class="course-default border radius-md mb-30">
-                                    <figure class="course-img">
-                                        <a href="course-details.html" title="Image" target="_self" class="lazy-container ratio ratio-2-3">
-                                            <img class="lazyload" src="/Images/placeholder.png" data-src="/Images/course/pro-7.jpg" alt="course">
-                                        </a>
-                                        <div class="hover-show">
-                                            <a href="course-details.html" class="btn btn-md btn-primary rounded-pill" title="Enroll Now" target="_self">Enroll Now</a>
-                                        </div>
-                                    </figure>
-                                    <div class="course-details">
-                                        <div class="p-3">
-                                            <a href="course-details.html" target="_self" title="Development" class="tag font-sm color-primary mb-1">Development</a>
-                                            <h6 class="course-title lc-2 mb-0">
-                                                <a href="course-details.html" target="_self" title="Link">
-                                                    Java Swing (GUI) Programming: From Beginner to Expert
-                                                </a>
-                                            </h6>
-                                            <div class="authors mt-15">
-                                                <div class="author">
-                                                    <img class="lazyload blur-up radius-sm" src="/Images/placeholder.png" data-src="/Images/avatar-3.jpg" alt="Image">
-                                                    <span class="font-sm">
-                                                        <a href="course-details.html" target="_self" title="Neil Fontaine">
-                                                            Neil Fontaine
-                                                        </a>
-                                                    </span>
-                                                </div>
-                                                <span class="font-sm icon-start"><i class="fas fa-clock"></i>06h 00m</span>
-                                            </div>
-                                        </div>
-                                        <div class="course-bottom-info px-3 py-2">
-                                            <span class="font-sm"><i class="fas fa-usd-circle"></i>$13.99</span>
-                                            <span class="font-sm"><i class="fas fa-book-alt"></i>08 Lessons</span>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-xl-3 col-lg-4 col-sm-6">
-                                <div class="course-default border radius-md mb-30">
-                                    <figure class="course-img">
-                                        <a href="course-details.html" title="Image" target="_self" class="lazy-container ratio ratio-2-3">
-                                            <img class="lazyload" src="/Images/placeholder.png" data-src="/Images/course/pro-8.jpg" alt="course">
-                                        </a>
-                                        <div class="hover-show">
-                                            <a href="course-details.html" class="btn btn-md btn-primary rounded-pill" title="Enroll Now" target="_self">Enroll Now</a>
-                                        </div>
-                                    </figure>
-                                    <div class="course-details">
-                                        <div class="p-3">
-                                            <a href="course-details.html" target="_self" title="Development" class="tag font-sm color-primary mb-1">Development</a>
-                                            <h6 class="course-title lc-2 mb-0">
-                                                <a href="course-details.html" target="_self" title="Link">
-                                                    Learn Flowcharting and Pseudocode. Be a better programmer!
-                                                </a>
-                                            </h6>
-                                            <div class="authors mt-15">
-                                                <div class="author">
-                                                    <img class="lazyload blur-up radius-sm" src="/Images/placeholder.png" data-src="/Images/avatar-4.jpg" alt="Image">
-                                                    <span class="font-sm">
-                                                        <a href="course-details.html" target="_self" title="John Kolko">
-                                                            John Kolko
-                                                        </a>
-                                                    </span>
-                                                </div>
-                                                <span class="font-sm icon-start"><i class="fas fa-clock"></i>06h 00m</span>
-                                            </div>
-                                        </div>
-                                        <div class="course-bottom-info px-3 py-2">
-                                            <span class="font-sm"><i class="fas fa-usd-circle"></i>$64.99</span>
-                                            <span class="font-sm"><i class="fas fa-book-alt"></i>17 Lessons</span>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-xl-3 col-lg-4 col-sm-6">
-                                <div class="course-default border radius-md mb-30">
-                                    <figure class="course-img">
-                                        <a href="course-details.html" title="Image" target="_self" class="lazy-container ratio ratio-2-3">
-                                            <img class="lazyload" src="/Images/placeholder.png" data-src="/Images/course/pro-9.jpg" alt="course">
-                                        </a>
-                                        <div class="hover-show">
-                                            <a href="course-details.html" class="btn btn-md btn-primary rounded-pill" title="Enroll Now" target="_self">Enroll Now</a>
-                                        </div>
-                                    </figure>
-                                    <div class="course-details">
-                                        <div class="p-3">
-                                            <a href="course-details.html" target="_self" title="Development" class="tag font-sm color-primary mb-1">Development</a>
-                                            <h6 class="course-title lc-2 mb-0">
-                                                <a href="course-details.html" target="_self" title="Link">
-                                                    Learn To Program with Delphi and Object Pascal
-                                                </a>
-                                            </h6>
-                                            <div class="authors mt-15">
-                                                <div class="author">
-                                                    <img class="lazyload blur-up radius-sm" src="/Images/placeholder.png" data-src="/Images/avatar-5.jpg" alt="Image">
-                                                    <span class="font-sm">
-                                                        <a href="course-details.html" target="_self" title="Mike Russel">
-                                                            Mike Russel
-                                                        </a>
-                                                    </span>
-                                                </div>
-                                                <span class="font-sm icon-start"><i class="fas fa-clock"></i>06h 00m</span>
-                                            </div>
-                                        </div>
-                                        <div class="course-bottom-info px-3 py-2">
-                                            <span class="font-sm"><i class="fas fa-usd-circle"></i>$13.99</span>
-                                            <span class="font-sm"><i class="fas fa-book-alt"></i>11 Lessons</span>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-xl-3 col-lg-4 col-sm-6">
-                                <div class="course-default border radius-md mb-30">
-                                    <figure class="course-img">
-                                        <a href="course-details.html" title="Image" target="_self" class="lazy-container ratio ratio-2-3">
-                                            <img class="lazyload" src="/Images/placeholder.png" data-src="/Images/course/pro-10.jpg" alt="course">
-                                        </a>
-                                        <div class="hover-show">
-                                            <a href="course-details.html" class="btn btn-md btn-primary rounded-pill" title="Enroll Now" target="_self">Enroll Now</a>
-                                        </div>
-                                    </figure>
-                                    <div class="course-details">
-                                        <div class="p-3">
-                                            <a href="course-details.html" target="_self" title="Development" class="tag font-sm color-primary mb-1">Development</a>
-                                            <h6 class="course-title lc-2 mb-0">
-                                                <a href="course-details.html" target="_self" title="Link">
-                                                    SQL Server High Availability and Disaster Recovery (HA/DR)
-                                                </a>
-                                            </h6>
-                                            <div class="authors mt-15">
-                                                <div class="author">
-                                                    <img class="lazyload blur-up radius-sm" src="/Images/placeholder.png" data-src="/Images/avatar-6.jpg" alt="Image">
-                                                    <span class="font-sm">
-                                                        <a href="course-details.html" target="_self" title="Julian">
-                                                            Julian
-                                                        </a>
-                                                    </span>
-                                                </div>
-                                                <span class="font-sm icon-start"><i class="fas fa-clock"></i>06h 00m</span>
-                                            </div>
-                                        </div>
-                                        <div class="course-bottom-info px-3 py-2">
-                                            <span class="font-sm"><i class="fas fa-usd-circle"></i>$19.99</span>
-                                            <span class="font-sm"><i class="fas fa-book-alt"></i>11 Lessons</span>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="cta-btn text-center mt-15">
-                            <a href="courses.html" class="btn btn-lg btn-primary rounded-pill" title="View More" target="_self">View More</a>
-                        </div>
-                    </div>
-                    <div class="tab-pane slide" id="tab4">
-                        <div class="row">
-                            <div class="col-xl-3 col-lg-4 col-sm-6">
-                                <div class="course-default border radius-md mb-30">
-                                    <figure class="course-img">
-                                        <a href="course-details.html" title="Image" target="_self" class="lazy-container ratio ratio-2-3">
-                                            <img class="lazyload" src="/Images/placeholder.png" data-src="/Images/course/pro-8.jpg" alt="course">
-                                        </a>
-                                        <div class="hover-show">
-                                            <a href="course-details.html" class="btn btn-md btn-primary rounded-pill" title="Enroll Now" target="_self">Enroll Now</a>
-                                        </div>
-                                    </figure>
-                                    <div class="course-details">
-                                        <div class="p-3">
-                                            <a href="course-details.html" target="_self" title="Music" class="tag font-sm color-primary mb-1">Music</a>
-                                            <h6 class="course-title lc-2 mb-0">
-                                                <a href="course-details.html" target="_self" title="Link">
-                                                    Adventures in Classical Music—Music Appreciation for All!
-                                                </a>
-                                            </h6>
-                                            <div class="authors mt-15">
-                                                <div class="author">
-                                                    <img class="lazyload blur-up radius-sm" src="/Images/placeholder.png" data-src="/Images/avatar-4.jpg" alt="Image">
-                                                    <span class="font-sm">
-                                                        <a href="course-details.html" target="_self" title="John Kolko">
-                                                            John Kolko
-                                                        </a>
-                                                    </span>
-                                                </div>
-                                                <span class="font-sm icon-start"><i class="fas fa-clock"></i>06h 00m</span>
-                                            </div>
-                                        </div>
-                                        <div class="course-bottom-info px-3 py-2">
-                                            <span class="font-sm"><i class="fas fa-usd-circle"></i>$64.99</span>
-                                            <span class="font-sm"><i class="fas fa-book-alt"></i>17 Lessons</span>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-xl-3 col-lg-4 col-sm-6">
-                                <div class="course-default border radius-md mb-30">
-                                    <figure class="course-img">
-                                        <a href="course-details.html" title="Image" target="_self" class="lazy-container ratio ratio-2-3">
-                                            <img class="lazyload" src="/Images/placeholder.png" data-src="/Images/course/pro-9.jpg" alt="course">
-                                        </a>
-                                        <div class="hover-show">
-                                            <a href="course-details.html" class="btn btn-md btn-primary rounded-pill" title="Enroll Now" target="_self">Enroll Now</a>
-                                        </div>
-                                    </figure>
-                                    <div class="course-details">
-                                        <div class="p-3">
-                                            <a href="course-details.html" target="_self" title="Music" class="tag font-sm color-primary mb-1">Music</a>
-                                            <h6 class="course-title lc-2 mb-0">
-                                                <a href="course-details.html" target="_self" title="Link">
-                                                    Acoustic Guitar and Electric Guitar Lessons: Getting Started
-                                                </a>
-                                            </h6>
-                                            <div class="authors mt-15">
-                                                <div class="author">
-                                                    <img class="lazyload blur-up radius-sm" src="/Images/placeholder.png" data-src="/Images/avatar-5.jpg" alt="Image">
-                                                    <span class="font-sm">
-                                                        <a href="course-details.html" target="_self" title="Mike Russel">
-                                                            Mike Russel
-                                                        </a>
-                                                    </span>
-                                                </div>
-                                                <span class="font-sm icon-start"><i class="fas fa-clock"></i>06h 00m</span>
-                                            </div>
-                                        </div>
-                                        <div class="course-bottom-info px-3 py-2">
-                                            <span class="font-sm"><i class="fas fa-usd-circle"></i>$13.99</span>
-                                            <span class="font-sm"><i class="fas fa-book-alt"></i>11 Lessons</span>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-xl-3 col-lg-4 col-sm-6">
-                                <div class="course-default border radius-md mb-30">
-                                    <figure class="course-img">
-                                        <a href="course-details.html" title="Image" target="_self" class="lazy-container ratio ratio-2-3">
-                                            <img class="lazyload" src="/Images/placeholder.png" data-src="/Images/course/pro-7.jpg" alt="course">
-                                        </a>
-                                        <div class="hover-show">
-                                            <a href="course-details.html" class="btn btn-md btn-primary rounded-pill" title="Enroll Now" target="_self">Enroll Now</a>
-                                        </div>
-                                    </figure>
-                                    <div class="course-details">
-                                        <div class="p-3">
-                                            <a href="course-details.html" target="_self" title="Music" class="tag font-sm color-primary mb-1">Music</a>
-                                            <h6 class="course-title lc-2 mb-0">
-                                                <a href="course-details.html" target="_self" title="Link">
-                                                    Complete Guitar Lessons System - Beginner to Advanced
-                                                </a>
-                                            </h6>
-                                            <div class="authors mt-15">
-                                                <div class="author">
-                                                    <img class="lazyload blur-up radius-sm" src="/Images/placeholder.png" data-src="/Images/avatar-3.jpg" alt="Image">
-                                                    <span class="font-sm">
-                                                        <a href="course-details.html" target="_self" title="Neil Fontaine">
-                                                            Neil Fontaine
-                                                        </a>
-                                                    </span>
-                                                </div>
-                                                <span class="font-sm icon-start"><i class="fas fa-clock"></i>06h 00m</span>
-                                            </div>
-                                        </div>
-                                        <div class="course-bottom-info px-3 py-2">
-                                            <span class="font-sm"><i class="fas fa-usd-circle"></i>$13.99</span>
-                                            <span class="font-sm"><i class="fas fa-book-alt"></i>08 Lessons</span>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-xl-3 col-lg-4 col-sm-6">
-                                <div class="course-default border radius-md mb-30">
-                                    <figure class="course-img">
-                                        <a href="course-details.html" title="Image" target="_self" class="lazy-container ratio ratio-2-3">
-                                            <img class="lazyload" src="/Images/placeholder.png" data-src="/Images/course/pro-10.jpg" alt="course">
-                                        </a>
-                                        <div class="hover-show">
-                                            <a href="course-details.html" class="btn btn-md btn-primary rounded-pill" title="Enroll Now" target="_self">Enroll Now</a>
-                                        </div>
-                                    </figure>
-                                    <div class="course-details">
-                                        <div class="p-3">
-                                            <a href="course-details.html" target="_self" title="Music" class="tag font-sm color-primary mb-1">Music</a>
-                                            <h6 class="course-title lc-2 mb-0">
-                                                <a href="course-details.html" target="_self" title="Link">
-                                                    Learn to Play Saxophone: Beginner to Pro in Under Four Hours
-                                                </a>
-                                            </h6>
-                                            <div class="authors mt-15">
-                                                <div class="author">
-                                                    <img class="lazyload blur-up radius-sm" src="/Images/placeholder.png" data-src="/Images/avatar-6.jpg" alt="Image">
-                                                    <span class="font-sm">
-                                                        <a href="course-details.html" target="_self" title="Julian">
-                                                            Julian
-                                                        </a>
-                                                    </span>
-                                                </div>
-                                                <span class="font-sm icon-start"><i class="fas fa-clock"></i>06h 00m</span>
-                                            </div>
-                                        </div>
-                                        <div class="course-bottom-info px-3 py-2">
-                                            <span class="font-sm"><i class="fas fa-usd-circle"></i>$19.99</span>
-                                            <span class="font-sm"><i class="fas fa-book-alt"></i>11 Lessons</span>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="cta-btn text-center mt-15">
-                            <a href="courses.html" class="btn btn-lg btn-primary rounded-pill" title="View More" target="_self">View More</a>
-                        </div>
-                    </div>
+                    
                 </div>
             </div>
         </div>
     </div>
     <!-- Shapes -->
     <div class="shape">
-        <img class="shape-1 lazyload" src="/Images/placeholder.png" data-src="/Images/shape/shape-4.png" alt="Shape">
-        <img class="shape-2 lazyload" src="/Images/placeholder.png" data-src="/Images/shape/shape-6.png" alt="Shape">
-        <img class="shape-3 lazyload" src="/Images/placeholder.png" data-src="/Images/shape/shape-2.png" alt="Shape">
-        <img class="shape-4 lazyload" src="/Images/placeholder.png" data-src="/Images/shape/shape-1.png" alt="Shape">
+        <img class="shape-1 lazyload" src="/images/placeholder.png" data-src="/images/shape/shape-4.png" alt="Shape">
+        <img class="shape-2 lazyload" src="/images/placeholder.png" data-src="/images/shape/shape-6.png" alt="Shape">
+        <img class="shape-3 lazyload" src="/images/placeholder.png" data-src="/images/shape/shape-2.png" alt="Shape">
+        <img class="shape-4 lazyload" src="/images/placeholder.png" data-src="/images/shape/shape-1.png" alt="Shape">
     </div>
 </section>
 <!-- Course-area end -->
 <!-- Mentor-area start -->
-<section class="mentor-area mentor-area_v1 pt-100 pb-70 bg-img bg-cover" data-bg-image="/Images/mentor-bg-1.jpg">
+<section class="mentor-area mentor-area_v1 pt-100 pb-70 bg-img bg-cover" data-bg-image="/images/mentor-bg-1.jpg">
     <div class="overlay opacity-85 bg-primary-light"></div>
     <div class="container">
         <div class="row">
             <div class="col-12">
                 <div class="section-title title-center mb-50" data-aos="fade-up">
                     <h2 class="title">
-                        Meet Our Expert <span>Mentors</span>
-                        <img class="title-shape lazyload" src="/Images/placeholder.png" data-src="/Images/shape/title-shape.png" alt="Shape">
+                        來認識我們的 <span>優質講師</span>
+                        <img class="title-shape lazyload" src="/images/placeholder.png" data-src="/images/shape/title-shape.png" alt="Shape">
                     </h2>
                 </div>
             </div>
             <div class="col-12">
                 <div class="row">
+                    <!-- 這邊是講師介紹 用Razor-->
                     <div class="col-lg-4 col-sm-6" data-aos="fade-up">
                         <div class="card radius-md mb-30">
                             <div class="card-img">
                                 <a href="mentor-details.html" title="Image" target="_self" class="lazy-container ratio ratio-1-2">
-                                    <img class="lazyload" src="/Images/placeholder.png" data-src="/Images/mentor/mentor-1.jpg" alt="Image">
+                                    <img class="lazyload" src="/images/placeholder.png" data-src="/images/mentor/mentor-1.jpg" alt="Image">
                                 </a>
                             </div>
                             <div class="card-content text-center">
@@ -1327,152 +426,20 @@
                                 </div>
                             </div>
                         </div>
-                    </div>
-                    <div class="col-lg-4 col-sm-6" data-aos="fade-up">
-                        <div class="card radius-md mb-30">
-                            <div class="card-img">
-                                <a href="mentor-details.html" title="Image" target="_self" class="lazy-container ratio ratio-1-2">
-                                    <img class="lazyload" src="/Images/placeholder.png" data-src="/Images/mentor/mentor-2.jpg" alt="Image">
-                                </a>
-                            </div>
-                            <div class="card-content text-center">
-                                <h4 class="card-title lc-1 mb-1">
-                                    <a href="mentor-details.html" target="_self" title="Link">
-                                        Colt Steele
-                                    </a>
-                                </h4>
-                                <p class="card-text color-primary font-sm">
-                                    App Developer
-                                </p>
-                                <div class="social-link justify-content-center">
-                                    <a href="https://www.instagram.com/" target="_blank" title="instagram"><i class="fab fa-instagram"></i></a>
-                                    <a href="https://www.dribbble.com/" target="_blank" title="dribbble"><i class="fab fa-dribbble"></i></a>
-                                    <a href="https://www.twitter.com/" target="_blank" title="twitter"><i class="fab fa-twitter"></i></a>
-                                    <a href="https://www.youtube.com/" target="_blank" title="youtube"><i class="fab fa-youtube"></i></a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-lg-4 col-sm-6" data-aos="fade-up">
-                        <div class="card radius-md mb-30">
-                            <div class="card-img">
-                                <a href="mentor-details.html" title="Image" target="_self" class="lazy-container ratio ratio-1-2">
-                                    <img class="lazyload" src="/Images/placeholder.png" data-src="/Images/mentor/mentor-3.jpg" alt="Image">
-                                </a>
-                            </div>
-                            <div class="card-content text-center">
-                                <h4 class="card-title lc-1 mb-1">
-                                    <a href="mentor-details.html" target="_self" title="Link">
-                                        Imran Teli
-                                    </a>
-                                </h4>
-                                <p class="card-text color-primary font-sm">
-                                    Marketing Expert
-                                </p>
-                                <div class="social-link justify-content-center">
-                                    <a href="https://www.instagram.com/" target="_blank" title="instagram"><i class="fab fa-instagram"></i></a>
-                                    <a href="https://www.dribbble.com/" target="_blank" title="dribbble"><i class="fab fa-dribbble"></i></a>
-                                    <a href="https://www.twitter.com/" target="_blank" title="twitter"><i class="fab fa-twitter"></i></a>
-                                    <a href="https://www.youtube.com/" target="_blank" title="youtube"><i class="fab fa-youtube"></i></a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+                    </div>               
                 </div>
             </div>
         </div>
     </div>
     <!-- Shapes -->
     <div class="shape">
-        <img class="shape-1 lazyload" src="/Images/placeholder.png" data-src="/Images/shape/shape-1.png" alt="Shape">
-        <img class="shape-2 lazyload" src="/Images/placeholder.png" data-src="/Images/shape/shape-3.png" alt="Shape">
-        <img class="shape-3 lazyload" src="/Images/placeholder.png" data-src="/Images/shape/shape-4.png" alt="Shape">
+        <img class="shape-1 lazyload" src="/images/placeholder.png" data-src="/images/shape/shape-1.png" alt="Shape">
+        <img class="shape-2 lazyload" src="/images/placeholder.png" data-src="/images/shape/shape-3.png" alt="Shape">
+        <img class="shape-3 lazyload" src="/images/placeholder.png" data-src="/images/shape/shape-4.png" alt="Shape">
     </div>
 </section>
 <!-- Mentor-area end -->
-<!-- Feature-area start -->
-<section class="feature-area feature-area_v1 pt-100 pb-60">
-    <div class="container">
-        <div class="row align-items-center gx-xl-5">
-            <div class="col-lg-5" data-aos="fade-up">
-                <div class="content-title mb-40">
-                    <h2 class="title mb-0">
-                        Which Features We Provide <span>For You</span>
-                        <img class="title-shape lazyload" src="/Images/placeholder.png" data-src="/Images/shape/title-shape.png" alt="Shape">
-                    </h2>
-                    <div class="row ">
-                        <div class="col-sm-6">
-                            <div class="card p-30 bg-primary-light radius-md mt-30">
-                                <div class="card-icon mb-20">
-                                    <img class="lazyload" src="/Images/placeholder.png" data-src="/Images/icon/enrollment.png" alt="Image">
-                                </div>
-                                <h6 class="card-title lc-1 mb-0">
-                                    <a href="courses.html" target="_self" title="Course Enrollment">
-                                        Course Enrollment
-                                    </a>
-                                </h6>
-                            </div>
-                        </div>
-                        <div class="col-sm-6">
-                            <div class="card p-30 bg-primary-light radius-md mt-30">
-                                <div class="card-icon mb-20">
-                                    <img class="lazyload" src="/Images/placeholder.png" data-src="/Images/icon/payment.png" alt="Image">
-                                </div>
-                                <h6 class="card-title lc-1 mb-0">
-                                    <a href="courses.html" target="_self" title="Payment Gateway">
-                                        Payment Gateway
-                                    </a>
-                                </h6>
-                            </div>
-                        </div>
-                        <div class="col-sm-6">
-                            <div class="card p-30 bg-primary-light radius-md mt-30">
-                                <div class="card-icon mb-20">
-                                    <img class="lazyload" src="/Images/placeholder.png" data-src="/Images/icon/builder.png" alt="Image">
-                                </div>
-                                <h6 class="card-title lc-1 mb-0">
-                                    <a href="courses.html" target="_self" title="Lesson Builder">
-                                        Lesson Builder
-                                    </a>
-                                </h6>
-                            </div>
-                        </div>
-                        <div class="col-sm-6">
-                            <div class="card p-30 bg-primary-light radius-md mt-30">
-                                <div class="card-icon mb-20">
-                                    <img class="lazyload" src="/Images/placeholder.png" data-src="/Images/icon/report.png" alt="Image">
-                                </div>
-                                <h6 class="card-title lc-1 mb-0">
-                                    <a href="courses.html" target="_self" title="Enrolment Report">
-                                        Enrolment Report
-                                    </a>
-                                </h6>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="col-lg-7 order-lg-first" data-aos="fade-up">
-                <div class="banner-img img-left mb-40">
-                    <div class="lazy-container radius-lg ratio ratio-2-3">
-                        <img class="lazyload" src="/Images/placeholder.png" data-src="/Images/banner/video-banner-1.jpg" alt="Image">
-                    </div>
-                    <a href="https://www.youtube.com/watch?v=bDJKs6r___g" class="video-btn youtube-popup p-absolute" title="Play Video">
-                        <i class="fas fa-play"></i>
-                    </a>
-                </div>
-            </div>
-        </div>
-    </div>
-    <!-- Shapes -->
-    <div class="shape">
-        <img class="shape-1 lazyload" src="/Images/placeholder.png" data-src="/Images/shape/shape-3.png" alt="Shape">
-        <img class="shape-2 lazyload" src="/Images/placeholder.png" data-src="/Images/shape/shape-1.png" alt="Shape">
-        <img class="shape-3 lazyload" src="/Images/placeholder.png" data-src="/Images/shape/shape-6.png" alt="Shape">
-        <img class="shape-4 lazyload" src="/Images/placeholder.png" data-src="/Images/shape/shape-4.png" alt="Shape">
-    </div>
-</section>
-<!-- Feature-area end -->
+
 <!-- Testimonial-area start -->
 <section class="testimonial-area testimonial-area_v1 pb-60">
     <div class="container">
@@ -1480,12 +447,13 @@
             <div class="col-lg-5" data-aos="fade-up">
                 <div class="content-title mb-30">
                     <h2 class="title">
-                        What Students Say About Our <span>Courses</span>
-                        <img class="title-shape lazyload" src="/Images/placeholder.png" data-src="/Images/shape/title-shape.png" alt="Shape">
+                         <span>來自學生們的評價</span>
+                        <img class="title-shape lazyload" src="/images/placeholder.png" data-src="/images/shape/title-shape.png" alt="Shape">
                     </h2>
                 </div>
                 <div class="swiper testimonial-slider mb-40" id="testimonial-slider-1">
                     <div class="swiper-wrapper">
+                        <!-- 學生評論，一樣用razor 新增-->
                         <div class="swiper-slide">
                             <div class="slider-item bg-white">
                                 <div class="quote">
@@ -1496,7 +464,7 @@
                                 <div class="client-info d-flex align-items-center mt-30">
                                     <div class="client-img">
                                         <div class="lazy-container rounded-pill ratio ratio-1-1">
-                                            <img class="lazyload" src="/Images/placeholder.png" data-src="/Images/avatar-1.jpg" alt="Person Image">
+                                            <img class="lazyload" src="/images/placeholder.png" data-src="/images/avatar-1.jpg" alt="Person Image">
                                         </div>
                                     </div>
                                     <div class="content">
@@ -1506,46 +474,7 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="swiper-slide">
-                            <div class="slider-item bg-white">
-                                <div class="quote">
-                                    <p class="text font-lg mb-0">
-                                        I was looking to develop my professional skills, but didn't have the time or resources to attend in-person classes. That's when I discovered Oppida. The platform offered a wide range of courses that fit my needs, and I was able to complete them on.
-                                    </p>
-                                </div>
-                                <div class="client-info d-flex align-items-center mt-30">
-                                    <div class="client-img">
-                                        <div class="lazy-container rounded-pill ratio ratio-1-1">
-                                            <img class="lazyload" src="/Images/placeholder.png" data-src="/Images/avatar-2.jpg" alt="Person Image">
-                                        </div>
-                                    </div>
-                                    <div class="content">
-                                        <h6 class="name mb-0">Hames Rodrigo</h6>
-                                        <span class="designation font-sm">UI/UX Designer</span>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="swiper-slide">
-                            <div class="slider-item bg-white">
-                                <div class="quote">
-                                    <p class="text font-lg mb-0">
-                                        I was looking to develop my professional skills, but didn't have the time or resources to attend in-person classes. That's when I discovered Oppida. The platform offered a wide range of courses that fit my needs, and I was able to complete them on.
-                                    </p>
-                                </div>
-                                <div class="client-info d-flex align-items-center mt-30">
-                                    <div class="client-img">
-                                        <div class="lazy-container rounded-pill ratio ratio-1-1">
-                                            <img class="lazyload" src="/Images/placeholder.png" data-src="/Images/avatar-3.jpg" alt="Person Image">
-                                        </div>
-                                    </div>
-                                    <div class="content">
-                                        <h6 class="name mb-0">Hames Rodrigo</h6>
-                                        <span class="designation font-sm">UI/UX Designer</span>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
+                       
                     </div>
                     <div class="swiper-pagination" id="testimonial-slider-1-pagination"></div>
                 </div>
@@ -1555,12 +484,12 @@
                     <div class="row align-items-center">
                         <div class="col-sm-6" data-aos="fade-up">
                             <div class="lazy-container radius-md mb-30 ratio ratio-1-2">
-                                <img class="lazyload blur-up" src="/Images/placeholder.png" data-src="/Images/testimonial-img-1.png" alt="Client Image">
+                                <img class="lazyload blur-up" src="/images/placeholder.png" data-src="/images/testimonial-img-1.png" alt="Client Image">
                             </div>
                         </div>
                         <div class="col-sm-6" data-aos="fade-up">
                             <div class="lazy-container radius-md mb-30 ratio ratio-1-2">
-                                <img class="lazyload blur-up" src="/Images/placeholder.png" data-src="/Images/testimonial-img-2.png" alt="Client Image">
+                                <img class="lazyload blur-up" src="/images/placeholder.png" data-src="/images/testimonial-img-2.png" alt="Client Image">
                             </div>
                         </div>
                     </div>
@@ -1573,19 +502,18 @@
 <!-- Newsletter-area start -->
 <section class="newsletter-area newsletter-area_v1">
     <div class="container">
-        <div class="newsletter-inner ptb-60 px-3 px-lg-5 radius-lg bg-img bg-cover" data-bg-image="/Images/newsletter-bg-1.jpg" data-aos="fade-up">
+        <div class="newsletter-inner ptb-60 px-3 px-lg-5 radius-lg bg-img bg-cover" data-bg-image="/images/newsletter-bg-1.jpg" data-aos="fade-up">
             <div class="row">
                 <div class="col-lg-6">
                     <div class="content-title">
                         <h2 class="title mb-30">
-                            Subscribe To Our
-                            Newsletter
+                            時刻留意最新消息
                         </h2>
                         <div class="newsletter-form">
                             <form id="newsletterForm">
                                 <div class="input-inline bg-white rounded-pill">
-                                    <input class="form-control border-0" placeholder="Enter email here..." type="text" name="EMAIL" required="">
-                                    <button class="btn btn-lg btn-primary rounded-pill" type="button" aria-label="button">Subscribe Now</button>
+                                    <input class="form-control border-0" placeholder="輸入您的email" type="text" name="EMAIL" required="">
+                                    <button class="btn btn-lg btn-primary rounded-pill" type="button" aria-label="button">訂閱</button>
                                 </div>
                             </form>
                         </div>
@@ -1596,118 +524,3 @@
     </div>
 </section>
 <!-- Newsletter-area end -->
-<!-- Footer-area start -->
-<footer class="footer-area bg-primary-light">
-    <div class="footer-top pt-100 pb-70">
-        <div class="container">
-            <div class="row gx-xl-5 justify-content-between">
-                <div class="col-lg-3 col-sm-6 col-sm-12">
-                    <div class="footer-widget" data-aos="fade-up" data-aos-delay="100">
-                        <!-- Logo -->
-                        <div class="logo mb-20">
-                            <a class="navbar-brand" href="index.html" target="_self" title="Link">
-                                <img class="lazyload" src="/Images/placeholder.png" data-src="/Images/logo/logo-1.png" alt="Brand Logo">
-                            </a>
-                        </div>
-                        <p>
-                            E-learning refers to the process of learning using electronic devices such as computers, smartphones, or tablets. Compare to others.
-                        </p>
-                    </div>
-                </div>
-                <div class="col-lg-2 col-sm-4">
-                    <div class="footer-widget" data-aos="fade-up" data-aos-delay="200">
-                        <h5>Useful Links</h5>
-                        <ul class="footer-links">
-                            <li>
-                                <a href="signup.html" target="_self" title="link">Registration</a>
-                            </li>
-                            <li>
-                                <a href="mentors.html" target="_self" title="link">Mentor</a>
-                            <li>
-                                <a href="courses.html" target="_self" title="link">Courses</a>
-                            </li>
-                            <li>
-                                <a href="error-404.html" target="_self" title="link">Privacy</a>
-                            </li>
-                        </ul>
-                    </div>
-                </div>
-                <div class="col-lg-2 col-sm-4">
-                    <div class="footer-widget" data-aos="fade-up" data-aos-delay="200">
-                        <h5>Features</h5>
-                        <ul class="footer-links">
-                            <li>
-                                <a href="error-404.html" target="_self" title="link">Paid Features</a>
-                            </li>
-                            <li>
-                                <a href="error-404.html" target="_self" title="link">Management</a>
-                            </li>
-                            <li>
-                                <a href="error-404.html" target="_self" title="link">Tracking</a>
-                            </li>
-                            <li>
-                                <a href="error-404.html" target="_self" title="link">Invoice</a>
-                            </li>
-                        </ul>
-                    </div>
-                </div>
-                <div class="col-lg-2 col-sm-4">
-                    <div class="footer-widget" data-aos="fade-up" data-aos-delay="200">
-                        <h5>Explore</h5>
-                        <ul class="footer-links">
-                            <li>
-                                <a href="error-404.html" target="_self" title="link">Our Mission</a>
-                            </li>
-                            <li>
-                                <a href="error-404.html" target="_self" title="link">How It Work</a>
-                            </li>
-                            <li>
-                                <a href="error-404.html" target="_self" title="link">About Us</a>
-                            </li>
-                            <li>
-                                <a href="contact.html" target="_self" title="link">Contact</a>
-                            </li>
-                        </ul>
-                    </div>
-                </div>
-                <div class="col-xl-3 col-sm-6">
-                    <div class="footer-widget" data-aos="fade-up" data-aos-delay="200">
-                        <h5>Download App</h5>
-                        <div class="btn-groups">
-                            <a href="error-404.html" class="btn btn-img size-sm radius-sm" title="App Store" target="_blank">
-                                <img class="lazyload blur-up" src="/Images/placeholder.png" data-src="/Images/app-store.png" alt="App Store">
-                            </a>
-                            <a href="error-404.html" class="btn btn-img size-sm radius-sm" title="Play Store" target="_blank">
-                                <img class="lazyload blur-up" src="/Images/placeholder.png" data-src="/Images/play-store.png" alt="App Store">
-                            </a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-    <div class="copy-right-area border-top ptb-30">
-        <div class="container">
-            <div class="copy-right-content">
-                <div class="social-link rounded style-2 justify-content-center mb-10">
-                    <a href="https://www.instagram.com/" target="_blank" title="Link"><i class="fab fa-instagram"></i></a>
-                    <a href="https://www.dribbble.com/" target="_blank" title="Link"><i class="fab fa-dribbble"></i></a>
-                    <a href="https://www.twitter.com/" target="_blank" title="Link"><i class="fab fa-twitter"></i></a>
-                    <a href="https://www.youtube.com/" target="_blank" title="Link"><i class="fab fa-youtube"></i></a>
-                </div>
-                <span>
-                    Copyright <i class="fal fa-copyright"></i><span id="footerDate"></span> <a href="index.html" target="_self" title="Oppida" class="color-primary">Oppida</a>. All Rights Reserved
-                </span>
-            </div>
-        </div>
-    </div>
-    <!-- Shapes -->
-    <div class="shape">
-        <img class="shape-1 lazyload" src="/Images/placeholder.png" data-src="/Images/shape/shape-3.png" alt="Shape">
-        <img class="shape-2 lazyload" src="/Images/placeholder.png" data-src="/Images/shape/shape-1.png" alt="Shape">
-        <img class="shape-3 lazyload" src="/Images/placeholder.png" data-src="/Images/shape/shape-6.png" alt="Shape">
-        <img class="shape-4 lazyload" src="/Images/placeholder.png" data-src="/Images/shape/shape-4.png" alt="Shape">
-    </div>
-</footer>
-<!-- Footer-area end-->
-
