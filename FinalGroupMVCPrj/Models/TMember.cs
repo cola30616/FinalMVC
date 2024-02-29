@@ -28,7 +28,6 @@ public partial class TMember
     [StringLength(50)]
     public string FShowName { get; set; }
 
-    [Required]
     [Column("fEmail")]
     [StringLength(50)]
     public string FEmail { get; set; }
