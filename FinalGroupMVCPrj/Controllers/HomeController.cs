@@ -27,6 +27,7 @@ namespace FinalGroupMVCPrj.Controllers
 
         public async Task<IActionResult> Index()
         {
+            var fields = await _context.TCourseFields.Select(u => u.FFieldName).ToListAsync();
             var courseList = await _context.TLessonCourses
             .Include(course => course.FTeacher) // 加載 Teacher 導航屬性
             .Select(course => new LessonCourseVM
@@ -45,7 +46,8 @@ namespace FinalGroupMVCPrj.Controllers
                 // 圖片數據
                 imageData = course.FPhoto,
                 // 新增老師
-                teacher = course.FTeacher // 將加載的 Teacher 導航屬性賦值給 ViewModel 的 teacher 屬性
+                teacher = course.FTeacher, // 將加載的 Teacher 導航屬性賦值給 ViewModel 的 teacher 屬性
+                fields = fields
             })
             .ToListAsync();
             return View(courseList);

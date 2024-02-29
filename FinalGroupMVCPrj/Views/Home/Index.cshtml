@@ -10,7 +10,7 @@
                     <h1 class="title mb-30" data-aos="fade-up" data-aos-delay="100">
                         能力想更上層樓就要
                         <span class="d-block text-center">來學樂</span>
-                        <img class="title-shape lazyload" src="/images/placeholder.png" data-src="/images/shape/title-shape.png" alt="Shape">
+                        <img class="title-shape lazyload" src="/images/placeholder.png" data-src="" alt="Shape">
                     </h1>
                     <p class="text text-center" data-aos="fade-up" data-aos-delay="100">
                         歡迎到來學樂，選擇全台最優質線下學習預約平台。
@@ -32,7 +32,7 @@
             </div>
             <div class="col-lg-6" data-aos="fade-up">
                 <div class="banner-image mb-40">
-                    <img class="lazyload blur-up" src="/images/placeholder.png" data-src="/images/banner/hero-banner-1.png" alt="Banner Image">
+                    <img class="rounded lazyload blur-up" src="/images/placeholder.png" data-src="/images/Clement/banner.png" alt="Banner Image" style=" image-rendering: pixelated;filter: brightness(120%);">
                 </div>
             </div>
         </div>
@@ -65,80 +65,29 @@
             </div>
             <div class="col-12" data-aos="fade-up">
                 <div class="swiper category-slider" id="category-slider-1" data-slides-per-view="5" data-swiper-loop="false">
-                    <div class="swiper-wrapper">
-                        <div class="swiper-slide">
-                            <div class="card p-25 border radius-md">
-                                <div class="card-icon radius-md mb-20">
-                                    <i class="ico-ux"></i>
+                    @foreach(var course in Model.Take(1))
+                    {
+                        <div class="swiper-wrapper">
+                            @foreach (var field in course.fields)
+                            {
+                                <div class="swiper-slide">
+                                    <div class="card p-25 border radius-md">
+                                        <div class="card-icon radius-md mb-20">
+                                            <i class="fa-solid fa-lightbulb fa-bounce fa-xs"></i>
+                                        </div>
+                                        <h6 class="card-title lc-1 mb-0">
+                                            <div href="" target="_self" title=@field>
+                                                @field
+                                            </div>
+                                        </h6>
+                                    </div>
                                 </div>
-                                <h6 class="card-title lc-1 mb-0">
-                                    <a href="courses.html" target="_self" title="Web UI Design">
-                                        UI 設計
-                                    </a>
-                                </h6>
-                            </div>
+                            }
+                            
+                            
                         </div>
-                        <div class="swiper-slide">
-                            <div class="card p-25 border radius-md">
-                                <div class="card-icon radius-md mb-20">
-                                    <i class="ico-development"></i>
-                                </div>
-                                <h6 class="card-title lc-1 mb-0">
-                                    <a href="courses.html" target="_self" title="Web Development">
-                                        網頁開發
-                                    </a>
-                                </h6>
-                            </div>
-                        </div>
-                        <div class="swiper-slide">
-                            <div class="card p-25 border radius-md">
-                                <div class="card-icon radius-md mb-20">
-                                    <i class="ico-setting"></i>
-                                </div>
-                                <h6 class="card-title lc-1 mb-0">
-                                    <a href="courses.html" target="_self" title="App Development">
-                                        App 開發
-                                    </a>
-                                </h6>
-                            </div>
-                        </div>
-                        <div class="swiper-slide">
-                            <div class="card p-25 border radius-md">
-                                <div class="card-icon radius-md mb-20">
-                                    <i class="ico-social"></i>
-                                </div>
-                                <h6 class="card-title lc-1 mb-0">
-                                    <a href="courses.html" target="_self" title="Digital Marketing">
-                                        數位行銷
-                                    </a>
-                                </h6>
-                            </div>
-                        </div>
-                        <div class="swiper-slide">
-                            <div class="card p-25 border radius-md">
-                                <div class="card-icon radius-md mb-20">
-                                    <i class="ico-design-tool"></i>
-                                </div>
-                                <h6 class="card-title lc-1 mb-0">
-                                    <a href="courses.html" target="_self" title="Graphics Design">
-                                       美術設計
-                                    </a>
-                                </h6>
-                            </div>
-                        </div>
-                        <div class="swiper-slide">
-                            <div class="card p-25 border radius-md">
-                                <div class="card-icon radius-md mb-20">
-                                    <i class="ico-book"></i>
-                                </div>
-                                <h6 class="card-title lc-1 mb-0">
-                                    <a href="courses.html" target="_self" title="Self Development">
-                                        目前熱門
-                                    </a>
-                                </h6>
-                            </div>
-                        </div>
-                    </div>
+                    }
+                    
                     <div class="swiper-pagination position-static mt-30" id="category-slider-1-pagination"></div>
                 </div>
             </div>
