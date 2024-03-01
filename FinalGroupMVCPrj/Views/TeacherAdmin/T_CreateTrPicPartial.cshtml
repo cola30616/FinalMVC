@@ -1,36 +1,50 @@
 ﻿@model TTeacher
-
+<!-- 新增圖片的modal彈跳視窗-->
 <div class="modal fade" id="exampleModal" tabindex="-100" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog">
+    <div class="modal-dialog modal-dialog-centered modal-lg">
         <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title" id="exampleModalLabel">上傳圖片</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
-            <div class="modal-body">
-                <div style=" display:flex ;">
-                    <div style="text-align: left; " >
-                        <select class="form-select" style="width:150px"><option value="" disabled selected hidden>選擇分類</option></select>
+            <form>
+                <div class="modal-body" style=" display:flex ;">
+                    <!-- 上傳圖片 -->
+                    <div style="text-align: center;padding:100px; border-right: 2px dashed  #ADADAD;">
+                        <img src="~/images/image_upload_icon.png" /><br>
+                        將你要上傳的圖片拖曳到這裡<br>
+                        <div>
+                            <img src="~/images/warning.png" style="width:25px" />
+                            <label style="color:red;font-size:15px">檔案格式無效。</label>
+                        </div>
+                        <button type="button" class="btn btn-primary">選取圖片</button>
                     </div>
-                    <div class="input-group mb-3">
-                        <input type="text" class="form-control" style="width:150px" placeholder="" aria-label="Recipient's username" aria-describedby="button-addon2">
-                        <button class="btn btn-outline-secondary" type="button" id="button-addon2">建立分類</button>
+                    <div style="text-align: center;padding:100px">
+                        <div class="form-floating mb-3">
+                            <select class="form-select">
+                                <option value="" disabled selected hidden></option>
+                                <option value="">所有</option>
+                                <option value="">Designing</option>
+                                <option value="">Development</option>
+                                <option value="">Graphics</option>
+                            </select>
+                            <label for="floatingInput">選擇分類</label>
+                        </div>
+                        <!--一般文字輸入-->
+                        <div class="form-floating mb-3">
+                            <!-- 內容1  -->
+                            <input type="email" class="form-control" id="floatingInput" placeholder="">
+                            <!-- 標題1  -->
+                            <label for="floatingInput">標題</label>
+                        </div>
                     </div>
                 </div>
-
-                <div style="text-align: center;">
-                    將你要上傳的圖片拖曳到這裡
-                </div>
-                <div style="text-align: center;">
-                    <button type="button" class="btn btn-primary">選取圖片</button>
-                </div>
-
-            </div>
-
+            </form>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">關閉</button>
-                
+
             </div>
         </div>
     </div>
 </div>
+

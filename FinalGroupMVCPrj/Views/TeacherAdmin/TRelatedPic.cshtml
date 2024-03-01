@@ -24,7 +24,7 @@
         margin-bottom: 70px;
     }
 
-    .filter-button {
+    .btn btn-outline-secondary {
         font-size: 18px;
         border: 2px solid #3F6184;
         padding: 5px 10px;
@@ -34,9 +34,9 @@
         background: transparent;
     }
 
-        .filter-button:hover,
-        .filter-button:focus,
-        .filter-button.active {
+        .btn.btn-outline-secondary:hover,
+        .btn.btn-outline-secondary:focus,
+        .btn.btn-outline-secondary.active {
             color: #ffffff;
             background-color: #3F6184;
             outline: none;
@@ -51,9 +51,9 @@
 
         .gallery_product .img-info {
             position: absolute;
-            background: rgba(0,0,0,0.5);
+            background: rgba(0,0,0,0.3);
             left: 0;
-            right: 0;
+            right: -5%;
             bottom: 0;
             padding: 20px;
             overflow: hidden;
@@ -62,6 +62,8 @@
             display: none;
             -webkit-transition: 2s;
             transition: 2s;
+            text-align:center;
+
         }
 
         .gallery_product:hover .img-info {
@@ -82,25 +84,25 @@
 <div class="container-fluid">
     <div class="row">
         <!-- 新增圖片的按鈕 -->
-        <div class="text-start">
+        <div class="text-start" style="margin:10px">
             <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">新增圖片</button>
         </div>
-
-        <div align="center">
-            <button class="filter-button" data-filter="all">All</button>
-            <button class="filter-button" data-filter="category1">Designing</button>
-            <button class="filter-button" data-filter="category2">Development</button>
-            <button class="filter-button" data-filter="category3">Graphics</button>
+        <!-- 分類圖片 -->
+        <div align="justify" style="margin:10px">
+            <button class="btn btn-outline-secondary" data-filter="all">所有</button>
+            <button class="btn btn-outline-secondary" data-filter="category1">Designing</button>
+            <button class="btn btn-outline-secondary" data-filter="category2">Development</button>
+            <button class="btn btn-outline-secondary" data-filter="category3">Graphics</button>
         </div>
 
         <br />
-
+        <!-- 圖片們 -->
         <div class="gallery_product col-sm-3 col-xs-6 filter category1">
             <a class="fancybox" rel="ligthbox" href="https://picsum.photos/400/250?image=122">
                 <img class="img-responsive" alt="" src="https://picsum.photos/400/250?image=122" />
-                <div class='img-info'>
-                    <h4>Image Title 1</h4>
-                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+                <div class='img-info' >
+                    <h4 >Image Title 1</h4>
+                    
                 </div>
             </a>
         </div>
@@ -110,7 +112,7 @@
                 <img class="img-responsive" alt="" src="https://picsum.photos/400/250?image=526" />
                 <div class='img-info'>
                     <h4>Image Title 2</h4>
-                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+                 
                 </div>
             </a>
         </div>
@@ -120,7 +122,7 @@
                 <img class="img-responsive" alt="" src="https://picsum.photos/400/250?image=626" />
                 <div class='img-info'>
                     <h4>Image Title 3</h4>
-                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+            
                 </div>
             </a>
         </div>
@@ -130,7 +132,7 @@
                 <img class="img-responsive" alt="" src="https://picsum.photos/400/250?image=626" />
                 <div class='img-info'>
                     <h4>Image Title 4</h4>
-                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+            
                 </div>
             </a>
         </div>
@@ -140,7 +142,7 @@
                 <img class="img-responsive" alt="" src="https://picsum.photos/400/250?image=486" />
                 <div class='img-info'>
                     <h4>Image Title 5</h4>
-                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+          
                 </div>
             </a>
         </div>
@@ -150,7 +152,7 @@
                 <img class="img-responsive" alt="" src="https://picsum.photos/400/250?image=846" />
                 <div class='img-info'>
                     <h4>Image Title 6</h4>
-                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+         
                 </div>
             </a>
         </div>
@@ -160,7 +162,7 @@
                 <img class="img-responsive" alt="" src="https://picsum.photos/400/250?image=1066" />
                 <div class='img-info'>
                     <h4>Image Title 7</h4>
-                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+        
                 </div>
             </a>
         </div>
@@ -170,7 +172,7 @@
                 <img class="img-responsive" alt="" src="https://picsum.photos/400/250?image=506" />
                 <div class='img-info'>
                     <h4>Image Title 8</h4>
-                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+          
                 </div>
             </a>
         </div>
@@ -180,7 +182,7 @@
                 <img class="img-responsive" alt="" src="https://picsum.photos/400/250?image=1026" />
                 <div class='img-info'>
                     <h4>Image Title 9</h4>
-                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+                
                 </div>
             </a>
         </div>
@@ -190,7 +192,7 @@
                 <img class="img-responsive" alt="" src="https://picsum.photos/400/250?image=1077" />
                 <div class='img-info'>
                     <h4>Image Title 10</h4>
-                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+      
                 </div>
             </a>
         </div>
@@ -200,7 +202,7 @@
                 <img class="img-responsive" alt="" src="https://picsum.photos/400/250?image=102" />
                 <div class='img-info'>
                     <h4>Image Title 11</h4>
-                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+          
                 </div>
             </a>
         </div>
@@ -208,9 +210,9 @@
         <div class="gallery_product col-sm-3 col-xs-6 filter category3">
             <a class="fancybox" rel="ligthbox" href="https://picsum.photos/400/250?image=106">
                 <img class="img-responsive" alt="" src="https://picsum.photos/400/250?image=106" />
-                <div class='img-info'>
-                    <h4>Image Title 12</h4>
-                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+                <div class='img-info' >
+                    <h4 >Image Title 12</h4>
+        
                 </div>
             </a>
         </div>
@@ -227,7 +229,7 @@
     /*	gallery */
     $(document).ready(function () {
 
-        $(".filter-button").click(function () {
+        $(".btn.btn-outline-secondary").click(function () {
             var value = $(this).attr('data-filter');
 
             if (value == "all") {
@@ -239,7 +241,7 @@
 
             }
 
-            if ($(".filter-button").removeClass("active")) {
+            if ($(".btn.btn-outline-secondary").removeClass("active")) {
                 $(this).removeClass("active");
             }
             $(this).addClass("active");

@@ -22,7 +22,7 @@ namespace FinalGroupMVCPrj.Controllers
             return View();
         }
 
-        // GET: Teacher/List
+        // GET: Teacher/Info
         //動作簡述：回傳單一老師資訊的頁面
         [HttpGet]
         public IActionResult Info()

@@ -1,17 +1,16 @@
-﻿
-@{
+﻿@{
     ViewData["Title"] = "info";
 }
 
 <!-- Breadcrumb start -->
-<div class="breadcrumb-area bg-img bg-cover" data-bg-image="assets/images/breadcrumb-bg.jpg">
+<div class="breadcrumb-area bg-img bg-cover" data-bg-image="/images/breadcrumb-bg.jpg">
     <div class="container">
         <div class="content text-center">
-            <h2>Mentor Details</h2>
+            <h2>老師詳細資訊</h2>
             <nav aria-label="breadcrumb">
                 <ol class="breadcrumb">
-                    <li class="breadcrumb-item"><a href="index.html">Home</a></li>
-                    <li class="breadcrumb-item active" aria-current="page">Mentor Details</li>
+                    <li class="breadcrumb-item"><a href="index.html">推薦的老師</a></li>
+                    <li class="breadcrumb-item active" aria-current="page">老師詳細資訊</li>
                 </ol>
             </nav>
         </div>
@@ -22,35 +21,43 @@
 <section class="mentor-details pt-100 pb-60">
     <div class="container">
         <div class="row gx-xl-5 align-items-center">
+            <!-- 老師頭像 -->
             <div class="col-xl-4 col-lg-5">
                 <div class="content-img mb-40" data-aos="fade-up">
-                    <div class="lazy-container ratio ratio-1-1 radius-md">
-                        <img class="lazyload blur-up" src="assets/images/placeholder.png" data-src="assets/images/mentor/mentor-1.jpg" alt="Mentor">
-                    </div>
+                    <div class="lazy-container ratio ratio-1-1 radius-md" >
+                        <img class="lazyload blur-up" src="/images/placeholder.png" data-src="/images/mentor/mentor-1.jpg" alt="Mentor">
+                        <div>
+                            <button class="fa-regular fa-heart" style="display: flex;justify-content: center; align-items: center;font-size:30px;width:40px;height:40px;position: absolute; top: 0; left: 85%; margin: 10px;border-radius:50px;background-color:white"></button>
+                        </div>
+                    </div>     
+               
+                   
                 </div>
             </div>
             <div class="col-xl-8 col-lg-7">
                 <div class="content-title mb-40" data-aos="fade-up">
-                    <h3 class="title mt-0 mb-1">Jose Portilla</h3>
+                    <h3 class="title mt-0 mb-1">老師名稱</h3>
                     <span class="subtitle font-sm">
                         Web Designer, Researcher, Instructor at Tork
                     </span>
                     <div class="ratings mt-2">
-                        <div class="rate bg-img" data-bg-image="assets/images/rate-star.png">
-                            <div class="rating-icon bg-img" data-bg-image="assets/images/rate-star.png"></div>
+                        <div class="rate bg-img" data-bg-image="/images/rate-star.png">
+                            <div class="rating-icon bg-img" data-bg-image="/images/rate-star.png"></div>
                         </div>
                         <span class="ratings-total">(5)</span>
                     </div>
+                    <!-- 老師自我介紹 -->
                     <div class="content-text mt-20">
                         <p>
-                            Meet Jose, an experienced educator and industry expert with a passion for sharing knowledge and helping others succeed. With over 3 years of experience in Web Design, Jose brings a wealth of practical knowledge and real-world experience to the classroom.
+                            老師fIntroduction
                         </p>
                         <p>
-                            Whether you're just starting out in Oppida or looking to take your skills to the next level, Jose is the ideal guide to help you achieve your goals. With a focus on practical, hands-on learning, Jose will work with you to develop the skills and knowledge you need to succeed in Oppida.
+                            老師fIntroduction
                         </p>
                     </div>
+                    <!-- 社群網站連結fContactInfo -->
                     <div class="social-link icon-only mt-25">
-                        <span>Social Link:</span>
+                        <span>社群網站連結:</span>
                         <a href="https://www.instagram.com/" target="_blank" title="instagram" class="color-primary"><i class="fab fa-instagram"></i></a>
                         <a href="https://www.dribbble.com/" target="_blank" title="dribbble" class="color-primary"><i class="fab fa-dribbble"></i></a>
                         <a href="https://www.twitter.com/" target="_blank" title="twitter" class="color-primary"><i class="fab fa-twitter"></i></a>
@@ -84,7 +91,7 @@
                             <div class="course-default border radius-md mb-30">
                                 <figure class="course-img">
                                     <a href="course-details.html" title="Image" target="_self" class="lazy-container ratio ratio-2-3">
-                                        <img class="lazyload" src="assets/images/placeholder.png" data-src="assets/images/course/pro-1.jpg" alt="course">
+                                        <img class="lazyload" src="/images/placeholder.png" data-src="/images/course/pro-1.jpg" alt="course">
                                     </a>
                                     <div class="hover-show">
                                         <a href="course-details.html" class="btn btn-md btn-primary rounded-pill" title="Enroll Now" target="_self">Enroll Now</a>
@@ -100,7 +107,7 @@
                                         </h6>
                                         <div class="authors mt-15">
                                             <div class="author">
-                                                <img class="lazyload blur-up radius-sm" src="assets/images/placeholder.png" data-src="assets/images/avatar-1.jpg" alt="Image">
+                                                <img class="lazyload blur-up radius-sm" src="/images/placeholder.png" data-src="/images/avatar-1.jpg" alt="Image">
                                                 <span class="font-sm">
                                                     <a href="course-details.html" target="_self" title="James Hobert">
                                                         James Hobert
@@ -121,7 +128,7 @@
                             <div class="course-default border radius-md mb-30">
                                 <figure class="course-img">
                                     <a href="course-details.html" title="Image" target="_self" class="lazy-container ratio ratio-2-3">
-                                        <img class="lazyload" src="assets/images/placeholder.png" data-src="assets/images/course/pro-2.jpg" alt="course">
+                                        <img class="lazyload" src="/images/placeholder.png" data-src="/images/course/pro-2.jpg" alt="course">
                                     </a>
                                     <div class="hover-show">
                                         <a href="course-details.html" class="btn btn-md btn-primary rounded-pill" title="Enroll Now" target="_self">Enroll Now</a>
@@ -137,7 +144,7 @@
                                         </h6>
                                         <div class="authors mt-15">
                                             <div class="author">
-                                                <img class="lazyload blur-up radius-sm" src="assets/images/placeholder.png" data-src="assets/images/avatar-2.jpg" alt="Image">
+                                                <img class="lazyload blur-up radius-sm" src="/images/placeholder.png" data-src="/images/avatar-2.jpg" alt="Image">
                                                 <span class="font-sm">
                                                     <a href="course-details.html" target="_self" title="Dr. Angela">
                                                         Dr. Angela
@@ -158,7 +165,7 @@
                             <div class="course-default border radius-md mb-30">
                                 <figure class="course-img">
                                     <a href="course-details.html" title="Image" target="_self" class="lazy-container ratio ratio-2-3">
-                                        <img class="lazyload" src="assets/images/placeholder.png" data-src="assets/images/course/pro-3.jpg" alt="course">
+                                        <img class="lazyload" src="/images/placeholder.png" data-src="/images/course/pro-3.jpg" alt="course">
                                     </a>
                                     <div class="hover-show">
                                         <a href="course-details.html" class="btn btn-md btn-primary rounded-pill" title="Enroll Now" target="_self">Enroll Now</a>
@@ -174,7 +181,7 @@
                                         </h6>
                                         <div class="authors mt-15">
                                             <div class="author">
-                                                <img class="lazyload blur-up radius-sm" src="assets/images/placeholder.png" data-src="assets/images/avatar-3.jpg" alt="Image">
+                                                <img class="lazyload blur-up radius-sm" src="/images/placeholder.png" data-src="/images/avatar-3.jpg" alt="Image">
                                                 <span class="font-sm">
                                                     <a href="course-details.html" target="_self" title="Kathy Jone">
                                                         Kathy Jone
@@ -195,7 +202,7 @@
                             <div class="course-default border radius-md mb-30">
                                 <figure class="course-img">
                                     <a href="course-details.html" title="Image" target="_self" class="lazy-container ratio ratio-2-3">
-                                        <img class="lazyload" src="assets/images/placeholder.png" data-src="assets/images/course/pro-4.jpg" alt="course">
+                                        <img class="lazyload" src="/images/placeholder.png" data-src="/images/course/pro-4.jpg" alt="course">
                                     </a>
                                     <div class="hover-show">
                                         <a href="course-details.html" class="btn btn-md btn-primary rounded-pill" title="Enroll Now" target="_self">Enroll Now</a>
@@ -211,7 +218,7 @@
                                         </h6>
                                         <div class="authors mt-15">
                                             <div class="author">
-                                                <img class="lazyload blur-up radius-sm" src="assets/images/placeholder.png" data-src="assets/images/avatar-4.jpg" alt="Image">
+                                                <img class="lazyload blur-up radius-sm" src="/images/placeholder.png" data-src="/images/avatar-4.jpg" alt="Image">
                                                 <span class="font-sm">
                                                     <a href="course-details.html" target="_self" title="Kyle Pew.">
                                                         Kyle Pew.
