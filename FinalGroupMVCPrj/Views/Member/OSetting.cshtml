@@ -1,7 +1,218 @@
 ﻿@model TMember
+
 @{
     ViewData["Title"] = "Setting";
 }
+@section Styles{
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-select@1.13.14/dist/css/bootstrap-select.min.css">
+    <link href="~/css/owenadd/light_prefixed.css" rel="stylesheet" asp-append-version="true" />
+}
+<!-- Breadcrumb start -->
+<div class="breadcrumb-area bg-img bg-cover" data-bg-image="/images/owenadd/breadcrumb-bg.jpg" >
+    <div class="container">
+        <div class="content text-center">
+            <h2>帳號設定</h2>
 
-<h1>@Model.FShowName</h1>
+        </div>
+    </div>
+</div>
+<!-- Breadcrumb end -->
+<!-- Checkout-area start -->
+<div class="shopping-area pt-60 pb-60">
+    <div class="container">
+        <div class="d-flex gap-5">
+            <!--第一區-->
+            <div class=" form-block border radius-md mb-30 d-flex flex-column gap-4 px-4 py-4" data-aos="fade-up" style="width:50%;height:50%">
+                <div class="course d-flex flex-column align-items-center ">
+                    <div class="position-relative">
+                        <img class="lazyload rounded-pill border border-2" src="/images/owenadd/membernophoto.jpg" data-src="/images/owenadd/membernophoto.jpg" alt="course" style="width:200px;height:200px">
+                        <button type="submit" class="btn border border-2 position-absolute translate-middle d-flex justify-content-center align-items-center" style="top: 85%; left: 85%; width: 50px; height: 50px; border-radius: 50%; background-color: white; color: lightgray">
+                            <i class="fa-regular fa-pen-to-square fa-xl"></i>
+                        </button>
+                    </div>
+                </div>
+                <div class="course">
+                    <div class="d-flex flex-column gap-2">
+                        <div class="">
+                            <div class="form-group mb-30">
+                                <label>電子信箱  </label>
+                                <div class="d-flex gap-2 align-items-center justify-content-between">
+                                        <input disabled id="firstName" type="text" class="form-control" name="firstName" value="example@gmail.com" style="width:80%">
+                                    <button class="btn btn-lg  btn-primary radius-sm " type="button" aria-label="button" style=" white-space: nowrap">變更</button>
+                                </div>
+                            </div>
+                            <div class="form-group mb-30">
+                                <label>修改密碼  </label>
+                                <div class="d-flex gap-1 align-items-center justify-content-between">
+                                    <input type="text" class="form-control" name="firstName" placeholder="輸入一次原密碼" style="width:65%">
+                                    <button class="btn btn-lg  btn-primary radius-sm text-center " type="button" aria-label="button" style=" ">開始變更</button>
+                                </div>
+                            </div>
+                       
+                        </div>
+                        <div class="">
+                            <div class="form-group mb-30">
+                                <label>連結帳號  </label>
+                                <div class="d-flex flex-column  gap-2 align-items-start">
+                                    <div class="d-flex align-items-center gap-2">
+                                        <button type="submit" style="  width: 60px; height: 60px;">
+                                            <img class="rounded-pill" src="/images/owenadd/line_logo.png" alt="LINE登入" border="0" />
+                                        </button>
+                                        <div class="text-center">
+                                            <button class="btn  btn-primary radius-sm " type="button" aria-label="button">連結</button>
+                                        </div>
+                                        <button type="submit" style="  width: 60px; height: 60px;">
+                                            <img class="rounded-pill border border-secondary" src="/images/owenadd/Google_logo.png" alt="Google登入" border="0" />
+                                        </button>
+                                        <div class="text-center">
+                                            <button class="btn  btn-primary radius-sm " type="button" aria-label="button">取消連結</button>
+                                        </div>
+                                    </div >
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!--第二區-->
+            <div class=" form-block border radius-md px-5 py-5" data-aos="fade-up">
+                
+                <form>
+                    <h4 class="mb-20 color-primary">基本資訊</h4>
+                    <div class="row gx-xl-5">
+                        <div class="col-lg-12">
+                            <div class="billing-details" data-aos="fade-up">
+                                <div class="row">
+                                    <div class="col-lg-6">
+                                        <div class="form-group mb-30">
+                                            <label for="firstName">真實姓名 </label>
+                                            <input disabled id="firstName" type="text" class="form-control" name="firstName" value="王小明">
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-6">
+                                        <div class="form-group mb-30">
+                                            <label for="lastName">顯示名稱 </label>
+                                            <input id="lastName" type="text" class="form-control" name="lastName" placeholder="請避免使用不雅或爭議名稱" required="">
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-6">
+                                        <div class="form-group mb-30">
+                                            <label for="country">性別 </label>
+                                            <select class="niceselect form-control" id="country">
+                                                <option value=null>其他</option>
+                                                <option value=false>女</option>
+                                                <option value=true>男</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-6">
+                                        <div class="form-group mb-30">
+                                            <label for="email">生日 <span class="color-red">*</span> </label>
+                                            <input id="email" type="date" class="form-control" name="email" placeholder="Email Address" required="">
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-6">
+                                        <div class="form-group mb-30">
+                                            <label for="company_name">電話</label>
+                                            <input id="company_name" type="text" class="form-control" name="company_name" placeholder="Company Name">
+                                        </div>
+                                    </div>
 
+
+
+                    </div>
+   <h4 class="mb-20 color-primary">其他資訊</h4>
+                                <div class="custom-checkbox pb-4">
+                                    <input class="input-checkbox" type="checkbox" name="checkbox"  checked>
+                                    <label class="form-check-label"  aria-controls="collapseAddress" for="differentaddress">
+                                        <span>我想收到優惠活動通知</span>
+                                    </label>
+                                </div>
+                    <div class="row gx-xl-5">
+                                    <div class="col-lg-6">
+                                        <div class="form-group mb-30">
+                                            <label for="country">職業類別 </label>
+                                            <select class="niceselect form-control" id="country">
+                                                <option data-display="Select an Option">Select an option...</option>
+                                                <option value="AX">Aland Islands</option>
+                                                <option value="AF">Afghanistan</option>
+                                                <option value="AL">Albania</option>
+                                                <option value="DZ">Algeria</option>
+                                                <option value="AD">Andorra</option>
+                                                <option value="AO">Angola</option>
+                                                <option value="AI">Anguilla</option>
+                                                <option value="AQ">Antarctica</option>
+                                                <option value="AG">Antigua and Barbuda</option>
+                                                <option value="AR">Argentina</option>
+                                                <option value="AM">Armenia</option>
+                                                <option value="AW">Aruba</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-6">
+                                        <div class="form-group mb-30">
+                                            <label for="country">最高學歷 </label>
+                                            <select class="niceselect form-control" id="country">
+                                                <option data-display="Select an Option">Select an option...</option>
+                                                <option value="AX">Aland Islands</option>
+                                                <option value="AF">Afghanistan</option>
+                                                <option value="AL">Albania</option>
+                                                <option value="DZ">Algeria</option>
+                                                <option value="AD">Andorra</option>0
+                                                <option value="AO">Angola</option>
+                                                <option value="AI">Anguilla</option>
+                                                <option value="AQ">Antarctica</option>
+                                                <option value="AG">Antigua and Barbuda</option>
+                                                <option value="AR">Argentina</option>
+                                                <option value="AM">Armenia</option>
+                                                <option value="AW">Aruba</option>
+                                            </select>
+                                        </div>
+                                    </div> 
+                                    <div class ="col-lg-6">
+                                        <div class="col-lg-6">
+                                            <div class="form-group mb-30">
+                                                <label title="至多可選三個">想學習的領域</label>
+                                                <br />
+                                                <select class="liveCityLcSelect " name="multiple" data-placeholder="至多可選三個" multiple>
+                                                    <option value="lorem">台北市</option>
+                                                    <option value="ipsum">Ipsum</option>
+                                                    <option value="dolor">Dolor</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-6">
+                                            <div class="form-group mb-30">
+                                                <label title="至多可選三個" >生活縣市</label>
+                                                <br />
+                                                <select class="wishField " name="multiple" data-placeholder="至多可選三個" multiple>
+                                                    <option value="lorem">台北市</option>
+                                                    <option value="ipsum">Ipsum</option>
+                                                    <option value="dolor">Dolor</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="d-flex justify-content-end"> <button class="btn btn-lg  btn-primary radius-sm " type="button" aria-label="button" style=" white-space: nowrap">儲存</button></div>
+                                </div>
+                            </div>
+                
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+       
+    </div>
+</div>
+<!-- Checkout-area end -->
+@section Scripts{
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap-select@1.13.14/dist/js/bootstrap-select.min.js"></script>
+    <script src="~/js/owenscript/lc_select.js"></script>    
+    <script src="~/js/owenscript/bundle.min.js"></script>
+    <script src="~/js/owenscript/membersetting.js"></script>
+
+}

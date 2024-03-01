@@ -18,76 +18,113 @@
         <div class="container">
             <div class="row">
                 <div class="col-12">
-                    <div class="main-form ">
-                    <div class="d-flex justify-content-between flex-wrap gap-2 mt-50 mb-30">
-                        <div class="  d-flex align-items-center">
-                            <h3 class="title" data-splitting="" data-aos="">登入</h3>
+                <div class="main-form">
+                    <div class="loginTogle mt-50 mb-15" style="display:block">
+                        <div class=" d-flex justify-content-between flex-wrap gap-2 " >
+                            <div class="  d-flex align-items-center ">
+                                <h3 class="title" data-splitting="" data-aos="">登入</h3>
+                            </div>
+                            <div class="link font-sm d-flex align-items-center">
+                                還沒有帳號？ <span id="toggleToSignup" target="_self" title="立即註冊" class="color-primary" style="cursor: pointer">立即註冊加入</span>
+                            </div>
                         </div>
-                        <div class="link font-sm d-flex align-items-center">
-                            還沒有帳號？ <span target="_self" title="Login Now" class="color-primary" style="cursor: pointer">立即註冊加入</span>
+                        <div class="link font-sm d-flex align-items-center text-dark mt-3">
+                            使用已連結帳號
                         </div>
-                        <div class="link font-sm d-flex align-items-center" style="display:none">
-                            已有帳號→ <span target="_self" title="Login Now" class="color-primary" style="cursor: pointer">立即登入學習</span>
+                        <div class=" d-flex flex-wrap gap-2 mt-3 mb-4">
+
+                            <div>
+                                <button type="submit" style="  width: 60px; height: 60px;">
+                                    <img class="rounded-pill" src="/images/owenadd/line_logo.png" alt="LINE登入" border="0" />
+                                </button>
+                                <button type="submit" style="  width: 60px; height: 60px;">
+                                    <img class="rounded-pill border border-secondary" src="/images/owenadd/Google_logo.png" alt="Google登入" border="0" />
+                                </button>
+                            </div>
+                        </div>
+                        <div class=" d-flex flex-wrap gap-2 mt-2">
+                            <div class="link font-sm d-flex align-items-center  text-dark">
+                                或使用信箱和密碼
+                            </div>
                         </div>
                     </div>
-                        
+                    <div class="signupTogle" style="display:none">
+                        <div class=" d-flex justify-content-between flex-wrap gap-2 mt-50 mb-30">
+                            <div class="  d-flex align-items-center ">
+                                <h3 class="title" data-splitting="" data-aos="">註冊</h3>
+                            </div>
+                            <div class="link font-sm d-flex align-items-center" style="display:none">
+                                已是學員→ <span id="toggleToLogin" target="_self" title="立即登入" class="color-primary" style="cursor: pointer">立即登入學習</span>
+                            </div>
+                        </div>
+                 </div>
+             
                     <form asp-controller="Home" asp-action="Login" >
                             <div class="row">
-                            <div class="col-12">
-                                <div class="form-group mb-20" style="display:none">
-                                    <label asp-for="FRealName" class="form-label">姓名<span class="color-red">*</span></label>
-                                    <input asp-for ="FRealName" class="form-control" placeholder="">
+                            <div class="signupTogle col-12" style="display:none">
+                                <div class="form-group mb-20">
+                                    <input asp-for="FRealName" class="form-control" placeholder="真實姓名">
+                                    <span >註冊後可設定顯示名稱</span>
+                                    <br />
                                     <span asp-validation-for="FRealName" class="text-danger"></span>
+
                                 </div>
                             </div>
                                 <div class="col-12">
                                     <div class="form-group mb-20">
-                                    <label asp-for="FEmail" class="form-label">電子信箱<span class="color-red">*</span></label>
-                                    <input asp-for="FEmail" class="form-control" placeholder="" value="caixiaofang@email.com">
+                                    
+                                    <input asp-for="FEmail" class="form-control" placeholder="電子信箱" value="caixiaofang@email.com">
                                     <span asp-validation-for="FEmail" class="text-danger"></span>
                                     </div>
                                 </div>
                                 <div class="col-12">
                                     <div class="form-group mb-20">
-                                    <label asp-for="FPassword" class="form-label">密碼<span class="color-red">*</span></label>
                                         <div class="position-relative">
-                                        <input asp-for ="FPassword" type="password" class="form-control" placeholder="" value="123456">
+                                        <input asp-for="FPassword" type="password" class="form-control" placeholder="密碼" value="123456">
                                             <span class="show-password-field">
                                             <i class="show-icon"></i>
                                             </span>
                                         <span asp-validation-for="FPassword" class="text-danger"></span>
                                         </div>
                                     </div>
-                                <div class="col-12" style="display:none">
-                                    <div class="form-group mb-20">
-                                        <label  class="form-label">再次輸入密碼<span class="color-red">*</span></label>
+                                <div class="signupTogle col-12" style="display:none">
+                                    <div class="form-group mb-20" >
                                         <div class="position-relative">
-                                            <input type="password" class="form-control" placeholder="" value="">
+                                            <input type="password" class="form-control" placeholder="確認密碼" value="">
                                             <span class="show-password-field">
                                                 <i class="show-icon"></i>
                                             </span>
-                                            <span  class="text-danger"></span>
+                                            <span class="text-danger"></span>
                                         </div>
                                     </div>
                                 </div>
-                                <div class="col-12">
-                                    <div class="custom-checkbox mb-10 font-sm">
+                                <div class="signupTogle col-12" style="display:none">
+                                    <div class=" custom-checkbox mb-10 font-sm" >
+                                        <input class="input-checkbox" type="checkbox" name="checkbox" id="checkbox3" checked>
+                                        <label class="form-check-label" for="checkbox3"><span> 我想收到優惠活動通知</span></label>
+                                    </div>
+                                    <div class=" custom-checkbox mb-10 font-sm">
                                         <input class="input-checkbox" type="checkbox" name="checkbox" id="checkbox4" value="">
-                         @*            <label class="form-check-label" for="checkbox4"><span> 我同意來學樂平台的<a href="terms-conditions.html"> 服務條款＆隱私政策</a></span></label> *@
+                                        <label class="form-check-label" for="checkbox4"><span> 我同意來學樂平台的<span class="color-primary" style="cursor: pointer"> 服務條款＆隱私政策</span></span></label>
                                     </div>
                                 </div>
                             </div>
+
                             <div class="text-center mt-10">
-                                <button class="btn btn-lg btn-primary rounded-pill w-100" type="submit" aria-label="Login">登入</button>
+                                <button id="submitBtn" class="btn btn-lg btn-primary rounded-pill w-100" type="submit" aria-label="Login">登入</button>
                             </div>
-                            <div class="d-flex justify-content-between flex-wrap gap-2 mt-30">
-                                <div class="link font-sm">
-                                    <a href="error-404.html" title="Forgot Password">忘記密碼？</a>
+                            <div class=" loginTogle" style="display:block">
+                                <div class=" d-flex justify-content-between flex-wrap gap-2 mt-30" >
+                                    <div class="link font-sm">
+                                        <a href="error-404.html" title="Forgot Password">忘記密碼？</a>
+                                    </div>
                                 </div>
                             </div>
+
                     </div>
                         </form>
                     </div>
+         
                 </div>
             </div>
         </div>
@@ -98,4 +135,5 @@
     @{
         await Html.RenderPartialAsync("~/Views/Shared/_ValidationScriptsPartial.cshtml");
     }
+    <script src="~/js/owenscript/loginpage.js"></script>
     }
