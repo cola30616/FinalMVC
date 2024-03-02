@@ -104,6 +104,12 @@ namespace FinalGroupMVCPrj.Controllers
             MemberInfoDTO member = new MemberInfoDTO { Email = "ssdasdad@sdasdas", MemberId = 5, ShowName = "2222", RealName = "5555" };
             return Json(member);
         }
+        [HttpPost]
+        public IActionResult teacherApply([FromBody] TTeacherApplyLog data)
+        {
+            data.FApplyDatetime = DateTime.Now;
+            return Ok(new { Message = "操作成功", Data = data });
+        }
 
 
 
