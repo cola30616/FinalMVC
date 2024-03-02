@@ -33,10 +33,10 @@
         on_change       : null, // function(new_value, target_field) {}, - triggered every time field value changes. Passes value and target field object as parameters
         
         labels          : [ // (array) option used to translate script texts
-            'search options',
+            '關鍵字搜尋',
             'add options',
             'Select options ..',
-            '.. no matching options ..',
+            '.. 沒有符合選項 ..',
         ],
     };
     
