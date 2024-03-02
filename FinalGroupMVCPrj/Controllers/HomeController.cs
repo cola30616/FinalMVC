@@ -7,6 +7,8 @@ using Microsoft.EntityFrameworkCore;
 using System.Diagnostics;
 using System.Security.Claims;
 using Microsoft.AspNetCore.Authorization;
+using Newtonsoft.Json;
+using FinalGroupMVCPrj.Models.DTO;
 
 
 
@@ -97,6 +99,12 @@ namespace FinalGroupMVCPrj.Controllers
             HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
             return RedirectToAction("Index");
         }
+        public IActionResult testAPI()
+        {
+            MemberInfoDTO member = new MemberInfoDTO { Email = "ssdasdad@sdasdas", MemberId = 5, ShowName = "2222", RealName = "5555" };
+            return Json(member);
+        }
+
 
 
 
