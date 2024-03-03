@@ -2,34 +2,20 @@
 #nullable disable
 using System;
 using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
-using Microsoft.EntityFrameworkCore;
 
 namespace FinalGroupMVCPrj.Models;
 
-[Table("tTeacherImages")]
 public partial class TTeacherImage
 {
-    [Key]
-    [Column("fTeacherImagesId")]
     public int FTeacherImagesId { get; set; }
 
-    [Column("fTeacherId")]
     public int FTeacherId { get; set; }
 
-    [Required]
-    [Column("fImageName")]
-    [StringLength(50)]
     public string FImageName { get; set; }
 
-    [Column("fImageLink")]
     public byte[] FImageLink { get; set; }
 
-    [Column("fImageSize")]
     public int? FImageSize { get; set; }
 
-    [ForeignKey("FTeacherId")]
-    [InverseProperty("TTeacherImages")]
     public virtual TTeacher FTeacher { get; set; }
 }

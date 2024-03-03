@@ -2,35 +2,20 @@
 #nullable disable
 using System;
 using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
-using Microsoft.EntityFrameworkCore;
 
 namespace FinalGroupMVCPrj.Models;
 
-[Table("tMemberLoginLog")]
 public partial class TMemberLoginLog
 {
-    [Key]
-    [Column("fLoginLogId")]
     public int FLoginLogId { get; set; }
 
-    [Column("fMemberId")]
     public int FMemberId { get; set; }
 
-    [Column("fLoginDateTime", TypeName = "datetime")]
     public DateTime FLoginDateTime { get; set; }
 
-    [Column("fLoginIP")]
-    [StringLength(50)]
-    [Unicode(false)]
     public string FLoginIp { get; set; }
 
-    [Column("fLoginDevice")]
-    [StringLength(50)]
     public string FLoginDevice { get; set; }
 
-    [ForeignKey("FMemberId")]
-    [InverseProperty("TMemberLoginLogs")]
     public virtual TMember FMember { get; set; }
 }

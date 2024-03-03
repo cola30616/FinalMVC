@@ -2,30 +2,18 @@
 #nullable disable
 using System;
 using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
-using Microsoft.EntityFrameworkCore;
 
 namespace FinalGroupMVCPrj.Models;
 
-[Table("tMemberFavCourses")]
 public partial class TMemberFavCourse
 {
-    [Key]
-    [Column("fMFavCId")]
     public int FMfavCid { get; set; }
 
-    [Column("fMemberId")]
     public int FMemberId { get; set; }
 
-    [Column("fLessonCourseId")]
     public int FLessonCourseId { get; set; }
 
-    [ForeignKey("FLessonCourseId")]
-    [InverseProperty("TMemberFavCourses")]
     public virtual TLessonCourse FLessonCourse { get; set; }
 
-    [ForeignKey("FMemberId")]
-    [InverseProperty("TMemberFavCourses")]
     public virtual TMember FMember { get; set; }
 }

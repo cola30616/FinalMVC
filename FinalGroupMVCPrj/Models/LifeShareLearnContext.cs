@@ -88,7 +88,7 @@ public partial class LifeShareLearnContext : DbContext
     public virtual DbSet<TVideoUploadUrl> TVideoUploadUrls { get; set; }
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-        //#warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see http://go.microsoft.com/fwlink/?LinkId=723263.
+//#warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see http://go.microsoft.com/fwlink/?LinkId=723263.
         => optionsBuilder.UseSqlServer("Data Source=.;Initial Catalog=LifeShareLearn;Integrated Security=True;Encrypt=False;TrustServerCertificate=True");
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -97,76 +97,325 @@ public partial class LifeShareLearnContext : DbContext
         {
             entity.HasKey(e => e.FEmployeeId).HasName("PK_tAdims");
 
-            entity.Property(e => e.FEmployeeId).ValueGeneratedNever();
+            entity.ToTable("tAdmins");
+
+            entity.Property(e => e.FEmployeeId)
+                .ValueGeneratedNever()
+                .HasColumnName("fEmployeeId");
+            entity.Property(e => e.FAccountStatus).HasColumnName("fAccountStatus");
+            entity.Property(e => e.FAdminJoinDate)
+                .HasColumnType("datetime")
+                .HasColumnName("fAdminJoinDate");
+            entity.Property(e => e.FAdminRole)
+                .HasMaxLength(50)
+                .HasColumnName("fAdminRole");
+            entity.Property(e => e.FEmployeeEmail)
+                .HasMaxLength(50)
+                .HasColumnName("fEmployeeEmail");
+            entity.Property(e => e.FEmployeeName)
+                .HasMaxLength(50)
+                .HasColumnName("fEmployeeName");
+            entity.Property(e => e.FNote)
+                .HasMaxLength(50)
+                .HasColumnName("fNote");
+            entity.Property(e => e.FPassword)
+                .HasMaxLength(50)
+                .HasColumnName("fPassword");
         });
 
         modelBuilder.Entity<TChatMessageTeacher>(entity =>
         {
-            entity.Property(e => e.FMessageId).ValueGeneratedNever();
+            entity.HasKey(e => e.FMessageId);
+
+            entity.ToTable("tChatMessageTeacher");
+
+            entity.Property(e => e.FMessageId)
+                .ValueGeneratedNever()
+                .HasColumnName("fMessageId");
+            entity.Property(e => e.FChatRoomId).HasColumnName("fChatRoomId");
+            entity.Property(e => e.FMemberId).HasColumnName("fMemberId");
+            entity.Property(e => e.FMessage).HasColumnName("fMessage");
+            entity.Property(e => e.FMessageTime)
+                .HasColumnType("datetime")
+                .HasColumnName("fMessageTime");
+            entity.Property(e => e.FTeacherId).HasColumnName("fTeacherId");
 
             entity.HasOne(d => d.FChatRoom).WithMany(p => p.TChatMessageTeachers)
+                .HasForeignKey(d => d.FChatRoomId)
                 .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("FK_tChatMessageTeacher_tChatRoomTeacher");
         });
 
         modelBuilder.Entity<TChatRoomTeacher>(entity =>
         {
+            entity.HasKey(e => e.ChatRoomId);
+
+            entity.ToTable("tChatRoomTeacher");
+
             entity.Property(e => e.ChatRoomId).ValueGeneratedNever();
+            entity.Property(e => e.FMemberId).HasColumnName("fMemberId");
+            entity.Property(e => e.FTeacherId).HasColumnName("fTeacherId");
 
             entity.HasOne(d => d.FMember).WithMany(p => p.TChatRoomTeachers)
+                .HasForeignKey(d => d.FMemberId)
                 .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("FK_tChatRoomTeacher_tMember");
 
             entity.HasOne(d => d.FTeacher).WithMany(p => p.TChatRoomTeachers)
+                .HasForeignKey(d => d.FTeacherId)
                 .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("FK_tChatRoomTeacher_tTeacher");
         });
 
         modelBuilder.Entity<TCity>(entity =>
         {
-            entity.Property(e => e.FCityId).ValueGeneratedNever();
+            entity.HasKey(e => e.FCityId);
+
+            entity.ToTable("tCity");
+
+            entity.Property(e => e.FCityId)
+                .ValueGeneratedNever()
+                .HasColumnName("fCityId");
+            entity.Property(e => e.FCityName)
+                .IsRequired()
+                .HasMaxLength(50)
+                .HasColumnName("fCityName");
         });
 
         modelBuilder.Entity<TCityDistrict>(entity =>
         {
+            entity.HasKey(e => e.FDistrictId);
+
+            entity.ToTable("tCityDistricts");
+
+            entity.Property(e => e.FDistrictId).HasColumnName("fDistrictId");
+            entity.Property(e => e.FCityId).HasColumnName("fCityId");
+            entity.Property(e => e.FDistrictName)
+                .IsRequired()
+                .HasMaxLength(50)
+                .HasColumnName("fDistrictName");
+
             entity.HasOne(d => d.FCity).WithMany(p => p.TCityDistricts)
+                .HasForeignKey(d => d.FCityId)
                 .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("FK_tCityDistricts_tCity");
         });
 
         modelBuilder.Entity<TCoupon>(entity =>
         {
-            entity.HasOne(d => d.FCouponCondition).WithMany(p => p.TCoupons).HasConstraintName("FK_tCoupon_tCouponConditionList");
+            entity.HasKey(e => e.FCouponId);
+
+            entity.ToTable("tCoupon");
+
+            entity.Property(e => e.FCouponId).HasColumnName("fCouponId");
+            entity.Property(e => e.FCouponConditionId).HasColumnName("fCouponConditionId");
+            entity.Property(e => e.FCouponCreatedDate)
+                .HasColumnType("date")
+                .HasColumnName("fCouponCreatedDate");
+            entity.Property(e => e.FCouponDiscount)
+                .HasColumnType("money")
+                .HasColumnName("fCouponDiscount");
+            entity.Property(e => e.FCouponEndDate)
+                .HasColumnType("date")
+                .HasColumnName("fCouponEndDate");
+            entity.Property(e => e.FCouponStartDate)
+                .HasColumnType("date")
+                .HasColumnName("fCouponStartDate");
+            entity.Property(e => e.FCouponValidOrNot).HasColumnName("fCouponValidOrNot");
+            entity.Property(e => e.FDiscountCode)
+                .IsRequired()
+                .HasMaxLength(50)
+                .HasColumnName("fDiscountCode");
+
+            entity.HasOne(d => d.FCouponCondition).WithMany(p => p.TCoupons)
+                .HasForeignKey(d => d.FCouponConditionId)
+                .HasConstraintName("FK_tCoupon_tCouponConditionList");
+        });
+
+        modelBuilder.Entity<TCouponConditionList>(entity =>
+        {
+            entity.HasKey(e => e.FCouponConditionId);
+
+            entity.ToTable("tCouponConditionList");
+
+            entity.Property(e => e.FCouponConditionId).HasColumnName("fCouponConditionId");
+            entity.Property(e => e.FBirthdayOffer).HasColumnName("fBirthdayOffer");
+            entity.Property(e => e.FCouponConditionName)
+                .IsRequired()
+                .HasMaxLength(50)
+                .HasColumnName("fCouponConditionName");
+            entity.Property(e => e.FCourseType).HasColumnName("fCourseType");
+            entity.Property(e => e.FFieldId).HasColumnName("fField_Id");
+            entity.Property(e => e.FNewRegistrantOrNot).HasColumnName("fNewRegistrantOrNot");
+            entity.Property(e => e.FSubjectId).HasColumnName("fSubjectId");
+            entity.Property(e => e.FTeacherId).HasColumnName("fTeacherId");
+        });
+
+        modelBuilder.Entity<TCourseField>(entity =>
+        {
+            entity.HasKey(e => e.FFieldId);
+
+            entity.ToTable("tCourseFields");
+
+            entity.Property(e => e.FFieldId).HasColumnName("fField_Id");
+            entity.Property(e => e.FFieldCode)
+                .IsRequired()
+                .HasMaxLength(50)
+                .IsUnicode(false)
+                .HasColumnName("fFieldCode");
+            entity.Property(e => e.FFieldName)
+                .IsRequired()
+                .HasMaxLength(50)
+                .HasColumnName("fFieldName");
         });
 
         modelBuilder.Entity<TCourseSubject>(entity =>
         {
             entity.HasKey(e => e.FSubjectId).HasName("PK_tCourseSubjecs");
 
+            entity.ToTable("tCourseSubjects");
+
+            entity.Property(e => e.FSubjectId).HasColumnName("fSubjectId");
+            entity.Property(e => e.FFieldId).HasColumnName("fField_Id");
+            entity.Property(e => e.FSubjectCode)
+                .IsRequired()
+                .HasMaxLength(50)
+                .IsUnicode(false)
+                .HasColumnName("fSubjectCode");
+            entity.Property(e => e.FSubjectName)
+                .IsRequired()
+                .HasMaxLength(50)
+                .HasColumnName("fSubjectName");
+
             entity.HasOne(d => d.FField).WithMany(p => p.TCourseSubjects)
+                .HasForeignKey(d => d.FFieldId)
                 .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("FK_tCourseSubjecs_tCourseFields");
         });
 
         modelBuilder.Entity<TCoursework>(entity =>
         {
+            entity.HasKey(e => e.FCourseworkId);
+
+            entity.ToTable("tCoursework");
+
+            entity.Property(e => e.FCourseworkId).HasColumnName("fCourseworkId");
+            entity.Property(e => e.FComment).HasColumnName("fComment");
+            entity.Property(e => e.FCommentTime)
+                .HasColumnType("datetime")
+                .HasColumnName("fCommentTime");
+            entity.Property(e => e.FDescrpition).HasColumnName("fDescrpition");
+            entity.Property(e => e.FLastModifyTime)
+                .HasColumnType("datetime")
+                .HasColumnName("fLastModifyTime");
+            entity.Property(e => e.FMemberId).HasColumnName("fMemberId");
+            entity.Property(e => e.FName)
+                .IsRequired()
+                .HasMaxLength(50)
+                .HasColumnName("fName");
+            entity.Property(e => e.FOrderDetailId).HasColumnName("fOrderDetail_Id");
+            entity.Property(e => e.FShareAudience)
+                .HasMaxLength(50)
+                .HasColumnName("fShareAudience");
+
             entity.HasOne(d => d.FOrderDetail).WithMany(p => p.TCourseworks)
+                .HasForeignKey(d => d.FOrderDetailId)
                 .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("FK_tCoursework_tOrderDetail");
         });
 
         modelBuilder.Entity<TCourseworkFile>(entity =>
         {
-            entity.Property(e => e.FCourseworkFileId).ValueGeneratedNever();
+            entity.HasKey(e => e.FCourseworkFileId);
+
+            entity.ToTable("tCourseworkFile");
+
+            entity.Property(e => e.FCourseworkFileId)
+                .ValueGeneratedNever()
+                .HasColumnName("fCourseworkFileId");
+            entity.Property(e => e.FCourseworkId).HasColumnName("fCourseworkId");
+            entity.Property(e => e.FFileFormat)
+                .HasMaxLength(50)
+                .HasColumnName("fFileFormat");
+            entity.Property(e => e.FFileLink).HasColumnName("fFileLink");
+            entity.Property(e => e.FFileName)
+                .IsRequired()
+                .HasMaxLength(50)
+                .HasColumnName("fFileName");
+            entity.Property(e => e.FFileSize).HasColumnName("fFileSize");
 
             entity.HasOne(d => d.FCoursework).WithMany(p => p.TCourseworkFiles)
+                .HasForeignKey(d => d.FCourseworkId)
                 .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("FK_tCourseworkFile_tCoursework");
         });
 
         modelBuilder.Entity<TLessonCourse>(entity =>
         {
+            entity.HasKey(e => e.FLessonCourseId);
+
+            entity.ToTable("tLessonCourse");
+
+            entity.Property(e => e.FLessonCourseId).HasColumnName("fLessonCourseId");
+            entity.Property(e => e.FAddressDetail)
+                .HasMaxLength(100)
+                .HasColumnName("fAddressDetail");
+            entity.Property(e => e.FCode)
+                .HasMaxLength(50)
+                .HasColumnName("fCode");
+            entity.Property(e => e.FDescription)
+                .HasMaxLength(500)
+                .HasColumnName("fDescription");
+            entity.Property(e => e.FDistrictId).HasColumnName("fDistrictId");
+            entity.Property(e => e.FEditorDes)
+                .HasMaxLength(500)
+                .HasColumnName("fEditorDes");
+            entity.Property(e => e.FEndTime)
+                .HasPrecision(0)
+                .HasColumnName("fEndTime");
+            entity.Property(e => e.FHomeworkDescription)
+                .HasMaxLength(200)
+                .HasColumnName("fHomeworkDescription");
+            entity.Property(e => e.FLessonDate)
+                .HasColumnType("date")
+                .HasColumnName("fLessonDate");
+            entity.Property(e => e.FMaxPeople).HasColumnName("fMaxPeople");
+            entity.Property(e => e.FMinPeople).HasColumnName("fMinPeople");
+            entity.Property(e => e.FName)
+                .IsRequired()
+                .HasMaxLength(50)
+                .HasColumnName("fName");
+            entity.Property(e => e.FOnlineLink)
+                .HasMaxLength(200)
+                .HasColumnName("fOnlineLink");
+            entity.Property(e => e.FPhoto).HasColumnName("fPhoto");
+            entity.Property(e => e.FPrice)
+                .HasColumnType("money")
+                .HasColumnName("fPrice");
+            entity.Property(e => e.FRegDeadline)
+                .HasColumnType("smalldatetime")
+                .HasColumnName("fRegDeadline");
+            entity.Property(e => e.FRequirement)
+                .HasMaxLength(200)
+                .HasColumnName("fRequirement");
+            entity.Property(e => e.FStartTime)
+                .HasPrecision(0)
+                .HasColumnName("fStartTime");
+            entity.Property(e => e.FStatus)
+                .HasMaxLength(50)
+                .HasColumnName("fStatus");
+            entity.Property(e => e.FStatusNote)
+                .HasMaxLength(50)
+                .HasColumnName("fStatusNote");
+            entity.Property(e => e.FSubjectId).HasColumnName("fSubjectId");
+            entity.Property(e => e.FTeacherId).HasColumnName("fTeacherId");
+            entity.Property(e => e.FVenueName)
+                .HasMaxLength(50)
+                .HasColumnName("fVenueName");
+            entity.Property(e => e.FVenueType).HasColumnName("fVenueType");
+
             entity.HasOne(d => d.FTeacher).WithMany(p => p.TLessonCourses)
+                .HasForeignKey(d => d.FTeacherId)
                 .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("FK_tLessonCourse_tTeacher");
         });
@@ -175,131 +424,467 @@ public partial class LifeShareLearnContext : DbContext
         {
             entity.HasKey(e => e.FLessonEvalId).HasName("PK_tLessonCourseEvaluation");
 
+            entity.ToTable("tLessonEvaluation");
+
+            entity.Property(e => e.FLessonEvalId).HasColumnName("fLessonEval_Id");
+            entity.Property(e => e.FComment)
+                .HasMaxLength(200)
+                .HasColumnName("fComment");
+            entity.Property(e => e.FCommentDate)
+                .HasColumnType("datetime")
+                .HasColumnName("fCommentDate");
+            entity.Property(e => e.FCommentUpdateDate)
+                .HasColumnType("datetime")
+                .HasColumnName("fCommentUpdateDate");
+            entity.Property(e => e.FDisplayStatus).HasColumnName("fDisplayStatus");
+            entity.Property(e => e.FMemberId).HasColumnName("fMemberId");
+            entity.Property(e => e.FOrderDetailId).HasColumnName("fOrderDetail_Id");
+            entity.Property(e => e.FScore).HasColumnName("fScore");
+
             entity.HasOne(d => d.FMember).WithMany(p => p.TLessonEvaluations)
+                .HasForeignKey(d => d.FMemberId)
                 .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("FK_tLessonEvaluation_tMember");
 
             entity.HasOne(d => d.FOrderDetail).WithMany(p => p.TLessonEvaluations)
+                .HasForeignKey(d => d.FOrderDetailId)
                 .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("FK_tLessonEvaluation_tOrderDetail");
         });
 
         modelBuilder.Entity<TMember>(entity =>
         {
-            entity.Property(e => e.FPhone).IsFixedLength();
+            entity.HasKey(e => e.FMemberId);
+
+            entity.ToTable("tMember");
+
+            entity.Property(e => e.FMemberId).HasColumnName("fMemberId");
+            entity.Property(e => e.FBirthDate)
+                .HasColumnType("date")
+                .HasColumnName("fBirthDate");
+            entity.Property(e => e.FEducation)
+                .HasMaxLength(50)
+                .HasColumnName("fEducation");
+            entity.Property(e => e.FEmail)
+                .IsRequired()
+                .HasMaxLength(50)
+                .HasColumnName("fEmail");
+            entity.Property(e => e.FEmailVerification).HasColumnName("fEmailVerification");
+            entity.Property(e => e.FGender).HasColumnName("fGender");
+            entity.Property(e => e.FGetCampaignInfo).HasColumnName("fGetCampaignInfo");
+            entity.Property(e => e.FJob)
+                .HasMaxLength(50)
+                .HasColumnName("fJob");
+            entity.Property(e => e.FMemberProfilePic).HasColumnName("fMemberProfilePic");
+            entity.Property(e => e.FNote)
+                .HasMaxLength(50)
+                .HasColumnName("fNote");
+            entity.Property(e => e.FPassword)
+                .IsRequired()
+                .HasMaxLength(200)
+                .HasColumnName("fPassword");
+            entity.Property(e => e.FPhone)
+                .HasMaxLength(10)
+                .IsUnicode(false)
+                .IsFixedLength()
+                .HasColumnName("fPhone");
+            entity.Property(e => e.FQualifiedTeacher).HasColumnName("fQualifiedTeacher");
+            entity.Property(e => e.FRealName)
+                .IsRequired()
+                .HasMaxLength(50)
+                .HasColumnName("fRealName");
+            entity.Property(e => e.FRegisterDatetime)
+                .HasColumnType("datetime")
+                .HasColumnName("fRegisterDatetime");
+            entity.Property(e => e.FShowName)
+                .IsRequired()
+                .HasMaxLength(50)
+                .HasColumnName("fShowName");
+            entity.Property(e => e.FStatus).HasColumnName("fStatus");
         });
 
         modelBuilder.Entity<TMemberCitiesList>(entity =>
         {
             entity.HasKey(e => e.FMcitiesId).HasName("PK_tMemberCitesList");
 
+            entity.ToTable("tMemberCitiesList");
+
+            entity.Property(e => e.FMcitiesId).HasColumnName("fMCitiesId");
+            entity.Property(e => e.FCityId).HasColumnName("fCityId");
+            entity.Property(e => e.FMemberId).HasColumnName("fMemberId");
+
             entity.HasOne(d => d.FCity).WithMany(p => p.TMemberCitiesLists)
+                .HasForeignKey(d => d.FCityId)
                 .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("FK_tMemberCitesList_tCity");
 
             entity.HasOne(d => d.FMember).WithMany(p => p.TMemberCitiesLists)
+                .HasForeignKey(d => d.FMemberId)
                 .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("FK_tMemberCitesList_tMember");
         });
 
         modelBuilder.Entity<TMemberFavCourse>(entity =>
         {
+            entity.HasKey(e => e.FMfavCid);
+
+            entity.ToTable("tMemberFavCourses");
+
+            entity.Property(e => e.FMfavCid).HasColumnName("fMFavCId");
+            entity.Property(e => e.FLessonCourseId).HasColumnName("fLessonCourseId");
+            entity.Property(e => e.FMemberId).HasColumnName("fMemberId");
+
             entity.HasOne(d => d.FLessonCourse).WithMany(p => p.TMemberFavCourses)
+                .HasForeignKey(d => d.FLessonCourseId)
                 .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("FK_tMemberFavCourses_tLessonCourse");
 
             entity.HasOne(d => d.FMember).WithMany(p => p.TMemberFavCourses)
+                .HasForeignKey(d => d.FMemberId)
                 .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("FK_tMemberFavCourses_tMember");
         });
 
         modelBuilder.Entity<TMemberFavTeacher>(entity =>
         {
+            entity.HasKey(e => e.FMfavTid);
+
+            entity.ToTable("tMemberFavTeachers");
+
+            entity.Property(e => e.FMfavTid).HasColumnName("fMFavTId");
+            entity.Property(e => e.FMemberId).HasColumnName("fMemberId");
+            entity.Property(e => e.FTeacherId).HasColumnName("fTeacherId");
+
             entity.HasOne(d => d.FMember).WithMany(p => p.TMemberFavTeachers)
+                .HasForeignKey(d => d.FMemberId)
                 .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("FK_tMemberFavTeachers_tMember");
 
             entity.HasOne(d => d.FTeacher).WithMany(p => p.TMemberFavTeachers)
+                .HasForeignKey(d => d.FTeacherId)
                 .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("FK_tMemberFavTeachers_tTeacher");
         });
 
         modelBuilder.Entity<TMemberGetPush>(entity =>
         {
+            entity.HasKey(e => e.FMemberGetPushId);
+
+            entity.ToTable("tMemberGetPush");
+
+            entity.Property(e => e.FMemberGetPushId).HasColumnName("fMemberGetPushId");
+            entity.Property(e => e.FMemberId).HasColumnName("fMemberId");
+            entity.Property(e => e.FPushCreatedTime)
+                .HasColumnType("datetime")
+                .HasColumnName("fPushCreatedTime");
+            entity.Property(e => e.FPushMessageId).HasColumnName("fPushMessageId");
+            entity.Property(e => e.FPushRead).HasColumnName("fPushRead");
+
             entity.HasOne(d => d.FPushMessage).WithMany(p => p.TMemberGetPushes)
+                .HasForeignKey(d => d.FPushMessageId)
                 .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("FK_tMemberGetPush_tPushMessage");
         });
 
         modelBuilder.Entity<TMemberLoginLog>(entity =>
         {
+            entity.HasKey(e => e.FLoginLogId);
+
+            entity.ToTable("tMemberLoginLog");
+
+            entity.Property(e => e.FLoginLogId).HasColumnName("fLoginLogId");
+            entity.Property(e => e.FLoginDateTime)
+                .HasColumnType("datetime")
+                .HasColumnName("fLoginDateTime");
+            entity.Property(e => e.FLoginDevice)
+                .HasMaxLength(50)
+                .HasColumnName("fLoginDevice");
+            entity.Property(e => e.FLoginIp)
+                .HasMaxLength(50)
+                .IsUnicode(false)
+                .HasColumnName("fLoginIP");
+            entity.Property(e => e.FMemberId).HasColumnName("fMemberId");
+
             entity.HasOne(d => d.FMember).WithMany(p => p.TMemberLoginLogs)
+                .HasForeignKey(d => d.FMemberId)
                 .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("FK_tMemberLoginLog_tMember");
         });
 
         modelBuilder.Entity<TMemberWishField>(entity =>
         {
+            entity.HasKey(e => e.FMwishFieldsId);
+
+            entity.ToTable("tMemberWishFields");
+
+            entity.Property(e => e.FMwishFieldsId).HasColumnName("fMWishFieldsId");
+            entity.Property(e => e.FFieldId).HasColumnName("fField_Id");
+            entity.Property(e => e.FMemberId).HasColumnName("fMemberId");
+
             entity.HasOne(d => d.FField).WithMany(p => p.TMemberWishFields)
+                .HasForeignKey(d => d.FFieldId)
                 .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("FK_tMemberWishFields_tCourseFields");
 
             entity.HasOne(d => d.FMember).WithMany(p => p.TMemberWishFields)
+                .HasForeignKey(d => d.FMemberId)
                 .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("FK_tMemberWishFields_tMember");
         });
 
         modelBuilder.Entity<TOrder>(entity =>
         {
+            entity.HasKey(e => e.FOrderId);
+
+            entity.ToTable("tOrder");
+
+            entity.Property(e => e.FOrderId).HasColumnName("fOrderId");
+            entity.Property(e => e.FCouponId).HasColumnName("fCouponId");
+            entity.Property(e => e.FMemberId).HasColumnName("fMemberId");
+            entity.Property(e => e.FOrderDate)
+                .HasColumnType("datetime")
+                .HasColumnName("fOrderDate");
+            entity.Property(e => e.FPaymentMethod)
+                .IsRequired()
+                .HasMaxLength(50)
+                .HasColumnName("fPaymentMethod");
+
             entity.HasOne(d => d.FMember).WithMany(p => p.TOrders)
+                .HasForeignKey(d => d.FMemberId)
                 .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("FK_tOrder_tMember");
         });
 
         modelBuilder.Entity<TOrderDetail>(entity =>
         {
+            entity.HasKey(e => e.FOrderDetailId);
+
+            entity.ToTable("tOrderDetail");
+
+            entity.Property(e => e.FOrderDetailId).HasColumnName("fOrderDetail_Id");
+            entity.Property(e => e.FDiscount)
+                .HasColumnType("money")
+                .HasColumnName("fDiscount");
+            entity.Property(e => e.FLessonCourseId).HasColumnName("fLessonCourseId");
+            entity.Property(e => e.FLessonPrice)
+                .HasColumnType("money")
+                .HasColumnName("fLessonPrice");
+            entity.Property(e => e.FModificationDescription)
+                .HasMaxLength(50)
+                .HasColumnName("fModificationDescription");
+            entity.Property(e => e.FOrderId).HasColumnName("fOrderId");
+            entity.Property(e => e.FOrderValid).HasColumnName("fOrderValid");
+
             entity.HasOne(d => d.FLessonCourse).WithMany(p => p.TOrderDetails)
+                .HasForeignKey(d => d.FLessonCourseId)
                 .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("FK_tOrderDetail_tLessonCourse");
 
             entity.HasOne(d => d.FOrder).WithMany(p => p.TOrderDetails)
+                .HasForeignKey(d => d.FOrderId)
                 .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("FK_tOrderDetail_tOrder");
         });
 
+        modelBuilder.Entity<TPushLayout>(entity =>
+        {
+            entity.HasKey(e => e.FPushLayoutId);
+
+            entity.ToTable("tPushLayout");
+
+            entity.Property(e => e.FPushLayoutId).HasColumnName("fPushLayoutId");
+            entity.Property(e => e.FLayoutName)
+                .HasMaxLength(50)
+                .HasColumnName("fLayoutName");
+        });
+
         modelBuilder.Entity<TPushMessage>(entity =>
         {
+            entity.HasKey(e => e.FPushMessageId);
+
+            entity.ToTable("tPushMessage");
+
+            entity.Property(e => e.FPushMessageId).HasColumnName("fPushMessageId");
+            entity.Property(e => e.FEmployeeId).HasColumnName("fEmployeeId");
+            entity.Property(e => e.FPushContent)
+                .IsRequired()
+                .HasColumnName("fPushContent");
+            entity.Property(e => e.FPushCreatedTime)
+                .HasColumnType("datetime")
+                .HasColumnName("fPushCreatedTime");
+            entity.Property(e => e.FPushEndDate)
+                .HasColumnType("date")
+                .HasColumnName("fPushEndDate");
+            entity.Property(e => e.FPushImagePath).HasColumnName("fPushImagePath");
+            entity.Property(e => e.FPushLastUpdatedTime)
+                .HasColumnType("datetime")
+                .HasColumnName("fPushLastUpdatedTime");
+            entity.Property(e => e.FPushLayoutId).HasColumnName("fPushLayoutId");
+            entity.Property(e => e.FPushMethod)
+                .IsRequired()
+                .HasMaxLength(50)
+                .HasColumnName("fPushMethod");
+            entity.Property(e => e.FPushStartDate)
+                .HasColumnType("date")
+                .HasColumnName("fPushStartDate");
+            entity.Property(e => e.FPushType)
+                .IsRequired()
+                .HasMaxLength(50)
+                .HasColumnName("fPushType");
+
             entity.HasOne(d => d.FEmployee).WithMany(p => p.TPushMessages)
+                .HasForeignKey(d => d.FEmployeeId)
                 .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("FK_tPushMessage_tAdmins");
 
             entity.HasOne(d => d.FPushLayout).WithMany(p => p.TPushMessages)
+                .HasForeignKey(d => d.FPushLayoutId)
                 .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("FK_tPushMessage_tPushLayout");
         });
 
         modelBuilder.Entity<TServiceForm>(entity =>
         {
-            entity.HasOne(d => d.FEmployee).WithMany(p => p.TServiceForms).HasConstraintName("FK_tServiceForm_tAdims");
+            entity.HasKey(e => e.FServiceId);
+
+            entity.ToTable("tServiceForm");
+
+            entity.Property(e => e.FServiceId).HasColumnName("fServiceId");
+            entity.Property(e => e.FEmployeeId).HasColumnName("fEmployeeId");
+            entity.Property(e => e.FMemberId).HasColumnName("fMemberId");
+            entity.Property(e => e.FServiceChannel)
+                .HasMaxLength(50)
+                .HasColumnName("fServiceChannel");
+            entity.Property(e => e.FServiceClosedTime)
+                .HasColumnType("datetime")
+                .HasColumnName("fServiceClosedTime");
+            entity.Property(e => e.FServiceContent).HasColumnName("fServiceContent");
+            entity.Property(e => e.FServiceCreatedTime)
+                .HasColumnType("datetime")
+                .HasColumnName("fServiceCreatedTime");
+            entity.Property(e => e.FServiceFormType)
+                .IsRequired()
+                .HasMaxLength(50)
+                .HasColumnName("fServiceFormType");
+            entity.Property(e => e.FServiceParentId).HasColumnName("fServiceParentId");
+            entity.Property(e => e.FServiceStatus)
+                .HasMaxLength(50)
+                .HasColumnName("fServiceStatus");
+            entity.Property(e => e.FServiceStep).HasColumnName("fServiceStep");
+            entity.Property(e => e.FServiceTag)
+                .HasMaxLength(50)
+                .HasColumnName("fServiceTag");
+            entity.Property(e => e.FServiceType)
+                .HasMaxLength(50)
+                .HasColumnName("fServiceType");
+
+            entity.HasOne(d => d.FEmployee).WithMany(p => p.TServiceForms)
+                .HasForeignKey(d => d.FEmployeeId)
+                .HasConstraintName("FK_tServiceForm_tAdims");
         });
 
         modelBuilder.Entity<TTeacher>(entity =>
         {
+            entity.HasKey(e => e.FTeacherId);
+
+            entity.ToTable("tTeacher");
+
+            entity.Property(e => e.FTeacherId).HasColumnName("fTeacherId");
+            entity.Property(e => e.FContactInfo)
+                .HasMaxLength(50)
+                .HasColumnName("fContactInfo");
+            entity.Property(e => e.FIntroduction)
+                .HasMaxLength(300)
+                .HasColumnName("fIntroduction");
+            entity.Property(e => e.FJoinDatetime)
+                .HasColumnType("datetime")
+                .HasColumnName("fJoinDatetime");
+            entity.Property(e => e.FMemberId).HasColumnName("fMemberId");
+            entity.Property(e => e.FNote)
+                .HasMaxLength(50)
+                .HasColumnName("fNote");
+            entity.Property(e => e.FTeacherName)
+                .IsRequired()
+                .HasMaxLength(50)
+                .HasColumnName("fTeacherName");
+            entity.Property(e => e.FTeacherProfilePic).HasColumnName("fTeacherProfilePic");
+
             entity.HasOne(d => d.FMember).WithMany(p => p.TTeachers)
+                .HasForeignKey(d => d.FMemberId)
                 .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("FK_tTeacher_tMember");
         });
 
         modelBuilder.Entity<TTeacherApplyLog>(entity =>
         {
+            entity.HasKey(e => e.FApplyLogId);
+
+            entity.ToTable("tTeacherApplyLog");
+
+            entity.Property(e => e.FApplyLogId).HasColumnName("fApplyLogId");
+            entity.Property(e => e.FApplyDatetime)
+                .HasColumnType("datetime")
+                .HasColumnName("fApplyDatetime");
+            entity.Property(e => e.FContactInfo)
+                .IsRequired()
+                .HasMaxLength(50)
+                .HasColumnName("fContactInfo");
+            entity.Property(e => e.FEmployeeId).HasColumnName("fEmployeeId");
+            entity.Property(e => e.FIntroduction)
+                .HasMaxLength(200)
+                .HasColumnName("fIntroduction");
+            entity.Property(e => e.FMemberId).HasColumnName("fMemberId");
+            entity.Property(e => e.FNote)
+                .HasMaxLength(50)
+                .HasColumnName("fNote");
+            entity.Property(e => e.FPdfLink)
+                .HasMaxLength(100)
+                .HasColumnName("fPdfLink");
+            entity.Property(e => e.FProgressStatus)
+                .HasMaxLength(50)
+                .HasColumnName("fProgressStatus");
+            entity.Property(e => e.FRealName)
+                .IsRequired()
+                .HasMaxLength(50)
+                .HasColumnName("fRealName");
+            entity.Property(e => e.FReason)
+                .HasMaxLength(200)
+                .HasColumnName("fReason");
+            entity.Property(e => e.FReviewDatetime)
+                .HasColumnType("datetime")
+                .HasColumnName("fReviewDatetime");
+            entity.Property(e => e.FReviewResult).HasColumnName("fReviewResult");
+            entity.Property(e => e.FTeacherName)
+                .IsRequired()
+                .HasMaxLength(50)
+                .HasColumnName("fTeacherName");
+            entity.Property(e => e.FTeacherPlanLink)
+                .HasMaxLength(100)
+                .HasColumnName("fTeacherPlanLink");
+
             entity.HasOne(d => d.FMember).WithMany(p => p.TTeacherApplyLogs)
+                .HasForeignKey(d => d.FMemberId)
                 .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("FK_tTeacherApplyLog_tMember");
         });
 
         modelBuilder.Entity<TTeacherImage>(entity =>
         {
+            entity.HasKey(e => e.FTeacherImagesId);
+
+            entity.ToTable("tTeacherImages");
+
+            entity.Property(e => e.FTeacherImagesId).HasColumnName("fTeacherImagesId");
+            entity.Property(e => e.FImageLink).HasColumnName("fImageLink");
+            entity.Property(e => e.FImageName)
+                .IsRequired()
+                .HasMaxLength(50)
+                .HasColumnName("fImageName");
+            entity.Property(e => e.FImageSize).HasColumnName("fImageSize");
+            entity.Property(e => e.FTeacherId).HasColumnName("fTeacherId");
+
             entity.HasOne(d => d.FTeacher).WithMany(p => p.TTeacherImages)
+                .HasForeignKey(d => d.FTeacherId)
                 .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("FK_tTeacherImages_tTeacher");
         });
@@ -308,30 +893,210 @@ public partial class LifeShareLearnContext : DbContext
         {
             entity.HasKey(e => e.FTeacherSujectsId).HasName("PK_tTeacherSujects");
 
+            entity.ToTable("tTeacherSubjects");
+
+            entity.Property(e => e.FTeacherSujectsId).HasColumnName("fTeacherSujectsId");
+            entity.Property(e => e.FSubjectId).HasColumnName("fSubjectId");
+            entity.Property(e => e.FTeacherId).HasColumnName("fTeacherId");
+
             entity.HasOne(d => d.FSubject).WithMany(p => p.TTeacherSubjects)
+                .HasForeignKey(d => d.FSubjectId)
                 .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("FK_tTeacherSujects_tCourseSubjecs");
 
             entity.HasOne(d => d.FTeacher).WithMany(p => p.TTeacherSubjects)
+                .HasForeignKey(d => d.FTeacherId)
                 .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("FK_tTeacherSujects_tTeacher");
         });
 
         modelBuilder.Entity<TVenue>(entity =>
         {
+            entity.HasKey(e => e.FVenueId);
+
+            entity.ToTable("tVenue");
+
+            entity.Property(e => e.FVenueId).HasColumnName("fVenueId");
+            entity.Property(e => e.FAddedTime)
+                .HasColumnType("date")
+                .HasColumnName("fAddedTime");
+            entity.Property(e => e.FAddressDetail)
+                .IsRequired()
+                .HasMaxLength(50)
+                .HasColumnName("fAddressDetail");
+            entity.Property(e => e.FDistrictId).HasColumnName("fDistrictId");
+            entity.Property(e => e.FMaxPeople).HasColumnName("fMaxPeople");
+            entity.Property(e => e.FNote)
+                .HasMaxLength(50)
+                .HasColumnName("fNote");
+            entity.Property(e => e.FOpenStatus).HasColumnName("fOpenStatus");
+            entity.Property(e => e.FPriceHalfHr)
+                .HasColumnType("money")
+                .HasColumnName("fPriceHalfHr");
+            entity.Property(e => e.FReviewStatus).HasColumnName("fReviewStatus");
+            entity.Property(e => e.FVenueCode)
+                .IsRequired()
+                .HasMaxLength(50)
+                .HasColumnName("fVenueCode");
+            entity.Property(e => e.FVenueName)
+                .IsRequired()
+                .HasMaxLength(50)
+                .HasColumnName("fVenueName");
+            entity.Property(e => e.FVenueProviderId).HasColumnName("fVenueProviderId");
+
             entity.HasOne(d => d.FVenueProvider).WithMany(p => p.TVenues)
+                .HasForeignKey(d => d.FVenueProviderId)
                 .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("FK_tVenue_tVenueProviderInfo");
         });
 
         modelBuilder.Entity<TVenueProviderInfo>(entity =>
         {
-            entity.Property(e => e.FPassword).IsFixedLength();
+            entity.HasKey(e => e.FVenueProviderId);
+
+            entity.ToTable("tVenueProviderInfo");
+
+            entity.Property(e => e.FVenueProviderId).HasColumnName("fVenueProviderId");
+            entity.Property(e => e.FContactName)
+                .IsRequired()
+                .HasMaxLength(50)
+                .HasColumnName("fContactName");
+            entity.Property(e => e.FEmail)
+                .IsRequired()
+                .HasMaxLength(50)
+                .HasColumnName("fEmail");
+            entity.Property(e => e.FGuinumber)
+                .IsRequired()
+                .HasMaxLength(50)
+                .HasColumnName("fGUInumber");
+            entity.Property(e => e.FName)
+                .IsRequired()
+                .HasMaxLength(50)
+                .HasColumnName("fName");
+            entity.Property(e => e.FPassword)
+                .IsRequired()
+                .HasMaxLength(10)
+                .IsFixedLength()
+                .HasColumnName("fPassword");
+            entity.Property(e => e.FPhone)
+                .IsRequired()
+                .HasMaxLength(50)
+                .HasColumnName("fPhone");
         });
 
         modelBuilder.Entity<TVideoCourse>(entity =>
         {
-            entity.Property(e => e.FNote).IsFixedLength();
+            entity.HasKey(e => e.FVideoCourseId);
+
+            entity.ToTable("tVideoCourse");
+
+            entity.Property(e => e.FVideoCourseId).HasColumnName("fVideoCourseId");
+            entity.Property(e => e.FCode)
+                .HasMaxLength(20)
+                .HasColumnName("fCode");
+            entity.Property(e => e.FCoursePhoto).HasColumnName("fCoursePhoto");
+            entity.Property(e => e.FDescription)
+                .HasMaxLength(500)
+                .HasColumnName("fDescription");
+            entity.Property(e => e.FHomeworkDescription)
+                .IsRequired()
+                .HasMaxLength(200)
+                .HasColumnName("fHomeworkDescription");
+            entity.Property(e => e.FLaunchStatus).HasColumnName("fLaunchStatus");
+            entity.Property(e => e.FName)
+                .HasMaxLength(50)
+                .HasColumnName("fName");
+            entity.Property(e => e.FNote)
+                .HasMaxLength(10)
+                .IsFixedLength()
+                .HasColumnName("fNote");
+            entity.Property(e => e.FPrice)
+                .HasColumnType("money")
+                .HasColumnName("fPrice");
+            entity.Property(e => e.FRequirement)
+                .HasMaxLength(200)
+                .HasColumnName("fRequirement");
+            entity.Property(e => e.FSubjectId).HasColumnName("fSubjectId");
+            entity.Property(e => e.FTeacherId).HasColumnName("fTeacherId");
+            entity.Property(e => e.FUpdateDate)
+                .HasColumnType("datetime")
+                .HasColumnName("fUpdateDate");
+            entity.Property(e => e.FUploadDate)
+                .HasColumnType("datetime")
+                .HasColumnName("fUploadDate");
+            entity.Property(e => e.FValidate)
+                .HasMaxLength(10)
+                .HasColumnName("fValidate");
+        });
+
+        modelBuilder.Entity<TVideoCourseEvaluation>(entity =>
+        {
+            entity.HasKey(e => e.FVideoCourseEvalId);
+
+            entity.ToTable("tVideoCourseEvaluation");
+
+            entity.Property(e => e.FVideoCourseEvalId).HasColumnName("fVideoCourseEval_Id");
+            entity.Property(e => e.FComment)
+                .HasMaxLength(200)
+                .HasColumnName("fComment");
+            entity.Property(e => e.FCommentDate)
+                .HasColumnType("datetime")
+                .HasColumnName("fCommentDate");
+            entity.Property(e => e.FCommentUpdateDate)
+                .HasColumnType("datetime")
+                .HasColumnName("fCommentUpdateDate");
+            entity.Property(e => e.FDisplayStatus).HasColumnName("fDisplayStatus");
+            entity.Property(e => e.FMemberId).HasColumnName("fMemberId");
+            entity.Property(e => e.FScore).HasColumnName("fScore");
+            entity.Property(e => e.FVideoCourseId).HasColumnName("fVideoCourseId");
+        });
+
+        modelBuilder.Entity<TVideoCourseQa>(entity =>
+        {
+            entity.HasKey(e => e.FVideoCourseQaid);
+
+            entity.ToTable("tVideoCourseQA");
+
+            entity.Property(e => e.FVideoCourseQaid).HasColumnName("fVideoCourseQAId");
+            entity.Property(e => e.FAnswer)
+                .HasMaxLength(200)
+                .HasColumnName("fAnswer");
+            entity.Property(e => e.FAnswerCondition).HasColumnName("fAnswerCondition");
+            entity.Property(e => e.FAnswerDate)
+                .HasColumnType("datetime")
+                .HasColumnName("fAnswerDate");
+            entity.Property(e => e.FDisplayStatus).HasColumnName("fDisplayStatus");
+            entity.Property(e => e.FMemberId).HasColumnName("fMemberId");
+            entity.Property(e => e.FPurpose)
+                .IsRequired()
+                .HasMaxLength(50)
+                .HasColumnName("fPurpose");
+            entity.Property(e => e.FQuestion)
+                .HasMaxLength(200)
+                .HasColumnName("fQuestion");
+            entity.Property(e => e.FQuestionDate)
+                .HasColumnType("datetime")
+                .HasColumnName("fQuestionDate");
+            entity.Property(e => e.FVideoCourseId).HasColumnName("fVideoCourseId");
+        });
+
+        modelBuilder.Entity<TVideoUploadUrl>(entity =>
+        {
+            entity.HasKey(e => e.FVideoUploadUrlId);
+
+            entity.ToTable("tVideoUploadUrl");
+
+            entity.Property(e => e.FVideoUploadUrlId).HasColumnName("fVideoUploadUrl_Id");
+            entity.Property(e => e.FUploadTime)
+                .HasColumnType("datetime")
+                .HasColumnName("fUploadTime");
+            entity.Property(e => e.FVideoCourseId).HasColumnName("fVideoCourseId");
+            entity.Property(e => e.FVideoName)
+                .HasMaxLength(50)
+                .HasColumnName("fVideoName");
+            entity.Property(e => e.FVideoPath)
+                .HasMaxLength(200)
+                .HasColumnName("fVideoPath");
         });
 
         OnModelCreatingPartial(modelBuilder);

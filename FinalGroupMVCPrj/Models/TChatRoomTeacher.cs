@@ -2,32 +2,20 @@
 #nullable disable
 using System;
 using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
-using Microsoft.EntityFrameworkCore;
 
 namespace FinalGroupMVCPrj.Models;
 
-[Table("tChatRoomTeacher")]
 public partial class TChatRoomTeacher
 {
-    [Key]
     public int ChatRoomId { get; set; }
 
-    [Column("fMemberId")]
     public int FMemberId { get; set; }
 
-    [Column("fTeacherId")]
     public int FTeacherId { get; set; }
 
-    [ForeignKey("FMemberId")]
-    [InverseProperty("TChatRoomTeachers")]
     public virtual TMember FMember { get; set; }
 
-    [ForeignKey("FTeacherId")]
-    [InverseProperty("TChatRoomTeachers")]
     public virtual TTeacher FTeacher { get; set; }
 
-    [InverseProperty("FChatRoom")]
     public virtual ICollection<TChatMessageTeacher> TChatMessageTeachers { get; set; } = new List<TChatMessageTeacher>();
 }
