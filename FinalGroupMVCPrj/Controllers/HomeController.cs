@@ -104,13 +104,52 @@ namespace FinalGroupMVCPrj.Controllers
             MemberInfoDTO member = new MemberInfoDTO { Email = "ssdasdad@sdasdas", MemberId = 5, ShowName = "2222", RealName = "5555" };
             return Json(member);
         }
-        [HttpPost]
-        public IActionResult teacherApply([FromBody] TTeacherApplyLog data)
-        {
-            data.FApplyDatetime = DateTime.Now;
-            return Ok(new { Message = "操作成功", Data = data });
-        }
 
+        // POST: Home/teacherApply
+        //動作簡述：老師申請資料異動結果
+        [HttpPost]
+        public IActionResult TeacherApply([FromBody] TTeacherApplyLog data)
+        {
+            string message = "";
+            try
+            {
+            if (!ModelState.IsValid) { return BadRequest(new { Message = "操作失敗", Data = data }); }
+                var checkExist = _context.TTeacherApplyLogs.FirstOrDefault(r=>r.FMemberId==data.FMemberId);
+            if (checkExist ==null)
+            {
+                data.FApplyDatetime = DateTime.Now;
+                    data.FProgressStatus = "待審核";
+                _context.TTeacherApplyLogs.Add(data);
+                _context.SaveChanges();
+                message = "新增成功";
+            }
+            else {
+                _context.Update(data);
+                _context.SaveChanges();
+                message = "更新成功";
+            }
+            return Ok(new { Message = message, Data = data });
+            } catch (Exception ex)
+            {
+                return StatusCode(500, "伺服器錯誤：" + ex.Message);
+            }
+        }
+        // GET: Home/TApplyRecord?memberId=
+        //動作簡述：回傳設定會員資訊的頁面
+        [HttpGet]
+        public IActionResult TApplyRecord(int memberId)
+        {
+            try
+            {
+                if (memberId ==0) { return BadRequest("會員ID為0"); }
+                TTeacherApplyLog? record = _context.TTeacherApplyLogs.FirstOrDefault(r => r.FMemberId == memberId);
+                return Ok(record);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, "伺服器錯誤：" + ex.Message);
+            }
+        }
 
 
 
