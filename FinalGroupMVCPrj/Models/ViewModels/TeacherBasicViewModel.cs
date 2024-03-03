@@ -2,12 +2,12 @@
 
 namespace FinalGroupMVCPrj.Models.ViewModels
 {
-    public class TeacherBasic
+    public class TeacherBasicViewModel
     {
-        [Display(Name = "名字")]
+        [Display(Name = "暱稱")]
         public string? TeacherName { get; set; }
         //public DateTime JoinDatetime { get; set; }
-        [Display(Name = "廠商ID")]
+        [Display(Name = "老師頭像")]
         public byte[]? TeacherProfilePic { get; set; }
         [Display(Name = "關於我")]
         public string? Introduction { get; set; }

@@ -29,9 +29,9 @@ namespace FinalGroupMVCPrj.Controllers
         public IActionResult TBasicInfo( )
         {
             //取得所有db老師資料放到ViewModel
-            IEnumerable<TeacherBasic> vBasicVMCollection = new List<TeacherBasic>(
+            IEnumerable<TeacherBasicViewModel> vBasicVMCollection = new List<TeacherBasicViewModel>(
                     _lifeShareLearnContext.TTeachers
-                    .Select(tr =>new TeacherBasic {
+                    .Select(tr =>new TeacherBasicViewModel {
                         TeacherName = tr.FTeacherName,
                         TeacherProfilePic = tr.FTeacherProfilePic,
                         Introduction = tr.FIntroduction,
