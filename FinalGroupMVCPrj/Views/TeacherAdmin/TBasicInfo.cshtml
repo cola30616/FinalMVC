@@ -9,12 +9,14 @@
     .hidden {
         display: none;
     }
+
     .btn.btn-primary.btn-sm {
         cursor: pointer;
         background-color: #0072E3;
         color: white;
     }
-    .btn.btn-primary.btn-sm:hover {
+
+        .btn.btn-primary.btn-sm:hover {
             background-color: #2828FF;
         }
 </style>
@@ -33,38 +35,47 @@
 <section class="section profile">
     <div class="row">
         <div class="col-xl-4">
-
+            <!-- 左邊卡片 -->
             <div class="card">
                 <div class="card-body profile-card pt-4 d-flex flex-column align-items-center">
-
-                    <!-- 老師頭像 -->
-                    <img id="Teacher-avatar1" src="" alt="Profile" class="rounded-circle" />
-                    <h2 id="Teacher-name1">Kevin Anderson</h2>
-                    <h3>Web Designer</h3>
-                    <div class="social-links mt-2">
-                        <a href="#" class="twitter"><i class="bi bi-twitter"></i></a>
-                        <a href="#" class="facebook"><i class="bi bi-facebook"></i></a>
-                        <a href="#" class="instagram"><i class="bi bi-instagram"></i></a>
-                        <a href="#" class="linkedin"><i class="bi bi-linkedin"></i></a>
-                    </div>
+                    @foreach (TeacherBasicViewModel item in Model)
+                    {
+                        <!-- 老師頭像 -->
+                        <img id="Teacher-avatar1" src="@item.TeacherProfilePicURL" alt="Profile" class="rounded-circle" />
+                        <h2 id="Teacher-name1">Kevin Anderson</h2>
+                        <h3>Web Designer</h3>
+                        <div class="social-links mt-2">
+                            <a href="#" class="twitter"><i class="bi bi-twitter"></i></a>
+                            <a href="#" class="facebook"><i class="bi bi-facebook"></i></a>
+                            <a href="#" class="instagram"><i class="bi bi-instagram"></i></a>
+                            <a href="#" class="linkedin"><i class="bi bi-linkedin"></i></a>
+                        </div>
+                    }
                 </div>
+
             </div>
+
 
         </div>
 
         <div class="col-xl-8">
-
+            <!-- 右邊卡片 -->
             <div class="card">
+
                 <div class="card-body pt-3">
+
                     <!-- Bordered Tabs -->
                     <ul class="nav nav-tabs nav-tabs-bordered">
 
                         <li class="nav-item">
-                            <button class="nav-link active" data-bs-toggle="tab" data-bs-target="#profile-overview">Overview</button>
+                            <button class="nav-link active" data-bs-toggle="tab" data-bs-target="#profile-overview">預覽</button>
                         </li>
 
                         <li class="nav-item">
-                            <button class="nav-link" data-bs-toggle="tab" data-bs-target="#profile-edit">Edit Profile</button>
+                            @foreach (TeacherBasicViewModel item in Model)
+                            {
+                                <button TeacherID="@item.TeacherId" class="nav-link" data-bs-toggle="tab" data-bs-target="#profile-edit">編輯</button>
+                            }
                         </li>
 
                         <li class="nav-item">
@@ -77,196 +88,75 @@
 
                     </ul>
                     <div class="tab-content pt-2">
+                        <!-- 預覽內容 -->
+                        @foreach (TeacherBasicViewModel item in Model)
+                        {
+                            <div class="tab-pane fade show active profile-overview" id="profile-overview">
+                                <!-- 標題1 關於我 -->
+                                <h5 class="card-title">@Html.DisplayNameFor(t => t.Introduction)</h5>
+                                <p class="small fst-italic">@item.Introduction</p>
 
-                        <div class="tab-pane fade show active profile-overview" id="profile-overview">
-                            <h5 class="card-title">@Html.DisplayNameFor(tr => tr.Introduction)</h5>
-                            <p class="small fst-italic">123456</p>
+                                <!-- 標題2 已開科目 -->
+                                <h5 class="card-title">@Html.DisplayNameFor(t => t.SubjectName)</h5>
+                                <p class="small fst-italic">@string.Join(", ", item.SubjectName)</p>
 
-                            <h5 class="card-title">基本資訊</h5>
+                                <!-- 標題3 老師名稱 -->
+                                <h5 class="card-title">基本資訊</h5>
 
-                            <div class="row">
-                                <div class="col-lg-3 col-md-4 label ">@Html.DisplayNameFor(tr => tr.TeacherName)</div>
-                                <div id="Teacher-name2" class="col-lg-9 col-md-8">Kevin Anderson</div>
+                                <div class="row">
+                                    <div class="col-lg-3 col-md-4 label ">@Html.DisplayNameFor(tr => tr.TeacherName)</div>
+                                    <div id="Teacher-name2" class="col-lg-9 col-md-8">@item.TeacherName</div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="col-lg-3 col-md-4 label">Company</div>
+                                    <div class="col-lg-9 col-md-8">Lueilwitz, Wisoky and Leuschke</div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="col-lg-3 col-md-4 label">Job</div>
+                                    <div class="col-lg-9 col-md-8">Web Designer</div>
+                                </div>
+
+                                <h5 class="card-title">地址</h5>
+
+                                <div class="row">
+                                    <div class="col-lg-3 col-md-4 label">Country</div>
+                                    <div class="col-lg-9 col-md-8">USA</div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="col-lg-3 col-md-4 label">Address</div>
+                                    <div class="col-lg-9 col-md-8">A108 Adam Street, New York, NY 535022</div>
+                                </div>
+
+                                <h5 class="card-title">聯絡資訊</h5>
+
+                                <div class="row">
+                                    <div class="col-lg-3 col-md-4 label">@Html.DisplayNameFor(t => t.ContactInfo)</div>
+                                    <div class="col-lg-9 col-md-8">@item.ContactInfo</div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="col-lg-3 col-md-4 label">Phone</div>
+                                    <div class="col-lg-9 col-md-8">(436) 486-3538 x29071</div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="col-lg-3 col-md-4 label">Email</div>
+                                    <div class="col-lg-9 col-md-8">k.anderson@example.com</div>
+                                </div>
+
                             </div>
-
-                            <div class="row">
-                                <div class="col-lg-3 col-md-4 label">Company</div>
-                                <div class="col-lg-9 col-md-8">Lueilwitz, Wisoky and Leuschke</div>
-                            </div>
-
-                            <div class="row">
-                                <div class="col-lg-3 col-md-4 label">Job</div>
-                                <div class="col-lg-9 col-md-8">Web Designer</div>
-                            </div>
-
-                            <h5 class="card-title">地址</h5>
-
-                            <div class="row">
-                                <div class="col-lg-3 col-md-4 label">Country</div>
-                                <div class="col-lg-9 col-md-8">USA</div>
-                            </div>
-
-                            <div class="row">
-                                <div class="col-lg-3 col-md-4 label">Address</div>
-                                <div class="col-lg-9 col-md-8">A108 Adam Street, New York, NY 535022</div>
-                            </div>
-
-                            <h5 class="card-title">聯絡資訊</h5>
-
-                            <div class="row">
-                                <div class="col-lg-3 col-md-4 label">Phone</div>
-                                <div class="col-lg-9 col-md-8">(436) 486-3538 x29071</div>
-                            </div>
-
-                            <div class="row">
-                                <div class="col-lg-3 col-md-4 label">Email</div>
-                                <div class="col-lg-9 col-md-8">k.anderson@example.com</div>
-                            </div>
-
-                        </div>
-
-                        <div class="tab-pane fade profile-edit pt-3" id="profile-edit">
-
-                            <!-- Profile Edit Form -->
-                            <form>
-                                <div class="row mb-3">
-                                    <!-- 標題1 -->
-                                    <label for="profileImage" class="col-md-4 col-lg-3 col-form-label">個人資料相片</label>
-                                    <!-- 內容1 -->
-                                    <div class="col-md-8 col-lg-9">
-                                        <img id="Teacher-avatar2" src="" alt="Profile">
-                                        <div class="pt-2">
-                                            <!-- 上傳修改頭像input -->
-                                            <span class="file-input-container">                         
-                                                <input type="file" id="fileInput" class="hidden" accept="image/gif, image/jpeg, image/png" multiple />
-                                                <label for="fileInput" class="btn btn-primary btn-sm" title="Upload new profile image"><i class="bi bi-upload"></i></label>
-                                            </span>   
-                                            <!-- 清除頭像btn -->
-                                            <button class="btn btn-danger btn-sm" title="Remove my profile image"><i class="bi bi-trash"></i></button>
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <div class="row mb-3">
-                                    <!-- 標題2 -->
-                                    <label for="fullName" class="col-md-4 col-lg-3 col-form-label">@Html.DisplayNameFor(tr => tr.TeacherName)</label>
-                                    <div class="col-md-8 col-lg-9">
-                                        <!-- 內容2 -->
-                                        <input name="fullName" type="text" class="form-control" id="fullName" value="Kevin Anderson">
-                                    </div>
-                                </div>
-
-                                <div class="row mb-3">
-                                    <!-- 標題3 -->
-                                    <label for="about" class="col-md-4 col-lg-3 col-form-label">@Html.DisplayNameFor(tr => tr.Introduction)</label>
-                                    <div class="col-md-8 col-lg-9">
-                                        <!-- 內容3 -->
-                                        <textarea name="about" class="form-control" id="about" style="height: 100px">Sunt est soluta temporibus accusantium neque nam maiores cumque temporibus. Tempora libero non est unde veniam est qui dolor. Ut sunt iure rerum quae quisquam autem eveniet perspiciatis odit. Fuga sequi sed ea saepe at unde.</textarea>
-                                    </div>
-                                </div>
-
-                                <div class="row mb-3">
-                                    <!-- 標題4 -->
-                                    <label for="company" class="col-md-4 col-lg-3 col-form-label">Company</label>
-                                    <div class="col-md-8 col-lg-9">
-                                        <!-- 內容4 -->
-                                        <input name="company" type="text" class="form-control" id="company" value="Lueilwitz, Wisoky and Leuschke">
-                                    </div>
-                                </div>
-
-                                <div class="row mb-3">
-                                    <!-- 標題 -->
-                                    <label for="Job" class="col-md-4 col-lg-3 col-form-label">Job</label>
-                                    <div class="col-md-8 col-lg-9">
-                                        <!-- 內容 -->
-                                        <input name="job" type="text" class="form-control" id="Job" value="Web Designer">
-                                    </div>
-                                </div>
-
-                                <div class="row mb-3">
-                                    <!-- 標題 -->
-                                    <label for="Country" class="col-md-4 col-lg-3 col-form-label">Country</label>
-                                    <div class="col-md-8 col-lg-9">
-                                        <!-- 內容 -->
-                                        <input name="country" type="text" class="form-control" id="Country" value="USA">
-                                    </div>
-                                </div>
-
-                                <div class="row mb-3">
-                                    <!-- 標題 -->
-                                    <label for="Address" class="col-md-4 col-lg-3 col-form-label">Address</label>
-                                    <div class="col-md-8 col-lg-9">
-                                        <!-- 內容 -->
-                                        <input name="address" type="text" class="form-control" id="Address" value="A108 Adam Street, New York, NY 535022">
-                                    </div>
-                                </div>
-
-                                <div class="row mb-3">
-                                    <!-- 標題 -->
-                                    <label for="Phone" class="col-md-4 col-lg-3 col-form-label">Phone</label>
-                                    <div class="col-md-8 col-lg-9">
-                                        <!-- 內容 -->
-                                        <input name="phone" type="text" class="form-control" id="Phone" value="(436) 486-3538 x29071">
-                                    </div>
-                                </div>
-
-                                <div class="row mb-3">
-                                    <!-- 標題 -->
-                                    <label for="Email" class="col-md-4 col-lg-3 col-form-label">Email</label>
-                                    <div class="col-md-8 col-lg-9">
-                                        <!-- 內容 -->
-                                        <input name="email" type="email" class="form-control" id="Email" value="k.anderson@example.com">
-                                    </div>
-                                </div>
-
-                                <div class="row mb-3">
-                                    <!-- 標題 -->
-                                    <label for="Twitter" class="col-md-4 col-lg-3 col-form-label">Twitter Profile</label>
-                                    <div class="col-md-8 col-lg-9">
-                                        <!-- 內容 -->
-                                        <input name="twitter" type="text" class="form-control" id="Twitter" value="https://twitter.com/#">
-                                    </div>
-                                </div>
-
-                                <div class="row mb-3">
-                                    <!-- 標題 -->
-                                    <label for="Facebook" class="col-md-4 col-lg-3 col-form-label">Facebook Profile</label>
-                                    <div class="col-md-8 col-lg-9">
-                                        <!-- 內容 -->
-                                        <input name="facebook" type="text" class="form-control" id="Facebook" value="https://facebook.com/#">
-                                    </div>
-                                </div>
-
-                                <div class="row mb-3">
-                                    <!-- 標題 -->
-                                    <label for="Instagram" class="col-md-4 col-lg-3 col-form-label">Instagram Profile</label>
-                                    <div class="col-md-8 col-lg-9">
-                                        <!-- 內容 -->
-                                        <input name="instagram" type="text" class="form-control" id="Instagram" value="https://instagram.com/#">
-                                    </div>
-                                </div>
-
-                                <div class="row mb-3">
-                                    <!-- 標題 -->
-                                    <label for="Linkedin" class="col-md-4 col-lg-3 col-form-label">Linkedin Profile</label>
-                                    <div class="col-md-8 col-lg-9">
-                                        <!-- 內容 -->
-                                        <input name="linkedin" type="text" class="form-control" id="Linkedin" value="https://linkedin.com/#">
-                                    </div>
-                                </div>
-
-                                <div class="text-center">
-                                    <!-- 提交 -->
-                                    <button type="submit" class="btn btn-primary">Save Changes</button>
-                                </div>
-                            </form>
-                            <!-- End Profile Edit Form -->
-
-                        </div>
+                        }   
+                        <!-- ========== 編輯表單 ========== -->
+                        <div class="tab-pane fade profile-edit pt-3" id="profile-edit"></div>
+                 
+                    
                         <!-- ========== Settings Form ========= -->
                         <div class="tab-pane fade pt-3" id="profile-settings">
 
-                           
+
                             <form>
 
                                 <div class="row mb-3">
@@ -307,7 +197,7 @@
                         </div>
                         <!-- ======== Change Password Form =========== -->
                         <div class="tab-pane fade pt-3" id="profile-change-password">
-                           
+
                             <form>
 
                                 <div class="row mb-3">
@@ -362,62 +252,30 @@
     </div>
 </footer>
 
+@section Scripts {
+@* script用途：呼叫取得修改資料輸入欄位 *@
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            var elements = document.querySelectorAll('[data-bs-target="#profile-edit"]');
+            elements.forEach(function (element) {
+                element.addEventListener('click', async (event) => {
+                    try {
+                        const teacherId = event.target.getAttribute('teacherId');
+                        const response = await fetch(`@Url.Content("~/TeacherAdmin/EditBasicInfo")?TeacherID=${teacherId}`, {
+                            method: "GET"
+                        });
+                        if (!response.ok) {
+                            throw new Error(`${response.status}`);
+                        }
+                        const data = await response.text();
+                        document.getElementById("profile-edit").innerHTML = data
 
-
-
-
-@* script功能 : 讀取老師的名字和頭像 *@
-<script>
-    let teacherIdString = '0';
-    let teacherId = 0;
-    const Teacheravatar1 = document.getElementById('Teacher-avatar1');
-    const Teacheravatar2 = document.getElementById('Teacher-avatar2');
-    const Teachername1 = document.getElementById('Teacher-name1');
-    const Teachername2 = document.getElementById('Teacher-name2');
-    document.addEventListener('DOMContentLoaded', async ()=> {
-
-        try {
-            const response = await fetch('https://localhost:7031/UserInfo/APICurrentTeacherId', {
-                method: "GET",
+                
+                    } catch (error) {
+                        document.getElementById("toAddEditPartial").innerHTML = `<h2> 錯誤： ${error.message} 請稍後再試</h2>`
+                    }
+                });
             });
-            teacherIdString = await response.text();
-            
-            if (teacherIdString !== '0') {
-                teacherId = Number(teacherIdString);
-                ReadTrAva();
-                ReadTrNam();
-            }
-        } catch (error) {
-            console.error('Error fetching teacher ID:', error);
-        }
-    })
-    const ReadTrAva = async () => {
-        try {
-            const response = await fetch(`https://localhost:7031/Teacher/TeacherPhoto/${teacherId}`, {
-                method: "GET",
-            });
-            let photoUrl = '';
-            photoUrl = await response.text();
-
-            if (photoUrl !== '') {
-                Teacheravatar1.src = photoUrl;
-                Teacheravatar2.src = photoUrl;
-            }
-        } catch (error) {
-            console.error('Error fetching teacher Photo:', error);
-        }
-    };
-    const ReadTrNam = async () => {
-        try {
-            const response = await fetch(`https://localhost:7031/UserInfo/APITeacherInfo?teacherId=${teacherId}`, {
-                method: "GET",
-            });
-            let teacherInfo = await response.json();
-            Teachername1.innerHTML = teacherInfo.TeacherName;
-            Teachername2.innerHTML = teacherInfo.TeacherName;
-        } catch (error) {
-            console.error('Error fetching teacherInfo:', error);
-        }
-    };
-     
-</script>
+        });
+    </script>
+}

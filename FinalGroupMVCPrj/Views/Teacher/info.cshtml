@@ -1,4 +1,6 @@
-﻿@{
+﻿@model IEnumerable<TeacherBasicViewModel>
+
+@{
     ViewData["Title"] = "info";
 }
 
@@ -18,56 +20,60 @@
 </div>
 <!-- Breadcrumb end -->
 <!-- Mentor-details-area start -->
-<section class="mentor-details pt-100 pb-60">
-    <div class="container">
-        <div class="row gx-xl-5 align-items-center">
-            <!-- 老師頭像 -->
-            <div class="col-xl-4 col-lg-5">
-                <div class="content-img mb-40" data-aos="fade-up">
-                    <div class="lazy-container ratio ratio-1-1 radius-md" >
-                        <img class="lazyload blur-up" src="/images/placeholder.png" data-src="/images/mentor/mentor-1.jpg" alt="Mentor">
-                        <div>
-                            <button class="fa-regular fa-heart" style="display: flex;justify-content: center; align-items: center;font-size:30px;width:40px;height:40px;position: absolute; top: 0; left: 85%; margin: 10px;border-radius:50px;background-color:white"></button>
+@foreach (TeacherBasicViewModel item in Model)
+{
+    <section class="mentor-details pt-100 pb-60">
+        <div class="container">
+            <div class="row gx-xl-5 align-items-center">
+                <!-- 老師頭像 -->
+                <div class="col-xl-4 col-lg-5">
+                    <div class="content-img mb-40" data-aos="fade-up">
+                        <div class="lazy-container ratio ratio-1-1 radius-md">
+                            <img class="lazyload blur-up" src="@item.TeacherProfilePicURL"  alt="Mentor">
+                            <div>
+                                <button class="fa-regular fa-heart" style="display: flex;justify-content: center; align-items: center;font-size:30px;width:40px;height:40px;position: absolute; top: 0; left: 85%; margin: 10px;border-radius:50px;background-color:white"></button>
+                            </div>
                         </div>
-                    </div>     
-               
-                   
+
+
+                    </div>
                 </div>
-            </div>
-            <div class="col-xl-8 col-lg-7">
-                <div class="content-title mb-40" data-aos="fade-up">
-                    <h3 class="title mt-0 mb-1">老師名稱</h3>
-                    <span class="subtitle font-sm">
-                        Web Designer, Researcher, Instructor at Tork
-                    </span>
-                    <div class="ratings mt-2">
-                        <div class="rate bg-img" data-bg-image="/images/rate-star.png">
-                            <div class="rating-icon bg-img" data-bg-image="/images/rate-star.png"></div>
+
+                <div class="col-xl-8 col-lg-7">
+                    <div class="content-title mb-40" data-aos="fade-up">
+                        <!-- 老師名稱 -->
+                        <h3 class="title mt-0 mb-1">@item.TeacherName</h3>
+                        <!-- 開課科目 -->
+                        <span class="subtitle font-sm">
+                            @string.Join(", ", item.SubjectName)
+                        </span>
+                        <!-- 評價 -->
+                        <div class="ratings mt-2">
+                            <div class="rate bg-img" data-bg-image="/images/rate-star.png">
+                                <div class="rating-icon bg-img" data-bg-image="/images/rate-star.png"></div>
+                            </div>
+                            <span class="ratings-total">(5)</span>
                         </div>
-                        <span class="ratings-total">(5)</span>
-                    </div>
-                    <!-- 老師自我介紹 -->
-                    <div class="content-text mt-20">
-                        <p>
-                            老師fIntroduction
-                        </p>
-                        <p>
-                            老師fIntroduction
-                        </p>
-                    </div>
-                    <!-- 社群網站連結fContactInfo -->
-                    <div class="social-link icon-only mt-25">
-                        <span>社群網站連結:</span>
-                        <a href="https://www.instagram.com/" target="_blank" title="instagram" class="color-primary"><i class="fab fa-instagram"></i></a>
-                        <a href="https://www.dribbble.com/" target="_blank" title="dribbble" class="color-primary"><i class="fab fa-dribbble"></i></a>
-                        <a href="https://www.twitter.com/" target="_blank" title="twitter" class="color-primary"><i class="fab fa-twitter"></i></a>
-                        <a href="https://www.youtube.com/" target="_blank" title="youtube" class="color-primary"><i class="fab fa-youtube"></i></a>
+                        <!-- 老師自我介紹 -->
+                        <div class="content-text mt-20">
+                            <p>
+                                @item.Introduction
+                            </p>
+                        </div>
+                        <!-- 社群網站連結fContactInfo -->
+                        <div class="social-link icon-only mt-25">
+                            <span>社群網站連結:</span>
+                            <a href="https://www.instagram.com/" target="_blank" title="instagram" class="color-primary"><i class="fab fa-instagram"></i></a>
+                            <a href="https://www.dribbble.com/" target="_blank" title="dribbble" class="color-primary"><i class="fab fa-dribbble"></i></a>
+                            <a href="https://www.twitter.com/" target="_blank" title="twitter" class="color-primary"><i class="fab fa-twitter"></i></a>
+                            <a href="https://www.youtube.com/" target="_blank" title="youtube" class="color-primary"><i class="fab fa-youtube"></i></a>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
-    </div>
-</section>
+    </section>
+}
 <!-- Mentor-details-area end -->
 <!-- Course-area start -->
 <section class="course-area popular pb-100">

@@ -1,0 +1,67 @@
+﻿@model TTeacher
+
+<!-- ========== 編輯表單 ========== -->
+
+
+
+<form id="EditForm" asp-controller="TeacherAdmin" asp-action="">
+    <div class="row mb-3">
+        <!-- 標題1 -->
+        <label for="FTeacherProfilePic" class="col-md-4 col-lg-3 col-form-label">個人資料相片</label>
+        <!-- 內容1 -->
+        <div class="col-md-8 col-lg-9">
+            <img id="Teacher-avatar2" src="" alt="Profile">
+            <div class="pt-2">
+                <!-- 上傳修改頭像input -->
+                <span class="file-input-container">
+                    <input type="file" id="fileInput" class="hidden" accept="image/gif, image/jpeg, image/png" multiple />
+                    <label for="fileInput" class="btn btn-primary btn-sm" title="Upload new profile image"><i class="bi bi-upload"></i></label>
+                </span>
+                <!-- 清除頭像btn -->
+                <button class="btn btn-danger btn-sm" title="Remove my profile image"><i class="bi bi-trash"></i></button>
+            </div>
+        </div>
+    </div>
+
+    <div class="row mb-3">
+        <!-- 標題2 老師名稱 -->
+        <label asp-for="FTeacherName" for="fullName" class="col-md-4 col-lg-3 col-form-label">@Html.DisplayNameFor(t => t.FTeacherName)</label>
+        <div class="col-md-8 col-lg-9">
+            <!-- 內容2 老師名稱 -->
+            <input asp-for="FTeacherName" name="fullName" type="text" class="form-control" id="fullName" value="Kevin Anderson">
+        </div>
+    </div>
+
+    <div class="row mb-3">
+        <!-- 標題3 自我介紹 -->
+        <label asp-for="FIntroduction" for="about" class="col-md-4 col-lg-3 col-form-label">@Html.DisplayNameFor(t=>t.FIntroduction)</label>
+        <div class="col-md-8 col-lg-9">
+            <!-- 內容3 自我介紹 -->
+            <textarea asp-for="FIntroduction" name="about" class="form-control" id="about" style="height: 100px">Sunt est soluta temporibus accusantium neque nam maiores cumque temporibus. Tempora libero non est unde veniam est qui dolor. Ut sunt iure rerum quae quisquam autem eveniet perspiciatis odit. Fuga sequi sed ea saepe at unde.</textarea>
+        </div>
+    </div>
+
+    <div class="row mb-3">
+        <!-- 標題4 聯絡方式 -->
+        <label asp-for="FContactInfo" for="about" class="col-md-4 col-lg-3 col-form-label">@Html.DisplayNameFor(t => t.FContactInfo)</label>
+        <div class="col-md-8 col-lg-9">
+            <!-- 內容4 聯絡方式 -->
+            <textarea asp-for="FContactInfo" name="about" class="form-control" id="about" style="height: 100px">Sunt est soluta temporibus accusantium neque nam maiores cumque temporibus. Tempora libero non est unde veniam est qui dolor. Ut sunt iure rerum quae quisquam autem eveniet perspiciatis odit. Fuga sequi sed ea saepe at unde.</textarea>
+        </div>
+    </div>
+
+    <div class="row mb-3">
+        <!-- 標題5 備註 -->
+        <label asp-for="FNote" for="about" class="col-md-4 col-lg-3 col-form-label">@Html.DisplayNameFor(t => t.FNote)</label>
+        <div class="col-md-8 col-lg-9">
+            <!-- 內容5 備註 -->
+            <textarea asp-for="FNote" name="about" class="form-control" id="about" style="height: 100px">Sunt est soluta temporibus accusantium neque nam maiores cumque temporibus. Tempora libero non est unde veniam est qui dolor. Ut sunt iure rerum quae quisquam autem eveniet perspiciatis odit. Fuga sequi sed ea saepe at unde.</textarea>
+        </div>
+    </div>
+
+    <div class="text-center">
+        <!-- 提交 -->
+        <button type="submit" class="btn btn-primary">Save Changes</button>
+    </div>
+</form>
+<!-- End Profile Edit Form -->

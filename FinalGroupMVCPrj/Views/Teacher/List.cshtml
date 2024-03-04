@@ -486,7 +486,7 @@
     <script>
         const row = document.querySelector('#row');
         document.addEventListener('DOMContentLoaded', async () => {
-            const response = await fetch('@Url.Content("~/Teacher/AllTeachersPhotos")', {
+            const response = await fetch('@Url.Content("~/Teacher/AllTrInfo")', {
                 "method": "GET",
             });
             const datas = await response.json();
@@ -495,8 +495,8 @@
                 `<div class="col-lg-4 col-sm-6" data-aos="fade-up">
                                                 <div class="card radius-md mb-30 shadow-md">
                                                     <div class="card-img">
-                                                             <a href="https://localhost:7031/Teacher/Info" title="Image" target="_self" class="lazy-container ratio ratio-1-2">
-                                                             <img id="lazyload" src=${tr} data-src="/images/mentor/mentor-1.jpg" alt="Image">
+                                                             <a href="https://localhost:7031/Teacher/Info?id=${tr.fTeacherId}" title="Image" target="_self" class="lazy-container ratio ratio-1-2">
+                                                             <img id="lazyload" src=${tr.teacherProfilePicURL} data-src="/images/mentor/mentor-1.jpg" alt="Image">
                                                         </a>
                                                         <div>
                                                             <button class="fa-regular fa-heart" style="display: flex;justify-content: center; align-items: center;font-size:30px;width:40px;height:40px;position: absolute; top: 0; left: 82%; margin: 10px;border-radius:50px;background-color:white;z-index:1"></button>
@@ -505,11 +505,11 @@
                                                     <div class="card-content text-center">
                                                         <h4 class="card-title lc-1 mb-1">
                                                             <a href="mentor-details.html" target="_self" title="Link">
-                                                                Jose Portilla
+                                                                  ${tr.fTeacherName}
                                                             </a>
                                                         </h4>
                                                         <p class="card-text color-primary font-sm">
-                                                            Web Designer
+                                                                  ${tr.subjectNames}
                                                         </p>
                                                         <div class="social-link justify-content-center">
                                                             <a href="https://www.instagram.com/" target="_blank" title="instagram"><i class="fab fa-instagram"></i></a>
