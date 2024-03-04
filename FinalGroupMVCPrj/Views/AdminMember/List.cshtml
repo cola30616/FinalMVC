@@ -1,8 +1,319 @@
-﻿
+﻿@model MemberBasicViewModel
 @{
     ViewData["Title"] = "List";
     Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
 }
 
-<h1>會員清單</h1>
+<div class="pagetitle">
+    <h1>會員管理</h1>
+    <nav>
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="index.html">管理員後台</a></li>
+            <li class="breadcrumb-item">會員管理</li>
+            <li class="breadcrumb-item active">會員清單</li>
+        </ol>
+    </nav>
+</div><!-- End Page Title -->
 
+<section class="section">
+    <div class="row">
+        <div class="col-lg-12">
+
+            </div>
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">會員清單</h5>
+                <div >
+                    <div class="d-flex align-items-center gap-4 mb-3">
+                        <div class="d-flex align-items-center gap-2 ">
+                            <label for="inputDate" class="">註冊日期</label>
+                            <div class="">
+                                <input type="date" class="form-control">
+                            </div>
+                            <span>~</span>
+                            <div class="">
+                                <input type="date" class="form-control">
+                            </div>
+                        </div>
+                            <div class="" style="width:10%">
+                                <select class="form-select" aria-label="Default select example">
+                                <option selected>驗證不拘</option>
+                                    <option value="1">One</option>
+                                    <option value="2">Two</option>
+                                    <option value="3">Three</option>
+                                </select>
+                        </div>
+                        <div class="" style="width:15%">
+                            <select class="form-select" aria-label="Default select example">
+                                <option selected>優惠通知不拘</option>
+                                <option value="1">One</option>
+                                <option value="2">Two</option>
+                                <option value="3">Three</option>
+                            </select>
+                        </div>
+                        <div class="" style="width:10%">
+                            <select class="form-select" aria-label="Default select example">
+                                <option selected>狀態不拘</option>
+                                <option value="1">One</option>
+                                <option value="2">Two</option>
+                                <option value="3">Three</option>
+                            </select>
+                        </div>
+
+                        <div class="col-sm-2">
+                            <button class="btn btn-success"> 匯出CSV</button>
+                        </div>
+                    </div>
+
+                    <div>
+                        <!-- Table with stripped rows -->
+                        <table id="memberListTable" class="datatable">
+                            <thead>
+                                <tr>
+                                    <th>@Html.DisplayNameFor(m=>m.MemberId)</th>
+                                    <th>@Html.DisplayNameFor(m=>m.RegisterDateTime)</th>
+                                    <th>@Html.DisplayNameFor(m=>m.RealName)</th>
+                                     <th>@Html.DisplayNameFor(m=>m.ShowName)</th>
+                                    <th>@Html.DisplayNameFor(m=>m.Email)</th>
+                                     <th>@Html.DisplayNameFor(m=>m.EmailVerification)</th>
+                                    <th>@Html.DisplayNameFor(m=>m.GetCampInfo)</th>
+                                    <th>@Html.DisplayNameFor(m=>m.Status)</th>
+                                    <th>操作</th>
+                                </tr>
+                            </thead>
+                        </table>
+                        <!-- End Table with stripped rows -->
+                    </div>
+
+                </div>
+            </div>
+
+        </div>
+    </div>
+</section>
+<!-- Button trigger modal -->
+<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
+    Launch static backdrop modal
+</button>
+
+<!-- Modal -->
+<div class="modal fade " id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg modal-dialog-scrollable">
+        <div class="modal-content p-3 ">
+            <div class="d-flex justify-content-between">
+                <!-- Default Tabs -->
+                <ul class="nav nav-tabs" id="myTab" role="tablist">
+                    <li class="nav-item" role="presentation">
+                        <button class="nav-link active" id="home-tab" data-bs-toggle="tab" data-bs-target="#home" type="button" role="tab" aria-controls="home" aria-selected="true">基本資訊</button>
+                    </li>
+                    <li class="nav-item" role="presentation">
+                        <button class="nav-link" id="profile-tab" data-bs-toggle="tab" data-bs-target="#profile" type="button" role="tab" aria-controls="profile" aria-selected="false">其他資訊</button>
+                    </li>
+                    <li class="nav-item" role="presentation">
+                        <button class="nav-link" id="contact-tab" data-bs-toggle="tab" data-bs-target="#contact" type="button" role="tab" aria-controls="contact" aria-selected="false">登入紀錄</button>
+                    </li>
+                </ul> 
+                <button type="button" class="btn" data-bs-dismiss="modal" aria-label="Close"><i class="fa-solid fa-x"></i></button>
+            </div>
+           
+
+            <div class="tab-content pt-2" id="myTabContent">
+                <div class="tab-pane fade show active p-3" id="home" role="tabpanel" aria-labelledby="home-tab">
+                    <div class="d-flex  gap-4">
+                        <!--第一區-->
+                        <div class=" form-block mb-30 d-flex align-items-center flex-column gap-4 " data-aos="fade-up" style="width:50%;height:50%">
+                            <div class="course d-flex flex-column align-items-center ">
+                                <div class="position-relative">
+                                    <img class="lazyload rounded-pill border border-2" src="/images/owenadd/membernophoto.jpg" data-src="/images/owenadd/membernophoto.jpg" alt="course" style="width:200px;height:200px">
+                                    <button title="移除違規頭像" class="btn border border-2 position-absolute translate-middle d-flex justify-content-center align-items-center" style="top: 85%; left: 85%; width: 50px; height: 50px; border-radius: 50%; background-color: white; color: lightgray">
+                                        <i class="fa-solid fa-trash-can fa-xl" style="color:red"></i>
+                                    </button>
+                                </div>
+                            </div>
+                                <div class="d-flex flex-column">
+                                        <div class="d-flex gap-2 align-items-center mb-2 ">
+                                        <span class="fw-bold">註冊日期：</span>
+                                            <span >2024-03-04 10:08</span>
+                                        </div>
+                                            <div class="d-flex gap-2 mb-2">
+                                        <span class="fw-bold">電子信箱：</span>
+                                                <span >example@gmail.com</span>
+                                                <span></span>
+                                                <span class="text-success" >已驗證</span>
+                                        </div>
+                                        <div class="mb-2">
+                                        <label class="fw-bold">連結帳號：  </label>
+                                            <span>Google、Line</span>
+                                        </div>
+                                </div>
+
+                        </div>
+                        <!--第二區-->
+                        <div class="flex-grow-1 d-flex flex-column" style="width:40%;height:50%">
+                            <div class="mb-4"><span>※編輯&nbsp; <i class="fa-solid fa-pen-to-square"></i>&nbsp;僅限用於違規資料或必要</span></div>
+                            <div class="d-flex gap-3 align-items-end">
+                                <div class="flex-grow-1 form-group mb-3">
+                                    <label for="firstName">真實姓名 </label>
+                                    <input disabled id="firstName" type="text" class="form-control" name="firstName" value="王小明">
+                                </div>       
+                                <div class="editValue pb-4" style="cursor:pointer"><i class="fa-solid fa-pen-to-square"></i></div>
+                            </div>
+                            <div class="d-flex gap-3 align-items-end">
+                                <div class="flex-grow-1 form-group mb-3">
+                                    <label for="lastName">顯示名稱 </label>
+                                    <input disabled id="lastName" type="text" class="form-control" name="lastName" placeholder="" required="">
+                                </div>
+                                <div class="editValue pb-4" style="cursor:pointer"><i class="fa-solid fa-pen-to-square"></i></div>
+                            </div>
+                            <div class="d-flex gap-3 align-items-end">
+                                <div class="flex-grow-1 form-group mb-3">
+                                    <label for="company_name">電話</label>
+                                    <input disabled id="phone" type="text" class="form-control" name="lastName" placeholder="" required="">
+                                </div>
+                                <div class="editValue pb-4" style="cursor:pointer"><i class="fa-solid fa-pen-to-square"></i></div>
+                            </div>
+                            <div class="d-flex gap-3 align-items-end">
+                                <div class="flex-grow-1 form-group mb-3">
+                                    <label for="email">生日  </label>
+                                    <input disabled id="birth" type="date" class="form-control" name="lastName" placeholder="" required="">
+                                </div>
+                                <div class="editValue pb-4" style="cursor:pointer"><i class="fa-solid fa-pen-to-square"></i></div>
+                            </div>
+
+                            <div class="d-flex gap-3 align-items-end">
+                                <div class="flex-grow-1 form-group mb-3">
+                                    <label for="country">性別： </label>
+                                    <label>其他</label>
+                                </div>
+                            </div>
+                            <div class="d-flex gap-3 align-items-end">
+                                <div class="flex-grow-1 form-group mb-3">
+                                    <label >備註：  </label>
+                                    <textarea disabled class="form-control"></textarea>
+                                </div>
+                                <div class="editValue pb-5" style="cursor:pointer"><i class="fa-solid fa-pen-to-square"></i></div>
+                            </div>
+                        </div>
+                        </div>
+                </div>
+                <div class="tab-pane fade p-3" id="profile" role="tabpanel" aria-labelledby="profile-tab">
+                    Nesciunt totam et. Consequuntur magnam aliquid eos nulla dolor iure eos quia. Accusantium distinctio omnis et atque fugiat. Itaque doloremque aliquid sint quasi quia distinctio similique. Voluptate nihil recusandae mollitia dolores. Ut laboriosam voluptatum dicta.
+                </div>
+                <div class="tab-pane fade p-3" id="contact" role="tabpanel" aria-labelledby="contact-tab" style="max-height: 500px; overflow-y: auto;">
+                    <div class="mb-2">    <span>*資料僅限用於異常帳號處理與優化行銷</span></div>
+                    <div class="d-flex gap-2 align-items-center  mb-3">
+                        <span>指定最晚日期</span>
+                        <input class="form-control" type="date" style="width:20%" />
+                    </div>
+                    <table class="table table-striped table-hover">
+                        <thead>
+                            <tr>
+                                <th scope="col">#</th>
+                                <th scope="col">登入時間</th>
+                                <th scope="col">IP</th>
+                                <th scope="col">地區</th>
+                                <th scope="col">瀏覽器與系統</th>
+                            </tr>
+                        </thead>
+                        <tbody id="table-body">
+                            <!-- 假資料放這裡 -->
+                        </tbody>
+                    </table>
+                    <div class="d-flex justify-content-center">
+                        <button id="load-more-btn" class="btn btn-primary">載入5筆</button>
+                    </div>
+                 
+                </div>
+            </div><!-- End Default Tabs -->
+        </div>
+    </div>
+</div>
+@section  Scripts {
+    <script src="~/js/owenscript/adminmemberlist.js" asp-append-version="true"></script>
+    <script>
+        let loadedDataCount = 0;
+        const dataPerPage = 5;
+
+       //生成隨機資料
+        function generateRandomData(count) {
+            const data = [];
+            for (let i = 1; i <= count; i++) {
+                data.push({
+                    id: loadedDataCount + i,
+                    loginTime: generateRandomDateTime(),
+                    ip: generateRandomIP(),
+                    region: generateRandomRegion(),
+                    browserSystem: generateRandomBrowserSystem()
+                });
+            }
+            return data;
+        }
+        // 生成隨機日期時間
+        function generateRandomDateTime() {
+            const year = 2023;
+            const month = Math.floor(Math.random() * 12) + 1; // 1-12
+            const day = Math.floor(Math.random() * 28) + 1; // 1-28 (considering a constant month length)
+            const hours = Math.floor(Math.random() * 24); // 0-23
+            const minutes = Math.floor(Math.random() * 60); // 0-59
+            return `${year}-${month < 10 ? '0' + month : month}-${day < 10 ? '0' + day : day} ${hours < 10 ? '0' + hours : hours}:${minutes < 10 ? '0' + minutes : minutes}`;
+        }
+
+        // 生成隨機IP
+        function generateRandomIP() {
+            return `${Math.floor(Math.random() * 256)}.${Math.floor(Math.random() * 256)}.${Math.floor(Math.random() * 256)}.${Math.floor(Math.random() * 256)}`;
+        }
+
+        // 生成隨機國家/縣市/地區
+        function generateRandomRegion() {
+            const regions = ['台灣/台北市/大安區', '台灣/高雄市/小港區', '台灣/花蓮縣/花蓮市', '台灣/新北市/三重區'];
+            return regions[Math.floor(Math.random() * regions.length)];
+        }
+
+        // 生成隨機瀏覽器與系統
+        function generateRandomBrowserSystem() {
+            const browsers = ['Chrome 12.5', 'Firefox 5.5', 'Safari 16.7', 'Edge 9.3'];
+            const systems = ['Windows', 'MacOS', 'Linux','ios', 'android'];
+            const randomBrowser = browsers[Math.floor(Math.random() * browsers.length)];
+            const randomSystem = systems[Math.floor(Math.random() * systems.length)];
+            return `${randomBrowser} / ${randomSystem}`;
+        }
+
+
+        function insertDataToTable(data) {
+            const tbody = document.getElementById('table-body');
+            data.forEach(item => {
+                const row = document.createElement('tr');
+                row.innerHTML = `
+                <th scope="row">${item.id}</th>
+                <td>${item.loginTime}</td>
+                <td>${item.ip}</td>
+                <td>${item.region}</td>
+                <td>${item.browserSystem}</td>
+              `;
+                tbody.appendChild(row);
+            });
+        }
+
+        // 載入更多資料
+        function loadMoreData() {
+            if (loadedDataCount < 30) {
+                const remainingDataCount = Math.min(dataPerPage, 30 - loadedDataCount);
+                const newData = generateRandomData(remainingDataCount);
+                insertDataToTable(newData);
+                loadedDataCount += remainingDataCount;
+
+                // 檢查是否載入所有資料
+                if (loadedDataCount === 30) {
+                    document.getElementById('load-more-btn').disabled = true;
+                    document.getElementById('load-more-btn').innerHTML = "已無紀錄可載入";
+                }
+            }
+        }
+
+        //載入更多資料的點擊事件
+        document.getElementById('load-more-btn').addEventListener('click', loadMoreData);
+
+        // 最一開始載入
+        loadMoreData();
+    </script>
+}
