@@ -1,0 +1,602 @@
+﻿ @model IEnumerable<LessonCourseVM>
+<!-- Breadcrumb start -->
+<div class="breadcrumb-area bg-img bg-cover" data-bg-image="assets/images/breadcrumb-bg.jpg">
+    <div class="container">
+        <div class="content text-center">
+            <h2>課程清單</h2>
+            <nav aria-label="breadcrumb">
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item"><a asp-controller="Home" asp-action="Index">首頁</a></li>
+                    <li class="breadcrumb-item active" aria-current="page">課程</li>
+                </ol>
+            </nav>
+        </div>
+    </div>
+</div>
+<!-- Breadcrumb end -->
+<!-- Course-area start -->
+<div class="course-area pt-60 pb-75">
+    <div class="container">
+        <div class="row gx-xl-5">
+            <div class="col-lg-4 col-xl-3">
+                <!-- Spacer -->
+                <div class="pb-40 d-none d-lg-block"></div>
+                <div class="widget-offcanvas offcanvas-lg offcanvas-start" tabindex="-1" id="widgetOffcanvas" aria-labelledby="widgetOffcanvas">
+                    <div class="offcanvas-header px-20">
+                        <h4 class="offcanvas-title">Filter</h4>
+                        <button type="button" class="btn-close" data-bs-dismiss="offcanvas" data-bs-target="#widgetOffcanvas" aria-label="Close"></button>
+                    </div>
+                    <div class="offcanvas-body p-0">
+                        <aside class="widget-area px-20" data-aos="fade-up">
+                            <div class="widget widget-categories py-20">
+                                <h5 class="title">
+                                    <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#categories">
+                                        Categories
+                                    </button>
+                                </h5>
+                                <div id="categories" class="collapse show">
+                                    <div class="accordion-body mt-20 scroll-y">
+                                        <ul class="list-group">
+                                            <!-- Add class .list-dropdown for dropdown-menu -->
+                                            <li class="list-item">
+                                                <a class="category-toggle" href="courses.html" title="link" target="_self">All<span class="qty">(99)</span></a>
+                                            </li>
+                                            <li class="list-item list-dropdown">
+                                                <a class="category-toggle" href="#development">Development<span class="qty">(88)</span></a>
+                                                <ul class="menu-collapse">
+                                                    <li><a class="icon-start" href="courses.html" title="link" target="_self"><i class="fal fa-angle-right"></i>Web<span class="qty">(14)</span></a></li>
+                                                    <li><a class="icon-start" href="courses.html" title="link" target="_self"><i class="fal fa-angle-right"></i>Software<span class="qty">(51)</span></a></li>
+                                                    <li><a class="icon-start" href="courses.html" title="link" target="_self"><i class="fal fa-angle-right"></i>Career<span class="qty">(16)</span></a></li>
+                                                </ul>
+                                            </li>
+                                            <li class="list-item">
+                                                <a href="courses.html" title="link" target="_self" class="category-toggle">Marketing<span class="qty">(02)</span></a>
+                                            </li>
+                                            <li class="list-item">
+                                                <a href="courses.html" title="link" target="_self" class="category-toggle">Photography<span class="qty">(22)</span></a>
+                                            </li>
+                                            <li class="list-item">
+                                                <a href="courses.html" title="link" target="_self" class="category-toggle">IT & Software<span class="qty">(32)</span></a>
+                                            </li>
+                                            <li class="list-item">
+                                                <a href="courses.html" title="link" target="_self" class="category-toggle">Music & Media<span class="qty">(15)</span></a>
+                                            </li>
+                                            <li class="list-item">
+                                                <a href="courses.html" title="link" target="_self" class="category-toggle">Life Science<span class="qty">(85)</span></a>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="widget widget-type py-20">
+                                <h5 class="title">
+                                    <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#topic" aria-expanded="true" aria-controls="topic">
+                                        Topic
+                                    </button>
+                                </h5>
+                                <div id="topic" class="collapse show">
+                                    <div class="accordion-body mt-20 scroll-y">
+                                        <ul class="list-group custom-checkbox">
+                                            <li>
+                                                <input class="input-checkbox" type="checkbox" name="checkbox" id="checkbox1" value="">
+                                                <label class="form-check-label" for="checkbox1"><span>Python</span><span class="qty">(67)</span></label>
+                                            </li>
+                                            <li>
+                                                <input class="input-checkbox" type="checkbox" name="checkbox" id="checkbox2" value="">
+                                                <label class="form-check-label" for="checkbox2"><span>JavaScript</span><span class="qty">(32)</span></label>
+                                            </li>
+                                            <li>
+                                                <input class="input-checkbox" type="checkbox" name="checkbox" id="checkbox3" value="">
+                                                <label class="form-check-label" for="checkbox3"><span>Machine Learning</span><span class="qty">(13)</span></label>
+                                            </li>
+                                            <li>
+                                                <input class="input-checkbox" type="checkbox" name="checkbox" id="checkbox4" value="">
+                                                <label class="form-check-label" for="checkbox4"><span>Wordpress</span><span class="qty">(64)</span></label>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="widget widget-price py-20">
+                                <h5 class="title">
+                                    <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#price" aria-expanded="true" aria-controls="price">
+                                        Price
+                                    </button>
+                                </h5>
+                                <div id="price" class="collapse show">
+                                    <div class="accordion-body mt-20 scroll-y">
+                                        <div class="row gx-sm-3">
+                                            <div class="col-md-6">
+                                                <div class="form-group mb-20">
+                                                    <label class="mb-1">Minimum</label>
+                                                    <input class="form-control size-md" type="number" name="min" id="min">
+                                                </div>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <div class="form-group mb-20">
+                                                    <label class="mb-1">Maximum</label>
+                                                    <input class="form-control size-md" type="number" name="max" id="max">
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="price-item">
+                                            <div class="price-slider" data-range-slider='filterPriceSlider'></div>
+                                            <div class="price-value">
+                                                <span>
+                                                    Price:
+                                                    <span class="filter-price-range" data-range-value='filterPriceSliderValue'></span>
+                                                </span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="widget widget-ratings py-20">
+                                <h5 class="title">
+                                    <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#sort" aria-expanded="true" aria-controls="sort">
+                                        Ratings
+                                    </button>
+                                </h5>
+                                <div id="sort" class="collapse show">
+                                    <div class="accordion-body mt-20 scroll-y">
+                                        <ul class="list-group custom-radio">
+                                            <li>
+                                                <input class="input-radio" type="radio" name="radio" id="radio1" value="">
+                                                <label class="form-radio-label" for="radio1">
+                                                    <span class="rating">
+                                                        <i class="fas fa-star"></i>
+                                                        <i class="fas fa-star"></i>
+                                                        <i class="fas fa-star"></i>
+                                                        <i class="fas fa-star"></i>
+                                                        <i class="fas fa-star"></i>
+                                                    </span>
+                                                    <span class="qty">(67)</span>
+                                                </label>
+                                            </li>
+                                            <li>
+                                                <input class="input-radio" type="radio" name="radio" id="radio2" value="">
+                                                <label class="form-radio-label" for="radio2">
+                                                    <span class="rating">
+                                                        <i class="fas fa-star"></i>
+                                                        <i class="fas fa-star"></i>
+                                                        <i class="fas fa-star"></i>
+                                                        <i class="fas fa-star"></i>
+                                                        <i class="far fa-star"></i>
+                                                    </span>
+                                                    <span class="qty">(32)</span>
+                                                </label>
+                                            </li>
+                                            <li>
+                                                <input class="input-radio" type="radio" name="radio" id="radio3" value="">
+                                                <label class="form-radio-label" for="radio3">
+                                                    <span class="rating">
+                                                        <i class="fas fa-star"></i>
+                                                        <i class="fas fa-star"></i>
+                                                        <i class="fas fa-star"></i>
+                                                        <i class="far fa-star"></i>
+                                                        <i class="far fa-star"></i>
+                                                    </span>
+                                                    <span class="qty">(13)</span>
+                                                </label>
+                                            </li>
+                                            <li>
+                                                <input class="input-radio" type="radio" name="radio" id="radio4" value="">
+                                                <label class="form-radio-label" for="radio4">
+                                                    <span class="rating">
+                                                        <i class="fas fa-star"></i>
+                                                        <i class="fas fa-star"></i>
+                                                        <i class="far fa-star"></i>
+                                                        <i class="far fa-star"></i>
+                                                        <i class="far fa-star"></i>
+                                                    </span>
+                                                    <span class="qty">(5)</span>
+                                                </label>
+                                            </li>
+                                            <li>
+                                                <input class="input-radio" type="radio" name="radio" id="radio5" value="">
+                                                <label class="form-radio-label" for="radio5">
+                                                    <span class="rating">
+                                                        <i class="fas fa-star"></i>
+                                                        <i class="far fa-star"></i>
+                                                        <i class="far fa-star"></i>
+                                                        <i class="far fa-star"></i>
+                                                        <i class="far fa-star"></i>
+                                                    </span>
+                                                    <span class="qty">(0)</span>
+                                                </label>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                           
+                        </aside>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-8 col-xl-9">
+                <!-- Spacer -->
+                <div class="pb-40"></div>
+                <div class="sort-area" data-aos="fade-up">
+                    <div class="row align-items-center">
+                        <div class="col-lg-6">
+                            <h5 class="mb-20">目前有 <span class="color-primary">@Model.Count()</span> 堂課</h5>
+                        </div>
+                        <div class="col-6 d-lg-none">
+                            <button class="btn btn-sm btn-outline icon-end radius-sm mb-20" type="button" data-bs-toggle="offcanvas" data-bs-target="#widgetOffcanvas" aria-controls="widgetOffcanvas">
+                                Filter <i class="fal fa-filter"></i>
+                            </button>
+                        </div>
+                        <div class="col-6">
+                            <ul class="sort-list list-unstyled mb-20 text-end">
+                                <li class="item">
+                                    <div class="sort-item d-flex align-items-center">
+                                        <label class="me-2 font-sm">篩選依據</label>
+                                        <select name="type" class="niceselect right">
+                                            <option value="high">Trending</option>
+                                            <option value="low">最新</option>
+                                            <option value="New">最熱門</option>                                     
+                                        </select>
+                                    </div>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <div class="row" data-aos="fade-up">
+                    <div class="col-xl-4 col-sm-6">
+                        <div class="course-default border radius-md mb-25">
+                            <figure class="course-img">
+                                <a href="course-details.html" title="Image" target="_self" class="lazy-container ratio ratio-2-3">
+                                    <img class="lazyload" src="assets/images/placeholder.png" data-src="assets/images/course/pro-5.jpg" alt="course">
+                                </a>
+                                <div class="hover-show">
+                                    <a href="course-details.html" class="btn btn-md btn-primary rounded-pill" title="Enroll Now" target="_self">Enroll Now</a>
+                                </div>
+                            </figure>
+                            <div class="course-details">
+                                <div class="p-3">
+                                    <a href="course-details.html" target="_self" title="Design" class="tag font-sm color-primary mb-1">Design</a>
+                                    <h6 class="course-title lc-2 mb-0">
+                                        <a href="course-details.html" target="_self" title="Link">
+                                            Photoshop Master Course: From Beginner to Photoshop Pro
+                                        </a>
+                                    </h6>
+                                    <div class="authors mt-15">
+                                        <div class="author">
+                                            <img class="lazyload blur-up radius-sm" src="assets/images/placeholder.png" data-src="assets/images/avatar-1.jpg" alt="Image">
+                                            <span class="font-sm">
+                                                <a href="course-details.html" target="_self" title="James Hobert">
+                                                    James Hobert
+                                                </a>
+                                            </span>
+                                        </div>
+                                        <span class="font-sm icon-start"><i class="fas fa-clock"></i>06h 00m</span>
+                                    </div>
+                                </div>
+                                <div class="course-bottom-info px-3 py-2">
+                                    <span class="font-sm"><i class="fas fa-usd-circle"></i>$13.99</span>
+                                    <span class="font-sm"><i class="fas fa-book-alt"></i>11 Lessons</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-xl-4 col-sm-6">
+                        <div class="course-default border radius-md mb-25">
+                            <figure class="course-img">
+                                <a href="course-details.html" title="Image" target="_self" class="lazy-container ratio ratio-2-3">
+                                    <img class="lazyload" src="assets/images/placeholder.png" data-src="assets/images/course/pro-6.jpg" alt="course">
+                                </a>
+                                <div class="hover-show">
+                                    <a href="course-details.html" class="btn btn-md btn-primary rounded-pill" title="Enroll Now" target="_self">Enroll Now</a>
+                                </div>
+                            </figure>
+                            <div class="course-details">
+                                <div class="p-3">
+                                    <a href="course-details.html" target="_self" title="Development" class="tag font-sm color-primary mb-1">Development</a>
+                                    <h6 class="course-title lc-2 mb-0">
+                                        <a href="course-details.html" target="_self" title="Link">
+                                            User Experience (UX): The Ultimate Guide to Usability and UX
+                                        </a>
+                                    </h6>
+                                    <div class="authors mt-15">
+                                        <div class="author">
+                                            <img class="lazyload blur-up radius-sm" src="assets/images/placeholder.png" data-src="assets/images/avatar-2.jpg" alt="Image">
+                                            <span class="font-sm">
+                                                <a href="course-details.html" target="_self" title="David Travis">
+                                                    David Travis
+                                                </a>
+                                            </span>
+                                        </div>
+                                        <span class="font-sm icon-start"><i class="fas fa-clock"></i>06h 00m</span>
+                                    </div>
+                                </div>
+                                <div class="course-bottom-info px-3 py-2">
+                                    <span class="font-sm"><i class="fas fa-usd-circle"></i>$79.00</span>
+                                    <span class="font-sm"><i class="fas fa-book-alt"></i>31 Lessons</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-xl-4 col-sm-6">
+                        <div class="course-default border radius-md mb-25">
+                            <figure class="course-img">
+                                <a href="course-details.html" title="Image" target="_self" class="lazy-container ratio ratio-2-3">
+                                    <img class="lazyload" src="assets/images/placeholder.png" data-src="assets/images/course/pro-7.jpg" alt="course">
+                                </a>
+                                <div class="hover-show">
+                                    <a href="course-details.html" class="btn btn-md btn-primary rounded-pill" title="Enroll Now" target="_self">Enroll Now</a>
+                                </div>
+                            </figure>
+                            <div class="course-details">
+                                <div class="p-3">
+                                    <a href="course-details.html" target="_self" title="Marketing" class="tag font-sm color-primary mb-1">Marketing</a>
+                                    <h6 class="course-title lc-2 mb-0">
+                                        <a href="course-details.html" target="_self" title="Link">
+                                            Anatomy for Figure Drawing: Mastering the Human Figure
+                                        </a>
+                                    </h6>
+                                    <div class="authors mt-15">
+                                        <div class="author">
+                                            <img class="lazyload blur-up radius-sm" src="assets/images/placeholder.png" data-src="assets/images/avatar-3.jpg" alt="Image">
+                                            <span class="font-sm">
+                                                <a href="course-details.html" target="_self" title="Neil Fontaine">
+                                                    Neil Fontaine
+                                                </a>
+                                            </span>
+                                        </div>
+                                        <span class="font-sm icon-start"><i class="fas fa-clock"></i>06h 00m</span>
+                                    </div>
+                                </div>
+                                <div class="course-bottom-info px-3 py-2">
+                                    <span class="font-sm"><i class="fas fa-usd-circle"></i>$13.99</span>
+                                    <span class="font-sm"><i class="fas fa-book-alt"></i>08 Lessons</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-xl-4 col-sm-6">
+                        <div class="course-default border radius-md mb-25">
+                            <figure class="course-img">
+                                <a href="course-details.html" title="Image" target="_self" class="lazy-container ratio ratio-2-3">
+                                    <img class="lazyload" src="assets/images/placeholder.png" data-src="assets/images/course/pro-8.jpg" alt="course">
+                                </a>
+                                <div class="hover-show">
+                                    <a href="course-details.html" class="btn btn-md btn-primary rounded-pill" title="Enroll Now" target="_self">Enroll Now</a>
+                                </div>
+                            </figure>
+                            <div class="course-details">
+                                <div class="p-3">
+                                    <a href="course-details.html" target="_self" title="Music" class="tag font-sm color-primary mb-1">Music</a>
+                                    <h6 class="course-title lc-2 mb-0">
+                                        <a href="course-details.html" target="_self" title="Link">
+                                            Anatomy for Figure Drawing: Mastering the Human Figure
+                                        </a>
+                                    </h6>
+                                    <div class="authors mt-15">
+                                        <div class="author">
+                                            <img class="lazyload blur-up radius-sm" src="assets/images/placeholder.png" data-src="assets/images/avatar-4.jpg" alt="Image">
+                                            <span class="font-sm">
+                                                <a href="course-details.html" target="_self" title="John Kolko">
+                                                    John Kolko
+                                                </a>
+                                            </span>
+                                        </div>
+                                        <span class="font-sm icon-start"><i class="fas fa-clock"></i>06h 00m</span>
+                                    </div>
+                                </div>
+                                <div class="course-bottom-info px-3 py-2">
+                                    <span class="font-sm"><i class="fas fa-usd-circle"></i>$64.99</span>
+                                    <span class="font-sm"><i class="fas fa-book-alt"></i>17 Lessons</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-xl-4 col-sm-6">
+                        <div class="course-default border radius-md mb-25">
+                            <figure class="course-img">
+                                <a href="course-details.html" title="Image" target="_self" class="lazy-container ratio ratio-2-3">
+                                    <img class="lazyload" src="assets/images/placeholder.png" data-src="assets/images/course/pro-9.jpg" alt="course">
+                                </a>
+                                <div class="hover-show">
+                                    <a href="course-details.html" class="btn btn-md btn-primary rounded-pill" title="Enroll Now" target="_self">Enroll Now</a>
+                                </div>
+                            </figure>
+                            <div class="course-details">
+                                <div class="p-3">
+                                    <a href="course-details.html" target="_self" title="Development" class="tag font-sm color-primary mb-1">Development</a>
+                                    <h6 class="course-title lc-2 mb-0">
+                                        <a href="course-details.html" target="_self" title="Link">
+                                            WordPress Development with Bootstrap: The Complete Course
+                                        </a>
+                                    </h6>
+                                    <div class="authors mt-15">
+                                        <div class="author">
+                                            <img class="lazyload blur-up radius-sm" src="assets/images/placeholder.png" data-src="assets/images/avatar-5.jpg" alt="Image">
+                                            <span class="font-sm">
+                                                <a href="course-details.html" target="_self" title="Mike Russel">
+                                                    Mike Russel
+                                                </a>
+                                            </span>
+                                        </div>
+                                        <span class="font-sm icon-start"><i class="fas fa-clock"></i>06h 00m</span>
+                                    </div>
+                                </div>
+                                <div class="course-bottom-info px-3 py-2">
+                                    <span class="font-sm"><i class="fas fa-usd-circle"></i>$13.99</span>
+                                    <span class="font-sm"><i class="fas fa-book-alt"></i>11 Lessons</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-xl-4 col-sm-6">
+                        <div class="course-default border radius-md mb-25">
+                            <figure class="course-img">
+                                <a href="course-details.html" title="Image" target="_self" class="lazy-container ratio ratio-2-3">
+                                    <img class="lazyload" src="assets/images/placeholder.png" data-src="assets/images/course/pro-10.jpg" alt="course">
+                                </a>
+                                <div class="hover-show">
+                                    <a href="course-details.html" class="btn btn-md btn-primary rounded-pill" title="Enroll Now" target="_self">Enroll Now</a>
+                                </div>
+                            </figure>
+                            <div class="course-details">
+                                <div class="p-3">
+                                    <a href="course-details.html" target="_self" title="Design" class="tag font-sm color-primary mb-1">Design</a>
+                                    <h6 class="course-title lc-2 mb-0">
+                                        <a href="course-details.html" target="_self" title="Link">
+                                            Soundscaping for health, relationships and success
+                                        </a>
+                                    </h6>
+                                    <div class="authors mt-15">
+                                        <div class="author">
+                                            <img class="lazyload blur-up radius-sm" src="assets/images/placeholder.png" data-src="assets/images/avatar-6.jpg" alt="Image">
+                                            <span class="font-sm">
+                                                <a href="course-details.html" target="_self" title="Julian">
+                                                    Julian
+                                                </a>
+                                            </span>
+                                        </div>
+                                        <span class="font-sm icon-start"><i class="fas fa-clock"></i>06h 00m</span>
+                                    </div>
+                                </div>
+                                <div class="course-bottom-info px-3 py-2">
+                                    <span class="font-sm"><i class="fas fa-usd-circle"></i>$19.99</span>
+                                    <span class="font-sm"><i class="fas fa-book-alt"></i>11 Lessons</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-xl-4 col-sm-6">
+                        <div class="course-default border radius-md mb-25">
+                            <figure class="course-img">
+                                <a href="course-details.html" title="Image" target="_self" class="lazy-container ratio ratio-2-3">
+                                    <img class="lazyload" src="assets/images/placeholder.png" data-src="assets/images/course/pro-11.jpg" alt="course">
+                                </a>
+                                <div class="hover-show">
+                                    <a href="course-details.html" class="btn btn-md btn-primary rounded-pill" title="Enroll Now" target="_self">Enroll Now</a>
+                                </div>
+                            </figure>
+                            <div class="course-details">
+                                <div class="p-3">
+                                    <a href="course-details.html" target="_self" title="Marketing" class="tag font-sm color-primary mb-1">Marketing</a>
+                                    <h6 class="course-title lc-2 mb-0">
+                                        <a href="course-details.html" target="_self" title="Link">
+                                            Web Design for Beginners: Real World Coding in HTML & CSS
+                                        </a>
+                                    </h6>
+                                    <div class="authors mt-15">
+                                        <div class="author">
+                                            <img class="lazyload blur-up radius-sm" src="assets/images/placeholder.png" data-src="assets/images/avatar-7.jpg" alt="Image">
+                                            <span class="font-sm">
+                                                <a href="course-details.html" target="_self" title="Infinite Skills">
+                                                    Infinite Skills
+                                                </a>
+                                            </span>
+                                        </div>
+                                        <span class="font-sm icon-start"><i class="fas fa-clock"></i>06h 00m</span>
+                                    </div>
+                                </div>
+                                <div class="course-bottom-info px-3 py-2">
+                                    <span class="font-sm"><i class="fas fa-usd-circle"></i>$14.00</span>
+                                    <span class="font-sm"><i class="fas fa-book-alt"></i>11 Lessons</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-xl-4 col-sm-6">
+                        <div class="course-default border radius-md mb-25">
+                            <figure class="course-img">
+                                <a href="course-details.html" title="Image" target="_self" class="lazy-container ratio ratio-2-3">
+                                    <img class="lazyload" src="assets/images/placeholder.png" data-src="assets/images/course/pro-12.jpg" alt="course">
+                                </a>
+                                <div class="hover-show">
+                                    <a href="course-details.html" class="btn btn-md btn-primary rounded-pill" title="Enroll Now" target="_self">Enroll Now</a>
+                                </div>
+                            </figure>
+                            <div class="course-details">
+                                <div class="p-3">
+                                    <a href="course-details.html" target="_self" title="Photography" class="tag font-sm color-primary mb-1">Photography</a>
+                                    <h6 class="course-title lc-2 mb-0">
+                                        <a href="course-details.html" target="_self" title="Link">
+                                            Typographic Logos: Typography and Lettering for Logo Design
+                                        </a>
+                                    </h6>
+                                    <div class="authors mt-15">
+                                        <div class="author">
+                                            <img class="lazyload blur-up radius-sm" src="assets/images/placeholder.png" data-src="assets/images/avatar-8.jpg" alt="Image">
+                                            <span class="font-sm">
+                                                <a href="course-details.html" target="_self" title="Brad Schiff">
+                                                    Brad Schiff
+                                                </a>
+                                            </span>
+                                        </div>
+                                        <span class="font-sm icon-start"><i class="fas fa-clock"></i>06h 00m</span>
+                                    </div>
+                                </div>
+                                <div class="course-bottom-info px-3 py-2">
+                                    <span class="font-sm"><i class="fas fa-usd-circle"></i>$17.99</span>
+                                    <span class="font-sm"><i class="fas fa-book-alt"></i>11 Lessons</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-xl-4 col-sm-6">
+                        <div class="course-default border radius-md mb-25">
+                            <figure class="course-img">
+                                <a href="course-details.html" title="Image" target="_self" class="lazy-container ratio ratio-2-3">
+                                    <img class="lazyload" src="assets/images/placeholder.png" data-src="assets/images/course/pro-29.jpg" alt="course">
+                                </a>
+                                <div class="hover-show">
+                                    <a href="course-details.html" class="btn btn-md btn-primary rounded-pill" title="Enroll Now" target="_self">Enroll Now</a>
+                                </div>
+                            </figure>
+                            <div class="course-details">
+                                <div class="p-3">
+                                    <a href="course-details.html" target="_self" title="IT & Software" class="tag font-sm color-primary mb-1">IT & Software</a>
+                                    <h6 class="course-title lc-2 mb-0">
+                                        <a href="course-details.html" target="_self" title="Link">
+                                            100 Days of Code: The Complete Python Pro Bootcamp for 2023
+                                        </a>
+                                    </h6>
+                                    <div class="authors mt-15">
+                                        <div class="author">
+                                            <img class="lazyload blur-up radius-sm" src="assets/images/placeholder.png" data-src="assets/images/avatar-3.jpg" alt="Image">
+                                            <span class="font-sm">
+                                                <a href="course-details.html" target="_self" title="Justin">
+                                                    Justin
+                                                </a>
+                                            </span>
+                                        </div>
+                                        <span class="font-sm icon-start"><i class="fas fa-clock"></i>06h 00m</span>
+                                    </div>
+                                </div>
+                                <div class="course-bottom-info px-3 py-2">
+                                    <span class="font-sm"><i class="fas fa-usd-circle"></i>$17.99</span>
+                                    <span class="font-sm"><i class="fas fa-book-alt"></i>11 Lessons</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <nav class="pagination-nav mt-15 mb-25" data-aos="fade-up">
+                    <ul class="pagination justify-content-center">
+                        <li class="page-item">
+                            <a class="page-link" href="courses.html" aria-label="Previous">
+                                <i class="far fa-angle-left"></i>
+                            </a>
+                        </li>
+                        <li class="page-item active"><a class="page-link" href="courses.html">1</a></li>
+                        <li class="page-item"><a class="page-link" href="courses.html">2</a></li>
+                        <li class="page-item"><a class="page-link" href="courses.html">3</a></li>
+                        <li class="page-item">
+                            <a class="page-link" href="courses.html" aria-label="Next">
+                                <i class="far fa-angle-right"></i>
+                            </a>
+                        </li>
+                    </ul>
+                </nav>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Course-area end -->

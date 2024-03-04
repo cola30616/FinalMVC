@@ -2,47 +2,28 @@
 #nullable disable
 using System;
 using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
-using Microsoft.EntityFrameworkCore;
 
 namespace FinalGroupMVCPrj.Models;
 
-[Table("tVideoCourseQA")]
 public partial class TVideoCourseQa
 {
-    [Key]
-    [Column("fVideoCourseQAId")]
     public int FVideoCourseQaid { get; set; }
 
-    [Column("fVideoCourseId")]
     public int FVideoCourseId { get; set; }
 
-    [Column("fMemberId")]
     public int FMemberId { get; set; }
 
-    [Required]
-    [Column("fPurpose")]
-    [StringLength(50)]
     public string FPurpose { get; set; }
 
-    [Column("fQuestion")]
-    [StringLength(200)]
     public string FQuestion { get; set; }
 
-    [Column("fQuestionDate", TypeName = "datetime")]
     public DateTime FQuestionDate { get; set; }
 
-    [Column("fAnswer")]
-    [StringLength(200)]
     public string FAnswer { get; set; }
 
-    [Column("fAnswerDate", TypeName = "datetime")]
     public DateTime? FAnswerDate { get; set; }
 
-    [Column("fAnswerCondition")]
     public bool FAnswerCondition { get; set; }
 
-    [Column("fDisplayStatus")]
     public bool FDisplayStatus { get; set; }
 }

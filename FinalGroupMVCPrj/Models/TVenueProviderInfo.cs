@@ -2,49 +2,24 @@
 #nullable disable
 using System;
 using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
-using Microsoft.EntityFrameworkCore;
 
 namespace FinalGroupMVCPrj.Models;
 
-[Table("tVenueProviderInfo")]
 public partial class TVenueProviderInfo
 {
-    [Key]
-    [Column("fVenueProviderId")]
     public int FVenueProviderId { get; set; }
 
-    [Required]
-    [Column("fName")]
-    [StringLength(50)]
     public string FName { get; set; }
 
-    [Required]
-    [Column("fGUInumber")]
-    [StringLength(50)]
     public string FGuinumber { get; set; }
 
-    [Required]
-    [Column("fPassword")]
-    [StringLength(10)]
     public string FPassword { get; set; }
 
-    [Required]
-    [Column("fContactName")]
-    [StringLength(50)]
     public string FContactName { get; set; }
 
-    [Required]
-    [Column("fPhone")]
-    [StringLength(50)]
     public string FPhone { get; set; }
 
-    [Required]
-    [Column("fEmail")]
-    [StringLength(50)]
     public string FEmail { get; set; }
 
-    [InverseProperty("FVenueProvider")]
     public virtual ICollection<TVenue> TVenues { get; set; } = new List<TVenue>();
 }

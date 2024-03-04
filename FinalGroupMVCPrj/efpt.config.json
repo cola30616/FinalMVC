@@ -156,14 +156,14 @@
          "ObjectType": 0
       }
    ],
-   "UiHint": "desktop-rae7e6c.LifeShareLearn.dbo",
+   "UiHint": "laptop-2ka2cr12.LifeShareLearn.dbo",
    "UncountableWords": null,
    "UseBoolPropertiesWithoutDefaultSql": false,
    "UseDatabaseNames": false,
    "UseDateOnlyTimeOnly": false,
    "UseDbContextSplitting": false,
    "UseDecimalDataAnnotationForSprocResult": true,
-   "UseFluentApiOnly": false,
+   "UseFluentApiOnly": true,
    "UseHandleBars": false,
    "UseHierarchyId": false,
    "UseInflector": true,

@@ -2,30 +2,18 @@
 #nullable disable
 using System;
 using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
-using Microsoft.EntityFrameworkCore;
 
 namespace FinalGroupMVCPrj.Models;
 
-[Table("tTeacherSubjects")]
 public partial class TTeacherSubject
 {
-    [Key]
-    [Column("fTeacherSujectsId")]
     public int FTeacherSujectsId { get; set; }
 
-    [Column("fTeacherId")]
     public int FTeacherId { get; set; }
 
-    [Column("fSubjectId")]
     public int FSubjectId { get; set; }
 
-    [ForeignKey("FSubjectId")]
-    [InverseProperty("TTeacherSubjects")]
     public virtual TCourseSubject FSubject { get; set; }
 
-    [ForeignKey("FTeacherId")]
-    [InverseProperty("TTeacherSubjects")]
     public virtual TTeacher FTeacher { get; set; }
 }

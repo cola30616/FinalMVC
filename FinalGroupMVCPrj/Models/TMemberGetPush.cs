@@ -2,32 +2,20 @@
 #nullable disable
 using System;
 using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
-using Microsoft.EntityFrameworkCore;
 
 namespace FinalGroupMVCPrj.Models;
 
-[Table("tMemberGetPush")]
 public partial class TMemberGetPush
 {
-    [Key]
-    [Column("fMemberGetPushId")]
     public int FMemberGetPushId { get; set; }
 
-    [Column("fMemberId")]
     public int FMemberId { get; set; }
 
-    [Column("fPushMessageId")]
     public int FPushMessageId { get; set; }
 
-    [Column("fPushRead")]
     public bool? FPushRead { get; set; }
 
-    [Column("fPushCreatedTime", TypeName = "datetime")]
     public DateTime FPushCreatedTime { get; set; }
 
-    [ForeignKey("FPushMessageId")]
-    [InverseProperty("TMemberGetPushes")]
     public virtual TPushMessage FPushMessage { get; set; }
 }

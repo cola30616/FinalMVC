@@ -2,23 +2,14 @@
 #nullable disable
 using System;
 using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
-using Microsoft.EntityFrameworkCore;
 
 namespace FinalGroupMVCPrj.Models;
 
-[Table("tPushLayout")]
 public partial class TPushLayout
 {
-    [Key]
-    [Column("fPushLayoutId")]
     public int FPushLayoutId { get; set; }
 
-    [Column("fLayoutName")]
-    [StringLength(50)]
     public string FLayoutName { get; set; }
 
-    [InverseProperty("FPushLayout")]
     public virtual ICollection<TPushMessage> TPushMessages { get; set; } = new List<TPushMessage>();
 }

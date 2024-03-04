@@ -1,5 +1,4 @@
-﻿@using FinalGroupMVCPrj.Models.ViewModel
-@model IEnumerable<LessonCourseVM>
+﻿@model IEnumerable<LessonCourseVM>
 
 <!-- Home-area start-->
 <section class="hero-banner hero-banner_v1 header-next pb-60">
@@ -76,7 +75,7 @@
                                             <i class="fa-solid fa-lightbulb fa-bounce fa-xs"></i>
                                         </div>
                                         <h6 class="card-title lc-1 mb-0">
-                                            <div href="" target="_self" title=@field>
+                                            <div asp-for=@field target="_self">
                                                 @field
                                             </div>
                                         </h6>
@@ -171,7 +170,7 @@
                         <img class="title-shape lazyload" src="/images/placeholder.png" data-src="/images/shape/title-shape.png" alt="Shape">
                     </h2>
                     <div class="cta-btn">
-                        <a href="courses.html" class="btn btn-lg btn-primary rounded-pill" title="See All Course" target="_self">所有課程</a>
+                        <a asp-controller="Lesson" asp-action="Index" class="btn btn-lg btn-primary rounded-pill" title="See All Course" target="_self">所有課程</a>
                     </div>
                 </div>
             </div>
@@ -281,7 +280,7 @@
                                                 <img class="lazyload" src="/images/placeholder.png" data-src="/images/course/pro-5.jpg" alt="course">
                                             </a>
                                             <div class="hover-show">
-                                                <a href="course-details.html" class="btn btn-md btn-primary rounded-pill" title="Enroll Now" target="_self">前往課程</a>
+                                                <a asp-route-id="@course.lessonCourse.FLessonCourseId"  class="btn btn-md btn-primary rounded-pill" title="Enroll Now" target="_self">前往課程</a>
                                             </div>
                                         </figure>
                                         <div class="course-details">
@@ -318,7 +317,7 @@
                             
                         </div>
                         <div class="cta-btn text-center mt-15">
-                            <a href="courses.html" class="btn btn-lg btn-primary rounded-pill" title="View More" target="_self">所有課程</a>
+                            <a asp-controller="Lesson" asp-action="Index" class="btn btn-lg btn-primary rounded-pill" title="View More" target="_self">所有課程</a>
                         </div>
                     </div>
                     
@@ -356,7 +355,7 @@
                         <div class="col-lg-4 col-sm-6" data-aos="fade-up">
                             <div class="card radius-md mb-30">
                                 <div class="card-img">
-                                    <a href="mentor-details.html" title="Image" target="_self" class="lazy-container ratio ratio-1-2">
+                                    <a asp-route-id="@course.teacher.FTeacherId" title="Image" target="_self" class="lazy-container ratio ratio-1-2">
                                         @if (course.teacher.FTeacherProfilePic != null) // 空值檢查
                                         {
                                             <img class="lazyload" src="data:image;base64,@(Convert.ToBase64String(course.teacher.FTeacherProfilePic))" alt="Image" />

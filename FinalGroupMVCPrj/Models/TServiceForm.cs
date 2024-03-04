@@ -2,62 +2,36 @@
 #nullable disable
 using System;
 using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
-using Microsoft.EntityFrameworkCore;
 
 namespace FinalGroupMVCPrj.Models;
 
-[Table("tServiceForm")]
 public partial class TServiceForm
 {
-    [Key]
-    [Column("fServiceId")]
     public int FServiceId { get; set; }
 
-    [Column("fMemberId")]
     public int FMemberId { get; set; }
 
-    [Column("fEmployeeId")]
     public int? FEmployeeId { get; set; }
 
-    [Column("fServiceParentId")]
     public int? FServiceParentId { get; set; }
 
-    [Column("fServiceCreatedTime", TypeName = "datetime")]
     public DateTime FServiceCreatedTime { get; set; }
 
-    [Column("fServiceChannel")]
-    [StringLength(50)]
     public string FServiceChannel { get; set; }
 
-    [Column("fServiceType")]
-    [StringLength(50)]
     public string FServiceType { get; set; }
 
-    [Column("fServiceTag")]
-    [StringLength(50)]
     public string FServiceTag { get; set; }
 
-    [Column("fServiceContent")]
     public string FServiceContent { get; set; }
 
-    [Column("fServiceClosedTime", TypeName = "datetime")]
     public DateTime? FServiceClosedTime { get; set; }
 
-    [Column("fServiceStatus")]
-    [StringLength(50)]
     public string FServiceStatus { get; set; }
 
-    [Column("fServiceStep")]
     public int? FServiceStep { get; set; }
 
-    [Required]
-    [Column("fServiceFormType")]
-    [StringLength(50)]
     public string FServiceFormType { get; set; }
 
-    [ForeignKey("FEmployeeId")]
-    [InverseProperty("TServiceForms")]
     public virtual TAdmin FEmployee { get; set; }
 }
