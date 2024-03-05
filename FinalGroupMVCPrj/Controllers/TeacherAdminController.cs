@@ -29,9 +29,16 @@ namespace FinalGroupMVCPrj.Controllers
         //■ ==========================     子謙作業區      ==========================■
         [HttpGet]
         public IActionResult VideoIntro()
-        {
-            
+        {           
             return View();
+        }
+        [HttpGet]
+        public IActionResult VEdit(int? id)
+        {
+            var videoList = _context.TVideoUploadUrls
+            .Where(t => t.FVideoUploadUrlId == id)           
+            .ToList();
+            return View(videoList);
         }
 
         //API Get
