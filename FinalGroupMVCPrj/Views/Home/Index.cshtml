@@ -280,7 +280,7 @@
                                                 <img class="lazyload" src="/images/placeholder.png" data-src="/images/course/pro-5.jpg" alt="course">
                                             </a>
                                             <div class="hover-show">
-                                                <a asp-route-id="@course.lessonCourse.FLessonCourseId"  class="btn btn-md btn-primary rounded-pill" title="Enroll Now" target="_self">前往課程</a>
+                                                <a asp-controller="Lesson" asp-action="Details" asp-route-id="@course.lessonCourse.FLessonCourseId"  class="btn btn-md btn-primary rounded-pill" title="Enroll Now" target="_self">前往課程</a>
                                             </div>
                                         </figure>
                                         <div class="course-details">

@@ -13,8 +13,8 @@ namespace FinalGroupMVCPrj.Controllers
             _context = context;
         }
         //■ ==========================     子謙作業區      ==========================■
-        // GET: LessonHistory/List
-        //動作簡述：回傳課程記錄清單的頁面
+        // GET: {baseUrl}/Lesson/Index
+        //動作簡述：回傳所有課程的頁面
         public async Task<IActionResult> Index()
         {
             var fields = await _context.TCourseFields.Select(u => u.FFieldName).ToListAsync();
@@ -43,6 +43,15 @@ namespace FinalGroupMVCPrj.Controllers
             return View(courseList);
         }
 
+        // Get: 
+        [HttpGet]
+        public async Task<IActionResult> Search(string searchText)
+        {           
+            var searchResults = await _context.TLessonCourses
+                                          .Where(c => c.FName.Contains(searchText))
+                                          .ToListAsync();
+            return Json(searchResults);
+        }
 
 
         //■ ==========================     翊妏 作業區      ==========================■
