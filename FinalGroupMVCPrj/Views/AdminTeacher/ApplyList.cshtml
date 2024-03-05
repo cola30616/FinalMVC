@@ -1,16 +1,16 @@
-﻿@model MemberBasicViewModel
+﻿@model AdminTApplyVM
 @{
     ViewData["Title"] = "List";
     Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
 }
 
 <div class="pagetitle">
-    <h1>會員管理</h1>
+    <h1>老師管理</h1>
     <nav>
         <ol class="breadcrumb">
             <li class="breadcrumb-item"><a href="index.html">管理員後台</a></li>
-            <li class="breadcrumb-item">會員管理</li>
-            <li class="breadcrumb-item active">會員清單</li>
+            <li class="breadcrumb-item">老師管理</li>
+            <li class="breadcrumb-item active">老師審核</li>
         </ol>
     </nav>
 </div>
@@ -18,16 +18,15 @@
 <section class="section">
     <div class="row">
         <div class="col-lg-12">
-
-            </div>
-            <div class="card">
-                <div class="card-body">
-                    <h5 class="card-title">會員清單</h5>
-                <div >
+        </div>
+        <div class="card">
+            <div class="card-body">
+                <h5 class="card-title">老師審核</h5>
+                <div>
                     <!--篩選資料區-->
                     <div class="d-flex align-items-center gap-4 mb-3">
                         <div class="d-flex align-items-center gap-2 ">
-                            <label for="inputDate" class="">註冊日期</label>
+                            <label for="inputDate" class="">申請日期</label>
                             <div class="">
                                 <input type="date" class="form-control">
                             </div>
@@ -36,21 +35,15 @@
                                 <input type="date" class="form-control">
                             </div>
                         </div>
-                            <div class="" style="width:10%">
-                                <select class="form-select" aria-label="Default select example">
-                                <option selected>驗證不拘</option>
-                                    <option value="1">One</option>
-                                    <option value="2">Two</option>
-                                    <option value="3">Three</option>
-                                </select>
-                        </div>
-                        <div class="" style="width:15%">
-                            <select class="form-select" aria-label="Default select example">
-                                <option selected>優惠通知不拘</option>
-                                <option value="1">One</option>
-                                <option value="2">Two</option>
-                                <option value="3">Three</option>
-                            </select>
+                        <div class="d-flex align-items-center gap-2 ">
+                            <label for="inputDate" class="">更新日期</label>
+                            <div class="">
+                                <input type="date" class="form-control">
+                            </div>
+                            <span>~</span>
+                            <div class="">
+                                <input type="date" class="form-control">
+                            </div>
                         </div>
                         <div class="" style="width:10%">
                             <select class="form-select" aria-label="Default select example">
@@ -60,23 +53,21 @@
                                 <option value="3">Three</option>
                             </select>
                         </div>
-                            <button class="btn btn-secondary"> 清除條件</button>
-                            <button class="btn btn-success"> 匯出CSV</button>
+                        <button class="btn btn-secondary"> 清除條件</button>
+                        <button class="btn btn-success"> 匯出CSV</button>
                     </div>
 
                     <div>
                         <!-- 表格-->
-                        <table id="memberListTable" class="datatable">
+                        <table id="tApplyListTable" class="datatable">
                             <thead>
                                 <tr>
-                                    <th>@Html.DisplayNameFor(m=>m.MemberId)</th>
-                                    <th>@Html.DisplayNameFor(m=>m.RegisterDateTime)</th>
-                                    <th>@Html.DisplayNameFor(m=>m.RealName)</th>
-                                     <th>@Html.DisplayNameFor(m=>m.ShowName)</th>
-                                    <th>@Html.DisplayNameFor(m=>m.Email)</th>
-                                     <th>@Html.DisplayNameFor(m=>m.EmailVerification)</th>
-                                    <th>@Html.DisplayNameFor(m=>m.GetCampInfo)</th>
-                                    <th>@Html.DisplayNameFor(m=>m.Status)</th>
+                                    <th>@Html.DisplayNameFor(m => m.ApplyDatetime)</th>
+                                    <th>@Html.DisplayNameFor(m => m.RealName)</th>
+                                    <th>@Html.DisplayNameFor(m => m.TeacherName)</th>
+                                    <th>@Html.DisplayNameFor(m => m.ReviewDatetime)</th>
+                                    <th>@Html.DisplayNameFor(m => m.ProgressStatus)</th>
+                                    <th>@Html.DisplayNameFor(m => m.Note)</th>
                                     <th>操作</th>
                                 </tr>
                             </thead>
@@ -95,11 +86,11 @@
 <div class="modal fade " id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
     <div class="modal-dialog modal-lg modal-dialog-scrollable">
         <div class="modal-content p-3 ">
-                        <div class="d-flex justify-content-between">
+            <div class="d-flex justify-content-between">
                 <!-- Default Tabs -->
-              <div class="d-flex gap-2 px-2 mb-3 mt-2">
-                    <span class="fw-bold">會員編號：</span><span>1</span> <span>陳小美</span><span>example@gmail.com</span>
-              </div>
+                <div class="d-flex gap-2 px-2 mb-3 mt-2">
+                    <span class="fw-bold">申請人：</span> <span>陳思婷</span><span>tinachen@email.com</span>
+                </div>
                 <button type="button" class="btn" data-bs-dismiss="modal" aria-label="Close"><i class="fa-solid fa-x"></i></button>
             </div>
             <div class="d-flex">
@@ -114,7 +105,7 @@
                     <li class="nav-item" role="presentation">
                         <button class="nav-link" id="contact-tab" data-bs-toggle="tab" data-bs-target="#contact" type="button" role="tab" aria-controls="contact" aria-selected="false">登入紀錄</button>
                     </li>
-                </ul> 
+                </ul>
             </div>
 
             <!--標籤內容區-->
@@ -132,22 +123,22 @@
                                     </button>
                                 </div>
                             </div>
-                                <div class="d-flex flex-column">
-                                        <div class="d-flex gap-2 align-items-center mb-2 ">
-                                        <span class="fw-bold">註冊日期：</span>
-                                            <span >2024-03-04 10:08</span>
-                                        </div>
-                                            <div class="d-flex gap-2 mb-2">
-                                        <span class="fw-bold">電子信箱：</span>
-                                                <span >example@gmail.com</span>
-                                                <span></span>
-                                                <span class="text-success" >已驗證</span>
-                                        </div>
-                                        <div class="mb-2">
-                                        <label class="fw-bold">連結帳號：  </label>
-                                            <span>Google、Line</span>
-                                        </div>
+                            <div class="d-flex flex-column">
+                                <div class="d-flex gap-2 align-items-center mb-2 ">
+                                    <span class="fw-bold">註冊日期：</span>
+                                    <span>2024-03-04 10:08</span>
                                 </div>
+                                <div class="d-flex gap-2 mb-2">
+                                    <span class="fw-bold">電子信箱：</span>
+                                    <span>example@gmail.com</span>
+                                    <span></span>
+                                    <span class="text-success">已驗證</span>
+                                </div>
+                                <div class="mb-2">
+                                    <label class="fw-bold">連結帳號：  </label>
+                                    <span>Google、Line</span>
+                                </div>
+                            </div>
 
                         </div>
                         <!--第二區-->
@@ -157,7 +148,7 @@
                                 <div class="flex-grow-1 form-group mb-3">
                                     <label for="firstName">真實姓名 </label>
                                     <input disabled id="firstName" type="text" class="form-control" name="firstName" value="王小明">
-                                </div>       
+                                </div>
                                 <div class="editValue pb-4" style="cursor:pointer"><i class="fa-solid fa-pen-to-square"></i></div>
                             </div>
                             <div class="d-flex gap-3 align-items-end">
@@ -190,13 +181,13 @@
                             </div>
                             <div class="d-flex gap-3 align-items-end">
                                 <div class="flex-grow-1 form-group mb-3">
-                                    <label >備註：  </label>
+                                    <label>備註：  </label>
                                     <textarea disabled class="form-control"></textarea>
                                 </div>
                                 <div class="editValue pb-5" style="cursor:pointer"><i class="fa-solid fa-pen-to-square"></i></div>
                             </div>
                         </div>
-                        </div>
+                    </div>
                 </div>
                 <!--其他資訊標籤內容區-->
                 <div class="tab-pane fade p-3 mt-2 mb-4" id="profile" role="tabpanel" aria-labelledby="profile-tab">
@@ -255,8 +246,8 @@
                                 </div>
                             </div>
                         </div>
-                       
-                 </div>
+
+                    </div>
 
                 </div>
                 <!--登入記錄標籤內容區-->
@@ -283,98 +274,12 @@
                     <div class="d-flex justify-content-center">
                         <button id="load-more-btn" class="btn btn-primary">載入5筆</button>
                     </div>
-                 
+
                 </div>
             </div><!-- End Default Tabs -->
         </div>
     </div>
 </div>
-@section  Scripts {
-    <script src="~/js/owenscript/adminmemberlist.js" asp-append-version="true"></script>
-    <script>
-        let loadedDataCount = 0;
-        const dataPerPage = 5;
-
-       //生成隨機資料
-        function generateRandomData(count) {
-            const data = [];
-            for (let i = 1; i <= count; i++) {
-                data.push({
-                    id: loadedDataCount + i,
-                    loginTime: generateRandomDateTime(),
-                    ip: generateRandomIP(),
-                    region: generateRandomRegion(),
-                    browserSystem: generateRandomBrowserSystem()
-                });
-            }
-            return data;
-        }
-        // 生成隨機日期時間
-        function generateRandomDateTime() {
-            const year = 2023;
-            const month = Math.floor(Math.random() * 12) + 1; // 1-12
-            const day = Math.floor(Math.random() * 28) + 1; // 1-28 
-            const hours = Math.floor(Math.random() * 24); // 0-23
-            const minutes = Math.floor(Math.random() * 60); // 0-59
-            return `${year}-${month < 10 ? '0' + month : month}-${day < 10 ? '0' + day : day} ${hours < 10 ? '0' + hours : hours}:${minutes < 10 ? '0' + minutes : minutes}`;
-        }
-
-        // 生成隨機IP
-        function generateRandomIP() {
-            return `${Math.floor(Math.random() * 256)}.${Math.floor(Math.random() * 256)}.${Math.floor(Math.random() * 256)}.${Math.floor(Math.random() * 256)}`;
-        }
-
-        // 生成隨機國家/縣市/地區
-        function generateRandomRegion() {
-            const regions = ['台灣/台北市/大安區', '台灣/高雄市/小港區', '台灣/花蓮縣/花蓮市', '台灣/新北市/三重區'];
-            return regions[Math.floor(Math.random() * regions.length)];
-        }
-
-        // 生成隨機瀏覽器與系統
-        function generateRandomBrowserSystem() {
-            const browsers = ['Chrome 12.5', 'Firefox 5.5', 'Safari 16.7', 'Edge 9.3'];
-            const systems = ['Windows', 'MacOS', 'Linux','ios', 'android'];
-            const randomBrowser = browsers[Math.floor(Math.random() * browsers.length)];
-            const randomSystem = systems[Math.floor(Math.random() * systems.length)];
-            return `${randomBrowser} / ${randomSystem}`;
-        }
-
-
-        function insertDataToTable(data) {
-            const tbody = document.getElementById('table-body');
-            data.forEach(item => {
-                const row = document.createElement('tr');
-                row.innerHTML = `
-                <th scope="row">${item.id}</th>
-                <td>${item.loginTime}</td>
-                <td>${item.ip}</td>
-                <td>${item.region}</td>
-                <td>${item.browserSystem}</td>
-              `;
-                tbody.appendChild(row);
-            });
-        }
-
-        // 載入更多資料
-        function loadMoreData() {
-            if (loadedDataCount < 30) {
-                const remainingDataCount = Math.min(dataPerPage, 30 - loadedDataCount);
-                const newData = generateRandomData(remainingDataCount);
-                insertDataToTable(newData);
-                loadedDataCount += remainingDataCount;
-
-                // 檢查是否載入所有資料
-                if (loadedDataCount === 30) {
-                    document.getElementById('load-more-btn').disabled = true;
-                    document.getElementById('load-more-btn').innerHTML = "已無紀錄可載入";
-                }
-            }
-        }
-
-        //載入更多資料的點擊事件
-        document.getElementById('load-more-btn').addEventListener('click', loadMoreData);
-
-        // 最一開始載入
-        loadMoreData();
-    </script>
+@section Scripts {
+    <script src="~/js/owenscript/admintapplylist.js" asp-append-version="true"></script>
 }

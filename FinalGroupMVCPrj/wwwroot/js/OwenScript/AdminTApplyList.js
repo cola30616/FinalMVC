@@ -6,20 +6,18 @@ $(document).ready(function () {
 
 function loadDataTable() {
     // html 欄位跟 ajax 的欄位務必相同
-    dataTable = $('#memberListTable').DataTable({
-        "ajax": { url: '/AdminMember/ListDataJson' },
+    dataTable = $('#tApplyListTable').DataTable({
+        "ajax": { url: '/AdminTeacher/ListDataJson' },
         "columns": [
-            { data: 'memberId', "width": "7%" },
-            { data: 'registerDateTime', "width": "12%" },
+            { data: 'applyDatetime', "width": "12%" },
             { data: 'realName', "width": "8%" },
-            { data: 'showName', "width": "10%" },
-            { data: 'email', "width": "15%" },
-            { data: 'emailVerification', "width": "7%" },
-            { data: 'getCampInfo', "width": "8%" },
-            { data: 'status', "width": "7%" },
+            { data: 'teacherName', "width": "10%" },
+            { data: 'reviewDatetime', "width": "12%" },
+            { data: 'progressStatus', "width": "7%" },
+            { data: 'note', "width": "15%" },
             {
                 // 這段是新增及刪除按鈕 ， 刪除用到onclick 事件，觸發下方的Delete
-                data: 'memberId',
+                data: 'applyLogId',
                 "render": function (data) {
                     return `<div class="" role="">
                         <button  memberId=${data}" class="btn btn-primary mx-2" data-bs-toggle="modal" data-bs-target="#staticBackdrop"><i class="fa-solid fa-gear"></i></button>
