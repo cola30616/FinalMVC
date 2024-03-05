@@ -1,6 +1,8 @@
 ﻿using FinalGroupMVCPrj.Models;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 
 namespace FinalGroupMVCPrj.Controllers
 {
@@ -32,8 +34,8 @@ namespace FinalGroupMVCPrj.Controllers
             return View();
         }
 
-        //API GetAll
-        //獲得單筆該老師的影片資訊
+        //API Get
+        //獲得目前老師的影片資訊
         [HttpGet]
         public IActionResult GetVideoData()
         {
@@ -49,6 +51,21 @@ namespace FinalGroupMVCPrj.Controllers
             .ToList();
             return Json(new { data = videoList });
         }
+
+        //API Delete
+        //刪除目前影片
+        [HttpDelete]
+        public async Task<IActionResult> DeleteVideoData(int? id)
+        {
+            var video = await _context.TVideoUploadUrls.FirstOrDefaultAsync(v => v.FVideoUploadUrlId == id);
+            if (video != null)
+            {
+                _context.TVideoUploadUrls.Remove(video);
+                await _context.SaveChangesAsync(); 
+            }
+            return Json(new { success = true, message = "刪除成功" });
+        }
+
 
     }
 }
