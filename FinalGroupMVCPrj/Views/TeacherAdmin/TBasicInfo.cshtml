@@ -42,8 +42,8 @@
                     {
                         <!-- 老師頭像 -->
                         <img id="Teacher-avatar1" src="@item.TeacherProfilePicURL" alt="Profile" class="rounded-circle" />
-                        <h2 id="Teacher-name1">Kevin Anderson</h2>
-                        <h3>Web Designer</h3>
+                        <h2 id="Teacher-name1">@item.TeacherName</h2>
+                        <h3> </h3>
                         <div class="social-links mt-2">
                             <a href="#" class="twitter"><i class="bi bi-twitter"></i></a>
                             <a href="#" class="facebook"><i class="bi bi-facebook"></i></a>
@@ -253,7 +253,7 @@
 </footer>
 
 @section Scripts {
-@* script用途：呼叫取得修改資料輸入欄位 *@
+    @* script用途：呼叫取得修改資料輸入欄位 *@
     <script>
         document.addEventListener('DOMContentLoaded', function () {
             var elements = document.querySelectorAll('[data-bs-target="#profile-edit"]');
@@ -268,14 +268,51 @@
                             throw new Error(`${response.status}`);
                         }
                         const data = await response.text();
+                        console.log(data)
                         document.getElementById("profile-edit").innerHTML = data
 
-                
+
                     } catch (error) {
                         document.getElementById("toAddEditPartial").innerHTML = `<h2> 錯誤： ${error.message} 請稍後再試</h2>`
                     }
                 });
             });
         });
+    </script>
+    @* script用途：賦予編輯窗的照片src屬性 *@
+    <script>
+        let teacherIdString = '0';
+        let teacherId = 0;
+        const Teacheravatar2 = document.getElementById('Teacher-avatar2');
+        document.addEventListener('DOMContentLoaded', async () => {
+
+            try {
+                const response = await fetch('https://localhost:7031/UserInfo/APICurrentTeacherId', {
+                    method: "GET",
+                });
+                teacherIdString = await response.text();
+
+                if (teacherIdString !== '0') {
+                    teacherId = Number(teacherIdString);
+                    ReadTrAva();
+                }
+            } catch (error) {
+                console.error('Error fetching teacher ID:', error);
+            }
+        })
+        const ReadTrAva = async () => {
+            try {
+                const response = await fetch(`https://localhost:7031/Teacher/TeacherPhoto/${teacherId}`, {
+                    method: "GET",
+                });
+                let photoUrl = '';
+                photoUrl = await response.text();
+                if (photoUrl !== '') {
+                    Teacheravatar2.src = photoUrl;
+                }
+            } catch (error) {
+                console.error('Error fetching teacher Photo:', error);
+            }
+        };
     </script>
 }
