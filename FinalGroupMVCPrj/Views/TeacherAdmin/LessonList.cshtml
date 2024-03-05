@@ -14,26 +14,42 @@
 </nav>
 <h1>老師後台課程清單</h1>
 <button type="button" class="btn btn-outline-primary" data-bs-toggle="tooltip" data-bs-placement="right" title="點擊新增課程">開課</button>
-<div>
-    <label>開課日期區間:</label>
-    @* <label for="inputDate" class="col-sm-2 col-form-label">Date</label> *@
+
+<div class="row">
     <div class="col-sm-10">
-        <input type="date" class="form-control">  &tilde;
-        <input type="date" class="form-control">
+        <div class="row mb-3">
+            <label class="col-sm-2  align-self-center">開課日期區間:</label>
+            <div class="col-sm-10">
+                <div class="row">
+                    <div class="col-sm-6">
+                        <input type="date" class="form-control">
+                    </div>
+                    <div class="col-sm-1 text-center align-self-center">
+                        ~
+                    </div>
+                    <div class="col-sm-5">
+                        <input type="date" class="form-control">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-sm-2">
+        <div class="col-sm-10">
+            <select class="form-select" aria-label="Default select example">
+                <option selected>狀態</option>
+                <option value="1">One</option>
+                <option value="2">Two</option>
+                <option value="3">Three</option>
+            </select>
+        </div>
     </div>
 </div>
 
-<div class="row mb-3">
-   
-    <div class="col-sm-10">
-        <select class="form-select" aria-label="Default select example">
-            <option selected>狀態</option>
-            <option value="1">One</option>
-            <option value="2">Two</option>
-            <option value="3">Three</option>
-        </select>
-    </div>
-</div>
+
+
+
 
 <!-- Table with stripped rows -->
 <table class="table datatable">
@@ -49,6 +65,7 @@
             <th>報名人數</th>
             <th>狀態</th>
             <th>授課場地</th>
+            <th></th>
         </tr>
     </thead>
     <tbody>
@@ -63,6 +80,10 @@
             <td>37%</td>
             <td>37%</td>
             <td>37%</td>
+            <td>
+                <button class="btn btn-outline-success" title="檢視">檢視</button>
+                <button class="btn btn-outline-warning">取消課程</button>
+            </td>
         </tr>
         <tr>
             <td>Theodore Duran</td>
@@ -75,6 +96,10 @@
             <td>97%</td>
             <td>97%</td>
             <td>97%</td>
+            <td>
+                <button class="btn btn-outline-success" title="檢視">檢視</button>
+                <button class="btn btn-outline-warning">取消課程</button>
+            </td>
         </tr>
         <tr>
             <td>Kylie Bishop</td>
@@ -87,6 +112,10 @@
             <td>63%</td>
             <td>63%</td>
             <td>63%</td>
+            <td>
+                <button class="btn btn-outline-success" title="檢視">檢視</button>
+                <button class="btn btn-outline-warning">取消課程</button>
+            </td>
         </tr>
         <tr>
             <td>Willow Gilliam</td>
@@ -99,6 +128,10 @@
             <td>30%</td>
             <td>30%</td>
             <td>30%</td>
+            <td>
+                <button class="btn btn-outline-success" title="檢視">檢視</button>
+                <button class="btn btn-outline-warning">取消課程</button>
+            </td>
         </tr>
         <tr>
             <td>Blossom Dickerson</td>
@@ -111,6 +144,10 @@
             <td>17%</td>
             <td>17%</td>
             <td>17%</td>
+            <td>
+                <button class="btn btn-outline-success" title="檢視">檢視</button>
+                <button class="btn btn-outline-warning">取消課程</button>
+            </td>
         </tr>
         <tr>
             <td>Elliott Snyder</td>
@@ -123,6 +160,10 @@
             <td>57%</td>
             <td>57%</td>
             <td>57%</td>
+            <td>
+                <button class="btn btn-outline-success" title="檢視">檢視</button>
+                <button class="btn btn-outline-warning">取消課程</button>
+            </td>
         </tr>
        
     </tbody>
