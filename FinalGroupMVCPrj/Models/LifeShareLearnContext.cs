@@ -88,8 +88,9 @@ public partial class LifeShareLearnContext : DbContext
     public virtual DbSet<TVideoUploadUrl> TVideoUploadUrls { get; set; }
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-       //#warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see http://go.microsoft.com/fwlink/?LinkId=723263.
-       => optionsBuilder.UseSqlServer("Data Source=.;Initial Catalog=LifeShareLearn;Integrated Security=True;Encrypt=False;TrustServerCertificate=True");
+        //#warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see http://go.microsoft.com/fwlink/?LinkId=723263.
+        => optionsBuilder.UseSqlServer("Data Source=.;Initial Catalog=LifeShareLearn;Integrated Security=True;Encrypt=False;TrustServerCertificate=True");
+
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
@@ -1087,16 +1088,21 @@ public partial class LifeShareLearnContext : DbContext
             entity.ToTable("tVideoUploadUrl");
 
             entity.Property(e => e.FVideoUploadUrlId).HasColumnName("fVideoUploadUrl_Id");
+            entity.Property(e => e.FTeacherId).HasColumnName("fTeacherId");
             entity.Property(e => e.FUploadTime)
                 .HasColumnType("datetime")
                 .HasColumnName("fUploadTime");
-            entity.Property(e => e.FVideoCourseId).HasColumnName("fVideoCourseId");
             entity.Property(e => e.FVideoName)
                 .HasMaxLength(50)
                 .HasColumnName("fVideoName");
             entity.Property(e => e.FVideoPath)
                 .HasMaxLength(200)
                 .HasColumnName("fVideoPath");
+
+            entity.HasOne(d => d.FTeacher).WithMany(p => p.TVideoUploadUrls)
+                .HasForeignKey(d => d.FTeacherId)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("FK_tVideoUploadUrl_tTeacher");
         });
 
         OnModelCreatingPartial(modelBuilder);

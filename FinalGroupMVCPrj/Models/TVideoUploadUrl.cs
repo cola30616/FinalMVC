@@ -9,11 +9,13 @@ public partial class TVideoUploadUrl
 {
     public int FVideoUploadUrlId { get; set; }
 
-    public int FVideoCourseId { get; set; }
+    public int FTeacherId { get; set; }
 
     public string FVideoName { get; set; }
 
     public string FVideoPath { get; set; }
 
     public DateTime? FUploadTime { get; set; }
+
+    public virtual TTeacher FTeacher { get; set; }
 }

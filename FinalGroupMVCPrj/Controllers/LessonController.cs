@@ -43,7 +43,7 @@ namespace FinalGroupMVCPrj.Controllers
             return View(courseList);
         }
 
-        // Get: 
+        // Get: {baseUrl}/Lesson/Search?={searchText}
         [HttpGet]
         public async Task<IActionResult> Search(string searchText)
         {           

@@ -33,7 +33,7 @@
     <link href="~/assets/css/style.css" rel="stylesheet">
 
     <!--DataTable CDN-->
-    <link rel="stylesheet" href="//cdn.datatables.net/1.13.7/css/jquery.dataTables.min.css" />
+    <link rel="stylesheet" href="//cdn.datatables.net/2.0.1/css/dataTables.dataTables.min.css" />
 
     <!-- =======================================================
     * Template Name: NiceAdmin
@@ -279,7 +279,7 @@
                     </a>
                 </li>
                 <li>
-                    <a href="components-badges.html">
+                        <a asp-controller="TeacherAdmin" asp-action="VideoIntro" >
                         <i class="bi bi-circle"></i><span>介紹影片</span>
                     </a>
                 </li>
@@ -315,7 +315,9 @@
     <main id="main" class="main">
         @RenderBody()
     </main>
-
+    <!--DataTable-->
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="//cdn.datatables.net/2.0.1/js/dataTables.min.js" asp-append-version="true"></script>
     <!-- Vendor JS Files -->
     <script src="~/assets/vendor/apexcharts/apexcharts.min.js"></script>
     <script src="~/assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
@@ -333,5 +335,7 @@
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <!--TinyMCE-->
     <script src="https://cdn.tiny.cloud/1/forirr314cvct8ywt434kbf87vah6743olso1oyjfnhh3vhi/tinymce/6/tinymce.min.js" referrerpolicy="origin"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    @await RenderSectionAsync("Scripts", required: false)
 </body>
 </html>

@@ -79,7 +79,7 @@ namespace FinalGroupMVCPrj.Controllers
             {
                 return Content("帳號密錯誤");
             }
-            else if (!dbMember.FEmailVerification)
+            else if ((bool)!dbMember.FEmailVerification)
             {
                 return Content("信箱未驗證");
             }
