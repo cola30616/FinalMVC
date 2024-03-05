@@ -31,7 +31,7 @@ function loadDataTable() {
         language: {
             url: "https://cdn.datatables.net/plug-ins/1.13.7/i18n/zh-HANT.json"
         },
-        order: [[1, 'dsc']]
+        order: [[0, 'dsc']]
 
 
     });
