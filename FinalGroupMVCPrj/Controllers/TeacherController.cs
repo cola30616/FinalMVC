@@ -33,9 +33,10 @@ namespace FinalGroupMVCPrj.Controllers
             IEnumerable<TeacherBasicViewModel> tBasicVMCollection = new List<TeacherBasicViewModel>(
                 _context.TTeachers
                 .Include(t => t.TTeacherSubjects)
-                .ThenInclude(t =>t.FSubject)
+                .ThenInclude(t => t.FSubject)
                 .Where(t => t.FTeacherId == id)
-                .Select(t => new TeacherBasicViewModel {
+                .Select(t => new TeacherBasicViewModel
+                {
                     TeacherName = t.FTeacherName,
                     TeacherProfilePicURL = (t.FTeacherProfilePic != null) ? GetImageDataURL(t.FTeacherProfilePic) : "https://upload.wikimedia.org/wikipedia/commons/thumb/6/65/No-Image-Placeholder.svg/1665px-No-Image-Placeholder.svg.png",
                     Introduction = t.FIntroduction,
@@ -53,20 +54,53 @@ namespace FinalGroupMVCPrj.Controllers
 
         // GET: Teacher/AllTrInfo
         //動作簡述：在List.cshtml的老師卡片使用中
-        [HttpGet]
-        public IActionResult AllTrInfo()
+        [HttpPost]
+        public IActionResult AllTrInfo([FromBody] TeacherListDTO _search)
         {
             var tr = _context.TTeachers
                 .Include(t => t.TTeacherSubjects)
                 .ThenInclude(t => t.FSubject)
-            .Select(t => new {
+            .Select(t => new
+            {
                 t.FTeacherId,
                 t.FTeacherName,
                 TeacherProfilePicURL = (t.FTeacherProfilePic != null) ? GetImageDataURL(t.FTeacherProfilePic) : "https://upload.wikimedia.org/wikipedia/commons/thumb/6/65/No-Image-Placeholder.svg/1665px-No-Image-Placeholder.svg.png",
                 SubjectNames = t.TTeacherSubjects.Select(ts => ts.FSubject.FSubjectName)
                 //SubjectName = t.TTeacherSubjects.Select(ts => ts.FSubject).Select(t => new { t.FSubjectName })
             });
-            return Json(tr);
+            //根據老師名稱搜尋
+            if (!string.IsNullOrEmpty(_search.Keywordtn))
+            {
+                tr = tr.Where(t => t.FTeacherName.Contains(_search.Keywordtn));
+            }
+            //根據科目搜尋
+            if (!string.IsNullOrEmpty(_search.Keywordsb))
+            {
+                tr = tr.Where(t => t.SubjectNames.Contains(_search.Keywordsb));
+            }
+            //總共有幾筆
+            int totalCount = tr.Count();
+            //一頁幾筆資料
+            int pageSize = _search.PageSize ?? 3;
+            //計算總共有幾頁
+            int totalPages = (int)Math.Ceiling((decimal)totalCount / pageSize);
+            //目前第幾頁
+            int page = _search.Page ?? 1;
+
+            //分頁
+            tr = tr.Skip((page - 1) * pageSize).Take(pageSize);
+
+            TeachersPagingDTO cardsPaging = new TeachersPagingDTO();
+            cardsPaging.TotalPages = totalPages;
+            List<TeacherInfo> teacherInfos = tr.Select(t => new TeacherInfo
+            {
+                FTeacherId = t.FTeacherId,
+                FTeacherName = t.FTeacherName,
+                TeacherProfilePicURL = t.TeacherProfilePicURL,
+                SubjectNames = (List<string>)t.SubjectNames
+            }).ToList();
+            cardsPaging.CardsResult = teacherInfos;
+            return Json(cardsPaging);
         }
 
         private static string GetImageDataURL(byte[] image)
@@ -75,7 +109,7 @@ namespace FinalGroupMVCPrj.Controllers
             if (image != null)
             {
                 string base64String = Convert.ToBase64String(image);
-                
+
                 blobDataURL = $"data:image/jpeg;base64,{base64String}";
                 return blobDataURL;
             }
@@ -88,15 +122,15 @@ namespace FinalGroupMVCPrj.Controllers
         [HttpGet]
         public async Task<IActionResult> AllTeachersPhotos()
         {
-            
 
-            
+
+
             List<string> allTeacherData = new List<string>();
             List<TTeacher> allTeachers = await _context.TTeachers.ToListAsync();
 
             foreach (var teacher in allTeachers)
-            { 
-               
+            {
+
                 byte[]? image = teacher?.FTeacherProfilePic;
                 int? id = teacher?.FTeacherId;
 
@@ -108,7 +142,7 @@ namespace FinalGroupMVCPrj.Controllers
                 }
                 var tr = _context.TTeachers.Select(t => t.FTeacherProfilePic);
             }
-           
+
 
 
             return Json(allTeacherData);

@@ -39,8 +39,8 @@
                                 <div class="search-form">
                                     <form id="searchForm">
                                         <div class="input-inline border rounded-pill">
-                                            <input class="form-control border-0" placeholder="搜尋老師名稱..." type="text" name="SEARCH" required="">
-                                            <button class="btn-icon rounded-pill" type="submit" aria-label="Search button">
+                                            <input id="inputKeyword" class="form-control border-0" placeholder="搜尋老師名稱..." type="text" name="SEARCH">
+                                            <button class="btn-icon rounded-pill" type="button" aria-label="Search button">
                                                 <i class="fa-solid fa-magnifying-glass"></i>
                                             </button>
                                         </div>
@@ -59,221 +59,52 @@
                                         <ul class="list-group">
                                             <!-- Add class .list-dropdown for dropdown-menu -->
                                             <li class="list-item list-dropdown">
-                                                <a class="category-toggle" href="#development">烹飪<span class="qty">(88)</span></a>
+                                                <a class="category-toggle" href="#development">烹飪<span class="qty">(3)</span></a>
                                                 <ul class="menu-collapse">
-                                                    <li><a class="icon-start" href="courses.html" title="link" target="_self"><i class="fal fa-angle-right"></i>日式料理<span class="qty">(14)</span></a></li>
-                                                    <li><a class="icon-start" href="courses.html" title="link" target="_self"><i class="fal fa-angle-right"></i>法式料理<span class="qty">(51)</span></a></li>
-                                                    <li><a class="icon-start" href="courses.html" title="link" target="_self"><i class="fal fa-angle-right"></i>中式料理<span class="qty">(16)</span></a></li>
+                                                    <li><button class="icon-start" href="courses.html" title="link" target="_self"><i class="fal fa-angle-right"></i>日式料理</button></li>
+                                                    <li><button class="icon-start" href="courses.html" title="link" target="_self"><i class="fal fa-angle-right"></i>法式料理</button></li>
+                                                    <li><button class="icon-start" href="courses.html" title="link" target="_self"><i class="fal fa-angle-right"></i>中式料理</button></li>
                                                 </ul>
                                             </li>
                                             <li class="list-item list-dropdown">
-                                                <a class="category-toggle" href="#development">軟體工程<span class="qty">(88)</span></a>
+                                                <a class="category-toggle" href="#development">軟體工程<span class="qty">(3)</span></a>
                                                 <ul class="menu-collapse">
-                                                    <li><a class="icon-start" href="courses.html" title="link" target="_self"><i class="fal fa-angle-right"></i>SQL<span class="qty">(14)</span></a></li>
-                                                    <li><a class="icon-start" href="courses.html" title="link" target="_self"><i class="fal fa-angle-right"></i>C#<span class="qty">(51)</span></a></li>
-                                                    <li><a class="icon-start" href="courses.html" title="link" target="_self"><i class="fal fa-angle-right"></i>Python<span class="qty">(16)</span></a></li>
+                                                    <li><button class="icon-start" href="courses.html" title="link" target="_self"><i class="fal fa-angle-right"></i>SQL</button></li>
+                                                    <li><button class="icon-start" href="courses.html" title="link" target="_self"><i class="fal fa-angle-right"></i>C#</button></li>
+                                                    <li><button class="icon-start" href="courses.html" title="link" target="_self"><i class="fal fa-angle-right"></i>Python</button></li>
                                                 </ul>
                                             </li>
                                             <li class="list-item list-dropdown">
-                                                <a class="category-toggle" href="#development">語言<span class="qty">(88)</span></a>
+                                                <a class="category-toggle" href="#development">語言<span class="qty">(5)</span></a>
                                                 <ul class="menu-collapse">
-                                                    <li><a class="icon-start" href="courses.html" title="link" target="_self"><i class="fal fa-angle-right"></i>法文<span class="qty">(14)</span></a></li>
-                                                    <li><a class="icon-start" href="courses.html" title="link" target="_self"><i class="fal fa-angle-right"></i>韓文<span class="qty">(51)</span></a></li>
-                                                    <li><a class="icon-start" href="courses.html" title="link" target="_self"><i class="fal fa-angle-right"></i>西班牙文<span class="qty">(16)</span></a></li>
-                                                    <li><a class="icon-start" href="courses.html" title="link" target="_self"><i class="fal fa-angle-right"></i>英文<span class="qty">(16)</span></a></li>
-                                                    <li><a class="icon-start" href="courses.html" title="link" target="_self"><i class="fal fa-angle-right"></i>日文<span class="qty">(16)</span></a></li>
+                                                    <li><button class="icon-start" href="courses.html" title="link" target="_self"><i class="fal fa-angle-right"></i>法文</button></li>
+                                                    <li><button class="icon-start" href="courses.html" title="link" target="_self"><i class="fal fa-angle-right"></i>韓文</button></li>
+                                                    <li><button class="icon-start" href="courses.html" title="link" target="_self"><i class="fal fa-angle-right"></i>西班牙文</button></li>
+                                                    <li><button class="icon-start" href="courses.html" title="link" target="_self"><i class="fal fa-angle-right"></i>英文</button></li>
+                                                    <li><button class="icon-start" href="courses.html" title="link" target="_self"><i class="fal fa-angle-right"></i>日文</button></li>
                                                 </ul>
                                             </li>
                                             <li class="list-item list-dropdown">
-                                                <a class="category-toggle" href="#development">投資理財<span class="qty">(88)</span></a>
+                                                <a class="category-toggle" href="#development">投資理財<span class="qty">(3)</span></a>
                                                 <ul class="menu-collapse">
-                                                    <li><a class="icon-start" href="courses.html" title="link" target="_self"><i class="fal fa-angle-right"></i>ETF<span class="qty">(14)</span></a></li>
-                                                    <li><a class="icon-start" href="courses.html" title="link" target="_self"><i class="fal fa-angle-right"></i>美股<span class="qty">(51)</span></a></li>
-                                                    <li><a class="icon-start" href="courses.html" title="link" target="_self"><i class="fal fa-angle-right"></i>台股<span class="qty">(16)</span></a></li>
+                                                    <li><button class="icon-start" href="courses.html" title="link" target="_self"><i class="fal fa-angle-right"></i>ETF</button></li>
+                                                    <li><button class="icon-start" href="courses.html" title="link" target="_self"><i class="fal fa-angle-right"></i>美股</button></li>
+                                                    <li><button class="icon-start" href="courses.html" title="link" target="_self"><i class="fal fa-angle-right"></i>台股</button></li>
                                                 </ul>
                                             </li>
                                             <li class="list-item list-dropdown">
-                                                <a class="category-toggle" href="#development">休閒運動<span class="qty">(88)</span></a>
+                                                <a class="category-toggle" href="#development">休閒運動<span class="qty">(3)</span></a>
                                                 <ul class="menu-collapse">
-                                                    <li><a class="icon-start" href="courses.html" title="link" target="_self"><i class="fal fa-angle-right"></i>瑜珈<span class="qty">(14)</span></a></li>
-                                                    <li><a class="icon-start" href="courses.html" title="link" target="_self"><i class="fal fa-angle-right"></i>籃球<span class="qty">(51)</span></a></li>
-                                                    <li><a class="icon-start" href="courses.html" title="link" target="_self"><i class="fal fa-angle-right"></i>羽球<span class="qty">(16)</span></a></li>
+                                                    <li><button class="icon-start" href="courses.html" title="link" target="_self"><i class="fal fa-angle-right"></i>瑜珈</button></li>
+                                                    <li><button class="icon-start" href="courses.html" title="link" target="_self"><i class="fal fa-angle-right"></i>籃球</button></li>
+                                                    <li><button class="icon-start" href="courses.html" title="link" target="_self"><i class="fal fa-angle-right"></i>羽球</button></li>
                                                 </ul>
                                             </li>
                                         </ul>
                                     </div>
                                 </div>
                             </div>
-                            <div class="widget widget-type py-20">
-                                <h5 class="title">
-                                    <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#topic" aria-expanded="true" aria-controls="topic">
-                                        Topic
-                                    </button>
-                                </h5>
-                                <div id="topic" class="collapse show">
-                                    <div class="accordion-body mt-20 scroll-y">
-                                        <ul class="list-group custom-checkbox">
-                                            <li>
-                                                <input class="input-checkbox" type="checkbox" name="checkbox" id="checkbox1" value="">
-                                                <label class="form-check-label" for="checkbox1"><span>Python</span><span class="qty">(67)</span></label>
-                                            </li>
-                                            <li>
-                                                <input class="input-checkbox" type="checkbox" name="checkbox" id="checkbox2" value="">
-                                                <label class="form-check-label" for="checkbox2"><span>JavaScript</span><span class="qty">(32)</span></label>
-                                            </li>
-                                            <li>
-                                                <input class="input-checkbox" type="checkbox" name="checkbox" id="checkbox3" value="">
-                                                <label class="form-check-label" for="checkbox3"><span>Machine Learning</span><span class="qty">(13)</span></label>
-                                            </li>
-                                            <li>
-                                                <input class="input-checkbox" type="checkbox" name="checkbox" id="checkbox4" value="">
-                                                <label class="form-check-label" for="checkbox4"><span>Wordpress</span><span class="qty">(64)</span></label>
-                                            </li>
-                                        </ul>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="widget widget-price py-20">
-                                <h5 class="title">
-                                    <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#price" aria-expanded="true" aria-controls="price">
-                                        Price
-                                    </button>
-                                </h5>
-                                <div id="price" class="collapse show">
-                                    <div class="accordion-body mt-20 scroll-y">
-                                        <div class="row gx-sm-3">
-                                            <div class="col-md-6">
-                                                <div class="form-group mb-20">
-                                                    <label class="mb-1">Minimum</label>
-                                                    <input class="form-control size-md" type="number" name="min" id="min">
-                                                </div>
-                                            </div>
-                                            <div class="col-md-6">
-                                                <div class="form-group mb-20">
-                                                    <label class="mb-1">Maximum</label>
-                                                    <input class="form-control size-md" type="number" name="max" id="max">
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="price-item">
-                                            <div class="price-slider" data-range-slider='filterPriceSlider'></div>
-                                            <div class="price-value">
-                                                <span>
-                                                    Price:
-                                                    <span class="filter-price-range" data-range-value='filterPriceSliderValue'></span>
-                                                </span>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="widget widget-ratings py-20">
-                                <h5 class="title">
-                                    <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#sort" aria-expanded="true" aria-controls="sort">
-                                        Ratings
-                                    </button>
-                                </h5>
-                                <div id="sort" class="collapse show">
-                                    <div class="accordion-body mt-20 scroll-y">
-                                        <ul class="list-group custom-radio">
-                                            <li>
-                                                <input class="input-radio" type="radio" name="radio" id="radio1" value="">
-                                                <label class="form-radio-label" for="radio1">
-                                                    <span class="rating">
-                                                        <i class="fas fa-star"></i>
-                                                        <i class="fas fa-star"></i>
-                                                        <i class="fas fa-star"></i>
-                                                        <i class="fas fa-star"></i>
-                                                        <i class="fas fa-star"></i>
-                                                    </span>
-                                                    <span class="qty">(67)</span>
-                                                </label>
-                                            </li>
-                                            <li>
-                                                <input class="input-radio" type="radio" name="radio" id="radio2" value="">
-                                                <label class="form-radio-label" for="radio2">
-                                                    <span class="rating">
-                                                        <i class="fas fa-star"></i>
-                                                        <i class="fas fa-star"></i>
-                                                        <i class="fas fa-star"></i>
-                                                        <i class="fas fa-star"></i>
-                                                        <i class="far fa-star"></i>
-                                                    </span>
-                                                    <span class="qty">(32)</span>
-                                                </label>
-                                            </li>
-                                            <li>
-                                                <input class="input-radio" type="radio" name="radio" id="radio3" value="">
-                                                <label class="form-radio-label" for="radio3">
-                                                    <span class="rating">
-                                                        <i class="fas fa-star"></i>
-                                                        <i class="fas fa-star"></i>
-                                                        <i class="fas fa-star"></i>
-                                                        <i class="far fa-star"></i>
-                                                        <i class="far fa-star"></i>
-                                                    </span>
-                                                    <span class="qty">(13)</span>
-                                                </label>
-                                            </li>
-                                            <li>
-                                                <input class="input-radio" type="radio" name="radio" id="radio4" value="">
-                                                <label class="form-radio-label" for="radio4">
-                                                    <span class="rating">
-                                                        <i class="fas fa-star"></i>
-                                                        <i class="fas fa-star"></i>
-                                                        <i class="far fa-star"></i>
-                                                        <i class="far fa-star"></i>
-                                                        <i class="far fa-star"></i>
-                                                    </span>
-                                                    <span class="qty">(5)</span>
-                                                </label>
-                                            </li>
-                                            <li>
-                                                <input class="input-radio" type="radio" name="radio" id="radio5" value="">
-                                                <label class="form-radio-label" for="radio5">
-                                                    <span class="rating">
-                                                        <i class="fas fa-star"></i>
-                                                        <i class="far fa-star"></i>
-                                                        <i class="far fa-star"></i>
-                                                        <i class="far fa-star"></i>
-                                                        <i class="far fa-star"></i>
-                                                    </span>
-                                                    <span class="qty">(0)</span>
-                                                </label>
-                                            </li>
-                                        </ul>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="widget widget-duration py-20">
-                                <h5 class="title">
-                                    <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#type" aria-expanded="true" aria-controls="type">
-                                        Video Duration
-                                    </button>
-                                </h5>
-                                <div id="type" class="collapse show">
-                                    <div class="accordion-body mt-20 scroll-y">
-                                        <ul class="list-group custom-checkbox">
-                                            <li>
-                                                <input class="input-checkbox" type="checkbox" name="checkbox" id="checkbox5" value="">
-                                                <label class="form-check-label" for="checkbox5"><span>0-1 Hour</span><span class="qty">(67)</span></label>
-                                            </li>
-                                            <li>
-                                                <input class="input-checkbox" type="checkbox" name="checkbox" id="checkbox6" value="">
-                                                <label class="form-check-label" for="checkbox6"><span>1-3 Hour</span><span class="qty">(32)</span></label>
-                                            </li>
-                                            <li>
-                                                <input class="input-checkbox" type="checkbox" name="checkbox" id="checkbox7" value="">
-                                                <label class="form-check-label" for="checkbox7"><span>3-6 Hour</span><span class="qty">(13)</span></label>
-                                            </li>
-                                            <li>
-                                                <input class="input-checkbox" type="checkbox" name="checkbox" id="checkbox8" value="">
-                                                <label class="form-check-label" for="checkbox8"><span>6-8 Hour</span><span class="qty">(64)</span></label>
-                                            </li>
-                                        </ul>
-                                    </div>
-                                </div>
-                            </div>
+                         
                         </aside>
                     </div>
                 </div>
@@ -281,7 +112,7 @@
             <div class="col-lg-8 col-xl-9">
                 <div class="row" data-aos="fade-up">
                     <div class="row" id="row">
-                        <!-- 老師卡片1 -->
+                        <!-- 老師卡片 -->
                         <div class="col-lg-4 col-sm-6" data-aos="fade-up">
                             <div class="card radius-md mb-30 shadow-md">
                                 <div class="card-img">
@@ -310,170 +141,12 @@
                                 </div>
                             </div>
                         </div>
-                        <!-- 老師卡片2 -->
-                        <div class="col-lg-4 col-sm-6" data-aos="fade-up">
-                            <div class="card radius-md mb-30 shadow-md">
-                                <div class="card-img">
-                                    <a asp-controller="Teacher" asp-action="info" title="Image" target="_self" class="lazy-container ratio ratio-1-2">
-                                        <img class="lazyload" src="/images/placeholder.png" data-src="/images/mentor/mentor-2.jpg" alt="Image">
-                                    </a>
-                                    <div>
-                                        <button class="fa-regular fa-heart" style="display: flex;justify-content: center; align-items: center;font-size:30px;width:40px;height:40px;position: absolute; top: 0; left: 82%; margin: 10px;border-radius:50px;background-color:white;z-index:1"></button>
-                                    </div>
-                                </div>
-                                <div class="card-content text-center">
-                                    <h4 class="card-title lc-1 mb-1">
-                                        <a href="mentor-details.html" target="_self" title="Link">
-                                            Colt Steele
-                                        </a>
-                                    </h4>
-                                    <p class="card-text color-primary font-sm">
-                                        App Developer
-                                    </p>
-                                    <div class="social-link justify-content-center">
-                                        <a href="https://www.instagram.com/" target="_blank" title="instagram"><i class="fab fa-instagram"></i></a>
-                                        <a href="https://www.dribbble.com/" target="_blank" title="dribbble"><i class="fab fa-dribbble"></i></a>
-                                        <a href="https://www.twitter.com/" target="_blank" title="twitter"><i class="fab fa-twitter"></i></a>
-                                        <a href="https://www.youtube.com/" target="_blank" title="youtube"><i class="fab fa-youtube"></i></a>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <!-- 老師卡片3 -->
-                        <div class="col-lg-4 col-sm-6" data-aos="fade-up">
-                            <div class="card radius-md mb-30 shadow-md">
-                                <div class="card-img">
-                                    <a asp-controller="Teacher" asp-action="info" title="Image" target="_self" class="lazy-container ratio ratio-1-2">
-                                        <img class="lazyload" src="/images/placeholder.png" data-src="/images/mentor/mentor-3.jpg" alt="Image">
-                                    </a>
-                                    <div>
-                                        <button class="fa-regular fa-heart" style="display: flex;justify-content: center; align-items: center;font-size:30px;width:40px;height:40px;position: absolute; top: 0; left: 82%; margin: 10px;border-radius:50px;background-color:white;z-index:1"></button>
-                                    </div>
-                                </div>
-                                <div class="card-content text-center">
-                                    <h4 class="card-title lc-1 mb-1">
-                                        <a href="mentor-details.html" target="_self" title="Link">
-                                            Imran Teli
-                                        </a>
-                                    </h4>
-                                    <p class="card-text color-primary font-sm">
-                                        Marketing Expert
-                                    </p>
-                                    <div class="social-link justify-content-center">
-                                        <a href="https://www.instagram.com/" target="_blank" title="instagram"><i class="fab fa-instagram"></i></a>
-                                        <a href="https://www.dribbble.com/" target="_blank" title="dribbble"><i class="fab fa-dribbble"></i></a>
-                                        <a href="https://www.twitter.com/" target="_blank" title="twitter"><i class="fab fa-twitter"></i></a>
-                                        <a href="https://www.youtube.com/" target="_blank" title="youtube"><i class="fab fa-youtube"></i></a>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <!-- 老師卡片4 -->
-                        <div class="col-lg-4 col-sm-6" data-aos="fade-up">
-                            <div class="card radius-md mb-30 shadow-md">
-                                <div class="card-img">
-                                    <a asp-controller="Teacher" asp-action="info" title="Image" target="_self" class="lazy-container ratio ratio-1-2">
-                                        <img class="lazyload" src="/images/placeholder.png" data-src="/images/mentor/mentor-8.jpg" alt="Image">
-                                    </a>
-                                    <div>
-                                        <button class="fa-regular fa-heart" style="display: flex;justify-content: center; align-items: center;font-size:30px;width:40px;height:40px;position: absolute; top: 0; left: 82%; margin: 10px;border-radius:50px;background-color:white;z-index:1"></button>
-                                    </div>
-                                </div>
-                                <div class="card-content text-center">
-                                    <h4 class="card-title lc-1 mb-1">
-                                        <a href="mentor-details.html" target="_self" title="Link">
-                                            Micky Lane
-                                        </a>
-                                    </h4>
-                                    <p class="card-text color-primary font-sm">
-                                        Photographer
-                                    </p>
-                                    <div class="social-link justify-content-center">
-                                        <a href="https://www.instagram.com/" target="_blank" title="instagram"><i class="fab fa-instagram"></i></a>
-                                        <a href="https://www.dribbble.com/" target="_blank" title="dribbble"><i class="fab fa-dribbble"></i></a>
-                                        <a href="https://www.twitter.com/" target="_blank" title="twitter"><i class="fab fa-twitter"></i></a>
-                                        <a href="https://www.youtube.com/" target="_blank" title="youtube"><i class="fab fa-youtube"></i></a>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <!-- 老師卡片5 -->
-                        <div class="col-lg-4 col-sm-6" data-aos="fade-up">
-                            <div class="card radius-md mb-30 shadow-md">
-                                <div class="card-img">
-                                    <a asp-controller="Teacher" asp-action="info" title="Image" target="_self" class="lazy-container ratio ratio-1-2">
-                                        <img class="lazyload" src="/images/placeholder.png" data-src="/images/mentor/mentor-9.jpg" alt="Image">
-
-                                    </a>
-                                    <div>
-                                        <button class="fa-regular fa-heart" style="display: flex;justify-content: center; align-items: center;font-size:30px;width:40px;height:40px;position: absolute; top: 0; left: 82%; margin: 10px;border-radius:50px;background-color:white;z-index:1"></button>
-                                    </div>
-                                </div>
-                                <div class="card-content text-center">
-                                    <h4 class="card-title lc-1 mb-1">
-                                        <a href="mentor-details.html" target="_self" title="Link">
-                                            Justin Mike
-                                        </a>
-                                    </h4>
-                                    <p class="card-text color-primary font-sm">
-                                        Mobile Developer
-                                    </p>
-                                    <div class="social-link justify-content-center">
-                                        <a href="https://www.instagram.com/" target="_blank" title="instagram"><i class="fab fa-instagram"></i></a>
-                                        <a href="https://www.dribbble.com/" target="_blank" title="dribbble"><i class="fab fa-dribbble"></i></a>
-                                        <a href="https://www.twitter.com/" target="_blank" title="twitter"><i class="fab fa-twitter"></i></a>
-                                        <a href="https://www.youtube.com/" target="_blank" title="youtube"><i class="fab fa-youtube"></i></a>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <!-- 老師卡片6 -->
-                        <div class="col-lg-4 col-sm-6" data-aos="fade-up">
-                            <div class="card radius-md mb-30 shadow-md">
-                                <div class="card-img">
-                                    <a asp-controller="Teacher" asp-action="info" title="Image" target="_self" class="lazy-container ratio ratio-1-2">
-                                        <img class="lazyload" src="/images/placeholder.png" data-src="/images/mentor/mentor-10.jpg" alt="Image">
-                                    </a>
-                                    <div>
-                                        <button class="fa-regular fa-heart" style="display: flex;justify-content: center; align-items: center;font-size:30px;width:40px;height:40px;position: absolute; top: 0; left: 82%; margin: 10px;border-radius:50px;background-color:white;z-index:1"></button>
-                                    </div>
-                                </div>
-                                <div class="card-content text-center">
-                                    <h4 class="card-title lc-1 mb-1">
-                                        <a href="mentor-details.html" target="_self" title="Link">
-                                            Heidi Phil
-                                        </a>
-                                    </h4>
-                                    <p class="card-text color-primary font-sm">
-                                        Digital Marketer
-                                    </p>
-                                    <div class="social-link justify-content-center">
-                                        <a href="https://www.instagram.com/" target="_blank" title="instagram"><i class="fab fa-instagram"></i></a>
-                                        <a href="https://www.dribbble.com/" target="_blank" title="dribbble"><i class="fab fa-dribbble"></i></a>
-                                        <a href="https://www.twitter.com/" target="_blank" title="twitter"><i class="fab fa-twitter"></i></a>
-                                        <a href="https://www.youtube.com/" target="_blank" title="youtube"><i class="fab fa-youtube"></i></a>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
                     </div>
                 </div>
                 <!-- 分頁功能那排 -->
                 <nav class="pagination-nav mt-15 mb-30" data-aos="fade-up">
-                    <ul class="pagination justify-content-center">
-                        <li class="page-item">
-                            <a class="page-link" href="mentors.html" aria-label="Previous">
-                                <i class="fa-solid fa-angle-left"></i>
-                            </a>
-                        </li>
-                        <li class="page-item active"><a class="page-link" href="mentors.html">1</a></li>
-                        <li class="page-item"><a class="page-link" href="mentors.html">2</a></li>
-                        <li class="page-item"><a class="page-link" href="mentors.html">3</a></li>
-                        <li class="page-item">
-                            <a class="page-link" href="mentors.html" aria-label="Next">
-                                <i class="fa-solid fa-angle-right"></i>
-                            </a>
-                        </li>
+                    <ul id="ul1" class="pagination justify-content-center">
+                       <!-- 這裡是分頁 1 、 2 、 3 -->
                     </ul>
                 </nav>
             </div>
@@ -484,45 +157,104 @@
 @section Scripts {
     @* script功能 : 老師功能卡片的顯示(a元素壞掉了) *@
     <script>
+
+        const searchData = {
+            "keywordtn": "",
+            "keywordsb": "",
+            "subject": "",
+            "page": 1,
+            "pageSize": 3,
+        };
+        const inpKeyword = document.querySelector('#inputKeyword');
         const row = document.querySelector('#row');
-        document.addEventListener('DOMContentLoaded', async () => {
+        const ulPaging = document.querySelector('#ul1');
+        const iconstarts = document.querySelectorAll('.icon-start');
+        const btnKeyword = document.querySelector('.btn-icon.rounded-pill');
+        const loadTrcards = async () => {
+
             const response = await fetch('@Url.Content("~/Teacher/AllTrInfo")', {
-                "method": "GET",
+                "method": "POST",
+                "body": JSON.stringify(searchData),
+                "headers": { "Content-Type": "application/json" }
             });
             const datas = await response.json();
             console.log(datas);
-            const divTrpics = datas.map(tr =>
-                `<div class="col-lg-4 col-sm-6" data-aos="fade-up">
-                                                <div class="card radius-md mb-30 shadow-md">
-                                                    <div class="card-img">
-                                                             <a href="https://localhost:7031/Teacher/Info?id=${tr.fTeacherId}" title="Image" target="_self" class="lazy-container ratio ratio-1-2">
-                                                             <img id="lazyload" src=${tr.teacherProfilePicURL} data-src="/images/mentor/mentor-1.jpg" alt="Image">
-                                                        </a>
-                                                        <div>
-                                                            <button class="fa-regular fa-heart" style="display: flex;justify-content: center; align-items: center;font-size:30px;width:40px;height:40px;position: absolute; top: 0; left: 82%; margin: 10px;border-radius:50px;background-color:white;z-index:1"></button>
-                                                        </div>
-                                                    </div>
-                                                    <div class="card-content text-center">
-                                                        <h4 class="card-title lc-1 mb-1">
-                                                            <a href="mentor-details.html" target="_self" title="Link">
-                                                                  ${tr.fTeacherName}
-                                                            </a>
-                                                        </h4>
-                                                        <p class="card-text color-primary font-sm">
-                                                                  ${tr.subjectNames}
-                                                        </p>
-                                                        <div class="social-link justify-content-center">
-                                                            <a href="https://www.instagram.com/" target="_blank" title="instagram"><i class="fab fa-instagram"></i></a>
-                                                            <a href="https://www.dribbble.com/" target="_blank" title="dribbble"><i class="fab fa-dribbble"></i></a>
-                                                            <a href="https://www.twitter.com/" target="_blank" title="twitter"><i class="fab fa-twitter"></i></a>
-                                                            <a href="https://www.youtube.com/" target="_blank" title="youtube"><i class="fab fa-youtube"></i></a>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>`
-            );
+            //console.log(datas.cardsResult);
+            const divTrpics = datas.cardsResult.map(tr => {
+                const { fTeacherId, teacherProfilePicURL, fTeacherName, subjectNames } = tr;
+                return (
+                                                                     `<div class="col-lg-4 col-sm-6" data-aos="fade-up">
+                                                                        <div class="card radius-md mb-30 shadow-md">
+                                                                            <div class="card-img">
+                                                                                     <a href="https://localhost:7031/Teacher/Info?id=${fTeacherId}" title="Image" target="_self" class="lazy-container ratio ratio-1-2">
+                                                                                     <img id="lazyload" src=${teacherProfilePicURL} data-src="/images/mentor/mentor-1.jpg" alt="Image">
+                                                                                </a>
+                                                                                <div>
+                                                                                    <button class="fa-regular fa-heart" style="display: flex;justify-content: center; align-items: center;font-size:30px;width:40px;height:40px;position: absolute; top: 0; left: 82%; margin: 10px;border-radius:50px;background-color:white;z-index:1"></button>
+                                                                                </div>
+                                                                            </div>
+                                                                            <div class="card-content text-center">
+                                                                                <h4 class="card-title lc-1 mb-1">
+                                                                                    <a href="mentor-details.html" target="_self" title="Link">
+                                                                                          ${fTeacherName}
+                                                                                    </a>
+                                                                                </h4>
+                                                                                <p class="card-text color-primary font-sm">
+                                                                                          ${subjectNames}
+                                                                                </p>
+                                                                                <div class="social-link justify-content-center">
+                                                                                    <a href="https://www.instagram.com/" target="_blank" title="instagram"><i class="fab fa-instagram"></i></a>
+                                                                                    <a href="https://www.dribbble.com/" target="_blank" title="dribbble"><i class="fab fa-dribbble"></i></a>
+                                                                                    <a href="https://www.twitter.com/" target="_blank" title="twitter"><i class="fab fa-twitter"></i></a>
+                                                                                    <a href="https://www.youtube.com/" target="_blank" title="youtube"><i class="fab fa-youtube"></i></a>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>`
+                )
+            });
             row.innerHTML = divTrpics.join("");
             //$('#lazyload').attr("src",)
+            //分頁
+            let liPaging = "";
+            for (let i = 1, max = datas.totalPages; i <= max; i++) {
+                //console.log(i)
+                liPaging += ` <li class="page-item"  onclick="pagingHandler(${i})"><a class="page-link" href="#">${i}</a></li>`
+            }
+            ulPaging.innerHTML = liPaging;
+        };
+        //分頁
+        const pagingHandler = page => {
+            searchData.page = page;
+            //console.log(page);
+            loadTrcards();
+        }
+        //老師名稱關鍵字搜尋
+        // inpKeyword.addEventListener('keydown', event => {
+        //     // console.log(event.which); //Enter => 13
+        //     if (event.which === 13) {
+        //         searchData.keywordtn = inpKeyword.value;
+        //         searchData.page = 1;
+        //         loadTrcards();
+        //     }
+        // })
+        //老師名稱關鍵字搜尋
+        btnKeyword.addEventListener('click', event => {
+            searchData.keywordtn = inpKeyword.value;
+            searchData.page = 1;
+            loadTrcards();
         });
+        //科目名稱篩選
+        iconstarts.forEach(iconstart => {
+            iconstart.addEventListener('click', (event) => {
+                const subjectname = iconstart.innerText;
+                //console.log(subjectname)
+                searchData.keywordsb = subjectname;
+                searchData.page = 1;
+                loadTrcards();
+            })
+        })
+
+        loadTrcards();
     </script>
 }

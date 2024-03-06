@@ -44,11 +44,14 @@
                         <img id="Teacher-avatar1" src="@item.TeacherProfilePicURL" alt="Profile" class="rounded-circle" />
                         <h2 id="Teacher-name1">@item.TeacherName</h2>
                         <h3> </h3>
-                        <div class="social-links mt-2">
-                            <a href="#" class="twitter"><i class="bi bi-twitter"></i></a>
-                            <a href="#" class="facebook"><i class="bi bi-facebook"></i></a>
-                            <a href="#" class="instagram"><i class="bi bi-instagram"></i></a>
-                            <a href="#" class="linkedin"><i class="bi bi-linkedin"></i></a>
+                        <div class="pt-2">
+                            <!-- 上傳修改頭像input -->
+                            <span class="file-input-container">
+                                <input type="file" id="fileInput" class="hidden" accept="image/gif, image/jpeg, image/png" multiple />
+                                <label for="fileInput" class="btn btn-primary btn-sm" title="Upload new profile image"><i class="bi bi-upload"></i></label>
+                            </span>
+                            <!-- 清除頭像btn -->
+                            <button class="btn btn-danger btn-sm" title="Remove my profile image"><i class="bi bi-trash"></i></button>
                         </div>
                     }
                 </div>
@@ -77,156 +80,37 @@
                                 <button TeacherID="@item.TeacherId" class="nav-link" data-bs-toggle="tab" data-bs-target="#profile-edit">編輯</button>
                             }
                         </li>
-
-                        <li class="nav-item">
-                            <button class="nav-link" data-bs-toggle="tab" data-bs-target="#profile-settings">Settings</button>
-                        </li>
-
-                        <li class="nav-item">
-                            <button class="nav-link" data-bs-toggle="tab" data-bs-target="#profile-change-password">Change Password</button>
-                        </li>
-
                     </ul>
                     <div class="tab-content pt-2">
                         <!-- 預覽內容 -->
                         @foreach (TeacherBasicViewModel item in Model)
                         {
                             <div class="tab-pane fade show active profile-overview" id="profile-overview">
-                                <!-- 標題1 關於我 -->
-                                <h5 class="card-title">@Html.DisplayNameFor(t => t.Introduction)</h5>
-                                <p class="small fst-italic">@item.Introduction</p>
+                                <!-- 標題1 老師名稱 -->
+                                <h5 class="card-title">@Html.DisplayNameFor(tr => tr.TeacherName)</h5>
+                                <p class="small fst-italic">@item.TeacherName</p>
 
                                 <!-- 標題2 已開科目 -->
                                 <h5 class="card-title">@Html.DisplayNameFor(t => t.SubjectName)</h5>
                                 <p class="small fst-italic">@string.Join(", ", item.SubjectName)</p>
 
-                                <!-- 標題3 老師名稱 -->
-                                <h5 class="card-title">基本資訊</h5>
+                                <!-- 標題3 關於我 -->
+                                <h5 class="card-title">@Html.DisplayNameFor(t => t.Introduction)</h5>
+                                <p class="small fst-italic">@item.Introduction</p>
 
-                                <div class="row">
-                                    <div class="col-lg-3 col-md-4 label ">@Html.DisplayNameFor(tr => tr.TeacherName)</div>
-                                    <div id="Teacher-name2" class="col-lg-9 col-md-8">@item.TeacherName</div>
-                                </div>
+                                <!-- 標題4 備註 -->
+                                <h5 class="card-title">@Html.DisplayNameFor(t => t.Note)</h5>
+                                <p class="small fst-italic">@item.Note</p>
 
-                                <div class="row">
-                                    <div class="col-lg-3 col-md-4 label">Company</div>
-                                    <div class="col-lg-9 col-md-8">Lueilwitz, Wisoky and Leuschke</div>
-                                </div>
-
-                                <div class="row">
-                                    <div class="col-lg-3 col-md-4 label">Job</div>
-                                    <div class="col-lg-9 col-md-8">Web Designer</div>
-                                </div>
-
-                                <h5 class="card-title">地址</h5>
-
-                                <div class="row">
-                                    <div class="col-lg-3 col-md-4 label">Country</div>
-                                    <div class="col-lg-9 col-md-8">USA</div>
-                                </div>
-
-                                <div class="row">
-                                    <div class="col-lg-3 col-md-4 label">Address</div>
-                                    <div class="col-lg-9 col-md-8">A108 Adam Street, New York, NY 535022</div>
-                                </div>
-
-                                <h5 class="card-title">聯絡資訊</h5>
-
-                                <div class="row">
-                                    <div class="col-lg-3 col-md-4 label">@Html.DisplayNameFor(t => t.ContactInfo)</div>
-                                    <div class="col-lg-9 col-md-8">@item.ContactInfo</div>
-                                </div>
-
-                                <div class="row">
-                                    <div class="col-lg-3 col-md-4 label">Phone</div>
-                                    <div class="col-lg-9 col-md-8">(436) 486-3538 x29071</div>
-                                </div>
-
-                                <div class="row">
-                                    <div class="col-lg-3 col-md-4 label">Email</div>
-                                    <div class="col-lg-9 col-md-8">k.anderson@example.com</div>
-                                </div>
-
+                                <!-- 標題5 聯絡方式 -->
+                                <h5 class="card-title">@Html.DisplayNameFor(t => t.ContactInfo)</h5>
+                                <p class="small fst-italic">@item.ContactInfo</p>
                             </div>
-                        }   
-                        <!-- ========== 編輯表單 ========== -->
-                        <div class="tab-pane fade profile-edit pt-3" id="profile-edit"></div>
-                 
-                    
-                        <!-- ========== Settings Form ========= -->
-                        <div class="tab-pane fade pt-3" id="profile-settings">
-
-
-                            <form>
-
-                                <div class="row mb-3">
-                                    <label for="fullName" class="col-md-4 col-lg-3 col-form-label">Email Notifications</label>
-                                    <div class="col-md-8 col-lg-9">
-                                        <div class="form-check">
-                                            <input class="form-check-input" type="checkbox" id="changesMade" checked>
-                                            <label class="form-check-label" for="changesMade">
-                                                Changes made to your account
-                                            </label>
-                                        </div>
-                                        <div class="form-check">
-                                            <input class="form-check-input" type="checkbox" id="newProducts" checked>
-                                            <label class="form-check-label" for="newProducts">
-                                                Information on new products and services
-                                            </label>
-                                        </div>
-                                        <div class="form-check">
-                                            <input class="form-check-input" type="checkbox" id="proOffers">
-                                            <label class="form-check-label" for="proOffers">
-                                                Marketing and promo offers
-                                            </label>
-                                        </div>
-                                        <div class="form-check">
-                                            <input class="form-check-input" type="checkbox" id="securityNotify" checked disabled>
-                                            <label class="form-check-label" for="securityNotify">
-                                                Security alerts
-                                            </label>
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <div class="text-center">
-                                    <button type="submit" class="btn btn-primary">Save Changes</button>
-                                </div>
-                            </form><!-- End settings Form -->
-
-                        </div>
-                        <!-- ======== Change Password Form =========== -->
-                        <div class="tab-pane fade pt-3" id="profile-change-password">
-
-                            <form>
-
-                                <div class="row mb-3">
-                                    <label for="currentPassword" class="col-md-4 col-lg-3 col-form-label">Current Password</label>
-                                    <div class="col-md-8 col-lg-9">
-                                        <input name="password" type="password" class="form-control" id="currentPassword">
-                                    </div>
-                                </div>
-
-                                <div class="row mb-3">
-                                    <label for="newPassword" class="col-md-4 col-lg-3 col-form-label">New Password</label>
-                                    <div class="col-md-8 col-lg-9">
-                                        <input name="newpassword" type="password" class="form-control" id="newPassword">
-                                    </div>
-                                </div>
-
-                                <div class="row mb-3">
-                                    <label for="renewPassword" class="col-md-4 col-lg-3 col-form-label">Re-enter New Password</label>
-                                    <div class="col-md-8 col-lg-9">
-                                        <input name="renewpassword" type="password" class="form-control" id="renewPassword">
-                                    </div>
-                                </div>
-
-                                <div class="text-center">
-                                    <button type="submit" class="btn btn-primary">Change Password</button>
-                                </div>
-                            </form><!-- End Change Password Form -->
-
-                        </div>
+                             <!-- ========== 編輯表單 ========== -->
+                            <div class="tab-pane fade profile-edit pt-3" id="profile-edit">
+                            <partial name="T_EditFormBasicInfo" model="@item.TeacherModel"></partial>
+                            </div>
+                        }                    
 
                     </div><!-- End Bordered Tabs -->
 
@@ -238,81 +122,8 @@
 </section>
 
 
-<!-- ======= Footer ======= -->
-<footer id="footer" class="footer">
-    <div class="copyright">
-        &copy; Copyright <strong><span>NiceAdmin</span></strong>. All Rights Reserved
-    </div>
-    <div class="credits">
-        <!-- All the links in the footer should remain intact. -->
-        <!-- You can delete the links only if you purchased the pro version. -->
-        <!-- Licensing information: https://bootstrapmade.com/license/ -->
-        <!-- Purchase the pro version with working PHP/AJAX contact form: https://bootstrapmade.com/nice-admin-bootstrap-admin-html-template/ -->
-        Designed by <a href="https://bootstrapmade.com/">BootstrapMade</a>
-    </div>
-</footer>
+
 
 @section Scripts {
-    @* script用途：呼叫取得修改資料輸入欄位 *@
-    <script>
-        document.addEventListener('DOMContentLoaded', function () {
-            var elements = document.querySelectorAll('[data-bs-target="#profile-edit"]');
-            elements.forEach(function (element) {
-                element.addEventListener('click', async (event) => {
-                    try {
-                        const teacherId = event.target.getAttribute('teacherId');
-                        const response = await fetch(`@Url.Content("~/TeacherAdmin/EditBasicInfo")?TeacherID=${teacherId}`, {
-                            method: "GET"
-                        });
-                        if (!response.ok) {
-                            throw new Error(`${response.status}`);
-                        }
-                        const data = await response.text();
-                        console.log(data)
-                        document.getElementById("profile-edit").innerHTML = data
 
-
-                    } catch (error) {
-                        document.getElementById("toAddEditPartial").innerHTML = `<h2> 錯誤： ${error.message} 請稍後再試</h2>`
-                    }
-                });
-            });
-        });
-    </script>
-    @* script用途：賦予編輯窗的照片src屬性 *@
-    <script>
-        let teacherIdString = '0';
-        let teacherId = 0;
-        const Teacheravatar2 = document.getElementById('Teacher-avatar2');
-        document.addEventListener('DOMContentLoaded', async () => {
-
-            try {
-                const response = await fetch('https://localhost:7031/UserInfo/APICurrentTeacherId', {
-                    method: "GET",
-                });
-                teacherIdString = await response.text();
-
-                if (teacherIdString !== '0') {
-                    teacherId = Number(teacherIdString);
-                    ReadTrAva();
-                }
-            } catch (error) {
-                console.error('Error fetching teacher ID:', error);
-            }
-        })
-        const ReadTrAva = async () => {
-            try {
-                const response = await fetch(`https://localhost:7031/Teacher/TeacherPhoto/${teacherId}`, {
-                    method: "GET",
-                });
-                let photoUrl = '';
-                photoUrl = await response.text();
-                if (photoUrl !== '') {
-                    Teacheravatar2.src = photoUrl;
-                }
-            } catch (error) {
-                console.error('Error fetching teacher Photo:', error);
-            }
-        };
-    </script>
 }

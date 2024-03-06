@@ -2,6 +2,7 @@
 using FinalGroupMVCPrj.Models.ViewModels;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using System.Security.Cryptography.Pkcs;
 
 namespace FinalGroupMVCPrj.Controllers
@@ -48,7 +49,21 @@ namespace FinalGroupMVCPrj.Controllers
             }
             return 0;
         }
-        // GET: TeacherAdmin/
+        //方法簡述：將二進位資料轉URL
+        private static string GetImageDataURL(byte[] image)
+        {
+            string blobDataURL = "";
+            if (image != null)
+            {
+                string base64String = Convert.ToBase64String(image);
+
+                blobDataURL = $"data:image/jpeg;base64,{base64String}";
+                return blobDataURL;
+            }
+
+            return null;
+        }
+        // GET: TeacherAdmin/TBasicInfo
         //動作簡述：回傳老師基本資訊
         [HttpGet]
         public IActionResult TBasicInfo()
@@ -65,37 +80,28 @@ namespace FinalGroupMVCPrj.Controllers
                         ContactInfo = t.FContactInfo,
                         Note = t.FNote,
                         SubjectName = t.TTeacherSubjects.Select(ts => ts.FSubject.FSubjectName),
+                        TeacherModel = t
                     })
                 );
             return View("TBasicinfo", vBasicVMCollection);
         }
-        //方法簡述：將二進位資料轉URL
-        private static string GetImageDataURL(byte[] image)
+
+        public IActionResult Edit(int TeacherID, [Bind("fTeacherId,fTeacherName,fIntroduction,fContactInfo,fNote")] TTeacher teacher)
         {
-            string blobDataURL = "";
-            if (image != null)
+            if (TeacherID != teacher.FTeacherId) { return NotFound(); }
+            if (ModelState.IsValid)
             {
-                string base64String = Convert.ToBase64String(image);
-
-                blobDataURL = $"data:image/jpeg;base64,{base64String}";
-                return blobDataURL;
+                _context.Update(teacher);
+                _context.SaveChanges();
+                //重導到首頁
+                return RedirectToAction("TBasicInfo");
             }
+            return View(teacher);
+        }
 
-            return null;
-        }
-        
-        
-        
-        public IActionResult EditBasicInfo(int? TeacherID)
-        {
-            TTeacher? teacher = _context.TTeachers.FirstOrDefault(t => t.FTeacherId == TeacherID);
-            return PartialView("T_EditFormBasicInfo", teacher);
-        }
-        
-        
-        
-        
-        // GET: TeacherAdmin/
+
+
+        // GET: TeacherAdmin/TRelatedPic
         //動作簡述：回傳老師相關圖片
         [HttpGet]
         public IActionResult TRelatedPic()
