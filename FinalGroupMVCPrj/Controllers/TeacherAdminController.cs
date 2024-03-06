@@ -66,6 +66,23 @@ namespace FinalGroupMVCPrj.Controllers
             }
             return 0;
         }
+        protected DateTime GetCurrentTeacherJoinDatetime()
+        {
+            var dbMember = _context.TMembers.SingleOrDefault(m => m.FMemberId == GetCurrentMemberId());
+            if (dbMember != null && dbMember.FQualifiedTeacher)
+            {
+                int teacherId = 0;
+                var dbTeacher = _context.TTeachers.SingleOrDefault(t => t.FMemberId == GetCurrentMemberId());
+                if (dbTeacher != null)
+                {
+                    DateTime jointime = dbTeacher.FJoinDatetime;
+                    return jointime;
+                }
+            }
+            DateTime dateTimeInfo = new DateTime();
+            dateTimeInfo = DateTime.Now;
+            return dateTimeInfo;
+        }
         //方法簡述：將二進位資料轉URL
         private static string GetImageDataURL(byte[] image)
         {
@@ -103,13 +120,17 @@ namespace FinalGroupMVCPrj.Controllers
             return View("TBasicinfo", vBasicVMCollection);
         }
 
-        public IActionResult Edit(int TeacherID, [Bind("fTeacherId,fTeacherName,fIntroduction,fContactInfo,fNote")] TTeacher teacher)
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> TEdit(TTeacher teacher)
         {
-            if (TeacherID != teacher.FTeacherId) { return NotFound(); }
+            teacher.FTeacherId = GetCurrentTeacherId();
+            teacher.FMemberId = GetCurrentMemberId();
+            teacher.FJoinDatetime = GetCurrentTeacherJoinDatetime();
             if (ModelState.IsValid)
             {
                 _context.Update(teacher);
-                _context.SaveChanges();
+                await _context.SaveChangesAsync();
                 //重導到首頁
                 return RedirectToAction("TBasicInfo");
             }
