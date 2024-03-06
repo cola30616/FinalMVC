@@ -176,50 +176,53 @@
             </div>
             <div class="col-12">
                 <!-- Slider main container -->
-                <div class="swiper course-slider" id="course-slider-1" data-slides-per-view="4" data-swiper-loop="true" data-aos="fade-up">
+                <div class="swiper course-slider" id="course-slider-1" data-slides-per-view="3" data-swiper-loop="true" data-aos="fade-up">
                     <!-- Additional required wrapper -->
                     <div class="swiper-wrapper">
-                        <!-- 這邊是slide 之後要寫Razor 語法新增 -->
-
-                        <div class="swiper-slide">
-                            <div class="course-default border radius-md mb-30">
-                                <figure class="course-img">
-                                    <a href="course-details.html" title="Image" target="_self" class="lazy-container ratio ratio-2-3">
-                                        <img class="lazyload" src="/images/placeholder.png" data-src="/images/course/pro-1.jpg" alt="course">
-                                    </a>
-                                    <div class="hover-show">
-                                        <a href="course-details.html" class="btn btn-md btn-primary rounded-pill" title="Enroll Now" target="_self">立即預約</a>
-                                    </div>
-                                </figure>
-                                <div class="course-details">
-                                    <div class="p-3">
-                                        <a href="course-details.html" target="_self" title="Design" class="tag font-sm color-primary mb-1">課程分類</a>
-                                        <h6 class="course-title lc-2 mb-0">
-                                            <a href="course-details.html" target="_self" title="Link">
-                                                課程名稱
-                                            </a>
-                                        </h6>
-                                        <div class="authors mt-15">
-                                            <div class="author">
-                                                <img class="lazyload blur-up radius-sm" src="/images/placeholder.png" data-src="/images/avatar-1.jpg" alt="Image">
-                                                <span class="font-sm">
-                                                    <a href="course-details.html" target="_self" title="">
-                                                        老師名稱
-                                                    </a>
-                                                </span>
-                                            </div>
-                                            <span class="font-sm icon-start"><i class="fas fa-clock"></i>課程時數</span>
+                        <!-- 這邊是slide 之後要寫Razor 語法新增 -->                      
+                            @foreach(var course in Model.Take(5))
+                            {
+                            <div class="swiper-slide">
+                                <div class="course-default border radius-md mb-30">
+                                    <figure class="course-img">
+                                        <a asp-controller="Lesson" asp-action="Details" asp-route-id="@course.lessonCourse.FLessonCourseId" title="Image" target="_self" class="lazy-container ratio ratio-2-3">
+                                            <img class="lazyload" src="/images/placeholder.png" data-src="/images/course/pro-1.jpg" alt="course">
+                                        </a>
+                                        <div class="hover-show">
+                                            <a asp-controller="Lesson" asp-action="Details" asp-route-id="@course.lessonCourse.FLessonCourseId" class="btn btn-md btn-primary rounded-pill" title="Enroll Now" target="_self">立即預約</a>
                                         </div>
-                                    </div>
-                                    <div class="course-bottom-info px-3 py-2">
-                                        <span class="font-sm"><i class="fas fa-usd-circle"></i>價格</span>
-                                        <span class="font-sm"><i class="fas fa-book-alt"></i>課程堂數</span>
+                                    </figure>
+                                    <div class="course-details">
+                                        <div class="p-3">
+                                            <a asp-controller="Lesson" asp-action="Details" asp-route-id="@course.lessonCourse.FLessonCourseId" target="_self" title="" class="tag font-sm color-primary mb-1">@(course.fieldName)/@(course.subjectName)</a>
+                                            <h6 class="course-title lc-2 mb-0">
+                                                <a asp-controller="Lesson" asp-action="Details" asp-route-id="@course.lessonCourse.FLessonCourseId" target="_self" title="Link">
+                                                    @course.lessonCourse.FName
+                                                </a>
+                                            </h6>
+                                            <div class="authors mt-15">
+                                                <div class="author">
+                                                    <img class="lazyload blur-up radius-sm" src="/images/placeholder.png" data-src="/images/avatar-1.jpg" alt="Image">
+                                                    <span class="font-sm">
+                                                        <a href="" target="_self" title="">
+                                                            @course.teacherName
+                                                        </a>
+                                                    </span>
+                                                </div>
+                                                <span class="font-sm icon-start"><i class="fas fa-clock"></i>課程時數</span>
+                                            </div>
+                                        </div>
+                                        <div class="course-bottom-info px-3 py-2">
+                                            <span class="font-sm"><i class="fas fa-usd-circle"></i>價格</span>
+                                            <span class="font-sm"><i class="fas fa-book-alt"></i>課程堂數</span>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
+                            }                           
                         </div>
 
-                    </div>
+                    
                     <!-- 分頁用 -->
                     <div class="swiper-pagination position-static" id="course-slider-1-pagination"></div>
                 </div>
@@ -301,7 +304,7 @@
                                                             <div class="author">
                                                                 <img class="lazyload blur-up radius-sm" src="/images/placeholder.png" data-src="/images/avatar-1.jpg" alt="Image">
                                                                 <span class="font-sm">
-                                                                    <a target="_self" title="James Hobert">
+                                                                    <a href="" target="_self" title="James Hobert">
                                                                         @course.teacherName
                                                                     </a>
                                                                 </span>
