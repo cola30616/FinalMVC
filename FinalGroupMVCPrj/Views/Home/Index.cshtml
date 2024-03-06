@@ -1,5 +1,4 @@
-﻿@using FinalGroupMVCPrj.Models.ViewModel
-@model IEnumerable<LessonCourseVM>
+﻿@model IEnumerable<LessonCourseVM>
 
 <!-- Home-area start-->
 <section class="hero-banner hero-banner_v1 header-next pb-60">
@@ -10,7 +9,7 @@
                     <h1 class="title mb-30" data-aos="fade-up" data-aos-delay="100">
                         能力想更上層樓就要
                         <span class="d-block text-center">來學樂</span>
-                        <img class="title-shape lazyload" src="/images/placeholder.png" data-src="/images/shape/title-shape.png" alt="Shape">
+                        <img class="title-shape lazyload" src="/images/placeholder.png" data-src="" alt="Shape">
                     </h1>
                     <p class="text text-center" data-aos="fade-up" data-aos-delay="100">
                         歡迎到來學樂，選擇全台最優質線下學習預約平台。
@@ -20,7 +19,7 @@
                             <div class="d-flex justify-content-center align-items-center ">
                                 <div class="col-xl-4 col-lg-2 col-md-4 col-sm-6">
                                         <button class="btn btn-lg btn-primary rounded-pill w-100" type="button" aria-label="Find Course">
-                                            <span>來找課程</span>
+                                        <a asp-controller="Lesson" asp-action="Index" style="color:ghostwhite">來找課程</a>
                                             <i class="fal fa-search"></i>
                                         </button>
                                     </div>
@@ -32,7 +31,7 @@
             </div>
             <div class="col-lg-6" data-aos="fade-up">
                 <div class="banner-image mb-40">
-                    <img class="lazyload blur-up" src="/images/placeholder.png" data-src="/images/banner/hero-banner-1.png" alt="Banner Image">
+                    <img class="rounded lazyload blur-up" src="/images/placeholder.png" data-src="/images/Clement/banner.png" alt="Banner Image" style=" image-rendering: pixelated;filter: brightness(120%);">
                 </div>
             </div>
         </div>
@@ -65,80 +64,27 @@
             </div>
             <div class="col-12" data-aos="fade-up">
                 <div class="swiper category-slider" id="category-slider-1" data-slides-per-view="5" data-swiper-loop="false">
-                    <div class="swiper-wrapper">
-                        <div class="swiper-slide">
-                            <div class="card p-25 border radius-md">
-                                <div class="card-icon radius-md mb-20">
-                                    <i class="ico-ux"></i>
+                    @foreach(var course in Model.Take(1))
+                    {
+                        <div class="swiper-wrapper">
+                            @foreach (var field in course.fields)
+                            {
+                                <div class="swiper-slide">
+                                    <div class="card p-25 border radius-md">
+                                        <div class="card-icon radius-md mb-20">
+                                            <i class="fa-solid fa-lightbulb fa-bounce fa-xs"></i>
+                                        </div>
+                                        <h6 class="card-title lc-1 mb-0">
+                                            <div asp-for=@field target="_self">
+                                                @field
+                                            </div>
+                                        </h6>
+                                    </div>
                                 </div>
-                                <h6 class="card-title lc-1 mb-0">
-                                    <a href="courses.html" target="_self" title="Web UI Design">
-                                        UI 設計
-                                    </a>
-                                </h6>
-                            </div>
+                            }                                                   
                         </div>
-                        <div class="swiper-slide">
-                            <div class="card p-25 border radius-md">
-                                <div class="card-icon radius-md mb-20">
-                                    <i class="ico-development"></i>
-                                </div>
-                                <h6 class="card-title lc-1 mb-0">
-                                    <a href="courses.html" target="_self" title="Web Development">
-                                        網頁開發
-                                    </a>
-                                </h6>
-                            </div>
-                        </div>
-                        <div class="swiper-slide">
-                            <div class="card p-25 border radius-md">
-                                <div class="card-icon radius-md mb-20">
-                                    <i class="ico-setting"></i>
-                                </div>
-                                <h6 class="card-title lc-1 mb-0">
-                                    <a href="courses.html" target="_self" title="App Development">
-                                        App 開發
-                                    </a>
-                                </h6>
-                            </div>
-                        </div>
-                        <div class="swiper-slide">
-                            <div class="card p-25 border radius-md">
-                                <div class="card-icon radius-md mb-20">
-                                    <i class="ico-social"></i>
-                                </div>
-                                <h6 class="card-title lc-1 mb-0">
-                                    <a href="courses.html" target="_self" title="Digital Marketing">
-                                        數位行銷
-                                    </a>
-                                </h6>
-                            </div>
-                        </div>
-                        <div class="swiper-slide">
-                            <div class="card p-25 border radius-md">
-                                <div class="card-icon radius-md mb-20">
-                                    <i class="ico-design-tool"></i>
-                                </div>
-                                <h6 class="card-title lc-1 mb-0">
-                                    <a href="courses.html" target="_self" title="Graphics Design">
-                                       美術設計
-                                    </a>
-                                </h6>
-                            </div>
-                        </div>
-                        <div class="swiper-slide">
-                            <div class="card p-25 border radius-md">
-                                <div class="card-icon radius-md mb-20">
-                                    <i class="ico-book"></i>
-                                </div>
-                                <h6 class="card-title lc-1 mb-0">
-                                    <a href="courses.html" target="_self" title="Self Development">
-                                        目前熱門
-                                    </a>
-                                </h6>
-                            </div>
-                        </div>
-                    </div>
+                    }
+                    
                     <div class="swiper-pagination position-static mt-30" id="category-slider-1-pagination"></div>
                 </div>
             </div>
@@ -224,7 +170,7 @@
                         <img class="title-shape lazyload" src="/images/placeholder.png" data-src="/images/shape/title-shape.png" alt="Shape">
                     </h2>
                     <div class="cta-btn">
-                        <a href="courses.html" class="btn btn-lg btn-primary rounded-pill" title="See All Course" target="_self">所有課程</a>
+                        <a asp-controller="Lesson" asp-action="Index" class="btn btn-lg btn-primary rounded-pill" title="See All Course" target="_self">所有課程</a>
                     </div>
                 </div>
             </div>
@@ -234,6 +180,7 @@
                     <!-- Additional required wrapper -->
                     <div class="swiper-wrapper">
                         <!-- 這邊是slide 之後要寫Razor 語法新增 -->
+
                         <div class="swiper-slide">
                             <div class="course-default border radius-md mb-30">
                                 <figure class="course-img">
@@ -301,78 +248,103 @@
                     </h2>
                     <div class="tabs-navigation mb-20">
                         <ul class="nav nav-tabs" data-hover="fancyHover">
-                            <li class="nav-item active">
-                                <button class="nav-link hover-effect btn-md rounded-pill active" data-bs-toggle="tab" data-bs-target="#tab1" type="button">科目分類1</button>
-                            </li>
-                            <li class="nav-item">
-                                <button class="nav-link hover-effect btn-md rounded-pill" data-bs-toggle="tab" data-bs-target="#tab2" type="button">科目分類2</button>
-                            </li>
-                            <li class="nav-item">
-                                <button class="nav-link hover-effect btn-md rounded-pill" data-bs-toggle="tab" data-bs-target="#tab3" type="button">科目分類3</button>
-                            </li>
-                            <li class="nav-item">
-                                <button class="nav-link hover-effect btn-md rounded-pill" data-bs-toggle="tab" data-bs-target="#tab4" type="button"> 科目分類4</button>
-                            </li>
+                            @{
+                                var index = 1;
+                            }
+                            @foreach (var course in Model.Take(1))
+                            {
+                                @foreach (var fields in course.fields)
+                                {
+                                    <li class="nav-item active">
+                                        <button class="nav-link hover-effect btn-md rounded-pill active" data-bs-toggle="tab" data-bs-target="#tab@(index)" type="button">@fields</button>
+                                    </li>
+                                    index++;
+                                }
+                            }                                                   
                         </ul>
                     </div>
                 </div>
             </div>
             <div class="col-12">
                 <div class="tab-content" data-aos="fade-up">
-                    <!--依照tab 去做分類 用Razor 語法做分類 -->
-                    <div class="tab-pane slide show active" id="tab1">
-                        <div class="row">
-                            <!-- 這邊是課程的細節 用Razor 語法-->
-                            @foreach(var course in Model)
-                            {
-                                <div class="col-xl-3 col-lg-4 col-sm-6">
-                                    <div class="course-default border radius-md mb-30">
-                                        <figure class="course-img">
-                                            <a href="course-details.html" title="Image" target="_self" class="lazy-container ratio ratio-2-3">
-                                                <img class="lazyload" src="/images/placeholder.png" data-src="/images/course/pro-5.jpg" alt="course">
-                                            </a>
-                                            <div class="hover-show">
-                                                <a href="course-details.html" class="btn btn-md btn-primary rounded-pill" title="Enroll Now" target="_self">前往課程</a>
-                                            </div>
-                                        </figure>
-                                        <div class="course-details">
-                                            <div class="p-3">
-                                                <a href="course-details.html" target="_self" title="Design" class="tag font-sm color-primary mb-1">@course.subjectName</a>
-                                                <h6 class="course-title lc-2 mb-0">
-                                                    <a href="course-details.html" target="_self" title="Link">
-                                                        @course.lessonCourse.FName
+                    <!--依照tab 去做分類 用Razor 語法做分類 -->                    
+                    
+                    @{
+                        var fieldCount = Model.Take(1).Select(f => f.fields);
+                        
+                    }
+                    @for (int i = 1; i < fieldCount.Count() + 1; i++)
+                        {
+                        <div class="tab-pane slide @(i == 1 ? "show active" : "")" id="tab@(i)">
+                                <div class="row">
+                                    @foreach (var course in Model)
+                                    {
+                                    @if(course.fieldNumber == i)
+                                    {
+                                        <!-- 這邊是課程的細節 用Razor 語法-->
+                                        <div class="col-xl-3 col-lg-4 col-sm-6">
+                                            <div class="course-default border radius-md mb-30">
+                                                <figure class="course-img">
+                                                    <a href="course-details.html" title="Image" target="_self" class="lazy-container ratio ratio-2-3">
+                                                        <img class="lazyload" src="/images/placeholder.png" data-src="/images/course/pro-5.jpg" alt="course">
                                                     </a>
-                                                </h6>
-                                                <div class="authors mt-15">
-                                                    <div class="author">
-                                                        <img class="lazyload blur-up radius-sm" src="/images/placeholder.png" data-src="/images/avatar-1.jpg" alt="Image">
-                                                        <span class="font-sm">
-                                                            <a href="course-details.html" target="_self" title="James Hobert">
-                                                                @course.teacherName
-                                                            </a>
-                                                        </span>
+                                                    <div class="hover-show">
+                                                        <a asp-controller="Lesson" asp-action="Details" asp-route-id="@course.lessonCourse.FLessonCourseId" class="btn btn-md btn-primary rounded-pill" title="Enroll Now" target="_self">前往課程</a>
                                                     </div>
-                                                    <!--課程總小時數考慮新增嗎?-->
-                                                    @* <span class="font-sm icon-start"><i class="fas fa-clock"></i>06h 00m</span> *@
+                                                </figure>
+                                                <div class="course-details">
+                                                    <div class="p-3">
+                                                        <a asp-controller="Lesson" asp-action="Details" asp-route-id="@course.lessonCourse.FLessonCourseId" target="_self" title=@course.subjectName class="tag font-sm color-primary mb-1">@course.subjectName</a>
+                                                        <h6 class="course-title lc-2 mb-0">
+                                                            <a asp-controller="Lesson" asp-action="Details" asp-route-id="@course.lessonCourse.FLessonCourseId" target="_self" title="Link">
+                                                                @course.lessonCourse.FName
+                                                            </a>
+                                                        </h6>
+                                                        <div class="authors mt-15">
+                                                            <div class="author">
+                                                                <img class="lazyload blur-up radius-sm" src="/images/placeholder.png" data-src="/images/avatar-1.jpg" alt="Image">
+                                                                <span class="font-sm">
+                                                                    <a href="course-details.html" target="_self" title="James Hobert">
+                                                                        @course.teacherName
+                                                                    </a>
+                                                                </span>
+                                                            </div>
+                                                            <!--課程總小時數考慮新增嗎?-->
+                                                            @* <span class="font-sm icon-start"><i class="fas fa-clock"></i>06h 00m</span> *@
+                                                        </div>
+                                                    </div>
+                                                    <div class="course-bottom-info px-3 py-2">
+                                                        <span class="font-sm"><i class="fas fa-usd-circle"></i>NT @((decimal)Math.Floor((double)course.lessonCourse.FPrice))</span>
+                                                        <!--這個堂數有考慮新增嗎-->
+                                                        @* <span class="font-sm"><i class="fas fa-book-alt"></i>11 Lessons</span> *@
+                                                    </div>
                                                 </div>
                                             </div>
-                                            <div class="course-bottom-info px-3 py-2">
-                                                <span class="font-sm"><i class="fas fa-usd-circle"></i>NT @((decimal)Math.Floor((double)course.lessonCourse.FPrice))</span>
-                                                <!--這個堂數有考慮新增嗎-->
-                                                @* <span class="font-sm"><i class="fas fa-book-alt"></i>11 Lessons</span> *@
-                                            </div>
                                         </div>
-                                    </div>
+                                    }
+                                    
+                                    }
                                 </div>
-                            }
+                            </div>                                                 
+                        }
+                    
+                    
+                    
+                           
+                                
+
+
                             
-                            
-                        </div>
-                        <div class="cta-btn text-center mt-15">
-                            <a href="courses.html" class="btn btn-lg btn-primary rounded-pill" title="View More" target="_self">所有課程</a>
-                        </div>
+                       
+                     
+                    <div class="cta-btn text-center mt-15">
+                        <a asp-controller="Lesson" asp-action="Index" class="btn btn-lg btn-primary rounded-pill" title="View More" target="_self">所有課程</a>
                     </div>
                     
+                    
+                     
+
+
                 </div>
             </div>
         </div>
@@ -387,7 +359,7 @@
 </section>
 <!-- Course-area end -->
 <!-- Mentor-area start -->
-<section class="mentor-area mentor-area_v1 pt-100 pb-70 bg-img bg-cover" data-bg-image="/images/mentor-bg-1.jpg">
+<section class="mentor-area mentor-area_v1 pt-100 pb-70 bg-img bg-cover mb-10" data-bg-image="/images/mentor-bg-1.jpg">
     <div class="overlay opacity-85 bg-primary-light"></div>
     <div class="container">
         <div class="row">
@@ -402,31 +374,41 @@
             <div class="col-12">
                 <div class="row">
                     <!-- 這邊是講師介紹 用Razor-->
-                    <div class="col-lg-4 col-sm-6" data-aos="fade-up">
-                        <div class="card radius-md mb-30">
-                            <div class="card-img">
-                                <a href="mentor-details.html" title="Image" target="_self" class="lazy-container ratio ratio-1-2">
-                                    <img class="lazyload" src="/images/placeholder.png" data-src="/images/mentor/mentor-1.jpg" alt="Image">
-                                </a>
-                            </div>
-                            <div class="card-content text-center">
-                                <h4 class="card-title lc-1 mb-1">
-                                    <a href="mentor-details.html" target="_self" title="Link">
-                                        Jose Portilla
+                    @foreach (var course in Model.Skip(1).Take(3))
+                    {
+                        <div class="col-lg-4 col-sm-6" data-aos="fade-up">
+                            <div class="card radius-md mb-30">
+                                <div class="card-img">
+                                    <a asp-route-id="@course.teacher.FTeacherId" title="Image" target="_self" class="lazy-container ratio ratio-1-2">
+                                        @if (course.teacher.FTeacherProfilePic != null) // 空值檢查
+                                        {
+                                            <img class="lazyload" src="data:image;base64,@(Convert.ToBase64String(course.teacher.FTeacherProfilePic))" alt="Image" />
+                                        }
+                                        else
+                                        {
+                                            <img class="lazyload" src="~/images/avatar-1.jpg" alt="Image" />
+                                        }
                                     </a>
-                                </h4>
-                                <p class="card-text color-primary font-sm">
-                                    Web Designer
-                                </p>
-                                <div class="social-link justify-content-center">
-                                    <a href="https://www.instagram.com/" target="_blank" title="instagram"><i class="fab fa-instagram"></i></a>
-                                    <a href="https://www.dribbble.com/" target="_blank" title="dribbble"><i class="fab fa-dribbble"></i></a>
-                                    <a href="https://www.twitter.com/" target="_blank" title="twitter"><i class="fab fa-twitter"></i></a>
-                                    <a href="https://www.youtube.com/" target="_blank" title="youtube"><i class="fab fa-youtube"></i></a>
+                                </div>
+                                <div class="card-content text-center">
+                                    <h4 class="card-title lc-1 mb-1">
+                                        <a href="mentor-details.html" target="_self" title="Link">
+                                            @course.teacher.FTeacherName
+                                        </a>
+                                    </h4>
+                                    <p class="card-text color-primary font-sm">
+                                        @course.subjectName
+                                    </p>
+                                    <div class="social-link justify-content-center">
+                                        <a href="https://www.instagram.com/" target="_blank" title="instagram"><i class="fab fa-instagram"></i></a>
+                                        <a href="https://www.dribbble.com/" target="_blank" title="dribbble"><i class="fab fa-dribbble"></i></a>
+                                        <a href="https://www.twitter.com/" target="_blank" title="twitter"><i class="fab fa-twitter"></i></a>
+                                        <a href="https://www.youtube.com/" target="_blank" title="youtube"><i class="fab fa-youtube"></i></a>
+                                    </div>
                                 </div>
                             </div>
                         </div>
-                    </div>               
+                    }                                
                 </div>
             </div>
         </div>
@@ -441,7 +423,7 @@
 <!-- Mentor-area end -->
 
 <!-- Testimonial-area start -->
-<section class="testimonial-area testimonial-area_v1 pb-60">
+<section class="testimonial-area testimonial-area_v1 pb-60 mt-20">
     <div class="container">
         <div class="row align-items-center gx-xl-5">
             <div class="col-lg-5" data-aos="fade-up">
@@ -502,11 +484,11 @@
 <!-- Newsletter-area start -->
 <section class="newsletter-area newsletter-area_v1">
     <div class="container">
-        <div class="newsletter-inner ptb-60 px-3 px-lg-5 radius-lg bg-img bg-cover" data-bg-image="/images/newsletter-bg-1.jpg" data-aos="fade-up">
+        <div class="newsletter-inner ptb-60 px-3 px-lg-5 radius-lg bg-img bg-cover" data-bg-image="/images/Clement/NewLetter.jpg" data-aos="fade-up">
             <div class="row">
                 <div class="col-lg-6">
                     <div class="content-title">
-                        <h2 class="title mb-30">
+                        <h2 class="title mb-30" style="color: antiquewhite">
                             時刻留意最新消息
                         </h2>
                         <div class="newsletter-form">

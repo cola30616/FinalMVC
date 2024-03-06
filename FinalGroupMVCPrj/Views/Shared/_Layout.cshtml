@@ -74,7 +74,7 @@
             <div class="container">
                 <!-- Mobile Logo -->
                 <div class="logo">
-                    <a href="index.html" target="_self" title="LifeShareLearn">
+                    <a asp-controller="Lesson" asp-action="Index" target="_self" title="LifeShareLearn">
                         <img class="lazyload" src="/images/placeholder.png" data-src="/images/logo/favicon.png" alt="Brand Logo">
                     </a>
                 </div>
@@ -87,28 +87,12 @@
             </div>
         </div>
 
-        <div class="main-navbar">
-            @* <div class="header-top bg-white py-3 mobile-item border-bottom">
-            <div class="container">
-            <div class="d-flex flex-wrap justify-content-between gap-15 align-items-center">
-            <a href="mailTo:examle@email.com" class="icon-start" target="_self" title="example@email.com">
-            <i class="fal fa-envelope"></i>
-            example@email.com
-            </a>
-            <div class="social-link style-2 size-md">
-            <a class="rounded-pill" href="https://www.instagram.com/" target="_blank" title="instagram"><i class="fab fa-instagram"></i></a>
-            <a class="rounded-pill" href="https://www.dribbble.com/" target="_blank" title="dribbble"><i class="fab fa-dribbble"></i></a>
-            <a class="rounded-pill" href="https://www.twitter.com/" target="_blank" title="twitter"><i class="fab fa-twitter"></i></a>
-            <a class="rounded-pill" href="https://www.youtube.com/" target="_blank" title="youtube"><i class="fab fa-youtube"></i></a>
-            </div>
-            </div>
-            </div>
-            </div> *@
-            <div class="header-bottom bg-white shadow-sm">
-                <div class="container ">
+        <div class="main-navbar">         
+            <div class="header-bottom ">
+                <div class="container">
                     <nav class="navbar navbar-expand-lg p-3">
                         <!-- Logo -->
-                        <a class="navbar-brand" href="index.html" target="_self" title="LifeShareLearn">
+                        <a asp-controller="Home" asp-action="Index" class="navbar-brand" target="_self" title="LifeShareLearn">
                             <img class="lazyload img-fluid img-fixed-size" src="/images/logo/TransparentLogo.png" alt="Brand Logo" style="width: 169px ; height: 43px">
                         </a>
                         <!-- Navigation items -->
@@ -116,11 +100,12 @@
                             <ul id="mainMenu" class="navbar-nav mobile-item mx-auto">
                                 <li class="nav-item p-3 ">
                                     <div class="input-group" style="position: relative;">
-                                        <input type="text" id="search" class="form-control" placeholder="搜尋課程" style="width: 491px">
+                                        <input type="text" id="searchInput" class="form-control"  style="width: 491px" >
                                         <button class="btn btn-light" type="button" style="position: absolute; top: 5px; right: 0;background-color: transparent;border-color: transparent;box-shadow: none">
                                             <img src="~/images/search-alt-2-svgrepo-com.svg" style="height: 30px; width: 30px;" />
-                                        </button>
+                                        </button>                                    
                                     </div>
+                                    <div id="searchResults"></div>
                                 </li>
                                 <li class="nav-item d-flex align-items-center justify-content-center">
                                     <a asp-controller="Teacher" asp-action="List" class="">  <i class="fa-solid fa-user-tie color-primary"></i>老師推薦 <i class="fal fa-plus "></i></a>
@@ -132,9 +117,7 @@
                                             <a class="nav-link" href="mentor-details.html">老師介紹</a>
                                         </li>
                                     </ul> *@
-                                </li>
-                                
-                               
+                                </li>                                                           
                             </ul>
                         </div>
                         <div class="more-option  ">
@@ -200,7 +183,7 @@
                                         </li>
 
                                         <li>
-                                            <a asp-controller="LessonHistory" asp-action="List" class="dropdown-item d-flex align-items-center" >
+                                            <a asp-controller="LessonHistory" asp-action="LearningRecord" class="dropdown-item d-flex align-items-center">
                                                 <i class="fa-solid fa-graduation-cap"></i>
                                                 <span>課程紀錄</span>
                                             </a>
@@ -337,6 +320,7 @@
         </div>
     </footer>
     <!-- Footer-area end-->
+    
     <!-- Lazysizes -->
     <script src="~/js/vendors/lazysizes.min.js"></script>
     <!-- Jquery JS -->
@@ -361,6 +345,9 @@
     <script src="~/js/script.js"></script>
     <!--根據登入狀態改變前台網頁-->
     <script src="~/js/loginstatus.js"></script>
+    <!--搜尋功能-->
+    <script src="~/js/Search.js"></script>
+    
     <!--Sweet alert-->
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     @await RenderSectionAsync("Scripts", required: false)
