@@ -267,58 +267,82 @@
             </div>
             <div class="col-12">
                 <div class="tab-content" data-aos="fade-up">
-                    <!--依照tab 去做分類 用Razor 語法做分類 -->                                  
-                        <div class="tab-pane slide show active" id="tab1">
-                            <div class="row">
-                                <!-- 這邊是課程的細節 用Razor 語法-->
-                                @foreach (var course in Model)
-                                {
-
-                                    <div class="col-xl-3 col-lg-4 col-sm-6">
-                                        <div class="course-default border radius-md mb-30">
-                                            <figure class="course-img">
-                                                <a href="course-details.html" title="Image" target="_self" class="lazy-container ratio ratio-2-3">
-                                                    <img class="lazyload" src="/images/placeholder.png" data-src="/images/course/pro-5.jpg" alt="course">
-                                                </a>
-                                                <div class="hover-show">
-                                                    <a asp-controller="Lesson" asp-action="Details" asp-route-id="@course.lessonCourse.FLessonCourseId" class="btn btn-md btn-primary rounded-pill" title="Enroll Now" target="_self">前往課程</a>
-                                                </div>
-                                            </figure>
-                                            <div class="course-details">
-                                                <div class="p-3">
-                                                <a asp-controller="Lesson" asp-action="Details" asp-route-id="@course.lessonCourse.FLessonCourseId" target="_self" title=@course.subjectName class="tag font-sm color-primary mb-1">@course.subjectName</a>
-                                                    <h6 class="course-title lc-2 mb-0">
-                                                    <a asp-controller="Lesson" asp-action="Details" asp-route-id="@course.lessonCourse.FLessonCourseId" target="_self" title="Link">
-                                                            @course.lessonCourse.FName
-                                                        </a>
-                                                    </h6>
-                                                    <div class="authors mt-15">
-                                                        <div class="author">
-                                                            <img class="lazyload blur-up radius-sm" src="/images/placeholder.png" data-src="/images/avatar-1.jpg" alt="Image">
-                                                            <span class="font-sm">
-                                                                <a href="course-details.html" target="_self" title="James Hobert">
-                                                                    @course.teacherName
-                                                                </a>
-                                                            </span>
-                                                        </div>
-                                                        <!--課程總小時數考慮新增嗎?-->
-                                                        @* <span class="font-sm icon-start"><i class="fas fa-clock"></i>06h 00m</span> *@
+                    <!--依照tab 去做分類 用Razor 語法做分類 -->                    
+                    
+                    @{
+                        var fieldCount = Model.Take(1).Select(f => f.fields);
+                        
+                    }
+                    @for (int i = 1; i < fieldCount.Count() + 1; i++)
+                        {
+                        <div class="tab-pane slide @(i == 1 ? "show active" : "")" id="tab@(i)">
+                                <div class="row">
+                                    @foreach (var course in Model)
+                                    {
+                                    @if(course.fieldNumber == i)
+                                    {
+                                        <!-- 這邊是課程的細節 用Razor 語法-->
+                                        <div class="col-xl-3 col-lg-4 col-sm-6">
+                                            <div class="course-default border radius-md mb-30">
+                                                <figure class="course-img">
+                                                    <a href="course-details.html" title="Image" target="_self" class="lazy-container ratio ratio-2-3">
+                                                        <img class="lazyload" src="/images/placeholder.png" data-src="/images/course/pro-5.jpg" alt="course">
+                                                    </a>
+                                                    <div class="hover-show">
+                                                        <a asp-controller="Lesson" asp-action="Details" asp-route-id="@course.lessonCourse.FLessonCourseId" class="btn btn-md btn-primary rounded-pill" title="Enroll Now" target="_self">前往課程</a>
                                                     </div>
-                                                </div>
-                                                <div class="course-bottom-info px-3 py-2">
-                                                    <span class="font-sm"><i class="fas fa-usd-circle"></i>NT @((decimal)Math.Floor((double)course.lessonCourse.FPrice))</span>
-                                                    <!--這個堂數有考慮新增嗎-->
-                                                    @* <span class="font-sm"><i class="fas fa-book-alt"></i>11 Lessons</span> *@
+                                                </figure>
+                                                <div class="course-details">
+                                                    <div class="p-3">
+                                                        <a asp-controller="Lesson" asp-action="Details" asp-route-id="@course.lessonCourse.FLessonCourseId" target="_self" title=@course.subjectName class="tag font-sm color-primary mb-1">@course.subjectName</a>
+                                                        <h6 class="course-title lc-2 mb-0">
+                                                            <a asp-controller="Lesson" asp-action="Details" asp-route-id="@course.lessonCourse.FLessonCourseId" target="_self" title="Link">
+                                                                @course.lessonCourse.FName
+                                                            </a>
+                                                        </h6>
+                                                        <div class="authors mt-15">
+                                                            <div class="author">
+                                                                <img class="lazyload blur-up radius-sm" src="/images/placeholder.png" data-src="/images/avatar-1.jpg" alt="Image">
+                                                                <span class="font-sm">
+                                                                    <a href="course-details.html" target="_self" title="James Hobert">
+                                                                        @course.teacherName
+                                                                    </a>
+                                                                </span>
+                                                            </div>
+                                                            <!--課程總小時數考慮新增嗎?-->
+                                                            @* <span class="font-sm icon-start"><i class="fas fa-clock"></i>06h 00m</span> *@
+                                                        </div>
+                                                    </div>
+                                                    <div class="course-bottom-info px-3 py-2">
+                                                        <span class="font-sm"><i class="fas fa-usd-circle"></i>NT @((decimal)Math.Floor((double)course.lessonCourse.FPrice))</span>
+                                                        <!--這個堂數有考慮新增嗎-->
+                                                        @* <span class="font-sm"><i class="fas fa-book-alt"></i>11 Lessons</span> *@
+                                                    </div>
                                                 </div>
                                             </div>
                                         </div>
-                                    </div>
-                                }
-                            </div>
-                            <div class="cta-btn text-center mt-15">
-                                <a asp-controller="Lesson" asp-action="Index" class="btn btn-lg btn-primary rounded-pill" title="View More" target="_self">所有課程</a>
-                            </div>
-                        </div>
+                                    }
+                                    
+                                    }
+                                </div>
+                            </div>                                                 
+                        }
+                    
+                    
+                    
+                           
+                                
+
+
+                            
+                       
+                     
+                    <div class="cta-btn text-center mt-15">
+                        <a asp-controller="Lesson" asp-action="Index" class="btn btn-lg btn-primary rounded-pill" title="View More" target="_self">所有課程</a>
+                    </div>
+                    
+                    
+                     
 
 
                 </div>

@@ -55,6 +55,8 @@ public partial class TLessonCourse
 
     public string FStatusNote { get; set; }
 
+    public virtual TCourseSubject FSubject { get; set; }
+
     public virtual TTeacher FTeacher { get; set; }
 
     public virtual ICollection<TMemberFavCourse> TMemberFavCourses { get; set; } = new List<TMemberFavCourse>();

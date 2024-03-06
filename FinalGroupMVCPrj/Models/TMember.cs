@@ -39,7 +39,7 @@ public partial class TMember
 
     public string FNote { get; set; }
 
-    public bool? FStatus { get; set; }
+    public bool FStatus { get; set; }
 
     public virtual ICollection<TChatRoomTeacher> TChatRoomTeachers { get; set; } = new List<TChatRoomTeacher>();
 

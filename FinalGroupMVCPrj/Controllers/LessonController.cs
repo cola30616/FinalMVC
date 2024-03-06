@@ -37,7 +37,8 @@ namespace FinalGroupMVCPrj.Controllers
                 imageData = course.FPhoto,
                 // 新增老師
                 teacher = course.FTeacher, // 將加載的 Teacher 導航屬性賦值給 ViewModel 的 teacher 屬性
-                fields = fields
+                fields = fields,
+                fieldNumber = course.FSubject.FFieldId,
             })
             .ToListAsync();
             return View(courseList);

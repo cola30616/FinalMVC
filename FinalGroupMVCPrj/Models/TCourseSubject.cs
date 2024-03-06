@@ -17,5 +17,7 @@ public partial class TCourseSubject
 
     public virtual TCourseField FField { get; set; }
 
+    public virtual ICollection<TLessonCourse> TLessonCourses { get; set; } = new List<TLessonCourse>();
+
     public virtual ICollection<TTeacherSubject> TTeacherSubjects { get; set; } = new List<TTeacherSubject>();
 }

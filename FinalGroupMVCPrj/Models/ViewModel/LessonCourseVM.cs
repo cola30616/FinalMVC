@@ -9,6 +9,8 @@
         public string subjectName {  get; set; }// 添加科目名稱屬性課程
 
         public List<string> fields {  get; set; } // 所有領域資料
+
+        public int fieldNumber {  get; set; }// 取得當前領域資料
         public byte[] imageData { get; set; } 
         
         public TTeacher teacher { get; set; }

@@ -15,7 +15,9 @@ public partial class TMemberLoginLog
 
     public string FLoginIp { get; set; }
 
-    public string FLoginDevice { get; set; }
+    public string FLoginBrowerNos { get; set; }
+
+    public string FLoginGeoInfo { get; set; }
 
     public virtual TMember FMember { get; set; }
 }
