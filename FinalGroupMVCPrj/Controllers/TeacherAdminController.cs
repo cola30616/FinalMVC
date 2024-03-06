@@ -23,6 +23,20 @@ namespace FinalGroupMVCPrj.Controllers
         {
             return View();
         }
+
+        // GET: TeacherAdmin/LessonCreate
+        [HttpGet]
+        public IActionResult LessonCreate()
+        {
+            return View("LCreate");
+        }
+
+        // GET: TeacherAdmin/LessonEdit
+        [HttpGet]
+        public IActionResult LessonEdit()
+        {
+            return View("LEdit");
+        }
         //■ ==========================     東霖作業區      ==========================■
         protected int GetCurrentMemberId()
         {

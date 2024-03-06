@@ -4,5 +4,169 @@
     Layout = "~/Views/Shared/_LayoutTeacherAdmin.cshtml";
 }
 
+
+<nav style="--bs-breadcrumb-divider: '|';">
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a href="index.html"><i class="bi bi-house-door"></i></a></li>
+        <li class="breadcrumb-item active">Dashboard</li>
+        <li class="breadcrumb-item active">Dashboard</li>
+    </ol>
+</nav>
 <h1>老師後台課程清單</h1>
+<button type="button" class="btn btn-outline-primary" data-bs-toggle="tooltip" data-bs-placement="right" title="點擊新增課程">開課</button>
+
+<div class="row">
+    <div class="col-sm-10">
+        <div class="row mb-3">
+            <label class="col-sm-2  align-self-center">開課日期區間:</label>
+            <div class="col-sm-10">
+                <div class="row">
+                    <div class="col-sm-5">
+                        <input type="date" class="form-control">
+                    </div>
+                    <div class="col-sm-1 text-center align-self-center">
+                        ~
+                    </div>
+                    <div class="col-sm-5">
+                        <input type="date" class="form-control">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-sm-2">
+        <div class="col-sm-10">
+            <select class="form-select" aria-label="Default select example">
+                <option selected>狀態</option>
+                <option value="1">One</option>
+                <option value="2">Two</option>
+                <option value="3">Three</option>
+            </select>
+        </div>
+    </div>
+</div>
+
+
+
+
+
+<!-- Table with stripped rows -->
+<table class="table datatable">
+    <thead>
+        <tr>
+            <th>代號</th>
+            <th>名稱</th>
+            <th>領域</th>
+            <th>售價</th>
+            <th data-type="date" data-format="YYYY/DD/MM">日期</th>
+            <th>時數</th>
+            <th>人數上限</th>
+            <th>報名人數</th>
+            <th>狀態</th>
+            <th>授課場地</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td>Unity Pugh</td>
+            <td>9958</td>
+            <td>Curicó</td>
+            <td>2005/02/11</td>
+            <td>37%</td>
+            <td>37%</td>
+            <td>37%</td>
+            <td>37%</td>
+            <td>37%</td>
+            <td>37%</td>
+            <td>
+                <button class="btn btn-outline-success" title="檢視">檢視</button>
+                <button class="btn btn-outline-warning">取消課程</button>
+            </td>
+        </tr>
+        <tr>
+            <td>Theodore Duran</td>
+            <td>8971</td>
+            <td>Dhanbad</td>
+            <td>1999/04/07</td>
+            <td>97%</td>
+            <td>97%</td>
+            <td>97%</td>
+            <td>97%</td>
+            <td>97%</td>
+            <td>97%</td>
+            <td>
+                <button class="btn btn-outline-success" title="檢視">檢視</button>
+                <button class="btn btn-outline-warning">取消課程</button>
+            </td>
+        </tr>
+        <tr>
+            <td>Kylie Bishop</td>
+            <td>3147</td>
+            <td>Norman</td>
+            <td>2005/09/08</td>
+            <td>63%</td>
+            <td>63%</td>
+            <td>63%</td>
+            <td>63%</td>
+            <td>63%</td>
+            <td>63%</td>
+            <td>
+                <button class="btn btn-outline-success" title="檢視">檢視</button>
+                <button class="btn btn-outline-warning">取消課程</button>
+            </td>
+        </tr>
+        <tr>
+            <td>Willow Gilliam</td>
+            <td>3497</td>
+            <td>Amqui</td>
+            <td>2009/29/11</td>
+            <td>30%</td>
+            <td>30%</td>
+            <td>30%</td>
+            <td>30%</td>
+            <td>30%</td>
+            <td>30%</td>
+            <td>
+                <button class="btn btn-outline-success" title="檢視">檢視</button>
+                <button class="btn btn-outline-warning">取消課程</button>
+            </td>
+        </tr>
+        <tr>
+            <td>Blossom Dickerson</td>
+            <td>5018</td>
+            <td>Kempten</td>
+            <td>2006/11/09</td>
+            <td>17%</td>
+            <td>17%</td>
+            <td>17%</td>
+            <td>17%</td>
+            <td>17%</td>
+            <td>17%</td>
+            <td>
+                <button class="btn btn-outline-success" title="檢視">檢視</button>
+                <button class="btn btn-outline-warning">取消課程</button>
+            </td>
+        </tr>
+        <tr>
+            <td>Elliott Snyder</td>
+            <td>3925</td>
+            <td>Enines</td>
+            <td>2006/03/08</td>
+            <td>57%</td>
+            <td>57%</td>
+            <td>57%</td>
+            <td>57%</td>
+            <td>57%</td>
+            <td>57%</td>
+            <td>
+                <button class="btn btn-outline-success" title="檢視">檢視</button>
+                <button class="btn btn-outline-warning">取消課程</button>
+            </td>
+        </tr>
+       
+    </tbody>
+</table>
+<!-- End Table with stripped rows -->
 

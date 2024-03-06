@@ -32,8 +32,8 @@
     <!-- Template Main CSS File -->
     <link href="~/assets/css/style.css" rel="stylesheet">
 
-    <!--DataTable CDN-->
-    <link rel="stylesheet" href="//cdn.datatables.net/1.13.7/css/jquery.dataTables.min.css" />
+    <!-- DataTable -->
+    <link rel="stylesheet" href="//cdn.datatables.net/2.0.1/css/dataTables.dataTables.min.css" />
 
     <!-- =======================================================
     * Template Name: NiceAdmin
@@ -42,6 +42,7 @@
     * Author: BootstrapMade.com
     * License: https://bootstrapmade.com/license/
     ======================================================== -->
+    @await RenderSectionAsync("Style", required: false)
 </head>
 <body>
 
@@ -333,5 +334,7 @@
     <!--TinyMCE-->
     <script src="https://cdn.tiny.cloud/1/forirr314cvct8ywt434kbf87vah6743olso1oyjfnhh3vhi/tinymce/6/tinymce.min.js" referrerpolicy="origin"></script>
     @await RenderSectionAsync("Scripts", required: false)
+    <!-- DataTable -->
+    <script src="//cdn.datatables.net/2.0.1/js/dataTables.min.js" asp-append-version="true"></script>
 </body>
 </html>
