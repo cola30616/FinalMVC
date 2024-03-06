@@ -124,9 +124,16 @@ namespace FinalGroupMVCPrj.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> TEdit(TTeacher teacher)
         {
-            teacher.FTeacherId = GetCurrentTeacherId();
-            teacher.FMemberId = GetCurrentMemberId();
-            teacher.FJoinDatetime = GetCurrentTeacherJoinDatetime();
+            TTeacher? dbTeacher = _context.TTeachers.Where(t => t.FTeacherId == GetCurrentTeacherId()).FirstOrDefault();
+            if(dbTeacher == null )
+            {
+                return BadRequest("系統異常");
+            }
+            dbTeacher.FTeacherName = teacher.FTeacherName;
+            dbTeacher.FIntroduction = teacher.FIntroduction;    
+            dbTeacher.FContactInfo = teacher.FContactInfo;
+            dbTeacher.FNote = teacher.FNote;
+            teacher = dbTeacher as TTeacher;
             if (ModelState.IsValid)
             {
                 _context.Update(teacher);
