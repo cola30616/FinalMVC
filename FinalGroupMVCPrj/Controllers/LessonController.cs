@@ -59,9 +59,12 @@ namespace FinalGroupMVCPrj.Controllers
 
         //■ ==========================     翊妏 作業區      ==========================■
         [HttpGet]
-        public IActionResult Details()
+        public IActionResult Details(int? id)
         {
-            return View("LDetails");
+            var querystring = _context.TLessonCourses.Where(x => x.FLessonCourseId == id).ToList();
+
+
+            return View("LDetails", querystring);
         }
     }
 }

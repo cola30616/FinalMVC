@@ -1,8 +1,5 @@
-﻿@*
-    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-*@
-@{
-}
+﻿@model TLessonCourse
+
 @section Style {
     <style>
 
@@ -25,160 +22,358 @@
 
 
 <div class="course-details-area pb-60">
-        <!-- Course title -->
-        <div class="course-banner bg-img bg-cover pb-5 bg-light" >
-            <div class="container">
-                <div class="row">
-                    @* 封面照 *@
-                    <div  class="col-lg-4">
+    <!-- Course title -->
+    <div class="course-banner bg-img bg-cover pb-5 bg-light">
+        <div class="container">
+            <div class="row">
+                @* 封面照 *@
+                <div class="col-lg-4">
                     <figure class="course-img" style="border: thin #c0c0c0 solid;border-radius: 8px;  display: flex; flex-flow: column; padding: 8px;margin: auto; background-color: white;">
-                            <img class="lazyload" style="border-radius:6px;" src="/images/placeholder.png" data-src="/images/course/pro-13.jpg" alt="course" title="Image">
-                        </figure>
-                    </div>
-                    @* 基本資料 *@
-                    <div class="col-lg-8">
-                        <div class="banner-content" data-aos="fade-up">
-                            <nav aria-label="breadcrumb">
-                                <ol class="breadcrumb">
+                        <img class="lazyload" style="border-radius:6px;" src="/images/placeholder.png" data-src="/images/course/pro-13.jpg" alt="course" title="Image">
+                    </figure>
+                </div>
+                @* 基本資料 *@
+                <div class="col-lg-8">
+                    <div class="banner-content" data-aos="fade-up">
+                        <nav aria-label="breadcrumb">
+                            <ol class="breadcrumb">
                                 <li class="breadcrumb-item active" aria-current="page"><a href="#"><img src="/images/dog.png" style="height: 40px;height: 40px;" class="border border-primary rounded-circle  "></a> 彼得遊世界</li>
-                                </ol>
-                            </nav>
-                            <h3 class="title mb-15 mt-10">
-                                多益商用英文進階
-                            </h3>
+                            </ol>
+                        </nav>
+                        <!--課名-->
+                        <h3 class="title mb-15 mt-10">
+                            @Html.DisplayFor(m => m.FName)
+                        </h3>
                         <div class="mb-3">
-                            @* class=" center  badge-sm rounded bg-primary text-bg-primary" *@
-                            <span class=" center  badge-sm rounded bg-primary text-bg-primary "> 領域 </span>&nbsp;
+                            <!--領域-->
+                            <span class=" center  badge-sm rounded bg-primary text-bg-primary "> 領域 </span>&nbsp;&#47;
+                            <!--科目-->
                             <span class=" center  badge-sm rounded bg-primary text-bg-primary"> 科目</span>&nbsp;
-                            <span class=" center  badge-lg rounded" style="background-color: #ace6f7;"> 線上</span>
+                            <!--場地類型-->
+                            <span class=" center  badge-lg rounded" style="background-color: #FDC501;color:#654e00;"> </span>
                         </div>
-                            <ul class="list-group list-group-horizontal align-items-center">
-                                <!-- <li class="d-inline-block">
-                                    <div class="ratings size-md gap-2">
-                                        <span class="badge bg-success size-md">Bestseller</span>
-                                        <div class="rate bg-img" data-bg-image="/images/rate-star-md.png">
-                                            <div class="rating-icon bg-img" data-bg-image="/images/rate-star-md.png"></div>
-                                        </div>
-                                        <span class="ratings-total">(5.0)</span>
+                        <ul class="list-group list-group-horizontal align-items-center">
+                            <!-- <li class="d-inline-block">
+                                <div class="ratings size-md gap-2">
+                                    <span class="badge bg-success size-md">Bestseller</span>
+                                    <div class="rate bg-img" data-bg-image="/images/rate-star-md.png">
+                                        <div class="rating-icon bg-img" data-bg-image="/images/rate-star-md.png"></div>
                                     </div>
-                                </li> -->
-                                <li class="d-inline-block icon-start font-sm">
-                                    <i class="fa-regular fa-user"></i>已報名 15人
-                                </li>
-                                <li class="d-inline-block icon-start font-sm">
+                                    <span class="ratings-total">(5.0)</span>
+                                </div>
+                            </li> -->
+                            <li class="d-inline-block icon-start font-sm">
+                                <i class="fa-regular fa-user"></i>已報名 15人
+                            </li>
+                            <li class="d-inline-block icon-start font-sm">
                                 @* <i class="fa-solid fa-dollar-sign"></i> 988 *@
                                 <i class="fas fa-usd-circle"></i> 988
-                                </li>
-                            </ul>
-                            <hr>
+                            </li>
+                        </ul>
+                        <hr>
                         <div class="ratings size-md gap-2 text-end">
-     
-                                @* <a href="checkout.html" class="btn btn-lg btn-outline radius-sm w-30 br-10" title="點擊收藏" target="_self"><i class="fa-regular fa-bookmark fa-xl" style="color: #30c2ec;"></i> 收藏</a> *@
+
+                            @* <a href="checkout.html" class="btn btn-lg btn-outline radius-sm w-30 br-10" title="點擊收藏" target="_self"><i class="fa-regular fa-bookmark fa-xl" style="color: #30c2ec;"></i> 收藏</a> *@
                             <a href="checkout.html" class="btn btn-lg btn-outline radius-sm w-30 br-10" title="點擊收藏" target="_self">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-bookmark" viewBox="0 0 16 16">
                                     <path d="M2 2a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v13.5a.5.5 0 0 1-.777.416L8 13.101l-5.223 2.815A.5.5 0 0 1 2 15.5zm2-1a1 1 0 0 0-1 1v12.566l4.723-2.482a.5.5 0 0 1 .554 0L13 14.566V2a1 1 0 0 0-1-1z" />
                                 </svg> 收藏
                             </a>
-                                <a href="checkout.html" class="btn btn-lg btn-outline radius-sm w-30 br-10" title="Buy Now" target="_self">Buy Now</a>
-                            </div>
-                            
+                            <a href="checkout.html" class="btn btn-lg btn-outline radius-sm w-30 br-10" title="Buy Now" target="_self">購買課程</a>
                         </div>
+
                     </div>
                 </div>
             </div>
         </div>
-        <!-- course-description -->
-        <div class="container">
-            <div class="row gx-xl-12">
-                <div class="col-lg-12" data-aos="fade-up">
-                    <!-- course-details-tab -->
-                    <div class="course-details-tab pt-5">
+    </div>
+    <!-- course-description -->
+    <div class="container">
+        <div class="row gx-xl-12">
+            <div class="col-lg-12" data-aos="fade-up">
+                <!-- course-details-tab -->
+                <div class="course-details-tab pt-5">
                     <div class="tabs-navigation mb-40">
                         <div class="row">
-                           
-                                <ul class="nav nav-tabs" data-hover="fancyHover">
-                                    <li class="nav-item active">
-                                        <button class="nav-link hover-effect btn-md rounded-pill active" data-bs-toggle="tab" data-bs-target="#tab1" type="button">關於課程</button>
-                                    </li>
-                                    <li class="nav-item">
-                                        <button class="nav-link hover-effect btn-md rounded-pill" data-bs-toggle="tab" data-bs-target="#tab5" type="button">評價</button>
-                                    </li>
-                                </ul>
-                           
-                           
+
+                            <ul class="nav nav-tabs" data-hover="fancyHover">
+                                <li class="nav-item active">
+                                    <button class="nav-link hover-effect btn-md rounded-pill active" data-bs-toggle="tab" data-bs-target="#tab1" type="button">關於課程</button>
+                                </li>
+                                <li class="nav-item">
+                                    <button class="nav-link hover-effect btn-md rounded-pill" data-bs-toggle="tab" data-bs-target="#tab5" type="button">評價</button>
+                                </li>
+                            </ul>
+
                         </div>
-                    </div>
 
 
                         <div class="tab-content">
-                        <!-- 關於課程 -->
+                            <!-- 關於課程 -->
                             <div class="tab-pane slide slide show active" id="tab1">
-                            @* 總覽 *@
-                            <div class="content pb-20">
+                                @* 總覽 *@
+                                <div class="content pb-20">
                                     <h5 class="title mb-20">總覽</h5>
-                                   @*  <p class="text">
-                                        This comprehensive course is designed for learners of all levels, from beginners to experienced coders looking to refresh their skills. Over the course of 100 days, you'll master the fundamentals of Python programming, as well as advanced topics such as object-oriented programming, web development, data analysis, and more.
+                                    @*  <p class="text">
+                                    This comprehensive course is designed for learners of all levels, from beginners to experienced coders looking to refresh their skills. Over the course of 100 days, you'll master the fundamentals of Python programming, as well as advanced topics such as object-oriented programming, web development, data analysis, and more.
                                     </p> *@
-                                                
-                                <form>
-                                    <fieldset>
-                                        <div class="row gl-xl-5 mt-10 pt-10" style="border:3px #ace6f7 solid;border-radius:8px">
-                                            <div class="col-lg-6">
-                                                <ul class="list-group list-unstyled mb-20">
-                                                    <li class="d-inline-block icon-start font-sm"><i class="fas fa-clock color-primary"></i> 01h 00m</li>
-                                                    <li class="d-inline-block icon-start font-sm"><i class="fas fa-users color-primary"></i>20人</li>
-                                                    <li class="d-inline-block icon-start font-sm"><i class="fa-solid fa-less-than-equal color-primary"></i> 10人</li>
-                                            </ul>
-                                        </div>
-                                        <div class="col-lg-6">
-                                            </ul>
-                                        </div>
+
+                                    <form>
+                                        <fieldset>
+                                            <div class="row gl-xl-5 mt-10 pt-10" style="border:2px #bfbfbf solid;border-radius:8px">
+                                                <div class="col-lg-6">
+                                                    <ul class="list-group list-unstyled mb-20">
+                                                        <li class="d-inline-block icon-start font-sm"><i class="fas fa-clock color-primary"></i> 01h 00m</li>
+                                                        <li class="d-inline-block icon-start font-sm"><i class="fas fa-users color-primary"></i>20人</li>
+                                                        <li class="d-inline-block icon-start font-sm"><i class="fa-solid fa-less-than-equal color-primary"></i> 10人</li>
+                                                    </ul>
+                                                </div>
+                                                <div class="col-lg-6">
+                                                    <ul class="list-group list-unstyled mb-20">
+                                                        <li class=" icon-start font-sm"><i class="fa-solid fa-location-dot color-primary"></i> 線上</li>
+                                                        <li class=" icon-start font-sm"><i class="fa-solid fa-calendar-days color-primary"></i> 2024-03-15</li>
+                                                        <li class="icon-start font-sm"><i class="fa-solid fa-hourglass color-primary"></i> 10:30:00~11:30:00</li>
+                                                    </ul>
+                                                </div>
+                                            </div>
+
+                                        </fieldset>
+
+                                    </form>
+
+
+                                </div>
+                                @* 課程敘述 *@
+                                <div class="content pb-20">
+                                    <h5 class="title mb-20">課程敘述</h5>
+                                    <div class="row gl-xl-5 mt-20">
+                                        <p style="border-radius:8px">我們的多益考試關鍵衝刺課程旨在幫助您從750分提高到890分，讓您在多益考試中取得理想成績。課程涵蓋全方位的考試準備，包括聽力、閱讀、語法和寫作等各個部分。我們將提供專業的教學團隊，採用豐富多元的教學方法，包括講解、練習、模擬考試等，幫助您掌握考試技巧和策略。此外，我們還提供大量的模擬考試和個性化輔導，讓您在真實考試環境中不斷提升。無論您的弱點在哪裡，我們都會為您量身定制學習計劃，助您迅速提高成績，迎接多益考試的挑戰。加入我們的課程，實現您的多益夢想！</p>
                                     </div>
-
-                                    </fieldset>
-
-                                </form>
-
-
                                 </div>
-                            @* 課程敘述 *@
-                            <div class="content pb-20">
-                                <h5 class="title mb-20">課程敘述</h5>
-
-                                <div class="row gl-xl-5 mt-20">
-                                    <p style="border-radius:8px">我們的多益考試關鍵衝刺課程旨在幫助您從750分提高到890分，讓您在多益考試中取得理想成績。課程涵蓋全方位的考試準備，包括聽力、閱讀、語法和寫作等各個部分。我們將提供專業的教學團隊，採用豐富多元的教學方法，包括講解、練習、模擬考試等，幫助您掌握考試技巧和策略。此外，我們還提供大量的模擬考試和個性化輔導，讓您在真實考試環境中不斷提升。無論您的弱點在哪裡，我們都會為您量身定制學習計劃，助您迅速提高成績，迎接多益考試的挑戰。加入我們的課程，實現您的多益夢想！</p>
-                                </div>
-                            </div>
-                            @* 課程要求 *@
-                            <div class="content pb-20">
-                                <h5 class="title mb-20">課程要求</h5>
-                                
-                                <div class="row gl-xl-5 mt-20">
-                                </div>
+                                @* 課程要求 *@
+                                <div class="content pb-20">
+                                    <h5 class="title mb-20">課程要求</h5>
+                                    <div class="row gl-xl-5 mt-20">
+                                        <div class="col-lg-6">
+                                            <ul class="info-list list-unstyled mb-20">
+                                                <li>最少要有750分</li>
+                                            </ul>
+                                        </div>
                                         <div class="col-lg-6">
                                             <ul class="info-list list-unstyled mb-20">
                                                 <li>請自備筆、筆記本、水</li>
                                             </ul>
-                            </div>
+                                        </div>
+                                    </div>
+
+                                </div>
                             </div>
 
-                            </div>
-                        </div>
-
-                        <!-- 評價 -->
-                                 <partial name="_BValuatePartial" />                                                   
-
+                            <!-- 評價 -->
+                            <div class="tab-pane slide" id="tab5">
+                                <div class="review-progresses p-30 radius-md border mb-40">
+                                    <div class="d-flex flex-wrap align-items-center justify-content-between gap-3 mb-30">
+                                        <h4 class="mb-0">Total Reviews Status</h4>
+                                        <div class="ratings size-md">
+                                            <div class="rate bg-img" data-bg-image="/images/rate-star-md.png">
+                                                <div class="rating-icon bg-img" data-bg-image="/images/rate-star-md.png"></div>
+                                            </div>
+                                            <span class="ratings-total">(4.5)</span>
+                                        </div>
+                                    </div>
+                                    <div class="review-progress mb-10 row align-items-center">
+                                        <div class="col-3 col-sm-2">5 Star</div>
+                                        <div class="progress-line col-6 col-sm-8">
+                                            <div class="progress">
+                                                <div class="progress-bar bg-primary" style="width: 90%" role="progressbar" aria-label="Basic example" aria-valuenow="90" aria-valuemin="0" aria-valuemax="100"></div>
+                                            </div>
+                                        </div>
+                                        <div class="col-3 col-sm-2 text-end">90%</div>
+                                    </div>
+                                    <div class="review-progress mb-10 row align-items-center">
+                                        <div class="col-3 col-sm-2">4 Star</div>
+                                        <div class="progress-line col-6 col-sm-8">
+                                            <div class="progress">
+                                                <div class="progress-bar bg-primary" style="width: 60%" role="progressbar" aria-label="Basic example" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100"></div>
+                                            </div>
+                                        </div>
+                                        <div class="col-3 col-sm-2 text-end">60%</div>
+                                    </div>
+                                    <div class="review-progress mb-10 row align-items-center">
+                                        <div class="col-3 col-sm-2">3 Star</div>
+                                        <div class="progress-line col-6 col-sm-8">
+                                            <div class="progress">
+                                                <div class="progress-bar bg-primary" style="width: 50%" role="progressbar" aria-label="Basic example" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100"></div>
+                                            </div>
+                                        </div>
+                                        <div class="col-3 col-sm-2 text-end">50%</div>
+                                    </div>
+                                    <div class="review-progress mb-10 row align-items-center">
+                                        <div class="col-3 col-sm-2">2 Star</div>
+                                        <div class="progress-line col-6 col-sm-8">
+                                            <div class="progress">
+                                                <div class="progress-bar bg-primary" style="width: 20%" role="progressbar" aria-label="Basic example" aria-valuenow="20" aria-valuemin="0" aria-valuemax="100"></div>
+                                            </div>
+                                        </div>
+                                        <div class="col-3 col-sm-2 text-end">20%</div>
+                                    </div>
+                                    <div class="review-progress mb-10 row align-items-center">
+                                        <div class="col-3 col-sm-2">1 Star</div>
+                                        <div class="progress-line col-6 col-sm-8">
+                                            <div class="progress">
+                                                <div class="progress-bar bg-primary" style="width: 10%" role="progressbar" aria-label="Basic example" aria-valuenow="10" aria-valuemin="0" aria-valuemax="100"></div>
+                                            </div>
+                                        </div>
+                                        <div class="col-3 col-sm-2 text-end">10%</div>
+                                    </div>
+                                </div>
+                                <div class="review-box pb-10">
+                                    <div class="review-list mb-30 border radius-md">
+                                        <div class="review-item p-30">
+                                            <div class="review-header flex-wrap mb-20">
+                                                <div class="author d-flex align-items-center justify-content-between gap-3">
+                                                    <div class="author-img">
+                                                        <a href="error-404.html" target="_self" title="Link" class="lazy-container ratio ratio-1-1 rounded-circle">
+                                                            <img class="lazyload" src="/images/placeholder.png" data-src="/images/avatar-4.jpg" alt="Avatar">
+                                                        </a>
+                                                    </div>
+                                                    <div class="author-info">
+                                                        <h6 class="mb-1">
+                                                            <a href="error-404.html" target="_self" title="Link">Mark Jco</a>
+                                                        </h6>
+                                                        <div class="ratings mb-1">
+                                                            <div class="rate bg-img" data-bg-image="/images/rate-star.png">
+                                                                <div class="rating-icon bg-img" data-bg-image="/images/rate-star.png"></div>
+                                                            </div>
+                                                            <span class="ratings-total">(4.5)</span>
+                                                        </div>
+                                                        <span class="font-xsm icon-start">
+                                                            <span class="color-green">
+                                                                <i class="fas fa-badge-check"></i>
+                                                            </span>
+                                                            Verified User
+                                                        </span>
+                                                    </div>
+                                                </div>
+                                                <div class="more-info font-sm">
+                                                    <div class="icon-start">
+                                                        <i class="fal fa-map-marker-alt"></i>
+                                                        Los Angela's, USA
+                                                    </div>
+                                                    <div class="icon-start">
+                                                        <i class="fal fa-clock"></i>
+                                                        04 Days ago
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <h5 class="lc-1">Ana Studios was very logical and creative at the same time</h5>
+                                            <p>
+                                                The client received excellent feedback on DePalma Studios’ designs due to
+                                                their website's improved look and feel. The team was very communicative and
+                                                collaborative, and they demonstrated a unique understanding of the client’s
+                                                requirements, providing very.
+                                            </p>
+                                        </div>
+                                    </div>
+                                    <div class="review-list mb-30 border radius-md">
+                                        <div class="review-item p-30">
+                                            <div class="review-header flex-wrap mb-20">
+                                                <div class="author d-flex align-items-center justify-content-between gap-3">
+                                                    <div class="author-img">
+                                                        <a href="error-404.html" target="_self" title="Link" class="lazy-container ratio ratio-1-1 rounded-circle">
+                                                            <img class="lazyload" src="/images/placeholder.png" data-src="/images/avatar-2.jpg" alt="Avatar">
+                                                        </a>
+                                                    </div>
+                                                    <div class="author-info">
+                                                        <h6 class="mb-1">
+                                                            <a href="error-404.html" target="_self" title="Link">Johnny Ben</a>
+                                                        </h6>
+                                                        <div class="ratings mb-1">
+                                                            <div class="rate bg-img" data-bg-image="/images/rate-star.png">
+                                                                <div class="rating-icon bg-img" data-bg-image="/images/rate-star.png"></div>
+                                                            </div>
+                                                            <span class="ratings-total">(4.5)</span>
+                                                        </div>
+                                                        <span class="font-xsm icon-start">
+                                                            <span class="color-green">
+                                                                <i class="fas fa-badge-check"></i>
+                                                            </span>
+                                                            Verified User
+                                                        </span>
+                                                    </div>
+                                                </div>
+                                                <div class="more-info font-sm">
+                                                    <div class="icon-start">
+                                                        <i class="fal fa-map-marker-alt"></i>
+                                                        Los Angela's, USA
+                                                    </div>
+                                                    <div class="icon-start">
+                                                        <i class="fal fa-clock"></i>
+                                                        04 Days ago
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <h4 class="lc-1">Ana Studios was very logical and creative at the same time</h4>
+                                            <p>
+                                                The client received excellent feedback on DePalma Studios’ designs due to
+                                                their website's improved look and feel. The team was very communicative and
+                                                collaborative, and they demonstrated a unique understanding of the client’s
+                                                requirements, providing very.
+                                            </p>
+                                        </div>
+                                        <div class="review-reply bg-light border-top p-30">
+                                            <div class="review-header flex-wrap mb-20 d-flex align-items-center justify-content-between gap-3">
+                                                <div class="author d-flex align-items-center gap-2">
+                                                    <div class="icon"><i class="fal fa-reply-all"></i></div>
+                                                    <h6 class="mb-0">Reply from Ana Rita Pailo</h6>
+                                                </div>
+                                                <div class="more-info font-sm">
+                                                    <div class="icon-start"><i class="fal fa-clock"></i>04 Days ago</div>
+                                                </div>
+                                            </div>
+                                            <div class="message">
+                                                <p>Hi Thomas,</p>
+                                                <p>
+                                                    I can see that we screwed up in our communication with you, and for that
+                                                    I sincerely apologize!
+                                                </p>
+                                                <p>
+                                                    I just re-read the email chain with Sven and I can see that we dropped
+                                                    the ball in of our explanation of how we work. I think there were
+                                                    several miscommunications that happened here, which I take full
+                                                    responsibility for.
+                                                </p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <!-- Pagination -->
+                                    <nav class="pagination-nav mb-30">
+                                        <ul class="pagination justify-content-center">
+                                            <li class="page-item">
+                                                <a class="page-link" href="courses.html" aria-label="Previous">
+                                                    <i class="far fa-angle-left"></i>
+                                                </a>
+                                            </li>
+                                            <li class="page-item active"><a class="page-link" href="courses.html">1</a></li>
+                                            <li class="page-item"><a class="page-link" href="courses.html">2</a></li>
+                                            <li class="page-item"><a class="page-link" href="courses.html">3</a></li>
+                                            <li class="page-item">
+                                                <a class="page-link" href="courses.html" aria-label="Next">
+                                                    <i class="far fa-angle-right"></i>
+                                                </a>
+                                            </li>
+                                        </ul>
+                                    </nav>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
-                
+
             </div>
         </div>
     </div>
     <!-- Course-details-area start -->
-
     <!-- Course-area start -->
     <section class="course-area pb-100">
         <div class="container">

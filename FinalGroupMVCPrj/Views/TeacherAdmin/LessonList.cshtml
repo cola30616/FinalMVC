@@ -170,3 +170,42 @@
 </table>
 <!-- End Table with stripped rows -->
 
+@section Script{
+    <script>
+    var dataTable; // 這段要記得加，先宣告datatable的變數
+
+    $(document).ready(function () {
+        loadDataTable();
+    })
+
+    function loadDataTable() {
+        // html 欄位跟 ajax 的欄位務必相同
+        dataTable = $('#tblData').DataTable({
+            "ajax": { url: '/TeacherAdmin/GetVideoData' },
+            "columns": [
+                { data: 'fVideoName', "width": "25%" },
+                { data: 'fVideoPath', "width": "25%" },
+                { data: 'fUploadTime', "width": "25%" },
+                {
+                    // 這段是編輯及刪除按鈕 ， 刪除用到onclick 事件，觸發下方的Delete
+                    data: 'fVideoUploadUrlId',
+                    "render": function (data) {
+                        return `<div class="w-75 btn-group" role="group">
+                                    <a href="/TeacherAdmin/VEdit/${data}" class="btn btn-primary mx-2"><i class="bi bi-pencil-square"></i>Edit </a>
+                                    <a onClick=Delete('/TeacherAdmin/DeleteVideoData/${data}') class="btn btn-danger mx-2"><i class="bi bi-trash"></i> Delete </a>
+                                </div>`
+                    },
+                    "width": "25%"
+                },
+            ],
+            // 新增中文版本
+            language: {
+                url: "https://cdn.datatables.net/plug-ins/2.0.1/i18n/zh-HANT.json"
+            }
+        });
+
+
+    }
+    </script>
+
+}
