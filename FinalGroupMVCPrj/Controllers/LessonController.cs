@@ -1,8 +1,10 @@
 ﻿using FinalGroupMVCPrj.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace FinalGroupMVCPrj.Controllers
 {
+    [AllowAnonymous]
     public class LessonController : UserInfoController
     {
         private readonly LifeShareLearnContext _context;
@@ -21,5 +23,10 @@ namespace FinalGroupMVCPrj.Controllers
 
 
         //■ ==========================     翊妏 作業區      ==========================■
+        [HttpGet]
+        public IActionResult Details()
+        {
+            return View("LDetails");
+        }
     }
 }

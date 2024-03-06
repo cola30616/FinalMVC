@@ -1,0 +1,166 @@
+﻿@{
+    ViewData["Title"] = "ChatTeacher";
+    Layout = "~/Views/Shared/_LayoutTeacherAdmin.cshtml";
+}
+<div class="ChatContainer">
+    <div class="leftSide">
+        <!--header-->
+        <!--<div class="header">
+              <div class="userimg">
+                  <img src="user.jpg" class="cover" />
+              </div>
+              <ul class="nav_icons">
+                  <li><ion-icon name="scan-circle-outline"></ion-icon></li>
+                  <li><ion-icon name="chatbox-outline"></ion-icon></li>
+                  <li><ion-icon name="ellipsis-vertical"></ion-icon></li>
+              </ul>
+        </div>-->
+        <div>
+            <!--search-->
+            <div class="search_chat">
+                <div>
+                    <input type="text" placeholder="Search or start new chat" />
+                    <ion-icon name="search-outline"></ion-icon>
+                </div>
+            </div>
+
+            <!--chat list-->
+            <div class="chatlist">
+                <div class="block active">
+                    <div class="imgbx">
+                        <img src="~/images/chat/img1.jpg" class="cover" />
+                    </div>
+                    <div class="details">
+                        <div class="listHead">
+                            <h4>王小帥</h4>
+                            <p class="time">10:56</p>
+                        </div>
+                        <div class="message_p">
+                            <p>How to make whatsapp clone using html and css only</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="chatlist">
+                <div class="block unread">
+                    <div class="imgbx">
+                        <img src="~/images/chat/img3.jpg" class="cover" />
+                    </div>
+                    <div class="details">
+                        <div class="listHead">
+                            <h4>小美</h4>
+                            <p class="time">10:56</p>
+                        </div>
+                        <div class="message_p">
+                            <p>How to lose222</p>
+                            <b>new</b>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <div class="rightSide">
+        <div class="header-chat">
+            <div class="imgText">
+                <div class="userimg">
+                    <img src="~/images/chat/img1.jpg" class="cover" />
+                </div>
+                <h4>
+                    王小帥<br />
+                    <span class=" bg-success border border-light rounded-circle chat-badge"></span>
+                    <span>Online</span>
+                </h4>
+            </div>
+            @*                 <ul class="nav_icons">
+            <li><ion-icon name="search-outline"></ion-icon></li>
+            <li><ion-icon name="ellipsis-vertical"></ion-icon></li>
+            </ul> *@
+        </div>
+
+        <!--chatbox-->
+
+
+
+        <div class="chatBox">
+
+            <div class="message std_message">
+                <div class="d-flex">
+                    <div class="flex-shrink-0">
+                        <div class="chat-avtar">
+                            <img class="rounded-circle img-fluid wid-40 " style="max-width: 40px; max-height: 40px;" src="~/images/chat/img1.jpg" alt="User image">
+                            <span class=" bg-success border border-light rounded-circle chat-badge"></span>
+                        </div>
+                    </div>
+                    <div class="flex-grow-1 mx-3">
+                        <div class="msg-content">
+                            <p class="mb-0">Hey. Very Good morning. How are you?</p>
+                        </div>
+                        <p class="mb-0 text-muted text-sm msg_time">11:23 AM</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="message my_message">
+                <div class="d-flex">
+                    <div class="flex-shrink-0">
+                        <ul class="list-inline ms-auto mb-0">
+                            <li class="list-inline-item">
+                                <a href="#" class="avtar avtar-xs btn-link-secondary">
+                                    <ion-icon name="trash-outline" class="delete"></ion-icon>
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="flex-grow-1 mx-3">
+                        <div class="msg-content">
+                            <p class="mb-0">Good.Thank you<br />wdwd</p>
+                        </div>
+                        <p class="mb-0 text-muted text-sm msg_time">11:23 AM</p>
+                    </div>
+                    <div class="flex-shrink-0">
+                        <div class="chat-avtar">
+                            <img class="rounded-circle img-fluid wid-40" style="max-width: 40px; max-height: 40px;" src="~/images/chat/img2.jpg" alt="User image">
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+        </div>
+
+        <!--chat input-->
+        <div class="chatbox_input">
+            <ion-icon name="happy-outline"></ion-icon>
+            <ion-icon name="attach-outline"></ion-icon>
+            <input type="text" placeholder="Type a message" />
+            <a href="#" class="avtar avtar-s btn-link-primary">
+                <ion-icon name="send-outline"></ion-icon>
+            </a>
+        </div>
+    </div>
+
+
+</div>
+
+<script type="module"
+        src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
+<script nomodule
+        src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
+
+@section Style {
+    <link rel="stylesheet" href="~/css/chat/chatstyle.css" />
+    <style>
+    </style>
+}
+
+@section Scripts {
+    <script>
+
+    </script>
+}
+
+
