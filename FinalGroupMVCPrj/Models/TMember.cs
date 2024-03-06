@@ -21,7 +21,7 @@ public partial class TMember
 
     public string FPassword { get; set; }
 
-    public bool? FEmailVerification { get; set; }
+    public bool FEmailVerification { get; set; }
 
     public byte[] FMemberProfilePic { get; set; }
 
