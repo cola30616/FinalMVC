@@ -65,4 +65,47 @@ namespace FinalGroupMVCPrj.Controllers
             return View("LDetails");
         }
     }
+
+    //課程細節，viewComponent
+    public class CourseItemView : ViewComponent
+    {
+        private readonly LifeShareLearnContext _context;
+
+        public CourseItemView(LifeShareLearnContext context)
+        {
+            _context = context;
+        }
+
+
+        // 這邊使用viewComponent
+        public async Task<IViewComponentResult> InvokeAsync(int page = 1, int pageSize = 10)
+        {
+            var fields = await _context.TCourseFields.Select(u => u.FFieldName).ToListAsync();
+            var courseList = await _context.TLessonCourses
+                .Include(course => course.FTeacher)
+                .Select(course => new LessonCourseVM
+                {
+                    lessonCourse = course,
+                    teacherName = _context.TTeachers
+                        .Where(teacher => teacher.FTeacherId == course.FTeacherId)
+                        .Select(teacher => teacher.FTeacherName)
+                        .FirstOrDefault() ?? "找不到當前老師",
+                    subjectName = _context.TCourseSubjects
+                        .Where(sub => sub.FSubjectId == course.FSubjectId)
+                        .Select(sub => sub.FSubjectName)
+                        .FirstOrDefault() ?? "找不到科目名稱",
+                    imageData = course.FPhoto,
+                    teacher = course.FTeacher,
+                    fields = fields,
+                    fieldName = course.FSubject.FField.FFieldName,
+                    fieldNumber = course.FSubject.FFieldId,
+                })
+                .Skip((page - 1) * pageSize)
+                .Take(pageSize)
+                .ToListAsync();
+
+            return View(courseList);
+        }
+    }
+
 }

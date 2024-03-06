@@ -204,7 +204,7 @@
                                                 <div class="author">
                                                     <img class="lazyload blur-up radius-sm" src="/images/placeholder.png" data-src="/images/avatar-1.jpg" alt="Image">
                                                     <span class="font-sm">
-                                                        <a title="@course.teacherName">
+                                                        <a asp-controller="Teacher" asp-action="Info" asp-route-id="@course.lessonCourse.FTeacherId" title="@course.teacherName">
                                                             @course.teacherName
                                                         </a>
                                                     </span>
@@ -304,7 +304,7 @@
                                                             <div class="author">
                                                                 <img class="lazyload blur-up radius-sm" src="/images/placeholder.png" data-src="/images/avatar-1.jpg" alt="Image">
                                                                 <span class="font-sm">
-                                                                    <a title="@course.teacherName">
+                                                                    <a asp-controller="Teacher" asp-action="Info" asp-route-id="@course.lessonCourse.FTeacherId" title="@course.teacherName">
                                                                         @course.teacherName
                                                                     </a>
                                                                 </span>
@@ -379,7 +379,7 @@
                         <div class="col-lg-4 col-sm-6" data-aos="fade-up">
                             <div class="card radius-md mb-30">
                                 <div class="card-img">
-                                    <a asp-route-id="@course.teacher.FTeacherId" title="Image" target="_self" class="lazy-container ratio ratio-1-2">
+                                    <a asp-controller="Teacher" asp-action="Info" asp-route-id="@course.lessonCourse.FTeacherId" asp-route-id="@course.teacher.FTeacherId" title="Image" target="_self" class="lazy-container ratio ratio-1-2">
                                         @if (course.teacher.FTeacherProfilePic != null) // 空值檢查
                                         {
                                             <img class="lazyload" src="data:image;base64,@(Convert.ToBase64String(course.teacher.FTeacherProfilePic))" alt="Image" />
@@ -392,7 +392,7 @@
                                 </div>
                                 <div class="card-content text-center">
                                     <h4 class="card-title lc-1 mb-1">
-                                        <a href="mentor-details.html" target="_self" title="Link">
+                                        <a asp-controller="Teacher" asp-action="Info" asp-route-id="@course.lessonCourse.FTeacherId" target="_self" title="Link">
                                             @course.teacher.FTeacherName
                                         </a>
                                     </h4>

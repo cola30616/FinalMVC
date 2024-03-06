@@ -243,46 +243,8 @@
                         </div>
                     </div>
                 </div>
-                <div class="row" data-aos="fade-up">
-                    <div class="col-xl-4 col-sm-6">
-                        <div class="course-default border radius-md mb-25">
-                            <figure class="course-img">
-                                <a href="course-details.html" title="Image" target="_self" class="lazy-container ratio ratio-2-3">
-                                    <img class="lazyload" src="assets/images/placeholder.png" data-src="assets/images/course/pro-5.jpg" alt="course">
-                                </a>
-                                <div class="hover-show">
-                                    <a href="course-details.html" class="btn btn-md btn-primary rounded-pill" title="Enroll Now" target="_self">Enroll Now</a>
-                                </div>
-                            </figure>
-                            <div class="course-details">
-                                <div class="p-3">
-                                    <a href="course-details.html" target="_self" title="Design" class="tag font-sm color-primary mb-1">Design</a>
-                                    <h6 class="course-title lc-2 mb-0">
-                                        <a href="course-details.html" target="_self" title="Link">
-                                            Photoshop Master Course: From Beginner to Photoshop Pro
-                                        </a>
-                                    </h6>
-                                    <div class="authors mt-15">
-                                        <div class="author">
-                                            <img class="lazyload blur-up radius-sm" src="assets/images/placeholder.png" data-src="assets/images/avatar-1.jpg" alt="Image">
-                                            <span class="font-sm">
-                                                <a href="course-details.html" target="_self" title="James Hobert">
-                                                    James Hobert
-                                                </a>
-                                            </span>
-                                        </div>
-                                        <span class="font-sm icon-start"><i class="fas fa-clock"></i>06h 00m</span>
-                                    </div>
-                                </div>
-                                <div class="course-bottom-info px-3 py-2">
-                                    <span class="font-sm"><i class="fas fa-usd-circle"></i>$13.99</span>
-                                    <span class="font-sm"><i class="fas fa-book-alt"></i>11 Lessons</span>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                   
-                </div>
+                <!--課程和分頁的code-->
+                @await Component.InvokeAsync("CourseItemView", new { page = 1, pageSize = 10 })
                 <nav class="pagination-nav mt-15 mb-25" data-aos="fade-up">
                     <ul class="pagination justify-content-center">
                         <li class="page-item">
