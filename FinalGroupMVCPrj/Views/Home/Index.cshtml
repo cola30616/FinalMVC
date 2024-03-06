@@ -18,13 +18,13 @@
                         <div class="form-wrapper border rounded-pill">
                             <div class="d-flex justify-content-center align-items-center ">
                                 <div class="col-xl-4 col-lg-2 col-md-4 col-sm-6">
-                                        <button class="btn btn-lg btn-primary rounded-pill w-100" type="button" aria-label="Find Course">
+                                    <button class="btn btn-lg btn-primary rounded-pill w-100" type="button" aria-label="Find Course">
                                         <a asp-controller="Lesson" asp-action="Index" style="color:ghostwhite">來找課程</a>
-                                            <i class="fal fa-search"></i>
-                                        </button>
-                                    </div>
+                                        <i class="fal fa-search"></i>
+                                    </button>
                                 </div>
-                            
+                            </div>
+
                         </div>
                     </div>
                 </div>
@@ -64,7 +64,7 @@
             </div>
             <div class="col-12" data-aos="fade-up">
                 <div class="swiper category-slider" id="category-slider-1" data-slides-per-view="5" data-swiper-loop="false">
-                    @foreach(var course in Model.Take(1))
+                    @foreach (var course in Model.Take(1))
                     {
                         <div class="swiper-wrapper">
                             @foreach (var field in course.fields)
@@ -81,10 +81,10 @@
                                         </h6>
                                     </div>
                                 </div>
-                            }                                                   
+                            }
                         </div>
                     }
-                    
+
                     <div class="swiper-pagination position-static mt-30" id="category-slider-1-pagination"></div>
                 </div>
             </div>
@@ -166,7 +166,7 @@
             <div class="col-12">
                 <div class="section-title title-inline mb-50" data-aos="fade-up">
                     <h2 class="title">
-                         <span>近期熱門課程</span>
+                        <span>近期熱門課程</span>
                         <img class="title-shape lazyload" src="/images/placeholder.png" data-src="/images/shape/title-shape.png" alt="Shape">
                     </h2>
                     <div class="cta-btn">
@@ -204,7 +204,7 @@
                                                 <img class="lazyload blur-up radius-sm" src="/images/placeholder.png" data-src="/images/avatar-1.jpg" alt="Image">
                                                 <span class="font-sm">
                                                     <a href="course-details.html" target="_self" title="">
-                                                       老師名稱
+                                                        老師名稱
                                                     </a>
                                                 </span>
                                             </div>
@@ -218,7 +218,7 @@
                                 </div>
                             </div>
                         </div>
-                        
+
                     </div>
                     <!-- 分頁用 -->
                     <div class="swiper-pagination position-static" id="course-slider-1-pagination"></div>
@@ -235,7 +235,6 @@
     </div>
 </section>
 <!-- Course-area end -->
-
 <!-- Course-area start 最新課程 -->
 <section class="course-area latest ptb-100">
     <div class="container">
@@ -243,7 +242,7 @@
             <div class="col-12">
                 <div class="section-title title-inline mb-30" data-aos="fade-up">
                     <h2 class="title mb-20">
-                         <span>全新課程推薦</span>
+                        <span>全新課程推薦</span>
                         <img class="title-shape lazyload" src="/images/placeholder.png" data-src="/images/shape/title-shape.png" alt="Shape">
                     </h2>
                     <div class="tabs-navigation mb-20">
@@ -255,31 +254,29 @@
                             {
                                 @foreach (var fields in course.fields)
                                 {
-                                    <li class="nav-item active">
-                                        <button class="nav-link hover-effect btn-md rounded-pill active" data-bs-toggle="tab" data-bs-target="#tab@(index)" type="button">@fields</button>
+                                    <li class="nav-item @(index == 1 ? "active" : "")">
+                                        <button class="nav-link hover-effect btn-md rounded-pill @(index == 1 ? "active" : "")" data-bs-toggle="tab" data-bs-target="#tab@(index)" type="button">@fields</button>
                                     </li>
                                     index++;
                                 }
-                            }                                                   
+                            }
                         </ul>
                     </div>
                 </div>
             </div>
             <div class="col-12">
                 <div class="tab-content" data-aos="fade-up">
-                    <!--依照tab 去做分類 用Razor 語法做分類 -->                    
-                    
+                    <!--依照tab 去做分類 用Razor 語法做分類 -->
                     @{
-                        var fieldCount = Model.Take(1).Select(f => f.fields);
-                        
+                        var TotalField = Model.Take(1).Select(f => f.fields);                       
                     }
-                    @for (int i = 1; i < fieldCount.Count() + 1; i++)
-                        {
+                    @for (int i = 1; i < TotalField.Count() + 1; i++)
+                    {
                         <div class="tab-pane slide @(i == 1 ? "show active" : "")" id="tab@(i)">
-                                <div class="row">
-                                    @foreach (var course in Model)
-                                    {
-                                    @if(course.fieldNumber == i)
+                            <div class="row">
+                                @foreach (var course in Model)
+                                {
+                                    @if (course.fieldNumber == i)
                                     {
                                         <!-- 這邊是課程的細節 用Razor 語法-->
                                         <div class="col-xl-3 col-lg-4 col-sm-6">
@@ -322,27 +319,27 @@
                                             </div>
                                         </div>
                                     }
-                                    
-                                    }
-                                </div>
-                            </div>                                                 
-                        }
-                    
-                    
-                    
-                           
-                                
+
+                                }
+                            </div>
+                        </div>
+                    }
 
 
-                            
-                       
-                     
+
+
+
+
+
+
+
+
                     <div class="cta-btn text-center mt-15">
                         <a asp-controller="Lesson" asp-action="Index" class="btn btn-lg btn-primary rounded-pill" title="View More" target="_self">所有課程</a>
                     </div>
-                    
-                    
-                     
+
+
+
 
 
                 </div>
@@ -408,7 +405,7 @@
                                 </div>
                             </div>
                         </div>
-                    }                                
+                    }
                 </div>
             </div>
         </div>
@@ -421,7 +418,6 @@
     </div>
 </section>
 <!-- Mentor-area end -->
-
 <!-- Testimonial-area start -->
 <section class="testimonial-area testimonial-area_v1 pb-60 mt-20">
     <div class="container">
@@ -429,7 +425,7 @@
             <div class="col-lg-5" data-aos="fade-up">
                 <div class="content-title mb-30">
                     <h2 class="title">
-                         <span>來自學生們的評價</span>
+                        <span>來自學生們的評價</span>
                         <img class="title-shape lazyload" src="/images/placeholder.png" data-src="/images/shape/title-shape.png" alt="Shape">
                     </h2>
                 </div>
@@ -456,7 +452,7 @@
                                 </div>
                             </div>
                         </div>
-                       
+
                     </div>
                     <div class="swiper-pagination" id="testimonial-slider-1-pagination"></div>
                 </div>
