@@ -17,5 +17,7 @@ public partial class TTeacherImage
 
     public int? FImageSize { get; set; }
 
+    public string FCategory { get; set; }
+
     public virtual TTeacher FTeacher { get; set; }
 }

@@ -34,4 +34,6 @@ public partial class TTeacher
     public virtual ICollection<TTeacherImage> TTeacherImages { get; set; } = new List<TTeacherImage>();
 
     public virtual ICollection<TTeacherSubject> TTeacherSubjects { get; set; } = new List<TTeacherSubject>();
+
+    public virtual ICollection<TVideoUploadUrl> TVideoUploadUrls { get; set; } = new List<TVideoUploadUrl>();
 }

@@ -88,8 +88,8 @@ public partial class LifeShareLearnContext : DbContext
     public virtual DbSet<TVideoUploadUrl> TVideoUploadUrls { get; set; }
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-//#warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see http://go.microsoft.com/fwlink/?LinkId=723263.
-        => optionsBuilder.UseSqlServer("Data Source=.;Initial Catalog=LifeShareLearn;Integrated Security=True;Encrypt=False;TrustServerCertificate=True");
+         //#warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see http://go.microsoft.com/fwlink/?LinkId=723263.
+         => optionsBuilder.UseSqlServer("Data Source=.;Initial Catalog=LifeShareLearn;Integrated Security=True;Encrypt=False;TrustServerCertificate=True");
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
@@ -414,6 +414,10 @@ public partial class LifeShareLearnContext : DbContext
                 .HasColumnName("fVenueName");
             entity.Property(e => e.FVenueType).HasColumnName("fVenueType");
 
+            entity.HasOne(d => d.FSubject).WithMany(p => p.TLessonCourses)
+                .HasForeignKey(d => d.FSubjectId)
+                .HasConstraintName("FK_tLessonCourse_tCourseSubjects");
+
             entity.HasOne(d => d.FTeacher).WithMany(p => p.TLessonCourses)
                 .HasForeignKey(d => d.FTeacherId)
                 .OnDelete(DeleteBehavior.ClientSetNull)
@@ -481,7 +485,6 @@ public partial class LifeShareLearnContext : DbContext
                 .HasColumnName("fNote");
             entity.Property(e => e.FPassword)
                 .IsRequired()
-                .HasMaxLength(200)
                 .HasColumnName("fPassword");
             entity.Property(e => e.FPhone)
                 .HasMaxLength(10)
@@ -593,12 +596,15 @@ public partial class LifeShareLearnContext : DbContext
             entity.ToTable("tMemberLoginLog");
 
             entity.Property(e => e.FLoginLogId).HasColumnName("fLoginLogId");
+            entity.Property(e => e.FLoginBrowerNos)
+                .HasMaxLength(50)
+                .HasColumnName("fLoginBrowerNOs");
             entity.Property(e => e.FLoginDateTime)
                 .HasColumnType("datetime")
                 .HasColumnName("fLoginDateTime");
-            entity.Property(e => e.FLoginDevice)
+            entity.Property(e => e.FLoginGeoInfo)
                 .HasMaxLength(50)
-                .HasColumnName("fLoginDevice");
+                .HasColumnName("fLoginGeoInfo");
             entity.Property(e => e.FLoginIp)
                 .HasMaxLength(50)
                 .IsUnicode(false)
@@ -831,7 +837,7 @@ public partial class LifeShareLearnContext : DbContext
                 .HasColumnName("fContactInfo");
             entity.Property(e => e.FEmployeeId).HasColumnName("fEmployeeId");
             entity.Property(e => e.FIntroduction)
-                .HasMaxLength(200)
+                .HasMaxLength(300)
                 .HasColumnName("fIntroduction");
             entity.Property(e => e.FMemberId).HasColumnName("fMemberId");
             entity.Property(e => e.FNote)
@@ -848,7 +854,7 @@ public partial class LifeShareLearnContext : DbContext
                 .HasMaxLength(50)
                 .HasColumnName("fRealName");
             entity.Property(e => e.FReason)
-                .HasMaxLength(200)
+                .HasMaxLength(300)
                 .HasColumnName("fReason");
             entity.Property(e => e.FReviewDatetime)
                 .HasColumnType("datetime")
@@ -875,6 +881,9 @@ public partial class LifeShareLearnContext : DbContext
             entity.ToTable("tTeacherImages");
 
             entity.Property(e => e.FTeacherImagesId).HasColumnName("fTeacherImagesId");
+            entity.Property(e => e.FCategory)
+                .HasMaxLength(50)
+                .HasColumnName("fCategory");
             entity.Property(e => e.FImageLink).HasColumnName("fImageLink");
             entity.Property(e => e.FImageName)
                 .IsRequired()
@@ -1087,16 +1096,21 @@ public partial class LifeShareLearnContext : DbContext
             entity.ToTable("tVideoUploadUrl");
 
             entity.Property(e => e.FVideoUploadUrlId).HasColumnName("fVideoUploadUrl_Id");
+            entity.Property(e => e.FTeacherId).HasColumnName("fTeacherId");
             entity.Property(e => e.FUploadTime)
                 .HasColumnType("datetime")
                 .HasColumnName("fUploadTime");
-            entity.Property(e => e.FVideoCourseId).HasColumnName("fVideoCourseId");
             entity.Property(e => e.FVideoName)
                 .HasMaxLength(50)
                 .HasColumnName("fVideoName");
             entity.Property(e => e.FVideoPath)
                 .HasMaxLength(200)
                 .HasColumnName("fVideoPath");
+
+            entity.HasOne(d => d.FTeacher).WithMany(p => p.TVideoUploadUrls)
+                .HasForeignKey(d => d.FTeacherId)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("FK_tVideoUploadUrl_tTeacher");
         });
 
         OnModelCreatingPartial(modelBuilder);
