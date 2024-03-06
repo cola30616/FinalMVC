@@ -1,0 +1,226 @@
+﻿@model FinalGroupMVCPrj.Models.TLessonEvaluation
+@{
+    ViewData["Title"] = "rate";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+
+<!-- Button trigger modal -->
+
+
+<!-- Modal -->
+<div class="modal fade" id="evalModal" tabindex="-1" aria-labelledby="evalModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-xl" style="width:550px;">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="evalModalLabel">評價</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body" style="display: flex; justify-content: center;">
+                <div class="rating" data-vote="0">
+
+                    <div class="star hidden" style="display: none;">
+                        <span class="full" data-value="0"></span>
+                    </div>
+
+                    <div class="star">
+
+                        <span class="full" data-value="1"></span>
+                        <span class="selected"></span>
+
+                    </div>
+
+                    <div class="star">
+
+                        <span class="full" data-value="2"></span>
+                        <span class="selected"></span>
+
+                    </div>
+
+                    <div class="star">
+
+                        <span class="full" data-value="3"></span>
+
+                        <span class="selected"></span>
+
+                    </div>
+
+                    <div class="star">
+
+                        <span class="full" data-value="4"></span>
+
+                        <span class="selected"></span>
+
+                    </div>
+
+                    <div class="star">
+
+                        <span class="full" data-value="5"></span>
+
+                        <span class="selected"></span>
+
+                    </div>
+
+                    <div class="score">
+                        <span class="score-rating js-score">0</span>
+                        <span>/</span>
+                        <span class="total">5</span>
+                    </div>
+                </div>
+
+            </div>
+            <form>
+                <div class="mb-3">
+                    <label for="evalContent" class="form-label" style="display:flex;justify-content:center;">評價內容</label>
+                    <textarea class="form-control" style=" width:400px; height:auto; margin-left:auto;margin-right:auto;" id="evalContent" rows="6"></textarea>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <button type="submit" class="btn btn-primary">Save changes</button>
+                </div>
+            </form>
+
+        </div>
+    </div>
+</div>
+<button type="button" class="btn btn-primary evalbtn1" data-bs-toggle="modal" data-bs-target="#evalModal">
+    評價課程
+</button>
+<button class="nav-link hover-effect btn-md rounded-pill evalbtn2" data-bs-toggle="modal" data-bs-target="#evalModal" type="button">評價</button>
+<div class="average">
+    <span class="text">Your average score is</span><div class=" score-average js-average"></div>
+</div>
+
+
+
+
+<script src="https://code.jquery.com/jquery-3.7.1.min.js"
+        integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo="
+        crossorigin="anonymous"></script>
+@section style {
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="~/css/vendors/bootstrap.min.css">
+    <link rel="stylesheet" href="~/css/chat/vstyle.css" />
+}
+<script>
+    var myModal = document.getElementById('myModal')
+    var myInput = document.getElementById('myInput')
+
+    myModal.addEventListener('shown.bs.modal', function () {
+        myInput.focus()
+    })
+</script>
+
+<script>
+    var starClicked = false;
+
+    $(function () {
+
+        $('.star').click(function () {
+
+            $(this).children('.selected').addClass('is-animated');
+            $(this).children('.selected').addClass('pulse');
+
+            var target = this;
+
+            setTimeout(function () {
+                $(target).children('.selected').removeClass('is-animated');
+                $(target).children('.selected').removeClass('pulse');
+            }, 1000);
+
+            starClicked = true;
+        })
+
+        $('.half').click(function () {
+            if (starClicked == true) {
+                setHalfStarState(this)
+            }
+            $(this).closest('.rating').find('.js-score').text($(this).data('value'));
+
+            $(this).closest('.rating').data('vote', $(this).data('value'));
+            calculateAverage()
+            console.log(parseInt($(this).data('value')));
+
+        })
+
+        $('.full').click(function () {
+            if (starClicked == true) {
+                setFullStarState(this)
+            }
+            $(this).closest('.rating').find('.js-score').text($(this).data('value'));
+
+            $(this).find('js-average').text(parseInt($(this).data('value')));
+
+            $(this).closest('.rating').data('vote', $(this).data('value'));
+            calculateAverage()
+
+            console.log(parseInt($(this).data('value')));
+        })
+
+        $('.half').hover(function () {
+            if (starClicked == false) {
+                setHalfStarState(this)
+            }
+
+        })
+
+        $('.full').hover(function () {
+            if (starClicked == false) {
+                setFullStarState(this)
+            }
+        })
+
+    })
+
+    function updateStarState(target) {
+        $(target).parent().prevAll().addClass('animate');
+        $(target).parent().prevAll().children().addClass('star-colour');
+
+        $(target).parent().nextAll().removeClass('animate');
+        $(target).parent().nextAll().children().removeClass('star-colour');
+    }
+
+    function setHalfStarState(target) {
+        $(target).addClass('star-colour');
+        $(target).siblings('.full').removeClass('star-colour');
+        updateStarState(target)
+    }
+
+    function setFullStarState(target) {
+        $(target).addClass('star-colour');
+        $(target).parent().addClass('animate');
+        $(target).siblings('.half').addClass('star-colour');
+
+        updateStarState(target)
+    }
+
+    function calculateAverage() {
+        var average = 0
+
+        $('.rating').each(function () {
+            average += $(this).data('vote')
+        })
+
+        $('.js-average').text((average / $('.rating').length).toFixed(1))
+    }
+</script>
+
+@section Scripts{
+@*     <!-- Jquery JS -->
+    <script src="~/js/vendors/jquery.min.js"></script>
+    <!-- Bootstrap JS -->
+    <script src="~/js/vendors/bootstrap.min.js"></script> *@
+    <script>
+        // 找到按鈕元素
+        var button = document.querySelector('.evalbtn1');
+
+        // 使用click()方法觸發按鈕點擊事件
+        button.click();
+    </script>
+}
+
+
+
+
+
