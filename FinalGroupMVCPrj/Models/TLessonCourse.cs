@@ -2,109 +2,62 @@
 #nullable disable
 using System;
 using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
-using Microsoft.EntityFrameworkCore;
 
 namespace FinalGroupMVCPrj.Models;
 
-[Table("tLessonCourse")]
 public partial class TLessonCourse
 {
-    [Key]
-    [Column("fLessonCourseId")]
     public int FLessonCourseId { get; set; }
 
-    [Required]
-    [Column("fName")]
-    [StringLength(50)]
     public string FName { get; set; }
 
-    [Column("fSubjectId")]
     public int? FSubjectId { get; set; }
 
-    [Column("fCode")]
-    [StringLength(50)]
     public string FCode { get; set; }
 
-    [Column("fTeacherId")]
     public int FTeacherId { get; set; }
 
-    [Column("fEditorDes")]
-    [StringLength(500)]
     public string FEditorDes { get; set; }
 
-    [Column("fDescription")]
-    [StringLength(500)]
     public string FDescription { get; set; }
 
-    [Column("fRequirement")]
-    [StringLength(200)]
     public string FRequirement { get; set; }
 
-    [Column("fPhoto")]
     public byte[] FPhoto { get; set; }
 
-    [Column("fPrice", TypeName = "money")]
     public decimal? FPrice { get; set; }
 
-    [Column("fHomeworkDescription")]
-    [StringLength(200)]
     public string FHomeworkDescription { get; set; }
 
-    [Column("fMaxPeople")]
     public int? FMaxPeople { get; set; }
 
-    [Column("fMinPeople")]
     public int? FMinPeople { get; set; }
 
-    [Column("fLessonDate", TypeName = "date")]
     public DateTime? FLessonDate { get; set; }
 
-    [Column("fStartTime")]
-    [Precision(0)]
     public TimeSpan? FStartTime { get; set; }
 
-    [Column("fEndTime")]
-    [Precision(0)]
     public TimeSpan? FEndTime { get; set; }
 
-    [Column("fVenueType")]
     public bool? FVenueType { get; set; }
 
-    [Column("fOnlineLink")]
-    [StringLength(200)]
     public string FOnlineLink { get; set; }
 
-    [Column("fVenueName")]
-    [StringLength(50)]
     public string FVenueName { get; set; }
 
-    [Column("fDistrictId")]
     public int? FDistrictId { get; set; }
 
-    [Column("fAddressDetail")]
-    [StringLength(100)]
     public string FAddressDetail { get; set; }
 
-    [Column("fRegDeadline", TypeName = "smalldatetime")]
     public DateTime? FRegDeadline { get; set; }
 
-    [Column("fStatus")]
-    [StringLength(50)]
     public string FStatus { get; set; }
 
-    [Column("fStatusNote")]
-    [StringLength(50)]
     public string FStatusNote { get; set; }
 
-    [ForeignKey("FTeacherId")]
-    [InverseProperty("TLessonCourses")]
     public virtual TTeacher FTeacher { get; set; }
 
-    [InverseProperty("FLessonCourse")]
     public virtual ICollection<TMemberFavCourse> TMemberFavCourses { get; set; } = new List<TMemberFavCourse>();
 
-    [InverseProperty("FLessonCourse")]
     public virtual ICollection<TOrderDetail> TOrderDetails { get; set; } = new List<TOrderDetail>();
 }

@@ -2,28 +2,16 @@
 #nullable disable
 using System;
 using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
-using Microsoft.EntityFrameworkCore;
 
 namespace FinalGroupMVCPrj.Models;
 
-[Table("tCityDistricts")]
 public partial class TCityDistrict
 {
-    [Key]
-    [Column("fDistrictId")]
     public int FDistrictId { get; set; }
 
-    [Required]
-    [Column("fDistrictName")]
-    [StringLength(50)]
     public string FDistrictName { get; set; }
 
-    [Column("fCityId")]
     public int FCityId { get; set; }
 
-    [ForeignKey("FCityId")]
-    [InverseProperty("TCityDistricts")]
     public virtual TCity FCity { get; set; }
 }

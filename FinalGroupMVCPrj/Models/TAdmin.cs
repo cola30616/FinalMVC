@@ -2,48 +2,28 @@
 #nullable disable
 using System;
 using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
-using Microsoft.EntityFrameworkCore;
 
 namespace FinalGroupMVCPrj.Models;
 
-[Table("tAdmins")]
 public partial class TAdmin
 {
-    [Key]
-    [Column("fEmployeeId")]
     public int FEmployeeId { get; set; }
 
-    [Column("fEmployeeName")]
-    [StringLength(50)]
     public string FEmployeeName { get; set; }
 
-    [Column("fEmployeeEmail")]
-    [StringLength(50)]
     public string FEmployeeEmail { get; set; }
 
-    [Column("fPassword")]
-    [StringLength(50)]
     public string FPassword { get; set; }
 
-    [Column("fAdminRole")]
-    [StringLength(50)]
     public string FAdminRole { get; set; }
 
-    [Column("fAdminJoinDate", TypeName = "datetime")]
     public DateTime? FAdminJoinDate { get; set; }
 
-    [Column("fAccountStatus")]
     public bool? FAccountStatus { get; set; }
 
-    [Column("fNote")]
-    [StringLength(50)]
     public string FNote { get; set; }
 
-    [InverseProperty("FEmployee")]
     public virtual ICollection<TPushMessage> TPushMessages { get; set; } = new List<TPushMessage>();
 
-    [InverseProperty("FEmployee")]
     public virtual ICollection<TServiceForm> TServiceForms { get; set; } = new List<TServiceForm>();
 }
