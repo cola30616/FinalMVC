@@ -49,6 +49,7 @@
     <link href="~/css/site.css" rel="stylesheet" />
     <!--調整前台右上角下拉選單和後台樣式相近-->
     <link href="~/css/adjustdropdown.css" rel="stylesheet" />
+    <link rel="stylesheet" href="//cdn.datatables.net/2.0.1/css/dataTables.dataTables.min.css" />
     @RenderSection("Styles", required: false)
 
     @await RenderSectionAsync("Style", required: false)
@@ -353,4 +354,5 @@
     @await RenderSectionAsync("Scripts", required: false)
    
 </body>
+<script src="//cdn.datatables.net/2.0.1/js/dataTables.min.js" asp-append-version="true"></script>
 </html>

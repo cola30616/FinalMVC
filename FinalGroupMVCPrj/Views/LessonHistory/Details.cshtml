@@ -46,7 +46,7 @@
 <!-- Checkout-area start -->
 <div class="shopping-area pt-100 pb-60">
     <div class="d-flex container">
-        <div class="flex-grow-1 row gx-xl-5">
+        <div class="flex-grow-1 row gx-xl-5" style="width:50%">
                 <div class="col-lg-8">
                     <div class="billing-details" data-aos="fade-up">
                         <h4 class="mb-20 fs-2">訂單編號</h4>
@@ -77,20 +77,35 @@
                     </div>
                 </div>           
         </div>
-        <div class="flex-grow-1">
-            <div class="col-lg-8">
-                <div class="billing-details" data-aos="fade-up">
-                    <h4 class="mb-20 fs-2">取消辦法</h4>
-                    <div class="col-lg-6">
-                        <div class="form-group mb-30 fs-4">
-                            <label for="firstName">240226?????<span class="color-red"></span> </label>
-                        </div>
+        <div class="flex-grow-1" style="width:50%">
+            <div class="billing-details" data-aos="fade-up">
+                <h4 class="mb-20 fs-2">★取消辦法</h4>
+                <div>
+                    <div class="col-lg-12 fs-4" >
+                        <ol class="indented-list" style="padding-right: 20px list-style:cjk-ideographic;list-style-position:outside">
+                            <li>事假需於5日前申請，病假需於3小時前申請(並附上就診證明)。</li>
+                            <li>若未依規定請假，恕不順延與退費。</li>
+                            <li>若課程已開始上課，恕不提供退費服務。</li>
+                        </ol>
                     </div>
-                    
-
                 </div>
             </div>
-            
+            <br />
+            <div class="text-center">
+                <button class="fs-3 btn btn-lg btn-primary radius-sm w-100" type="button" aria-label="button" data-bs-toggle="modal" data-bs-target="#orderSuccessModal">我要取消報名</button>
+            </div>
+            <br />
+            <h4 class="mb-20 fs-2">取消原因</h4>
+            <div class="col-lg-6">
+                <div class="form-group mb-30 fs-4">
+                    <label for="firstName">私人因素</label>
+                </div>
+            </div>
+            <br />
+            <div class="text-center">
+                <button class="fs-3 btn btn-lg btn-primary radius-sm w-100" type="button" aria-label="button" data-bs-toggle="modal" data-bs-target="#orderSuccessModal">我要評價課程</button>
+            </div>
         </div>
+        
     </div>
 </div>

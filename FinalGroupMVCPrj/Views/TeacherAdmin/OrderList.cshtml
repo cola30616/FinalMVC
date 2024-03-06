@@ -1,0 +1,101 @@
+﻿@model OrderBasicViewModel
+@{
+    ViewData["Title"] = "List";
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+}
+
+<div class="pagetitle">
+    <h1>訂單管理</h1>
+    <nav>
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="index.html">老師後台</a></li>
+            <li class="breadcrumb-item">訂單管理</li>
+            <li class="breadcrumb-item active">訂單清單</li>
+        </ol>
+    </nav>
+</div>
+
+<section class="section">
+    <div class="row">
+        <div class="col-lg-12">
+        </div>
+        <div class="card">
+            <div class="card-body">
+                <h5 class="card-title">訂單清單</h5>
+                <div>
+                    <!--篩選資料區-->
+                    <div class="d-flex align-items-center gap-4 mb-3">
+                        <div class="d-flex align-items-center gap-2 ">
+                            <label for="inputDate" class="">訂單日期</label>
+                            <div class="">
+                                <input type="date" class="form-control">
+                            </div>
+                            <span>~</span>
+                            <div class="">
+                                <input type="date" class="form-control">
+                            </div>
+                        </div>
+                        <div class="" style="width:10%">
+                            <select class="form-select" aria-label="Default select example">
+                                <option selected>篩選項目</option>
+                                <option value="1">One</option>
+                                <option value="2">Two</option>
+                                <option value="3">Three</option>
+                            </select>
+                        </div>
+                        <div class="" style="width:15%">
+                            <select class="form-select" aria-label="Default select example">
+                                <option selected>課程費用區間</option>
+                                <option value="1">0~399</option>
+                                <option value="2">400~799</option>
+                                <option value="3">800(含)以上</option>
+                            </select>
+                        </div>
+                        <div class="" style="width:10%">
+                            <select class="form-select" aria-label="Default select example">
+                                <option selected>課程成立與否</option>
+                                <option value="1">One</option>
+                                <option value="2">Two</option>
+                                <option value="3">Three</option>
+                            </select>
+                        </div>
+                        <button class="btn btn-secondary"> 清除條件</button>
+                        <button class="btn btn-success"> 匯出CSV</button>
+                    </div>
+
+                    <div>
+                        <!-- 表格-->
+                        <table id="OrderListTable" class="datatable">
+                            <thead>
+                                <tr>
+                                    <th>@Html.DisplayNameFor(m => m.FOrderId)</th>
+                                    <th>@Html.DisplayNameFor(m => m.FRealName)</th>
+                                    <th>@Html.DisplayNameFor(m => m.FEmail)</th>
+                                    <th>@Html.DisplayNameFor(m => m.FOrderDate)</th>
+                                    <th>@Html.DisplayNameFor(m => m.FOrderDetailId)</th>
+                                    <th>@Html.DisplayNameFor(m => m.FName)</th>
+                                    <th>@Html.DisplayNameFor(m => m.FLessonPrice)</th>
+                                    <th>@Html.DisplayNameFor(m => m.FOrderValid)</th>
+                                    <th>@Html.DisplayNameFor(m => m.FModificationDescription)</th>
+                                    <th>操作</th>
+                                </tr>
+                            </thead>
+                        </table>
+                        <!--結束表格 -->
+                    </div>
+
+                </div>
+            </div>
+
+        </div>
+    </div>
+</section>
+
+
+@section Scripts {
+    <script src="~/js/applescript/orderlist.js" asp-append-version="true"></script>
+    <script>
+
+
+    </script>
+}
