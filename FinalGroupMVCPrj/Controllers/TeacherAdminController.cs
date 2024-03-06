@@ -19,11 +19,8 @@ namespace FinalGroupMVCPrj.Controllers
         //■ ==========================     翊妏作業區      ==========================■
         // GET: TeacherAdmin/LessonList
         //動作簡述：回傳老師課程清單資訊
-        private readonly LifeShareLearnContext _context;
-        public TeacherAdminController(LifeShareLearnContext context)
-        {
-            _context = context;
-        }
+       
+        
         [HttpGet]
         public IActionResult LessonList( )
         {
