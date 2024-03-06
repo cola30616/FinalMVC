@@ -268,13 +268,13 @@
                 <div class="tab-content" data-aos="fade-up">
                     <!--依照tab 去做分類 用Razor 語法做分類 -->
                     @{
-                        var TotalField = Model.Take(1).Select(f => f.fields);                       
+                        List<string> TotalField = Model.Take(1).Select(f => f.fields).FirstOrDefault();
                     }
                     @for (int i = 1; i < TotalField.Count() + 1; i++)
-                    {
+                    {                      
                         <div class="tab-pane slide @(i == 1 ? "show active" : "")" id="tab@(i)">
                             <div class="row">
-                                @foreach (var course in Model)
+                                @foreach (var course in Model.Take(50))
                                 {
                                     @if (course.fieldNumber == i)
                                     {
@@ -291,7 +291,7 @@
                                                 </figure>
                                                 <div class="course-details">
                                                     <div class="p-3">
-                                                        <a asp-controller="Lesson" asp-action="Details" asp-route-id="@course.lessonCourse.FLessonCourseId" target="_self" title=@course.subjectName class="tag font-sm color-primary mb-1">@course.subjectName</a>
+                                                        <a asp-controller="Lesson" asp-action="Details" asp-route-id="@course.lessonCourse.FLessonCourseId" target="_self" title=@course.subjectName class="tag font-sm color-primary mb-1">@(course.fieldName)/@(course.subjectName)</a>
                                                         <h6 class="course-title lc-2 mb-0">
                                                             <a asp-controller="Lesson" asp-action="Details" asp-route-id="@course.lessonCourse.FLessonCourseId" target="_self" title="Link">
                                                                 @course.lessonCourse.FName
@@ -301,7 +301,7 @@
                                                             <div class="author">
                                                                 <img class="lazyload blur-up radius-sm" src="/images/placeholder.png" data-src="/images/avatar-1.jpg" alt="Image">
                                                                 <span class="font-sm">
-                                                                    <a href="course-details.html" target="_self" title="James Hobert">
+                                                                    <a target="_self" title="James Hobert">
                                                                         @course.teacherName
                                                                     </a>
                                                                 </span>
