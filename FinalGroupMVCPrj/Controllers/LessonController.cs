@@ -1,10 +1,12 @@
 ﻿using FinalGroupMVCPrj.Models;
 using FinalGroupMVCPrj.Models.ViewModel;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
 namespace FinalGroupMVCPrj.Controllers
 {
+    [AllowAnonymous]
     public class LessonController : UserInfoController
     {
         private readonly LifeShareLearnContext _context;
