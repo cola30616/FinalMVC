@@ -127,7 +127,7 @@
                                 </div>
                                 <h4 class="mb-20 color-primary">其他資訊</h4>
                                 <div class=" custom-checkbox mb-10 font-sm">
-                                    <input class="input-checkbox" type="checkbox" name="checkbox" id="checkbox3" checked>
+                                    <input asp-for="@Model.Member.FGetCampaignInfo" class="input-checkbox" type="checkbox"  >
                                     <label class="form-check-label" for="checkbox3"><span> 我想收到優惠活動通知</span></label>
                                 </div>
                                 <div class="row gx-xl-5">
@@ -186,7 +186,7 @@
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="d-flex justify-content-end"> <button class="btn btn-lg  btn-primary radius-sm " type="button" aria-label="button" style=" white-space: nowrap">儲存</button></div>
+                                    <div class="d-flex justify-content-end"> <button class="btn btn-lg  btn-primary radius-sm " type="submit" aria-label="button" style=" white-space: nowrap">儲存</button></div>
                                 </div>
                             </div>
 
