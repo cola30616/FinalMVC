@@ -1,4 +1,6 @@
-﻿namespace FinalGroupMVCPrj.Models.ViewModels
+﻿﻿using System.ComponentModel.DataAnnotations;
+
+namespace FinalGroupMVCPrj.Models.ViewModels
 {
     public class LessonDetailViewModel
     {
@@ -6,11 +8,16 @@
 
         public string? FName { get; set; }
 
+        public int? FField { get; set; }
+
         public int? FSubjectId { get; set; }
 
         public string? FCode { get; set; }
 
         public int FTeacherId { get; set; }
+
+        public string? FTime { get; set; }
+        public int FRegPeople {get;set;} 
 
         public string? FEditorDes { get; set; }
 
@@ -18,7 +25,7 @@
 
         public string? FRequirement { get; set; }
 
-        public byte[] FPhoto { get; set; }
+        public byte[]? FPhoto { get; set; }
 
         public decimal? FPrice { get; set; }
 
@@ -28,6 +35,7 @@
 
         public int? FMinPeople { get; set; }
 
+        //[DisplayFormat(DataFormatString = "{0:yyyy年MM月dd日}")]
         public DateTime? FLessonDate { get; set; }
 
         public TimeSpan? FStartTime { get; set; }
@@ -41,6 +49,8 @@
         public string? FVenueName { get; set; }
 
         public int? FDistrictId { get; set; }
+
+        public string? FDistrict { get; set; }
 
         public string? FAddressDetail { get; set; }
 
