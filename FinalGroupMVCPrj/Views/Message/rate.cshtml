@@ -3,10 +3,94 @@
     ViewData["Title"] = "rate";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
+@section Styles {
+    <style>
 
+        .btn:hover .bi-bookmark, .btn:hover .btn-text {
+            color: white; /* Change text color to white on hover */
+        }
 
+        .bi-bookmark {
+            fill: #30C2EC; /* Set default color for the SVG icon */
+            transition: fill 0.3s; /* Add transition for smooth color change */
+        }
 
-<!-- Button trigger modal -->
+        .btn:hover .bi-bookmark {
+            fill: white; /* Change color to white on hover */
+        }
+
+    </style>
+}
+
+<div class="course-details-area pb-60">
+    <!-- Course title -->
+    <div class="course-banner bg-img bg-cover pb-5 bg-light">
+        <div class="container">
+            <div class="row">
+                @* 封面照 *@
+                <div class="col-lg-4">
+                    <figure class="course-img" style="border: thin #c0c0c0 solid;border-radius: 8px;  display: flex; flex-flow: column; padding: 8px;margin: auto; background-color: white;">
+                        <img class="lazyload" style="border-radius:6px;" src="/images/placeholder.png" data-src="/images/course/pro-13.jpg" alt="course" title="Image">
+                    </figure>
+                </div>
+                @* 基本資料 *@
+                <div class="col-lg-8">
+                    <div class="banner-content" data-aos="fade-up">
+                        <nav aria-label="breadcrumb">
+                            <ol class="breadcrumb">
+                                <li class="breadcrumb-item active" aria-current="page"><a href="#"><img src="/images/dog.png" style="height: 40px;height: 40px;" class="border border-primary rounded-circle  "></a> 彼得遊世界</li>
+                            </ol>
+                        </nav>
+                        <h3 class="title mb-15 mt-10">
+                            多益商用英文進階
+                        </h3>
+                        <div class="mb-3">
+                            @* class=" center  badge-sm rounded bg-primary text-bg-primary" *@
+                            <span class=" center  badge-sm rounded bg-primary text-bg-primary "> 領域 </span>&nbsp;
+                            <span class=" center  badge-sm rounded bg-primary text-bg-primary"> 科目</span>&nbsp;
+                            <span class=" center  badge-lg rounded" style="background-color: #ace6f7;"> 線上</span>
+                        </div>
+                        <ul class="list-group list-group-horizontal align-items-center">
+                            <!-- <li class="d-inline-block">
+                                <div class="ratings size-md gap-2">
+                                    <span class="badge bg-success size-md">Bestseller</span>
+                                    <div class="rate bg-img" data-bg-image="/images/rate-star-md.png">
+                                        <div class="rating-icon bg-img" data-bg-image="/images/rate-star-md.png"></div>
+                                    </div>
+                                    <span class="ratings-total">(5.0)</span>
+                                </div>
+                            </li> -->
+                            <li class="d-inline-block icon-start font-sm">
+                                <i class="fa-regular fa-user"></i>已報名 15人
+                            </li>
+                            <li class="d-inline-block icon-start font-sm">
+                                @* <i class="fa-solid fa-dollar-sign"></i> 988 *@
+                                <i class="fas fa-usd-circle"></i> 988
+                            </li>
+                        </ul>
+                        <hr>
+                        <div class="ratings size-md gap-2 text-end">
+
+                            @* <a href="checkout.html" class="btn btn-lg btn-outline radius-sm w-30 br-10" title="點擊收藏" target="_self"><i class="fa-regular fa-bookmark fa-xl" style="color: #30c2ec;"></i> 收藏</a> *@
+                            <a href="checkout.html" class="btn btn-lg btn-outline radius-sm w-30 br-10" title="點擊收藏" target="_self">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-bookmark" viewBox="0 0 16 16">
+                                    <path d="M2 2a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v13.5a.5.5 0 0 1-.777.416L8 13.101l-5.223 2.815A.5.5 0 0 1 2 15.5zm2-1a1 1 0 0 0-1 1v12.566l4.723-2.482a.5.5 0 0 1 .554 0L13 14.566V2a1 1 0 0 0-1-1z" />
+                                </svg> 收藏
+                            </a>
+                            <a href="checkout.html" class="btn btn-lg btn-outline radius-sm w-30 br-10" title="Buy Now" target="_self">Buy Now</a>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- course-description -->
+    <div class="container">
+        <div class="row gx-xl-12">
+            <div class="col-lg-12" data-aos="fade-up">
+                <!-- course-details-tab -->
+                <div class="course-details-tab pt-5">
 
 
 <!-- Modal -->
@@ -76,18 +160,17 @@
                     <textarea class="form-control" style=" width:400px; height:auto; margin-left:auto;margin-right:auto;" id="evalContent" rows="6"></textarea>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                    <button type="submit" class="btn btn-primary">Save changes</button>
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">取消</button>
+                    <button type="submit" class="btn btn-primary">確定</button>
                 </div>
             </form>
 
         </div>
     </div>
 </div>
-<button type="button" class="btn btn-primary evalbtn1" data-bs-toggle="modal" data-bs-target="#evalModal">
+                    <button type="button" class="btn btn-primary rounded-pill evalbtn1" data-bs-toggle="modal" data-bs-target="#evalModal">
     評價課程
 </button>
-<button class="nav-link hover-effect btn-md rounded-pill evalbtn2" data-bs-toggle="modal" data-bs-target="#evalModal" type="button">評價</button>
 <div class="average">
     <span class="text">Your average score is</span><div class=" score-average js-average"></div>
 </div>
@@ -98,9 +181,9 @@
 <script src="https://code.jquery.com/jquery-3.7.1.min.js"
         integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo="
         crossorigin="anonymous"></script>
-@section style {
+@section Style {
     <!-- Bootstrap CSS -->
-    <link rel="stylesheet" href="~/css/vendors/bootstrap.min.css">
+
     <link rel="stylesheet" href="~/css/chat/vstyle.css" />
 }
 <script>
@@ -205,20 +288,6 @@
         $('.js-average').text((average / $('.rating').length).toFixed(1))
     }
 </script>
-
-@section Scripts{
-@*     <!-- Jquery JS -->
-    <script src="~/js/vendors/jquery.min.js"></script>
-    <!-- Bootstrap JS -->
-    <script src="~/js/vendors/bootstrap.min.js"></script> *@
-    <script>
-        // 找到按鈕元素
-        var button = document.querySelector('.evalbtn1');
-
-        // 使用click()方法觸發按鈕點擊事件
-        button.click();
-    </script>
-}
 
 
 
