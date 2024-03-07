@@ -1,30 +1,30 @@
-﻿
+﻿const searchResults = document.querySelector('#searchResults');
+const searchInput = document.querySelector('#searchInput');
 
-    const searchResults = document.querySelector('#searchResults');
-
-    const search = async () => { // 將 search 函數綁定到全局作用域
-        try {
-            const searchInput = document.querySelector('#inputSearch');
-            console.log(searchInput);
-            console.log(searchInput.value);
-            const response = await fetch(`@Url.Content("~/Lesson/Search")?searchText=${searchInput.value}`);
-            console.log(response)
-            if (!response.ok) {
-                throw new Error('Network response was not ok');
-            }
-
-            const data = await response.json();
-            // 清空搜尋結果區域
-            console.log(data)
-            searchResults.innerHTML = "";
-
-            // 將搜索結果動態添加到頁面上
-            for (const item of data) {
-                const itemHTML = `<a class="list-group-item list-group-item-action" href="/Lesson/Details/${item.fLessonCourseId}">${item.fName}</a>`;
-                searchResults.insertAdjacentHTML('beforeend', itemHTML);
-            }
-        } catch (error) {
-            console.error('Error:', error);
+const search = async (searchText) => {
+    try {
+        const response = await fetch(`/Lesson/Search?searchText=${encodeURIComponent(searchText)}`);
+        if (!response.ok) {
+            throw new Error('Network response was not ok');
         }
-    };
 
+        const data = await response.json();
+        searchResults.innerHTML = "";
+
+        for (const item of data) {
+            const itemHTML = `<a onclick="clickHandler('${item.fName}')" class="list-group-item list-group-item-action" style="z-index: 100" href="/Lesson/Details/${item.fLessonCourseId}">${item.fName}</a>`;
+            console.log(itemHTML)
+            searchResults.insertAdjacentHTML('beforeend', itemHTML);
+        }
+        // const itemHTMLs = data.map(item => `<a onclick="clickHandler('${item.fName}')" class="list-group-item list-group-item-action" href="/Lesson/Details/${item.fLessonCourseId}">${item.fName}</a>`);
+        // searchResults.innerHTML = itemHTMLs.join("");
+        // console.log(itemHTMLs)
+    } catch (error) {
+        console.error('Error:', error);
+    }
+};
+
+const clickHandler = (searchText) => {
+    searchInput.value = searchText;
+    searchResults.innerHTML = "";
+}
