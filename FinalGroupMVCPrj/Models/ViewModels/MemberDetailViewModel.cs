@@ -25,7 +25,7 @@ new SelectListItem { Text = "行政／總務／法務", Value = "行政／總務
 new SelectListItem { Text = "財會／金融專業", Value = "財會／金融專業" },
 new SelectListItem { Text = "行銷／企劃／專案管理", Value = "行銷／企劃／專案管理" },
 new SelectListItem { Text = "客服／門市／業務／貿易", Value = "客服／門市／業務／貿易" },
-new SelectListItem { Text = "餐飲／旅遊／美容美髮", Value = "餐飲／旅遊／美容美髮" },
+new SelectListItem { Text = "餐飲／旅遊 ／美容美髮", Value = "餐飲／旅遊 ／美容美髮" },
 new SelectListItem { Text = "資訊軟體", Value = "資訊軟體" },
 new SelectListItem { Text = "操作／技術／維修", Value = "操作／技術／維修" },
 new SelectListItem { Text = "資材／物流／運輸", Value = "資材／物流／運輸" },
@@ -46,3 +46,5 @@ new SelectListItem { Text = "其他新興產業", Value = "其他新興產業" }
         }
     }
 }
+
+

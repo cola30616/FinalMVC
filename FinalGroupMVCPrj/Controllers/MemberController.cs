@@ -2,6 +2,7 @@
 using FinalGroupMVCPrj.Models.ViewModels;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using Newtonsoft.Json;
 
@@ -28,23 +29,38 @@ namespace FinalGroupMVCPrj.Controllers
                 Cities = dbMember?.TMemberCitiesLists.Select(c=>c.FCityId),
                 WishFields = dbMember?.TMemberWishFields.Select(w => w.FFieldId),
             };
-            ViewBag.JobSelectList = MemberDetailViewModel.GetJobSelectList();
+            var JobSelectList = MemberDetailViewModel.GetJobSelectList();
+            foreach(var s in JobSelectList)
+            {
+                if(s.Value == dbMember.FJob)
+                {
+                    s.Selected = true;
+                    break;
+                }
+            }
+            ViewBag.JobSelectList = JobSelectList;
+            var CitySelectList = _context.TCities.Select(c => new SelectListItem { Text = c.FCityName, Value = c.FCityId.ToString() }).ToList();
+            if(mdVm.Cities != null)
+            {
+            foreach (var c in CitySelectList)
+            {
+                if (mdVm.Cities.Any(mc=>mc.ToString()==c.Value))
+                {
+                    c.Selected = true;
+                }
+            }
+            }
+            ViewBag.CitySelectList = CitySelectList;
             return View("OSetting", mdVm);
         }
-
-        public IActionResult Setting2()
+        // POST: Member/SettingSave
+        //動作簡述：儲存會員修改的資訊
+        [HttpPost]
+        public IActionResult SettingSave(MemberDetailViewModel mdVm)
         {
-            int memberId = GetCurrentMemberId();
-            if (memberId == 0) { return Content("系統異常"); };
-            var dbMember = _context.TMembers.Include(m => m.TMemberCitiesLists).Include(m => m.TMemberWishFields).FirstOrDefault(m => m.FMemberId == memberId);
-            MemberDetailViewModel mdVm = new MemberDetailViewModel
-            {
-                Member = dbMember,
-                Cities = dbMember?.TMemberCitiesLists.Select(c => c.FCityId),
-                WishFields = dbMember?.TMemberWishFields.Select(w => w.FFieldId),
-            };
-            return Content(mdVm?.Cities?.Skip(1).First().ToString());
+            return Content("Test");
         }
+
         // GET: Member/Fav
         //動作簡述：回傳設定會員資訊的頁面
         [HttpGet]

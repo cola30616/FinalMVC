@@ -79,7 +79,7 @@
             <!--第二區-->
             <div class=" form-block border radius-md px-5 py-5" data-aos="fade-up">
 
-                <form>
+                <form asp-controller="Member" asp-action="SettingSave" method="post">
                     <h4 class="mb-20 color-primary">基本資訊</h4>
                     <div class="row gx-xl-5">
                         <div class="col-lg-12">
@@ -134,7 +134,7 @@
                                     <div class="col-lg-6">
                                         <div class="form-group mb-30">
                                             <label>職業類別 </label>
-                                            <select asp-for="@Model.Member.FJob" class="form-control" asp-items="ViewBag.JobSelectList"></select>
+                                            <select asp-for="@Model.Member.FJob" class="niceselect form-control" asp-items="ViewBag.JobSelectList"></select>
                                         </div>
                                     </div>
                                     <div class="col-lg-6">
@@ -158,11 +158,9 @@
                                             <div class="form-group mb-30">
                                                 <label title="至多可選三個">想學習的領域</label>
                                                 <br />
-                                                <select class="liveCityLcSelect " name="multiple" data-placeholder="至多可選三個" multiple>
-                                                    <option value="lorem">台北市</option>
-                                                    <option value="ipsum">Ipsum</option>
-                                                    <option value="dolor">Dolor</option>
+                                                <select asp-for="@Model.Cities" asp-items="ViewBag.CitySelectList" class="liveCityLcSelect " name="multiple" data-placeholder="至多可選三個" multiple>
                                                 </select>
+                                             
                                             </div>
                                         </div>
                                         <div class="col-lg-6">
