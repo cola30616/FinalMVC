@@ -98,16 +98,14 @@
                         <!-- Navigation items -->
                         <div class="collapse navbar-collapse">
                             <ul id="mainMenu" class="navbar-nav mobile-item mx-auto">
-                                <li class="nav-item p-3 position-relative">
+                                <li class="nav-item p-1 position-relative" style="display: block;margin: 0;padding: 0">
                                     <div class="input-group">
                                         <input type="text" class="form-control" id="searchInput" style="width: 491px" oninput="search(this.value)">
                                         <button class="btn btn-light" type="button" style="position: absolute; top: 5px; right: 0; background-color: transparent; border-color: transparent; box-shadow: none;">
                                             <img src="~/images/search-alt-2-svgrepo-com.svg" style="height: 30px; width: 30px;" />
                                         </button>
                                     </div>
-                                    <div id="searchResults" class="list-group position-absolute" style="top: calc(100% - 1px); z-index: 100; width: 491px; margin-top: 0;">
-                                        @* <a class="list-group-item list-group-item-action" href="/Lesson/Details/10001">日式布丁</a>
-                                        <a class="list-group-item list-group-item-action" href="/Lesson/Details/10006">N4基礎日文保證班</a> *@
+                                    <div id="searchResults" class="list-group position-absolute" style="top: calc(100% - 1px); z-index: 100; width: 491px;">                                       
                                     </div>
                                 </li>
                                 <li class="nav-item d-flex align-items-center justify-content-center">

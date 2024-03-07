@@ -12,13 +12,10 @@ const search = async (searchText) => {
         searchResults.innerHTML = "";
 
         for (const item of data) {
-            const itemHTML = `<a onclick="clickHandler('${item.fName}')" class="list-group-item list-group-item-action" style="z-index: 100" href="/Lesson/Details/${item.fLessonCourseId}">${item.fName}</a>`;
+            const itemHTML = `<a onclick="clickHandler('${item.fName}')" class="list-group-item list-group-item-action" style="z-index: 100;margin-top: 0;" href="/Lesson/Details/${item.fLessonCourseId}">${item.fName}</a>`;
             console.log(itemHTML)
             searchResults.insertAdjacentHTML('beforeend', itemHTML);
-        }
-        // const itemHTMLs = data.map(item => `<a onclick="clickHandler('${item.fName}')" class="list-group-item list-group-item-action" href="/Lesson/Details/${item.fLessonCourseId}">${item.fName}</a>`);
-        // searchResults.innerHTML = itemHTMLs.join("");
-        // console.log(itemHTMLs)
+        }        
     } catch (error) {
         console.error('Error:', error);
     }
