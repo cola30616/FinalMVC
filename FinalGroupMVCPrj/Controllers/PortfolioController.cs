@@ -1,13 +1,23 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using FinalGroupMVCPrj.Models;
+using FinalGroupMVCPrj.Models.ViewModel;
+using Microsoft.AspNetCore.Mvc;
 
 namespace FinalGroupMVCPrj.Controllers
 {
 	public class PortfolioController : UserInfoController
 	{
-		public IActionResult List()
+        private readonly LifeShareLearnContext _context;
+        public PortfolioController(LifeShareLearnContext context)
+        {
+            _context = context;
+        }
+        //回傳作品清單
+        [HttpGet]
+        public async Task<IActionResult> ListAsync()
 		{
-			
-			return View();
+            var portfolioList = _context.TCourseworks.FirstOrDefault(m => m.FMemberId == GetCurrentMemberId());
+             
+            return View(portfolioList);
 		}
 	}
 }
