@@ -20,6 +20,7 @@
                 <div class="col-12">
                 <div class="main-form">
                     <div class="loginTogle mt-50 mb-15" style="display:block">
+                        <div id="result"></div>
                         <div class=" d-flex justify-content-between flex-wrap gap-2 " >
                             <div class="  d-flex align-items-center ">
                                 <h3 class="title" data-splitting="" data-aos="">登入</h3>
@@ -34,9 +35,9 @@
                         <div class=" d-flex flex-wrap gap-2 mt-3 mb-4">
 
                             <div>
-                                <button type="submit" style="  width: 60px; height: 60px;">
-                                    <img class="rounded-pill" src="/images/owenadd/line_logo.png" alt="LINE登入" border="0" />
-                                </button>
+                                <a href="javascript:openPopupWindow()" >
+                                    <img class="rounded-pill" src="/images/owenadd/line_logo.png" alt="LINE登入" border="0" style="  width: 45px; height: 45px;" />
+                                </a>
                                 <button type="submit" style="  width: 60px; height: 60px;">
                                     <img class="rounded-pill border border-secondary" src="/images/owenadd/Google_logo.png" alt="Google登入" border="0" />
                                 </button>
@@ -137,4 +138,24 @@
     }
     <script src="https://cdn.jsdelivr.net/npm/platform@1.3.6/platform.js"></script>
     <script src="~/js/owenscript/loginpage.js" asp-append-version="true"></script>
+    <script type="text/javascript">
+        let LineLoginUrl = "@Url.Action("GetLineLoginUrl", "Home")";
+    </script>
+    <script type="text/javascript">
+
+        function openPopupWindow() {
+            $("#result").html("");//清空顯示結果
+            //另開popup window前，每次都取得新的LineLoginUrl(每次Url的state參數都不一樣)
+            $.ajax({
+                url: LineLoginUrl,
+                method: "get",
+                success: function (url) {
+                    // window.open(url, "self");
+                    location.href = url;
+                }, error: function (xhr) {
+                    console.log(xhr);
+                }
+            });
+        }
+    </script>
     }
