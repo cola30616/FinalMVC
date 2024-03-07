@@ -6,7 +6,7 @@ namespace FinalGroupMVCPrj.Controllers
     {
 
         //■ ==========================     Apple 作業區      ==========================■
-        public IActionResult Details()
+        public IActionResult Details(int? id)
         {
             return View();
         }

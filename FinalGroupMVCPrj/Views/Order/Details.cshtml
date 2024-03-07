@@ -139,19 +139,17 @@
 @section Scripts{
     <script>
         $(document).ready(function () {
-            // 监听按钮点击事件
             $('#yourOrderButton').click(function () {
-                // 触发SweetAlert弹窗
+                // 觸發SweetAlert
                 Swal.fire({
-                    title: "我們已收到您的訂單!",
-                    text: "您可至訂購人信箱查看詳細資訊!",
+                    title: "我們已收到您的訂單！",
+                    text: "您可至訂購人信箱查看詳細資訊！",
                     icon: "success",
                     showCancelButton: true,
                     confirmButtonColor: "#3085d6",
                     confirmButtonText: "返回首頁",
                     cancelButtonText: "檢視訂單",
                 }).then((result) => {
-                    // 处理按钮点击事件
                     if (result.isConfirmed) {
                         // 導回首頁
                         window.location.href = '/URL';
