@@ -33,10 +33,13 @@
                             @* <span class="font-sm icon-start"><i class="fas fa-clock"></i>06h 00m</span> *@
                         </div>
                     </div>
-                    @* <div class="course-bottom-info px-3 py-2">
-                        <span class="font-sm"><i class="fas fa-usd-circle"></i>$13.99</span>
-                        <span class="font-sm"><i class="fas fa-book-alt"></i>11 Lessons</span>
-                    </div> *@
+                    <div class="course-bottom-info px-3 py-2">
+                        @if (course.lessonCourse.FPrice != null) { 
+                        <span class="font-sm"><i class="fas fa-usd-circle"></i>NT @((decimal)Math.Floor((double)course.lessonCourse.FPrice))</span>
+                        }
+                        <!--這個堂數有考慮新增嗎-->
+                        @* <span class="font-sm"><i class="fas fa-book-alt"></i>11 Lessons</span> *@
+                    </div>
                 </div>
             </div>
         </div>
