@@ -5,22 +5,20 @@ $(document).ready(function () {
 })
 
 function loadDataTable() {
-    // html 欄位跟 ajax 的欄位務必相同
     dataTable = $('#OrderListTable').DataTable({
         "ajax": { url: '/TeacherAdmin/ListDataJson' },
         "columns": [
-            { data: 'orderId', "width": "5%" },
-            { data: 'realName', "width": "7%" },
-            { data: 'email', "width": "12%" },
-            { data: 'orderDate', "width": "10%" },
-            { data: 'orderDetailId', "width": "5%" },
+            { data: 'orderID', "width": "5%" },
+            { data: 'realName', "width": "5%" },
+            { data: 'email', "width": "7%" },
+            { data: 'orderDate', "width": "7%" },
             { data: 'name', "width": "7%" },
             { data: 'price', "width": "5%" },
             { data: 'orderValid', "width": "5%" },
             { data: 'modificationDescription', "width": "10%" },
             {
                 // 這段是新增及刪除按鈕 ， 刪除用到onclick 事件，觸發下方的Delete
-                data: 'orderId',
+                data: 'orderID',
                 "render": function (data) {
                     return `<div class="" role="">
                         <button  orderId=${data}" class="btn btn-primary mx-2" data-bs-toggle="modal" data-bs-target="#staticBackdrop"><i class="fa-solid fa-gear"></i></button>
