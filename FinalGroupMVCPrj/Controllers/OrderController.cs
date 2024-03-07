@@ -5,5 +5,11 @@ namespace FinalGroupMVCPrj.Controllers
     public class OrderController : UserInfoController
     {
 
+        //■ ==========================     Apple 作業區      ==========================■
+        public IActionResult Details()
+        {
+            return View();
+        }
+
     }
 }

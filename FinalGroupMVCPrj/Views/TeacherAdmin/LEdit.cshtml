@@ -1,0 +1,192 @@
+﻿
+@{
+    ViewData["Title"] = "LEdit";
+    Layout = "~/Views/Shared/_LayoutTeacherAdmin.cshtml";
+}
+
+
+<p class="d-inline display-3 me-3">檢視課程</p>
+<button type="submit" class="btn btn-outline-info text-center align-self-center me-3">修改</button>
+<span class="badge rounded-pill bg-warning text-dark text-center align-self-center ">狀態</span>
+<hr />
+<div class="container col-12">
+    <div class="row">
+        <div class="col-6">
+            <div class=" bg-info-light text-center rounded-2 mb-4">基本資料</div>
+            <div class="row mb-3">
+                <div class="col-sm-6">
+                    <select class="form-select " aria-label="Default select example">
+                        <option selected>領域</option>
+                        <option value="1">One</option>
+                        <option value="2">Two</option>
+                        <option value="3">Three</option>
+                    </select>
+                </div>
+                <div class="col-sm-6">
+                    <select class="form-select " aria-label="Default select example">
+                        <option selected>科目</option>
+                        <option value="1">One</option>
+                        <option value="2">Two</option>
+                        <option value="3">Three</option>
+                    </select>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-sm-6">
+                    <div class="form-floating mb-3">
+                        <input type="text" class="form-control " id="floatingInput" placeholder="">
+                        <label for="floatingInput">代號</label>
+                    </div>
+                </div>
+                <div class="col-sm-6">
+                    <button type="submit" class="btn btn-primary align-self-center">自動帶入上筆資料</button>
+                </div>
+            </div>
+
+
+            <div class="form-floating mb-3">
+                <input type="text" class="form-control" id="floatingInput" placeholder="">
+                <label for="floatingInput">課名</label>
+            </div>
+            <div class="form-floating mb-3">
+                <input type="text" class="form-control" id="floatingInput" placeholder="">
+                <label for="floatingInput">要求</label>
+            </div>
+            <!--編輯器-->
+            <div class="form-floating mb-3">
+                <textarea class="form-control" placeholder="Leave a comment here" id="floatingTextarea" style="height: 100px; resize: none;"></textarea>
+                <label for="floatingTextarea">課程介紹</label>
+            </div>
+
+
+            <div class="form-floating mb-3">
+                <textarea class="form-control" placeholder="Leave a comment here" id="floatingTextarea" style="height: 100px; resize: none;"></textarea>
+                <label for="floatingTextarea">作業</label>
+            </div>
+        </div>
+
+        <div class="col-6">
+            <div class="bg-warning-light text-center rounded-2 mb-4">其他資料</div>
+            <!--封面照 croppie裁切-->
+            @* <img src="~/images/defaultimage.png" class="d-block rounded" alt="..." title="600x400" style="max-width: 600px; max-height: 400px;"> *@
+            <img src="~/images/defaultimage.png" class=" rounded " alt="..." title="600x400" style="width:60px;height:40px">
+
+            <div class="row mb-3">
+                <div class="col-sm-6">
+                    <input class="form-control" type="file" id="formFile">
+                </div>
+                <div class="col-sm-6">
+                    <button type="submit" class="btn btn-primary">裁切圖片</button>
+                    <button type="submit" class="btn btn-warning">移除圖片</button>
+                </div>
+               @*  <div class="col-sm-3">
+                  
+                </div> *@
+            </div>
+            <div class="input-group mb-3">
+                <span class="input-group-text">$</span>
+                <input type="text" class="form-control" aria-label="Amount (to the nearest dollar)" placeholder="售價">
+                <span class="input-group-text">元</span>
+            </div>
+            <!--人數-->
+
+
+            <div class="row">
+                <div class="col-sm-6">
+                    <div class="form-floating mb-3">
+                        <input type="number" class="form-control" id="floatingInput1" placeholder="">
+                        <label for="floatingInput1">最低人數</label>
+                    </div>
+                </div>
+                <div class="col-sm-6">
+                    <div class="form-floating mb-3">
+                        <input type="number" class="form-control" id="floatingInput2" placeholder="">
+                        <label for="floatingInput2">名額</label>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-sm-6">
+                    <label>開課日期</label>
+                    <input type="date" class="form-control">
+                </div>
+
+                <div class="col-sm-6">
+                    <label>報名截止日期</label>
+                    <input type="date" class="form-control">
+                </div>
+            </div>
+
+            <div class="row mb-3">
+                <div class="col-sm-6">
+                    <label for="inputTime1" class="col-form-label">開始時間</label>
+                    <div class="input-group">
+                        <input type="time" class="form-control" id="inputTime1">
+                       
+                    </div>
+                </div>
+               
+                <div class="col-sm-6">
+                    <label for="inputTime2" class="col-form-label">結束時間</label>
+                    <div class="input-group">
+                        <input type="time" class="form-control" id="inputTime2">
+                    </div>
+                </div>
+            </div>
+
+            <div class="row mb-3">
+                <label class="mb-2">場地類型</label>
+                <div class="col-sm-6">
+                    <fieldset>
+                        <div class="form-check">
+                            <input class="form-check-input" type="radio" name="gridRadios" id="gridRadios1" value="option1" checked>
+                            <label class="form-check-label" for="gridRadios1">
+                                實體
+                            </label>
+                        </div>
+                    </fieldset>
+                </div>
+                <div class="col-sm-6">
+                    <fieldset>
+                        <div class="form-check">
+                            <input class="form-check-input" type="radio" name="gridRadios" id="gridRadios2" value="option2">
+                            <label class="form-check-label" for="gridRadios2">
+                                線上
+                            </label>
+                        </div>
+                    </fieldset>
+                </div>
+            </div>
+
+            <!--詳細場地資訊-->
+            <div class="input-group mb-3">
+              
+                <input type="text" class="form-control" aria-label="Amount (to the nearest dollar)" placeholder="場地名稱">
+            </div>
+
+            <div class="row mb-3">
+                <div class="col-sm-4">
+                    <select class="form-select" aria-label="Default select example">
+                        <option selected>地區</option>
+                        <option value="1">One</option>
+                        <option value="2">Two</option>
+                        <option value="3">Three</option>
+                    </select>
+                </div>
+                <div class="col-sm-8">
+                    <input type="text" class="form-control" aria-label="Amount (to the nearest dollar)" placeholder="詳細地址">
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<hr />
+<div class="row">
+
+    <div class="col-sm-12 d-flex align-items-end">
+        <button type="button" class="btn btn-primary me-2">確定</button>
+        <button type="button" class="btn btn-secondary">取消</button>
+    </div>
+</div>
+

@@ -1,0 +1,129 @@
+﻿@model IEnumerable<TeacherBasicViewModel>
+@{
+    ViewData["Title"] = "TBasicInfo";
+    Layout = "~/Views/Shared/_LayoutTeacherAdmin.cshtml";
+}
+
+<style>
+    /* 客製上傳按鈕 */
+    .hidden {
+        display: none;
+    }
+
+    .btn.btn-primary.btn-sm {
+        cursor: pointer;
+        background-color: #0072E3;
+        color: white;
+    }
+
+        .btn.btn-primary.btn-sm:hover {
+            background-color: #2828FF;
+        }
+</style>
+
+<div class="pagetitle">
+    <h1>Profile</h1>
+    <nav>
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="index.html">Home</a></li>
+            <li class="breadcrumb-item">Users</li>
+            <li class="breadcrumb-item active">Profile</li>
+        </ol>
+    </nav>
+</div><!-- End Page Title -->
+
+<section class="section profile">
+    <div class="row">
+        <div class="col-xl-4">
+            <!-- 左邊卡片 -->
+            <div class="card">
+                <div class="card-body profile-card pt-4 d-flex flex-column align-items-center">
+                    @foreach (TeacherBasicViewModel item in Model)
+                    {
+                        <!-- 老師頭像 -->
+                        <img id="Teacher-avatar1" src="@item.TeacherProfilePicURL" alt="Profile" class="rounded-circle" />
+                        <h2 id="Teacher-name1">@item.TeacherName</h2>
+                        <h3> </h3>
+                        <div class="pt-2">
+                            <!-- 上傳修改頭像input -->
+                            <span class="file-input-container">
+                                <input type="file" id="fileInput" class="hidden" accept="image/gif, image/jpeg, image/png" multiple />
+                                <label for="fileInput" class="btn btn-primary btn-sm" title="Upload new profile image"><i class="bi bi-upload"></i></label>
+                            </span>
+                            <!-- 清除頭像btn -->
+                            <button class="btn btn-danger btn-sm" title="Remove my profile image"><i class="bi bi-trash"></i></button>
+                        </div>
+                    }
+                </div>
+
+            </div>
+
+
+        </div>
+
+        <div class="col-xl-8">
+            <!-- 右邊卡片 -->
+            <div class="card">
+
+                <div class="card-body pt-3">
+
+                    <!-- Bordered Tabs -->
+                    <ul class="nav nav-tabs nav-tabs-bordered">
+
+                        <li class="nav-item">
+                            <button class="nav-link active" data-bs-toggle="tab" data-bs-target="#profile-overview">預覽</button>
+                        </li>
+
+                        <li class="nav-item">
+                            @foreach (TeacherBasicViewModel item in Model)
+                            {
+                                <button TeacherID="@item.TeacherId" class="nav-link" data-bs-toggle="tab" data-bs-target="#profile-edit">編輯</button>
+                            }
+                        </li>
+                    </ul>
+                    <div class="tab-content pt-2">
+                        <!-- 預覽內容 -->
+                        @foreach (TeacherBasicViewModel item in Model)
+                        {
+                            <div class="tab-pane fade show active profile-overview" id="profile-overview">
+                                <!-- 標題1 老師名稱 -->
+                                <h5 class="card-title">@Html.DisplayNameFor(tr => tr.TeacherName)</h5>
+                                <p class="small fst-italic">@item.TeacherName</p>
+
+                                <!-- 標題2 已開科目 -->
+                                <h5 class="card-title">@Html.DisplayNameFor(t => t.SubjectName)</h5>
+                                <p class="small fst-italic">@string.Join(", ", item.SubjectName)</p>
+
+                                <!-- 標題3 關於我 -->
+                                <h5 class="card-title">@Html.DisplayNameFor(t => t.Introduction)</h5>
+                                <p class="small fst-italic">@item.Introduction</p>
+
+                                <!-- 標題4 備註 -->
+                                <h5 class="card-title">@Html.DisplayNameFor(t => t.Note)</h5>
+                                <p class="small fst-italic">@item.Note</p>
+
+                                <!-- 標題5 聯絡方式 -->
+                                <h5 class="card-title">@Html.DisplayNameFor(t => t.ContactInfo)</h5>
+                                <p class="small fst-italic">@item.ContactInfo</p>
+                            </div>
+                             <!-- ========== 編輯表單 ========== -->
+                            <div class="tab-pane fade profile-edit pt-3" id="profile-edit">
+                            <partial name="T_EditFormBasicInfo" model="@item.TeacherModel"></partial>
+                            </div>
+                        }                    
+
+                    </div><!-- End Bordered Tabs -->
+
+                </div>
+            </div>
+
+        </div>
+    </div>
+</section>
+
+
+
+
+@section Scripts {
+
+}

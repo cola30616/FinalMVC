@@ -7,6 +7,8 @@ using Microsoft.EntityFrameworkCore;
 using System.Diagnostics;
 using System.Security.Claims;
 using Microsoft.AspNetCore.Authorization;
+using Newtonsoft.Json;
+using FinalGroupMVCPrj.Models.DTO;
 
 
 
@@ -27,24 +29,33 @@ namespace FinalGroupMVCPrj.Controllers
 
         public async Task<IActionResult> Index()
         {
+            var fields = await _context.TCourseFields.Select(u => u.FFieldName).ToListAsync();
             var courseList = await _context.TLessonCourses
-                .Select(course => new LessonCourseVM
-                {
-                    lessonCourse = course,
-                    // 老師名稱
-                    teacherName = _context.TTeachers
-                        .Where(teacher => teacher.FTeacherId == course.FTeacherId)
-                        .Select(teacher => teacher.FTeacherName)
-                        .FirstOrDefault() ?? "找不到當前老師",
-                    // 科目名稱
-                    subjectName = _context.TCourseSubjects
-                        .Where(sub => sub.FSubjectId == course.FSubjectId)
-                        .Select (sub => sub.FSubjectName)
-                        .FirstOrDefault() ?? "找不到科目名稱"
-                })
-                .ToListAsync();
-
+            .Include(course => course.FTeacher) // 加載 Teacher 導航屬性
+            .Select(course => new LessonCourseVM
+            {
+                lessonCourse = course,
+                // 老師名稱
+                teacherName = _context.TTeachers
+                    .Where(teacher => teacher.FTeacherId == course.FTeacherId)
+                    .Select(teacher => teacher.FTeacherName)
+                    .FirstOrDefault() ?? "找不到當前老師",
+                // 科目名稱
+                subjectName = _context.TCourseSubjects
+                    .Where(sub => sub.FSubjectId == course.FSubjectId)
+                    .Select(sub => sub.FSubjectName)
+                    .FirstOrDefault() ?? "找不到科目名稱",
+                // 圖片數據
+                imageData = course.FPhoto,
+                // 新增老師
+                teacher = course.FTeacher, // 將加載的 Teacher 導航屬性賦值給 ViewModel 的 teacher 屬性
+                fields = fields,
+                fieldName = course.FSubject.FField.FFieldName,
+                fieldNumber = course.FSubject.FFieldId,
+            })
+            .ToListAsync();
             return View(courseList);
+
         }
         public IActionResult Test()
         {
@@ -72,7 +83,7 @@ namespace FinalGroupMVCPrj.Controllers
             {
                 return Content("帳號密錯誤");
             }
-            else if (!dbMember.FEmailVerification)
+            else if ((bool)!dbMember.FEmailVerification)
             {
                 return Content("信箱未驗證");
             }
@@ -96,6 +107,57 @@ namespace FinalGroupMVCPrj.Controllers
         {
             HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
             return RedirectToAction("Index");
+        }
+        public IActionResult testAPI()
+        {
+            MemberInfoDTO member = new MemberInfoDTO { Email = "ssdasdad@sdasdas", MemberId = 5, ShowName = "2222", RealName = "5555" };
+            return Json(member);
+        }
+
+        // POST: Home/teacherApply
+        //動作簡述：老師申請資料異動結果
+        [HttpPost]
+        public IActionResult TeacherApply([FromBody] TTeacherApplyLog data)
+        {
+            string message = "";
+            try
+            {
+            if (!ModelState.IsValid) { return BadRequest(new { Message = "操作失敗", Data = data }); }
+                var checkExist = _context.TTeacherApplyLogs.FirstOrDefault(r=>r.FMemberId==data.FMemberId);
+            if (checkExist ==null)
+            {
+                data.FApplyDatetime = DateTime.Now;
+                    data.FProgressStatus = "待審核";
+                _context.TTeacherApplyLogs.Add(data);
+                _context.SaveChanges();
+                message = "新增成功";
+            }
+            else {
+                _context.Update(data);
+                _context.SaveChanges();
+                message = "更新成功";
+            }
+            return Ok(new { Message = message, Data = data });
+            } catch (Exception ex)
+            {
+                return StatusCode(500, "伺服器錯誤：" + ex.Message);
+            }
+        }
+        // GET: Home/TApplyRecord?memberId=
+        //動作簡述：回傳設定會員資訊的頁面
+        [HttpGet]
+        public IActionResult TApplyRecord(int memberId)
+        {
+            try
+            {
+                if (memberId ==0) { return BadRequest("會員ID為0"); }
+                TTeacherApplyLog? record = _context.TTeacherApplyLogs.FirstOrDefault(r => r.FMemberId == memberId);
+                return Ok(record);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, "伺服器錯誤：" + ex.Message);
+            }
         }
 
 

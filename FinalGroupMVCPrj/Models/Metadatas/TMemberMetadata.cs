@@ -23,7 +23,7 @@ namespace FinalGroupMVCPrj.Models.Metadatas
         [StringLength(50)]
         public string FShowName { get; set; }
 
-        [Required]
+        [Required(ErrorMessage ="未填寫信箱")]
         [Column("fEmail")]
         [StringLength(50)]
         [EmailAddress(ErrorMessage ="信箱格式不正確")]
@@ -34,7 +34,7 @@ namespace FinalGroupMVCPrj.Models.Metadatas
         [Unicode(false)]
         public string FPhone { get; set; }
 
-        [Required]
+        [Required(ErrorMessage ="未填寫密碼")]
         [Column("fPassword")]
         [StringLength(200)]
         public string FPassword { get; set; }

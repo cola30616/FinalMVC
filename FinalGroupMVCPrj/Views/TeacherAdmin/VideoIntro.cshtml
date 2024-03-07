@@ -1,0 +1,81 @@
+﻿@{
+   
+    Layout = "~/Views/Shared/_LayoutTeacherAdmin.cshtml";
+}
+
+<table id="tblData" class="table table-bordered table-striped" style="width: 100%">
+    <thead>
+        <tr>
+            <th>影片名稱</th>
+            <th>影片網址</th>
+            <th>上傳日期</th>
+            <th></th>           
+        </tr>
+    </thead>
+
+</table>
+
+@section Scripts{
+   <script>
+        var dataTable; // 這段要記得加，先宣告datatable的變數
+
+        $(document).ready(function () {
+            loadDataTable();
+        })
+
+        function loadDataTable() {
+            // html 欄位跟 ajax 的欄位務必相同
+            dataTable = $('#tblData').DataTable({
+                "ajax": { url: '/TeacherAdmin/GetVideoData' },
+                "columns": [
+                    { data: 'fVideoName', "width": "25%" },
+                    { data: 'fVideoPath', "width": "25%" },
+                    { data: 'fUploadTime', "width": "25%" },
+                    {
+                        // 這段是編輯及刪除按鈕 ， 刪除用到onclick 事件，觸發下方的Delete
+                        data: 'fVideoUploadUrlId',
+                        "render": function (data) {
+                            return `<div class="w-75 btn-group" role="group">
+                                <a href="/TeacherAdmin/VEdit/${data}" class="btn btn-primary mx-2"><i class="bi bi-pencil-square"></i>編輯 </a>
+                                <a onClick=Delete('/TeacherAdmin/DeleteVideoData/${data}') class="btn btn-danger mx-2"><i class="bi bi-trash"></i> 刪除 </a>
+                            </div>`
+                        },
+                        "width": "25%"
+                    },
+                ],
+                   language: {
+                    url: "https://cdn.datatables.net/plug-ins/2.0.1/i18n/zh-HANT.json"
+                }
+            });
+
+
+        }
+        // 這一段是用sweetalert 做是否取消，可參考上方sweeetAlertfile
+        function Delete(url) {
+           Swal.fire({
+               title: "確定要刪除嗎",
+               text: "刪除後無法復原",
+               icon: "warning",
+               showCancelButton: true,
+               confirmButtonColor: "#3085d6",
+               cancelButtonColor: "#d33",
+               cancelButtonText: '取消',
+               confirmButtonText: "刪除"
+           }).then((result) => {
+               if (result.isConfirmed) {
+                   $.ajax({
+                       url: url,
+                       type: 'DELETE',
+                       success: function (data) {
+                           dataTable.ajax.reload();
+                           toastr.success(data.message);
+                       }
+                   })
+               }
+           });
+        }
+
+   </script>
+}
+
+

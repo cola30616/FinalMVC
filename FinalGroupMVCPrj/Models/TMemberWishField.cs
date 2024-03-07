@@ -2,30 +2,18 @@
 #nullable disable
 using System;
 using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
-using Microsoft.EntityFrameworkCore;
 
 namespace FinalGroupMVCPrj.Models;
 
-[Table("tMemberWishFields")]
 public partial class TMemberWishField
 {
-    [Key]
-    [Column("fMWishFieldsId")]
     public int FMwishFieldsId { get; set; }
 
-    [Column("fMemberId")]
     public int FMemberId { get; set; }
 
-    [Column("fField_Id")]
     public int FFieldId { get; set; }
 
-    [ForeignKey("FFieldId")]
-    [InverseProperty("TMemberWishFields")]
     public virtual TCourseField FField { get; set; }
 
-    [ForeignKey("FMemberId")]
-    [InverseProperty("TMemberWishFields")]
     public virtual TMember FMember { get; set; }
 }
