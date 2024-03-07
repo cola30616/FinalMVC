@@ -220,7 +220,7 @@ namespace FinalGroupMVCPrj.Controllers
                         string id_token = tokenObj.id_token;
                         var jst = new System.IdentityModel.Tokens.Jwt.JwtSecurityToken(id_token);
                         var userId = jst.Payload.Sub;
-                        return Content(userId);
+                       
                         var dbMember = _context.TMembers.
                             SingleOrDefault(m => m.FNote == userId);
                         if (dbMember == null) { return Content("尚未綁定Line帳號"); }
