@@ -3,6 +3,23 @@
     Layout = "~/Views/Shared/_LayoutTeacherAdmin.cshtml";
 }
 
+@section Styles {
+    <style>
+        .pic {
+            width: 148px;
+            height: 92px;
+            overflow: hidden;
+        }
+        .pic img {
+                transform: scale(1,1);
+                transition: all 1s ease-out;
+        }
+        .pic img:hover {
+               transform: scale(1.2,1.2);
+               transform-origin: center center;
+        }
+    </style>
+}
 <h1>新增課程</h1>
 <hr />
 <div class="container col-12">
@@ -64,21 +81,7 @@
         <div class="col-6">
             <div class="bg-warning-light text-center rounded-2 mb-2">其他資料</div>
             <!--封面照 croppie裁切-->
-            @* <img src="~/images/defaultimage.png" class="d-block rounded" alt="..." title="600x400" style="max-width: 600px; max-height: 400px;"> *@
 
-            @* <div class="row flex-md-column">
-            <div class="col  mb-3">
-            <div class="col-sm-8 mb-3">
-            <input class="form-control" type="file" id="formFile">
-            </div>
-            <div class="col-sm-4">
-            <button type="submit" class="btn btn-primary">裁切圖片</button>
-            </div>
-            </div>
-            <div class="d-flex align-items-stretch">
-            <img src="~/images/defaultimage.png" class=" rounded " alt="..." title="600x400" style="width:120px;height:80px">
-            </div>
-            </div> *@
             <div class="container">
                 <div class="row">
                     <div class="col-sm-6">
@@ -89,8 +92,8 @@
                             <button type="submit" class="btn btn-primary">裁切圖片</button>
                         </div>
                     </div>
-                    <div class="col-sm-6 d-flex ">
-                        <img src="~/images/defaultimage.png" class="rounded border border-dark border-2" alt="..." title="600x400" style="width:145px;height:90px">
+                    <div class="col-sm-6 d-flex rounded border border-dark border-2 pic">
+                        <img src="~/images/defaultimage.png" class="rounded" alt="..." title="放大檢視" style="width:145px;height:90px">
                     </div>
                 </div>
             </div>
@@ -174,7 +177,7 @@
             </div>
 
             <!--詳細場地資訊-->
-            <div id="onClassInfo" >
+            <div id="onClassInfo">
                 <div class="input-group mb-3">
                     <input type="text" class="form-control" aria-label="Amount (to the nearest dollar)" placeholder="場地名稱">
                 </div>
@@ -200,7 +203,6 @@
 <hr />
 <div class="row r">
     <div class="col-1 ">
-
     </div>
     <!-- 進度條 -->
     <div class="col-7 ">
@@ -217,21 +219,6 @@
 </div>
 
 @section Scripts {
-    <script>
-        //根據場地變換詳細場地資訊的顯示
-        const Venuetype = document.getElementsByName("VenueType");
-        const isOnline = document.querySelector("#onClassInfo");
-        // console.log(isOnline);
-        for (let i = 0; i < Venuetype.length; i++) {
-            Venuetype[i].addEventListener("change", function () {
-                if (Venuetype[i].id == 'online'){
-                    isOnline.hidden = true;
-                }
-                else{
-                    isOnline.hidden = false;
-                }
-            });
-        }
-    </script>
-
-}
+    <script src="~/js/tinascript/changevenuetype.js" asp-append-version="true"></script>
+   
+} 
