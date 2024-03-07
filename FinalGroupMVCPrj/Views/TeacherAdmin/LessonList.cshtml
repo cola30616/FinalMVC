@@ -7,13 +7,13 @@
 
 <nav style="--bs-breadcrumb-divider: '|';">
     <ol class="breadcrumb">
-        <li class="breadcrumb-item"><a href="index.html"><i class="bi bi-house-door"></i></a></li>
-        <li class="breadcrumb-item active">Dashboard</li>
-        <li class="breadcrumb-item active">Dashboard</li>
+        <li class="breadcrumb-item"><a asp-controller="TeacherAdmin" asp-action="LessonList"><i class="bi bi-house-door"></i>老師後台</a></li>
+        <li class="breadcrumb-item active">課程管理</li>
+        <li class="breadcrumb-item active">課程清單</li>
     </ol>
 </nav>
 <h1>老師後台課程清單</h1>
-<button type="button" class="btn btn-outline-primary" data-bs-toggle="tooltip" data-bs-placement="right" title="點擊新增課程">開課</button>
+<a asp-controller="TeacherAdmin" asp-action="LessonCreate"  class="btn btn-primary" data-bs-toggle="tooltip" data-bs-placement="right" title="點擊新增課程">開課</a>
 
 <div class="row">
     <div class="col-sm-10">
@@ -81,8 +81,8 @@
             <td>37%</td>
             <td>37%</td>
             <td>
-                <button class="btn btn-outline-success" title="檢視">檢視</button>
-                <button class="btn btn-outline-warning">取消課程</button>
+                <button class="btn btn-success" title="檢視">檢視</button>
+                <button class="btn btn-warning">取消課程</button>
             </td>
         </tr>
         <tr>
@@ -97,8 +97,8 @@
             <td>97%</td>
             <td>97%</td>
             <td>
-                <button class="btn btn-outline-success" title="檢視">檢視</button>
-                <button class="btn btn-outline-warning">取消課程</button>
+                <button class="btn btn-success" title="檢視">檢視</button>
+                <button class="btn btn-warning">取消課程</button>
             </td>
         </tr>
         <tr>
@@ -113,8 +113,8 @@
             <td>63%</td>
             <td>63%</td>
             <td>
-                <button class="btn btn-outline-success" title="檢視">檢視</button>
-                <button class="btn btn-outline-warning">取消課程</button>
+                <button class="btn btn-success" title="檢視">檢視</button>
+                <button class="btn btn-warning">取消課程</button>
             </td>
         </tr>
         <tr>
@@ -129,8 +129,8 @@
             <td>30%</td>
             <td>30%</td>
             <td>
-                <button class="btn btn-outline-success" title="檢視">檢視</button>
-                <button class="btn btn-outline-warning">取消課程</button>
+                <button class="btn btn-success" title="檢視">檢視</button>
+                <button class="btn btn-warning">取消課程</button>
             </td>
         </tr>
         <tr>
@@ -145,8 +145,8 @@
             <td>17%</td>
             <td>17%</td>
             <td>
-                <button class="btn btn-outline-success" title="檢視">檢視</button>
-                <button class="btn btn-outline-warning">取消課程</button>
+                <button class="btn btn-success" title="檢視">檢視</button>
+                <button class="btn btn-warning">取消課程</button>
             </td>
         </tr>
         <tr>
@@ -161,8 +161,8 @@
             <td>57%</td>
             <td>57%</td>
             <td>
-                <button class="btn btn-outline-success" title="檢視">檢視</button>
-                <button class="btn btn-outline-warning">取消課程</button>
+                <button class="btn btn-success" title="檢視">檢視</button>
+                <button class="btn btn-warning">取消課程</button>
             </td>
         </tr>
        
@@ -170,7 +170,130 @@
 </table>
 <!-- End Table with stripped rows -->
 
+
+@* <div>
+    <!-- 表格-->
+    <table id="lessonListTable" class="datatable">
+        <thead>
+            <tr>
+                <th>代號</th>
+                <th>名稱</th>
+                <th>領域</th>
+                <th>售價</th>
+                <th data-type="date" data-format="YYYY/DD/MM">日期</th>
+                <th>時數</th>
+                <th>人數上限</th>
+                <th>報名人數</th>
+                <th>狀態</th>
+                <th>授課場地</th>
+                <th>操作</th>
+            </tr>
+        </thead>
+        <tbody>
+        <tr>
+            <td>Unity Pugh</td>
+            <td>9958</td>
+            <td>Curicó</td>
+            <td>2005/02/11</td>
+            <td>37%</td>
+            <td>37%</td>
+            <td>37%</td>
+            <td>37%</td>
+            <td>37%</td>
+            <td>37%</td>
+            <td>
+                <button class="btn btn-success" title="檢視">檢視</button>
+                <button class="btn btn-warning">取消課程</button>
+            </td>
+        </tr>
+        <tr>
+            <td>Theodore Duran</td>
+            <td>8971</td>
+            <td>Dhanbad</td>
+            <td>1999/04/07</td>
+            <td>97%</td>
+            <td>97%</td>
+            <td>97%</td>
+            <td>97%</td>
+            <td>97%</td>
+            <td>97%</td>
+            <td>
+                <button class="btn btn-success" title="檢視">檢視</button>
+                <button class="btn btn-warning">取消課程</button>
+            </td>
+        </tr>
+        <tr>
+            <td>Kylie Bishop</td>
+            <td>3147</td>
+            <td>Norman</td>
+            <td>2005/09/08</td>
+            <td>63%</td>
+            <td>63%</td>
+            <td>63%</td>
+            <td>63%</td>
+            <td>63%</td>
+            <td>63%</td>
+            <td>
+                <button class="btn btn-success" title="檢視">檢視</button>
+                <button class="btn btn-warning">取消課程</button>
+            </td>
+        </tr>
+        <tr>
+            <td>Willow Gilliam</td>
+            <td>3497</td>
+            <td>Amqui</td>
+            <td>2009/29/11</td>
+            <td>30%</td>
+            <td>30%</td>
+            <td>30%</td>
+            <td>30%</td>
+            <td>30%</td>
+            <td>30%</td>
+            <td>
+                <button class="btn btn-success" title="檢視">檢視</button>
+                <button class="btn btn-warning">取消課程</button>
+            </td>
+        </tr>
+        <tr>
+            <td>Blossom Dickerson</td>
+            <td>5018</td>
+            <td>Kempten</td>
+            <td>2006/11/09</td>
+            <td>17%</td>
+            <td>17%</td>
+            <td>17%</td>
+            <td>17%</td>
+            <td>17%</td>
+            <td>17%</td>
+            <td>
+                <button class="btn btn-success" title="檢視">檢視</button>
+                <button class="btn btn-warning">取消課程</button>
+            </td>
+        </tr>
+        <tr>
+            <td>Elliott Snyder</td>
+            <td>3925</td>
+            <td>Enines</td>
+            <td>2006/03/08</td>
+            <td>57%</td>
+            <td>57%</td>
+            <td>57%</td>
+            <td>57%</td>
+            <td>57%</td>
+            <td>57%</td>
+            <td>
+                <button class="btn btn-success" title="檢視">檢視</button>
+                <button class="btn btn-warning">取消課程</button>
+            </td>
+        </tr>
+
+    </tbody>
+    </table>
+    <!--結束表格 -->
+</div> *@
+
 @section Scripts{
+    <script src="~/js/tinascript/lessonlist.js" asp-append-version="true"></script>
     <script>
         // datatable掛掉
     // var dataTable; // 這段要記得加，先宣告datatable的變數
