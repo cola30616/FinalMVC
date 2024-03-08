@@ -145,7 +145,7 @@
                                     <div class="col-lg-6">
                                         <div class="form-group mb-30">
                                             <label>職業類別 </label>
-                                            <select asp-for="@Model.Member.FJob" class="niceselect form-control" asp-items="ViewBag.JobSelectList"></select>
+                                            <select asp-for="@Model.Member.FJob" class="job niceselect form-control" asp-items="ViewBag.JobSelectList"></select>
                                         </div>
                                     </div>
                                     <div class="col-lg-6">
@@ -286,7 +286,7 @@
                 FShowName: "test"
             },
             Cities: new Array(),
-            WishFields: new Array()
+            WishFields: []
         };
         document.querySelectorAll('.liveCityLcSelect').forEach(function (el) {
         el.addEventListener('change', (e) => {
@@ -296,6 +296,14 @@
 
         async function fetchMemberData() {
             const memberId = @Model.Member.FMemberId;
+            //基本資訊填值
+
+            //其他資訊填值
+            const citySelectedOptions = document.querySelector('.liveCityLcSelect').selectedOptions;
+            for (const option of citySelectedOptions) {
+                memberDetailVm.Cities.push(option.value);
+            }
+
             try {
                 //fetch呼叫
                 const response = await fetch(`@Url.Content("~/Member/SettingSave")`, {
