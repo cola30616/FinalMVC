@@ -69,7 +69,7 @@
                                             }
                                             else
                                             {
-                                                <a href="#" class="btn  btn-primary radius-sm " aria-label="button">取消連結</a>
+                                                <a href="javascript:cancelLineLogin()" class="btn  btn-primary radius-sm " aria-label="button">取消連結</a>
                                             }
                                           
                                         </div>
@@ -228,11 +228,28 @@
                 url: LineLoginUrl,
                 method: "get",
                 success: function (url) {
-                    // window.open(url, "self");
                     location.href = url;
                 }, error: function (xhr) {
                     console.log(xhr);
                 }
+            });
+        }
+        function cancelLineLogin() {
+            Swal.fire({
+                title: "確認取消連結Line帳號?",
+                text: `(取消後不可回復)`,
+                icon: "info",
+                showCancelButton: true,
+                confirmButtonColor: "#30C2EC",
+                cancelButtonColor: "#d33",
+                confirmButtonText: "確定",
+                cancelButtonText: "取消"
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    
+                  
+                }
+
             });
         }
     </script>
