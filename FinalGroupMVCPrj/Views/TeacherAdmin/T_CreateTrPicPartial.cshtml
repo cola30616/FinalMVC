@@ -1,4 +1,4 @@
-﻿@model TTeacher
+﻿@model TTeacherImage
 <!-- 新增圖片的modal彈跳視窗-->
 <div class="modal fade" id="exampleModal" tabindex="-100" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered modal-lg">
@@ -7,44 +7,48 @@
                 <h5 class="modal-title" id="exampleModalLabel">上傳圖片</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
-            <form>
+            <form asp-controller="TeacherAdmin" asp-action="TAddtrimage" id="addForm" method="post" enctype="multipart/form-data">
                 <div class="modal-body" style=" display:flex ;">
-                    <!-- 上傳圖片 -->
-                    <div style="text-align: center;padding:100px; border-right: 2px dashed  #ADADAD;">
+                    <!-- 拖曳圖片 -->
+                    <div id="divdropzone" style="text-align: center;padding:100px; border: 2px dashed  #ADADAD;">
+                        <!-- 自訂dropzonejs的預設文字 -->
+                        <div class="dz-message" data-dz-message><span>Your Custom Message</span></div>
                         <img src="~/images/TonyAdd/image_upload_icon.png" /><br>
-                        將你要上傳的圖片拖曳到這裡<br>
-                        <div>
+                        <label>將你要上傳的圖片拖曳到這裡</label>
+                        <div id="divwarning" style="display:none">
                             <img src="~/images/TonyAdd/warning.png" style="width:25px" />
                             <label style="color:red;font-size:15px">檔案格式無效。</label>
                         </div>
-                        <input type="file" id="fileInput" class="hidden" accept="image/gif, image/jpeg, image/png" multiple />
-                        <label for="fileInput" class="btn btn-primary">選取圖片</label>     
+                        <!-- 上傳圖片按鈕 -->
+                        <input asp-for="FImageLink" type="file" id="Inputfile" class="hidden" accept="image/gif, image/jpeg, image/png" />
+                        <label  for="Inputfile" class="btn btn-primary" title="選取圖片">選取圖片</label>
                     </div>
                     <div style="text-align: center;padding:100px">
                         <div class="form-floating mb-3">
-                            <select class="form-select">
-                                <option value="" disabled selected hidden></option>
-                                <option value="">所有</option>
-                                <option value="">教育背景</option>
-                                <option value="">證照證書</option>
-                                <option value="">作品</option>
+                            <select asp-for="FCategory" class="form-select">
+                                <option  disabled selected hidden></option>
+                                <option >教育背景</option>
+                                <option >證照證書</option>
+                                <option >作品</option>
                             </select>
+                            <span asp-validation-for="FCategory" class="text-danger"></span>
                             <label for="floatingInput">選擇分類</label>
                         </div>
                         <!--一般文字輸入-->
                         <div class="form-floating mb-3">
                             <!-- 內容1  -->
-                            <input type="email" class="form-control" id="floatingInput" placeholder="">
+                            <input asp-for="FImageName" class="form-control" id="floatingInput" placeholder="">
                             <!-- 標題1  -->
                             <label for="floatingInput">標題</label>
                         </div>
                     </div>
                 </div>
-            </form>
+     
             <div class="modal-footer">
+                <input id="inpSubmit" type="submit" name="file" class="btn btn-primary" value="上傳">
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">關閉</button>
-
             </div>
+       </form>
         </div>
     </div>
 </div>
