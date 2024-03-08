@@ -246,10 +246,40 @@
                 cancelButtonText: "取消"
             }).then((result) => {
                 if (result.isConfirmed) {
-                    
+                    try {
+                        //fetch呼叫
+                        const response = await fetch(`@Url.Content("~/Member/EditBasicInfo")?id=${memberId}`, {
+                            method: "GET"
+                        });
+                        //攔截錯誤狀態代號
+                        if (!response.ok) {
+                            throw new Error(`${response.status}`);
+                        }
+                        //取得控制器動作回傳的 html
+                        const data = await response.text();
+                        //把html加到指定的彈跳視窗容器內
+                        document.getElementById("toAddEditPartial").innerHTML = data
+
+                        //下面是一個呼叫腳本的方法，如果用jQuery寫只要寫 $.getScript('指定的url');
+                        function loadScript(url, callback) {
+                            var script = document.createElement('script');
+                            script.type = 'text/javascript';
+                            script.src = url;
+                            script.onload = callback(script.src);
+                            document.head.appendChild(script);
+                        }
+
+                        //這個寫好的腳本是為了重新綁定因為fetch呼叫而失效的jQuery用戶端驗證
+                        //呼叫腳本，並在主控台通知成功
+                        loadScript('@Url.Content("~/js/reValidate.js")', function (url) {
+                            console.log(`${url} 腳本載入成功！`);
+                        });
+                    } catch (error) {
+                        //把簡短錯誤訊息呈現在畫面，程式不中斷
+                        document.getElementById("toAddEditPartial").innerHTML = `<h2> 錯誤： ${error.message} 請稍後再試</h2>`
+                    }
                   
                 }
-
             });
         }
     </script>

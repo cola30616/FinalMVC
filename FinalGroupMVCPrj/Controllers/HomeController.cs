@@ -332,6 +332,7 @@ namespace FinalGroupMVCPrj.Controllers
 
         public IActionResult LineLinkCancel()
         {
+
             int currentMemberId = GetCurrentMemberId();
             if (currentMemberId == 0) { return BadRequest("目前沒有會員登入"); }
                 var toDeleteLineMember = _context.TMembers.SingleOrDefault(m => m.FMemberId == currentMemberId);
