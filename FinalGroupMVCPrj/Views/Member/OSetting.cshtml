@@ -189,14 +189,14 @@
                                             <div class="form-group mb-30">
                                                 <label title="至多可選三個">生活縣市</label>
                                                 <br />
-                                                <select asp-for="@Model.Cities" asp-items="ViewBag.CitySelectList" class="liveCityLcSelect " name="multiple" data-placeholder="至多可選三個" multiple>
+                                                <select asp-items="ViewBag.CitySelectList" class="liveCityLcSelect " name="multiple" data-placeholder="至多可選三個" multiple>
                                                 </select>
                                              
                                             </div>
                                         </div>
                                         
                                     </div>
-                                    <div class="d-flex justify-content-end"> <button class="btn btn-lg  btn-primary radius-sm " type="submit" aria-label="button" style=" white-space: nowrap">儲存</button></div>
+                                    <div class="d-flex justify-content-end"> <a href="javascript:fetchMemberData()" class="btn btn-lg  btn-primary radius-sm " aria-label="button" style=" white-space: nowrap">儲存</a></div>
                                 </div>
                             </div>
 
@@ -221,7 +221,6 @@
         let LineLoginUrl = "@Url.Action("GetLineLoginUrl", "Home")";
     </script>
     <script type="text/javascript">
-
         function openPopupWindow() {
             $("#result").html("");//清空顯示結果
             //另開popup window前，每次都取得新的LineLoginUrl(每次Url的state參數都不一樣)
@@ -281,5 +280,41 @@
             }
         }
     </script>
+        <script >
+        const memberDetailVm = {
+            Member: {
+                FShowName: "test"
+            },
+            Cities: new Array(),
+            WishFields: new Array()
+        };
+        document.querySelectorAll('.liveCityLcSelect').forEach(function (el) {
+        el.addEventListener('change', (e) => {
+                console.log(e.target.selectedOptions)
+        });
+    });
 
+        async function fetchMemberData() {
+            const memberId = @Model.Member.FMemberId;
+            try {
+                //fetch呼叫
+                const response = await fetch(`@Url.Content("~/Member/SettingSave")`, {
+                    "method": "POST",
+                    "body": JSON.stringify(memberDetailVm),
+                    "headers": { "Content-Type": "application/json" }
+                });
+                if (response.ok) {
+               
+                    };
+            } catch (error) {
+                Swal.fire({
+                    position: "center",
+                    icon: "error",
+                    title: error,
+                    showConfirmButton: false,
+                    timer: 1500
+                });
+            }
+        }
+    </script>
 }

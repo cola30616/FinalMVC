@@ -60,7 +60,7 @@ namespace FinalGroupMVCPrj.Controllers
         // POST: Member/SettingSave
         //動作簡述：儲存會員修改的資訊
         [HttpPost]
-        public IActionResult SettingSave(MemberDetailViewModel mdVm)
+        public IActionResult SettingSave([FromBody]MemberDetailViewModel mdVm)
         {
             return Content("Test");
         }
