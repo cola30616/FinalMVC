@@ -62,7 +62,7 @@ namespace FinalGroupMVCPrj.Models.ViewModels
         public virtual TTeacher FTeacher { get; set; }
       
 
-        //評價的部分
-        public double FAvgScore { get; set; }
+        ////評價的部分
+        //public double FAvgScore { get; set; }
     }
 }

@@ -72,8 +72,7 @@ namespace FinalGroupMVCPrj.Controllers
             {
                 //主頁部分
                 FTeacher = querystring.FTeacher,
-                FName = querystring.FName,
-                
+                FName = querystring.FName,                
                 FFiled = _context.TCourseFields.Where(x=>x.FFieldId==querystring.FSubject.FFieldId).Select(x=>x.FFieldName).FirstOrDefault(),
                 FSubject = querystring.FSubject,
                 FVenueType = querystring.FVenueType,
@@ -85,8 +84,7 @@ namespace FinalGroupMVCPrj.Controllers
                 FVenueName = querystring.FVenueName,
                 FCity = _context.TCities.Where(c => c.TCityDistricts.Any(d => d.FDistrictId == querystring.FDistrictId)).Select(x => x.FCityName).FirstOrDefault(),
                 FDistrict = _context.TCityDistricts.Where(x => x.FDistrictId == querystring.FDistrictId).Select(x => x.FDistrictName).FirstOrDefault(),
-                FAddressDetail = querystring.FAddressDetail,
-                
+                FAddressDetail = querystring.FAddressDetail,                
                 FOnlineLink = querystring.FOnlineLink,
                 FLessonDate = querystring.FLessonDate,
                 FStartTime = querystring.FStartTime,
@@ -96,9 +94,9 @@ namespace FinalGroupMVCPrj.Controllers
                 FEditorDes = querystring.FEditorDes,
                 FRequirement = querystring.FRequirement,
 
-                // 評價部分
-                FAvgScore = querystring.TOrderDetails.SelectMany(order => order.TLessonEvaluations).Any()? 
-                Math.Round(querystring.TOrderDetails.SelectMany(order => order.TLessonEvaluations).Average(evaluation => evaluation.FScore), 1) :0
+                //// 評價部分
+                //FAvgScore = querystring.TOrderDetails.SelectMany(order => order.TLessonEvaluations).Any()? 
+                //Math.Round(querystring.TOrderDetails.SelectMany(order => order.TLessonEvaluations).Average(evaluation => evaluation.FScore), 1) :0
             }).ToListAsync();
 
             return View("LDetails", detail[0]);

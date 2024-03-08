@@ -61,7 +61,9 @@
                             </span>
                         </div>
                         <ul class="list-group list-group-horizontal align-items-center">
-                            <partial name="_BValuateAvgPartial" />
+                            <div FLessonCourseId=@Model.FLessonCourseId id="avgvalPartial">
+
+                            </div>
                             <li class="d-inline-block icon-start font-sm">
                                 <!--報名 人數-->
                                 <i class="fa-regular fa-user"></i>已報名 @Html.DisplayFor(m=>m.FRegPeople)人
@@ -214,7 +216,10 @@
                             </div>
 
                             <!-- 評價 -->
-                            <partial name="_BValuatePartial" />
+                            <div id="evalistcontainer" >
+
+                            </div>
+
                         </div>
                     </div>
                 </div>

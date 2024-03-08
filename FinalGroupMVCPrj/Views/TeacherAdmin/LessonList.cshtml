@@ -54,249 +54,28 @@
 
 
 <!-- Table with stripped rows -->
-<table class="datatable" id="lessonListTable">
+<table id="lessonListTable" class="datatable">
     <thead>
         <tr>
-            <th>@Html.DisplayNameFor(m=>m.FCode)</th>
-            <th>@Html.DisplayNameFor(m => m.FName)</th>
-            <th> @Html.DisplayNameFor(m => m.FFiled)</th>
-            <th>@Html.DisplayNameFor(m => m.FPrice)</th>
-            <th>@Html.DisplayNameFor(m => m.FLessonDate)</th>
-            <th>@Html.DisplayNameFor(m => m.FTime)</th>
-            <th>@Html.DisplayNameFor(m => m.FMaxPeople)</th>
-            <th>@Html.DisplayNameFor(m => m.FRegPeople)</th>
-            <th>@Html.DisplayNameFor(m => m.FStatus)</th>
-            <th>@Html.DisplayNameFor(m => m.FVenueType)</th>
-            <th></th>
+            <th>@Html.DisplayNameFor(m=>m.Code)</th>
+            <th>@Html.DisplayNameFor(m => m.Name)</th>
+            <th>@Html.DisplayNameFor(m => m.Filed)</th>
+            <th>@Html.DisplayNameFor(m => m.Price)</th>
+            <th>@Html.DisplayNameFor(m => m.LessonDate)</th>
+            <th>@Html.DisplayNameFor(m => m.Time)</th>
+            <th>@Html.DisplayNameFor(m => m.MaxPeople)</th>
+            <th>@Html.DisplayNameFor(m => m.RegPeople)</th>
+            <th>@Html.DisplayNameFor(m => m.Status)</th>
+            <th>@Html.DisplayNameFor(m => m.VenueType)</th>
+            <th></th> 
         </tr>
     </thead>
-  @*   <tbody>
-        <tr>
-            <td>Unity Pugh</td>
-            <td>9958</td>
-            <td>Curicó</td>
-            <td>2005/02/11</td>
-            <td>37%</td>
-            <td>37%</td>
-            <td>37%</td>
-            <td>37%</td>
-            <td>37%</td>
-            <td>37%</td>
-            <td>
-                <button class="btn btn-success" title="檢視">檢視</button>
-                <button class="btn btn-warning">取消課程</button>
-            </td>
-        </tr>
-        <tr>
-            <td>Theodore Duran</td>
-            <td>8971</td>
-            <td>Dhanbad</td>
-            <td>1999/04/07</td>
-            <td>97%</td>
-            <td>97%</td>
-            <td>97%</td>
-            <td>97%</td>
-            <td>97%</td>
-            <td>97%</td>
-            <td>
-                <button class="btn btn-success" title="檢視">檢視</button>
-                <button class="btn btn-warning">取消課程</button>
-            </td>
-        </tr>
-        <tr>
-            <td>Kylie Bishop</td>
-            <td>3147</td>
-            <td>Norman</td>
-            <td>2005/09/08</td>
-            <td>63%</td>
-            <td>63%</td>
-            <td>63%</td>
-            <td>63%</td>
-            <td>63%</td>
-            <td>63%</td>
-            <td>
-                <button class="btn btn-success" title="檢視">檢視</button>
-                <button class="btn btn-warning">取消課程</button>
-            </td>
-        </tr>
-        <tr>
-            <td>Willow Gilliam</td>
-            <td>3497</td>
-            <td>Amqui</td>
-            <td>2009/29/11</td>
-            <td>30%</td>
-            <td>30%</td>
-            <td>30%</td>
-            <td>30%</td>
-            <td>30%</td>
-            <td>30%</td>
-            <td>
-                <button class="btn btn-success" title="檢視">檢視</button>
-                <button class="btn btn-warning">取消課程</button>
-            </td>
-        </tr>
-        <tr>
-            <td>Blossom Dickerson</td>
-            <td>5018</td>
-            <td>Kempten</td>
-            <td>2006/11/09</td>
-            <td>17%</td>
-            <td>17%</td>
-            <td>17%</td>
-            <td>17%</td>
-            <td>17%</td>
-            <td>17%</td>
-            <td>
-                <button class="btn btn-success" title="檢視">檢視</button>
-                <button class="btn btn-warning">取消課程</button>
-            </td>
-        </tr>
-        <tr>
-            <td>Elliott Snyder</td>
-            <td>3925</td>
-            <td>Enines</td>
-            <td>2006/03/08</td>
-            <td>57%</td>
-            <td>57%</td>
-            <td>57%</td>
-            <td>57%</td>
-            <td>57%</td>
-            <td>57%</td>
-            <td>
-                <button class="btn btn-success" title="檢視">檢視</button>
-                <button class="btn btn-warning">取消課程</button>
-            </td>
-        </tr>
-       
-    </tbody> *@
+ 
 </table>
 <!-- End Table with stripped rows -->
 
 
-@* <div>
-    <!-- 表格-->
-    <table id="lessonListTable" class="datatable">
-        <thead>
-            <tr>
-                <th>代號</th>
-                <th>名稱</th>
-                <th>領域</th>
-                <th>售價</th>
-                <th data-type="date" data-format="YYYY/DD/MM">日期</th>
-                <th>時數</th>
-                <th>人數上限</th>
-                <th>報名人數</th>
-                <th>狀態</th>
-                <th>授課場地</th>
-                <th>操作</th>
-            </tr>
-        </thead>
-        <tbody>
-        <tr>
-            <td>Unity Pugh</td>
-            <td>9958</td>
-            <td>Curicó</td>
-            <td>2005/02/11</td>
-            <td>37%</td>
-            <td>37%</td>
-            <td>37%</td>
-            <td>37%</td>
-            <td>37%</td>
-            <td>37%</td>
-            <td>
-                <button class="btn btn-success" title="檢視">檢視</button>
-                <button class="btn btn-warning">取消課程</button>
-            </td>
-        </tr>
-        <tr>
-            <td>Theodore Duran</td>
-            <td>8971</td>
-            <td>Dhanbad</td>
-            <td>1999/04/07</td>
-            <td>97%</td>
-            <td>97%</td>
-            <td>97%</td>
-            <td>97%</td>
-            <td>97%</td>
-            <td>97%</td>
-            <td>
-                <button class="btn btn-success" title="檢視">檢視</button>
-                <button class="btn btn-warning">取消課程</button>
-            </td>
-        </tr>
-        <tr>
-            <td>Kylie Bishop</td>
-            <td>3147</td>
-            <td>Norman</td>
-            <td>2005/09/08</td>
-            <td>63%</td>
-            <td>63%</td>
-            <td>63%</td>
-            <td>63%</td>
-            <td>63%</td>
-            <td>63%</td>
-            <td>
-                <button class="btn btn-success" title="檢視">檢視</button>
-                <button class="btn btn-warning">取消課程</button>
-            </td>
-        </tr>
-        <tr>
-            <td>Willow Gilliam</td>
-            <td>3497</td>
-            <td>Amqui</td>
-            <td>2009/29/11</td>
-            <td>30%</td>
-            <td>30%</td>
-            <td>30%</td>
-            <td>30%</td>
-            <td>30%</td>
-            <td>30%</td>
-            <td>
-                <button class="btn btn-success" title="檢視">檢視</button>
-                <button class="btn btn-warning">取消課程</button>
-            </td>
-        </tr>
-        <tr>
-            <td>Blossom Dickerson</td>
-            <td>5018</td>
-            <td>Kempten</td>
-            <td>2006/11/09</td>
-            <td>17%</td>
-            <td>17%</td>
-            <td>17%</td>
-            <td>17%</td>
-            <td>17%</td>
-            <td>17%</td>
-            <td>
-                <button class="btn btn-success" title="檢視">檢視</button>
-                <button class="btn btn-warning">取消課程</button>
-            </td>
-        </tr>
-        <tr>
-            <td>Elliott Snyder</td>
-            <td>3925</td>
-            <td>Enines</td>
-            <td>2006/03/08</td>
-            <td>57%</td>
-            <td>57%</td>
-            <td>57%</td>
-            <td>57%</td>
-            <td>57%</td>
-            <td>57%</td>
-            <td>
-                <button class="btn btn-success" title="檢視">檢視</button>
-                <button class="btn btn-warning">取消課程</button>
-            </td>
-        </tr>
-
-    </tbody>
-    </table>
-    <!--結束表格 -->
-</div> *@
 
 @section Scripts{
     <script src="~/js/tinascript/lessonlist.js" asp-append-version="true"></script>
-    
-
-
 }

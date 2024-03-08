@@ -31,20 +31,22 @@ namespace FinalGroupMVCPrj.Controllers
         
         public IActionResult ListDataJson()
         {
-            var lessons = _context.TLessonCourses.AsQueryable().Select(querystring => new LessonListViewModel
+            var lessons = _context.TLessonCourses.AsQueryable().Where(x=>x.FTeacherId==GetCurrentTeacherId()).Select(querystring => new LessonListViewModel
             {
-                FCode = querystring.FCode,
-                FName = querystring.FName,
-                FFiled = _context.TCourseFields.Where(x => x.FFieldId == querystring.FSubject.FFieldId).Select(x => x.FFieldName).FirstOrDefault(),
-                FPrice = (int)querystring.FPrice,
-                FLessonDate = querystring.FLessonDate,
-                FMaxPeople = querystring.FMaxPeople,
-                FRegPeople = _context.TOrderDetails.Where(x => x.FLessonCourseId == querystring.FLessonCourseId).Count(),
-                FStatus = querystring.FStatus,
-                FTime = (querystring.FEndTime.Value.TotalHours - querystring.FStartTime.Value.TotalHours).ToString()+"hr",
-                FVenueType = querystring.FVenueType == true ? "實體" : "線上"
+                Code = querystring.FCode,
+                Name = querystring.FName,
+                Filed = _context.TCourseFields.Where(x => x.FFieldId == querystring.FSubject.FFieldId).Select(x => x.FFieldName).FirstOrDefault(),
+                Price = (int)querystring.FPrice,
+                LessonDate = querystring.FLessonDate,
+                Time = (querystring.FEndTime.Value.TotalHours - querystring.FStartTime.Value.TotalHours).ToString() + "hr",
+                MaxPeople = querystring.FMaxPeople,
+                RegPeople = _context.TOrderDetails.Where(x => x.FLessonCourseId == querystring.FLessonCourseId).Count(),
+                Status = querystring.FStatus,
+               VenueType = querystring.FVenueType == true ? "實體" : "線上",
+                lessonid = querystring.FLessonCourseId
             });
-            return Json(lessons);
+            //return Json(lessons );
+            return Json(new { data = lessons });
         }
 
         // GET: TeacherAdmin/LessonCreate
