@@ -329,11 +329,11 @@ namespace FinalGroupMVCPrj.Controllers
             }//end if 
             return Content("失敗");
         }
-
-        public IActionResult LineLinkCancel()
+        [HttpPost]
+        public IActionResult LineLinkCancel( int id)
         {
-
             int currentMemberId = GetCurrentMemberId();
+            if (id != currentMemberId) { return BadRequest("非當前登入會員"); }
             if (currentMemberId == 0) { return BadRequest("目前沒有會員登入"); }
                 var toDeleteLineMember = _context.TMembers.SingleOrDefault(m => m.FMemberId == currentMemberId);
                 if (toDeleteLineMember == null) { return BadRequest("資料庫系統異常，找不到已登入會員"); }
