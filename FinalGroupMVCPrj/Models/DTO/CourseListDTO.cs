@@ -2,7 +2,7 @@
 {
     public class CourseListDTO
     {
-        public string Keyword { get; set; }
+        public string? Keyword { get; set; }
         public int? FieldId { get; set; }
         public int? SubjectId { get; set; }
         public decimal? MinPrice { get; set; }

@@ -316,7 +316,9 @@
         </div>
     </footer>
     <!-- Footer-area end-->
-    <!--搜尋欄位-->
+    
+    @await RenderSectionAsync("Scripts", required: false)
+    <!--首頁搜尋bar-->
     <script src="~/js/search.js" asp-append-version="true"></script>
     <!-- Lazysizes --> 
     <script src="~/js/vendors/lazysizes.min.js"></script>
@@ -351,7 +353,7 @@
 
     <!--Sweet alert-->
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-    @await RenderSectionAsync("Scripts", required: false)
+    
 
 </body>
 </html>

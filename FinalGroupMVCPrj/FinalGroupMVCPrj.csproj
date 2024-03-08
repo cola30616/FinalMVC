@@ -30,4 +30,10 @@
     <PackageReference Include="NuGet.Packaging" Version="6.6.2" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Reference Include="ECPay.Payment.Integration">
+      <HintPath>..\..\Users\User\Desktop\ECPay.Payment.Integration.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+
 </Project>

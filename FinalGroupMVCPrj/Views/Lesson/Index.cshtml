@@ -1,6 +1,6 @@
 ﻿ @model IEnumerable<LessonCourseVM>
 <!-- Breadcrumb start -->
-<div class="breadcrumb-area bg-img bg-cover" data-bg-image="assets/images/breadcrumb-bg.jpg">
+<div class="breadcrumb-area bg-img bg-cover" data-bg-image="/images/breadcrumb-bg.jpg">
     <div class="container">
         <div class="content text-center">
             <h2>課程清單</h2>
@@ -248,21 +248,20 @@
                 <!--課程和分頁的code-->
                 @await Component.InvokeAsync("CourseItemView", new { page = 1, pageSize = 9 })
                 <nav class="pagination-nav mt-15 mb-25" data-aos="fade-up">
-                    <ul class="pagination justify-content-center">
-                        <!-- 第一頁-->
-                        <li class="page-item">
+                    <ul id="course-total-page" class="pagination justify-content-center">
+                        @* <li class="page-item">
                             <a class="page-link" href="courses.html" aria-label="Previous">
                                 <i class="far fa-angle-left"></i>
                             </a>
-                        </li>
-                        <li class="page-item active"><a class="page-link" href="courses.html">1</a></li>
-                        <li class="page-item"><a class="page-link" href="courses.html">2</a></li>                        
-                        <!--最後一頁-->
-                        <li class="page-item">
+                        </li> *@
+                        @* <li class="page-item active"><a class="page-link" href="courses.html">1</a></li>
+                        <li class="page-item"><a class="page-link" href="courses.html">2</a></li>
+                        <li class="page-item"><a class="page-link" href="courses.html">3</a></li> *@
+                        @* <li class="page-item">
                             <a class="page-link" href="courses.html" aria-label="Next">
                                 <i class="far fa-angle-right"></i>
                             </a>
-                        </li>
+                        </li> *@
                     </ul>
                 </nav>
             </div>
@@ -270,3 +269,7 @@
     </div>
 </div>
 <!-- Course-area end -->
+@section Scripts {
+    <!--篩選功能-->
+    <script src="~/js/FilterCourseList.js" asp-append-version="true"></script>
+}
