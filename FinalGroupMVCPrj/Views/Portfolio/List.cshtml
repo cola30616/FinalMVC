@@ -1,4 +1,6 @@
-﻿@using FinalGroupMVCPrj.Models.ViewModel
+﻿@using FinalGroupMVCPrj.Models.DTO
+@model IEnumerable<PortfolioListDTO>
+
 <!-- Breadcrumb start -->
 <div class="breadcrumb-area bg-img bg-cover" data-bg-image="/images/breadcrumb-bg.jpg">
     <div class="container">
@@ -34,7 +36,8 @@
                                 <li><i class="fal fa-tag"></i>App Development</li>
                             </ul>
                             <h4 class="title">
-                                法式馬卡龍
+                                @Html.DisplayFor(m => m.FirstOrDefault().FDescrpition) 
+                                @Html.DisplayFor(m => m.FirstOrDefault().FName)
                             </h4>
                             <p>
                                 每一顆馬卡龍充滿創意地搭配了不同口味的內餡，從濃郁的巧克力、香濃的咖啡，到清新的草莓、柔滑的榛果奶油，每一口都帶來一場層次豐富的味蕾冒險。
