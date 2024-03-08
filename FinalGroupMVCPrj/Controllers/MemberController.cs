@@ -20,6 +20,10 @@ namespace FinalGroupMVCPrj.Controllers
         [HttpGet]
         public IActionResult Setting()
         {
+            //if (TempData["Success"] != null)
+            //{
+            //    return Content(TempData["Success"].ToString());
+            //}
             int memberId = GetCurrentMemberId();
             if (memberId == 0) { return Content("系統異常"); };
             var dbMember = _context.TMembers.Include(m=>m.TMemberCitiesLists).Include(m=>m.TMemberWishFields).FirstOrDefault(m => m.FMemberId == memberId);

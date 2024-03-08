@@ -7,6 +7,7 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-select@1.13.14/dist/css/bootstrap-select.min.css">
     <link href="~/css/owenadd/light_prefixed.css" rel="stylesheet" asp-append-version="true" />
 }
+<partial name="_SweetAlertPartial" />
 <!-- Breadcrumb start -->
 <div class="breadcrumb-area bg-img bg-cover" data-bg-image="/images/owenadd/breadcrumb-bg.jpg">
     <div class="container">
@@ -62,13 +63,21 @@
                                             <img class="rounded-pill" src="/images/owenadd/line_logo.png" alt="LINE登入" border="0" />
                                         </button>
                                         <div class="text-center">
-                                            <button class="btn  btn-primary radius-sm " type="button" aria-label="button">連結</button>
+                                            @if(String.IsNullOrEmpty(Model.Member.FNote))
+                                            {
+                                                <a href="javascript:openPopupWindow()" class="btn  btn-primary radius-sm " aria-label="button">連結</a>
+                                            }
+                                            else
+                                            {
+                                                <a href="#" class="btn  btn-primary radius-sm " aria-label="button">取消連結</a>
+                                            }
+                                          
                                         </div>
                                         <button type="submit" style="  width: 60px; height: 60px;">
                                             <img class="rounded-pill border border-secondary" src="/images/owenadd/Google_logo.png" alt="Google登入" border="0" />
                                         </button>
                                         <div class="text-center">
-                                            <button class="btn  btn-primary radius-sm " type="button" aria-label="button">取消連結</button>
+                                            <button class="btn  btn-primary radius-sm " type="button" aria-label="button">連結</button>
                                         </div>
                                     </div>
                                 </div>
@@ -159,15 +168,6 @@
                                             <div class="form-group mb-30">
                                                 <label title="至多可選三個">想學習的領域</label>
                                                 <br />
-                                                <select asp-for="@Model.Cities" asp-items="ViewBag.CitySelectList" class="liveCityLcSelect " name="multiple" data-placeholder="至多可選三個" multiple>
-                                                </select>
-                                             
-                                            </div>
-                                        </div>
-                                        <div class="col-lg-6">
-                                            <div class="form-group mb-30">
-                                                <label title="至多可選三個">生活縣市</label>
-                                                <br />
                                                 <select class="wishField " name="multiple" data-placeholder="至多可選三個" multiple>
                                                     <option value=1>台北市</option>
                                                     <option value=2>新北市</option>
@@ -184,6 +184,16 @@
                                                 </select>
                                             </div>
                                         </div>
+                                        <div class="col-lg-6">
+                                            <div class="form-group mb-30">
+                                                <label title="至多可選三個">生活縣市</label>
+                                                <br />
+                                                <select asp-for="@Model.Cities" asp-items="ViewBag.CitySelectList" class="liveCityLcSelect " name="multiple" data-placeholder="至多可選三個" multiple>
+                                                </select>
+                                             
+                                            </div>
+                                        </div>
+                                        
                                     </div>
                                     <div class="d-flex justify-content-end"> <button class="btn btn-lg  btn-primary radius-sm " type="submit" aria-label="button" style=" white-space: nowrap">儲存</button></div>
                                 </div>
@@ -206,5 +216,25 @@
     <script src="~/js/owenscript/lc_select.js" asp-append-version="true"></script>
     <script src="~/js/owenscript/bundle.min.js"></script>
     <script src="~/js/owenscript/membersetting.js"></script>
+    <script type="text/javascript">
+        let LineLoginUrl = "@Url.Action("GetLineLoginUrl", "Home")";
+    </script>
+    <script type="text/javascript">
+
+        function openPopupWindow() {
+            $("#result").html("");//清空顯示結果
+            //另開popup window前，每次都取得新的LineLoginUrl(每次Url的state參數都不一樣)
+            $.ajax({
+                url: LineLoginUrl,
+                method: "get",
+                success: function (url) {
+                    // window.open(url, "self");
+                    location.href = url;
+                }, error: function (xhr) {
+                    console.log(xhr);
+                }
+            });
+        }
+    </script>
 
 }
