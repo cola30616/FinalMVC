@@ -330,6 +330,24 @@ namespace FinalGroupMVCPrj.Controllers
             return Content("失敗");
         }
 
+        public IActionResult LineLinkCancel()
+        {
+            int currentMemberId = GetCurrentMemberId();
+            if (currentMemberId == 0) { return BadRequest("目前沒有會員登入"); }
+                var toDeleteLineMember = _context.TMembers.SingleOrDefault(m => m.FMemberId == currentMemberId);
+                if (toDeleteLineMember == null) { return BadRequest("資料庫系統異常，找不到已登入會員"); }
+            toDeleteLineMember.FNote = null;
+            try
+            {
+                _context.TMembers.Update(toDeleteLineMember);
+                _context.SaveChanges();
+                return Ok();
+            }
+            catch (Exception e)
+            {
+                return BadRequest("資料庫系統異常，無法取消連結：" + e);
+            }
+        }
     }
     public class LineLoginToken
     {
