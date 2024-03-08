@@ -1,8 +1,10 @@
 ﻿using FinalGroupMVCPrj.Models;
+using FinalGroupMVCPrj.Models.DTO;
 using FinalGroupMVCPrj.Models.ViewModel;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using System.Drawing.Printing;
 
 namespace FinalGroupMVCPrj.Controllers
 {
@@ -47,15 +49,125 @@ namespace FinalGroupMVCPrj.Controllers
             return View(courseList);
         }
 
+        #region 
+        //API Calls
+
         // Get: {baseUrl}/Lesson/Search?={searchText}
+        // 搜尋功能API
         [HttpGet]
         public async Task<IActionResult> Search(string searchText)
-        {           
+        {
             var searchResults = await _context.TLessonCourses
-                                          .Where(c => c.FName.Contains(searchText))
+                                          .Where(c => c.FName.Contains(searchText) || c.FTeacher.FTeacherName.Contains(searchText))
+                                          .Select(data => new
+                                          {
+                                              name = data.FName,
+                                              id = data.FTeacherId,
+                                              teacherId = data.FTeacher.FTeacherId,
+                                              teacherName = data.FTeacher.FTeacherName,
+                                          })
                                           .ToListAsync();
             return Json(searchResults);
         }
+
+        //■ ==========================     子謙作業區      ==========================■
+        // GET: {baseUrl}/Lesson/CourseList
+        //課程篩選用API
+        [HttpGet]
+        public async Task<IActionResult> CourseList(CourseListDTO courseListDTO)
+        {
+            int pageSize = courseListDTO.PageSize ?? 10;
+            int skip = (courseListDTO.Page - 1) * pageSize;
+            // 全部資料
+            var query = _context.TLessonCourses.AsQueryable();
+            // 關鍵字查詢
+            if (!string.IsNullOrEmpty(courseListDTO.Keyword))
+            {
+                query = query.Where(course =>
+                    course.FName.Contains(courseListDTO.Keyword) ||                   
+                    course.FTeacher.FTeacherName.Contains(courseListDTO.Keyword) ||
+                    course.FSubject.FSubjectName.Contains(courseListDTO.Keyword) ||
+                    course.FSubject.FField.FFieldName.Contains(courseListDTO.Keyword)
+                );
+            }
+
+            if (courseListDTO.FieldId.HasValue)
+            {
+                query = query.Where(course => course.FSubject.FFieldId == courseListDTO.FieldId);
+            }
+
+            if (courseListDTO.SubjectId.HasValue)
+            {
+                query = query.Where(course => course.FSubjectId == courseListDTO.SubjectId);
+            }
+
+            if (courseListDTO.MinPrice.HasValue)
+            {
+                query = query.Where(course => course.FPrice >= courseListDTO.MinPrice);
+            }
+
+            if (courseListDTO.MaxPrice.HasValue)
+            {
+                query = query.Where(course => course.FPrice <= courseListDTO.MaxPrice);
+            }
+
+            //if (courseListDTO.MinRating.HasValue)
+            //{
+            //    query = query.Where(course => course.FSC >= courseListDTO.MinRating);
+            //}
+
+            //if (courseListDTO.MaxRating.HasValue)
+            //{
+            //    query = query.Where(course => course.FRating <= courseListDTO.MaxRating);
+            //}
+
+            if (!string.IsNullOrEmpty(courseListDTO.SortBy))
+            {
+                switch (courseListDTO.SortBy)
+                {                  
+                    case "newest":
+                        query = query.OrderByDescending(course => course.FLessonDate);
+                        break;
+                    //case "popular":
+                    //    // 在這裡根據你的定義添加最熱門課程的排序邏輯
+                    //    break;
+                    case "enrollment":
+                        query = query.OrderByDescending(course => course.FMaxPeople);
+                        break;
+                    //case "rating":
+                    //    query = query.OrderByDescending(course => course.FRating);
+                    //    break;
+                }
+            }
+            // 目前課程總數量
+            int totalCount = await query.CountAsync();
+
+            var courseList = await query
+                .Skip(skip)
+                .Take(pageSize)
+                .Select(course => new LessonCourseVM
+                {
+                    lessonCourse = course,
+                    teacherName = course.FTeacher.FTeacherName,
+                    subjectName = course.FSubject.FSubjectName,
+                    imageData = course.FPhoto,
+                    fieldName = course.FSubject.FField.FFieldName,
+                    fieldNumber = course.FSubject.FFieldId
+                })
+                .ToListAsync();
+
+            var response = new
+            {
+                totalCount,
+                totalPages = (int)Math.Ceiling((double)totalCount / pageSize),
+                currentPage = courseListDTO.Page,
+                pageSize,
+                courses = courseList
+            };
+
+            return Json(response);
+        }
+        #endregion
 
 
         //■ ==========================     翊妏 作業區      ==========================■
@@ -78,7 +190,7 @@ namespace FinalGroupMVCPrj.Controllers
 
 
         // 這邊使用viewComponent
-        public async Task<IViewComponentResult> InvokeAsync(int page = 1, int pageSize = 10)
+        public async Task<IViewComponentResult> InvokeAsync(int page = 1, int pageSize = 9)
         {
             var fields = await _context.TCourseFields.Select(u => u.FFieldName).ToListAsync();
             var courseList = await _context.TLessonCourses

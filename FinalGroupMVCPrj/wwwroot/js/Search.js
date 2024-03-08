@@ -10,12 +10,15 @@ const search = async (searchText) => {
 
         const data = await response.json();
         searchResults.innerHTML = "";
-
+        console.log(data)
         for (const item of data) {
-            const itemHTML = `<a onclick="clickHandler('${item.fName}')" class="list-group-item list-group-item-action" style="z-index: 100;margin-top: 0;" href="/Lesson/Details/${item.fLessonCourseId}">${item.fName}</a>`;
-            console.log(itemHTML)
+            const itemHTML = `<a onclick="clickHandler('${item.name}')" class="list-group-item list-group-item-action" style="z-index: 100;margin-top: 0;" href="/Lesson/Details/${item.id}">${item.name}</a>`;             
             searchResults.insertAdjacentHTML('beforeend', itemHTML);
-        }        
+        }
+        for (const item of data) {
+            const itemHTML = `<a onclick="clickHandler('${item.teacherName}')" class="list-group-item list-group-item-action" style="z-index: 100;margin-top: 0;" href="/Teacher/Info/${item.teacherId}">${item.teacherName}</a>`;
+            searchResults.insertAdjacentHTML('beforeend', itemHTML);
+        }   
     } catch (error) {
         console.error('Error:', error);
     }
