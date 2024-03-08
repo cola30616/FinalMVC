@@ -1,5 +1,7 @@
-﻿
-@{
+﻿@model IEnumerable< LessonListViewModel>
+
+
+    @{
     ViewData["Title"] = "LessonList";
     Layout = "~/Views/Shared/_LayoutTeacherAdmin.cshtml";
 }
@@ -52,23 +54,23 @@
 
 
 <!-- Table with stripped rows -->
-<table class="table datatable">
+<table class="datatable" id="lessonListTable">
     <thead>
         <tr>
-            <th>代號</th>
-            <th>名稱</th>
-            <th>領域</th>
-            <th>售價</th>
-            <th data-type="date" data-format="YYYY/DD/MM">日期</th>
-            <th>時數</th>
-            <th>人數上限</th>
-            <th>報名人數</th>
-            <th>狀態</th>
-            <th>授課場地</th>
+            <th>@Html.DisplayNameFor(m=>m.FCode)</th>
+            <th>@Html.DisplayNameFor(m => m.FName)</th>
+            <th> @Html.DisplayNameFor(m => m.FFiled)</th>
+            <th>@Html.DisplayNameFor(m => m.FPrice)</th>
+            <th>@Html.DisplayNameFor(m => m.FLessonDate)</th>
+            <th>@Html.DisplayNameFor(m => m.FTime)</th>
+            <th>@Html.DisplayNameFor(m => m.FMaxPeople)</th>
+            <th>@Html.DisplayNameFor(m => m.FRegPeople)</th>
+            <th>@Html.DisplayNameFor(m => m.FStatus)</th>
+            <th>@Html.DisplayNameFor(m => m.FVenueType)</th>
             <th></th>
         </tr>
     </thead>
-    <tbody>
+  @*   <tbody>
         <tr>
             <td>Unity Pugh</td>
             <td>9958</td>
@@ -166,7 +168,7 @@
             </td>
         </tr>
        
-    </tbody>
+    </tbody> *@
 </table>
 <!-- End Table with stripped rows -->
 
@@ -294,26 +296,7 @@
 
 @section Scripts{
     <script src="~/js/tinascript/lessonlist.js" asp-append-version="true"></script>
-    <script>
-        // datatable掛掉
-    // var dataTable; // 這段要記得加，先宣告datatable的變數
+    
 
-    // $(document).ready(function () {
-    //     loadDataTable();
-    // })
-
-    // function loadDataTable() {
-    //     // html 欄位跟 ajax 的欄位務必相同
-    //     dataTable = $('#tblData').DataTable({
-
-    //         // 新增中文版本
-    //         language: {
-    //             url: "https://cdn.datatables.net/plug-ins/2.0.1/i18n/zh-HANT.json"
-    //         }
-    //     });
-
-
-    // }
-    </script>
 
 }

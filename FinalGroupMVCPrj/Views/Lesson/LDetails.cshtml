@@ -130,27 +130,30 @@
                                                         <!--時數-->
                                                         <li class="d-inline-block icon-start font-sm">
                                                             <i class="fas fa-clock color-primary"></i>
-                                                            <span class="align-text">&nbsp;@Html.DisplayFor(m => m.FTime) hr</span>
+                                                            <span class="align-text">&nbsp;總時數:@Html.DisplayFor(m => m.FTime) hr</span>
                                                         </li>
                                                         <!--名額-->
                                                         <li class="d-inline-block icon-start font-sm">
                                                             <i class="fas fa-users color-primary"></i>
-                                                            <span class="align-text">@Html.DisplayFor(m => m.FMaxPeople)人</span>
+                                                            <span class="align-text">名額:@Html.DisplayFor(m => m.FMaxPeople)人</span>
                                                         </li>
                                                         <!--最低人數下限-->
                                                         <li class="d-inline-block icon-start font-sm">
                                                             <i class="fa-solid fa-less-than-equal fa-flip-horizontal color-primary"></i>
-                                                            <span class="align-text">&nbsp;@Html.DisplayFor(m => m.FMinPeople)人</span>
+                                                            <span class="align-text">&nbsp;開課人數下限:@Html.DisplayFor(m => m.FMinPeople)人</span>
                                                         </li>
                                                         <!--場地-->
                                                         <li class="icon-start font-sm">
                                                             <i class="fa-solid fa-location-dot color-primary"></i>
                                                             <span class="align-text">
                                                                 &nbsp;
-                                                                @(Model.FVenueType == true ? "實體" : "線上")
-                                                                &nbsp;
+                                                                場地類型:
+                                                                @(Model.FVenueType == true ? "實體" : "線上")                                                                
+                                                                &#124;
+                                                                場地名稱:
                                                                 @Html.DisplayFor(m => m.FVenueName)
-                                                                &nbsp;
+                                                                &#124;
+                                                                詳細地址:
                                                                 @{
                                                                     string alladdress = Model.FCity + Model.FDistrict + Model.FAddressDetail;
                                                                     @alladdress
@@ -165,16 +168,15 @@
                                                 </div>
                                                 <div class="col-lg-6">
                                                     <ul class="list-group list-unstyled mb-20">
-                                                        <!--開課日期-->@* @Html.DisplayFor(m => m.FLessonDate.Value.Date.ToString("yyyy-MM-dd")) *@
-                                                        <li class=" icon-start font-sm"><i class="fa-solid fa-calendar-days color-primary"></i>&nbsp; @Html.DisplayFor(m => m.FLessonDate)</li>
+                                                        <!--開課日期-->
+                                                        <li class=" icon-start font-sm"><i class="fa-solid fa-calendar-days color-primary"></i>&nbsp;開課日期: @Html.DisplayFor(m => m.FLessonDate)</li>
                                                         <!--開課時間-->
                                                         <li class="icon-start font-sm"><i class="fa-solid fa-hourglass color-primary"></i> 
-                                                            &nbsp;
+                                                            開課時間:
                                                              @Html.DisplayFor(m => m.FStartTime)~@Html.DisplayFor(m => m.FEndTime)</li> 
                                                         <!--報名截止日期-->
-                                                        <li class="icon-start font-sm"><i class="fa-regular fa-calendar-check color-primary"></i></i>&nbsp;   @Html.DisplayFor(m => m.FRegDeadline)</li>
-                                                        @* <!--開課日期-->
-                                                        <li class="icon-start font-sm"><i class="fa-solid fa-hourglass color-primary"></i> 10:30:00~11:30:00</li> *@
+                                                        <li class="icon-start font-sm"><i class="fa-regular fa-calendar-check color-primary"></i></i> 報名截止日期:@Html.DisplayFor(m => m.FRegDeadline)</li>
+                                                     
 
                                                     </ul>
                                                 </div>

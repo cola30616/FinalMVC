@@ -79,7 +79,7 @@ namespace FinalGroupMVCPrj.Controllers
                 FVenueType = querystring.FVenueType,
                 FRegPeople = _context.TOrderDetails.Where(x => x.FLessonCourseId == id).Count(),
                 FPrice = querystring.FPrice,
-                FTime = (querystring.FEndTime.Value.Hours - querystring.FStartTime.Value.Hours).ToString(),
+                FTime = ((querystring.FEndTime.Value.TotalHours - querystring.FStartTime.Value.TotalHours)).ToString(),
                 FMaxPeople = querystring.FMaxPeople,
                 FMinPeople = querystring.FMinPeople,
                 FVenueName = querystring.FVenueName,

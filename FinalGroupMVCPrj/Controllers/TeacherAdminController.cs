@@ -25,32 +25,27 @@ namespace FinalGroupMVCPrj.Controllers
         [HttpGet]
         public IActionResult LessonList( )
         {
+           
             return View();
         }
-
-        //[HttpGet]
-        //public IActionResult ListDataJson([FromBody] MemberFilterDTO? memberFilterData)
-        //{
-        //    var memberList = _context.TMembers.AsQueryable();
-        //    if (memberFilterData != null)
-        //    {
-
-        //    }
-        //    IEnumerable<MemberBasicViewModel> mBasicVMCollection =
-        //          new List<MemberBasicViewModel>(
-        //                    memberList.Select(m => new MemberBasicViewModel
-        //                    {
-        //                        MemberId = m.FMemberId,
-        //                        Email = m.FEmail,
-        //                        EmailVerification = m.FEmailVerification ? "已驗證" : "未驗證",
-        //                        RealName = m.FRealName,
-        //                        ShowName = m.FShowName,
-        //                        GetCampInfo = m.FGetCampaignInfo ? "是" : "否",
-        //                        RegisterDateTime = m.FRegisterDatetime.ToString("yyyy/MM/dd HH:mm"),
-        //                        Status = m.FStatus == true ? "正常" : "停權中"
-        //                    })); ;
-        //    return Json(new { data = mBasicVMCollection });
-        //}
+        
+        public IActionResult ListDataJson()
+        {
+            var lessons = _context.TLessonCourses.AsQueryable().Select(querystring => new LessonListViewModel
+            {
+                FCode = querystring.FCode,
+                FName = querystring.FName,
+                FFiled = _context.TCourseFields.Where(x => x.FFieldId == querystring.FSubject.FFieldId).Select(x => x.FFieldName).FirstOrDefault(),
+                FPrice = (int)querystring.FPrice,
+                FLessonDate = querystring.FLessonDate,
+                FMaxPeople = querystring.FMaxPeople,
+                FRegPeople = _context.TOrderDetails.Where(x => x.FLessonCourseId == querystring.FLessonCourseId).Count(),
+                FStatus = querystring.FStatus,
+                FTime = (querystring.FEndTime.Value.TotalHours - querystring.FStartTime.Value.TotalHours).ToString()+"hr",
+                FVenueType = querystring.FVenueType == true ? "實體" : "線上"
+            });
+            return Json(lessons);
+        }
 
         // GET: TeacherAdmin/LessonCreate
         [HttpGet]
