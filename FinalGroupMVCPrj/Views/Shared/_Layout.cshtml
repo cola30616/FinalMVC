@@ -318,6 +318,7 @@
     <!-- Footer-area end-->
     
     @await RenderSectionAsync("Scripts", required: false)
+
     <!--首頁搜尋bar-->
     <script src="~/js/search.js" asp-append-version="true"></script>
     <!-- Lazysizes --> 
@@ -343,7 +344,7 @@
     <!-- Main script JS -->
     <script src="~/js/script.js"></script>
     <!--搜尋功能-->
-    @* <script src="@Url.Content("~/js/Search.js")" asp-append-version="true"></script> *@
+    
 
     <!--根據登入狀態改變前台網頁-->
     <script src="~/js/loginstatus.js"></script>

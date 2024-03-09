@@ -1,4 +1,5 @@
-﻿let paginationAdded = false; // 確認分頁建立過了
+﻿let HtmlAdded = false; // 確認分頁建立過了
+//載入課程資料
 const loadCourses = async ( page = 1, pageSize = 9, keyword, fieldId, subjectId, minPrice, maxPrice, sortBy, sortType ) => {
     const urlParams = new URLSearchParams();
     urlParams.append('Page', page);
@@ -19,11 +20,12 @@ const loadCourses = async ( page = 1, pageSize = 9, keyword, fieldId, subjectId,
         throw new Error('Network response was not ok');
     }
     const data = await response.json();
-    console.log(data)
-
-     
-    // 如果分頁尚未新增過，則新增分頁
-    if (!paginationAdded) {
+    console.log(data)    
+    
+    // 如果分頁和篩選功能尚未新增過，就會新增一次
+    if (!HtmlAdded) {
+        // 新增篩選功能
+        createFilterHtml(data)
         const TotalPage = document.getElementById('course-total-page');
         for (let i = 1; i <= data.totalPages; i++) {
             const itemHTML = `<li class="page-item"><button class="page-link" onclick="pagingHandler(${i})">${i}</button></li>`;
@@ -34,9 +36,31 @@ const loadCourses = async ( page = 1, pageSize = 9, keyword, fieldId, subjectId,
    
    
 };
+
+const createFilterHtml = (data) => {
+    const fieldsSubjects = document.getElementById('fieldsSubjects');
+    for (const item of data.fieldWithSubjects) {
+        const { fieldId, fieldName, subjectNames } = item;
+        let subjectHTML = ''; // 初始化空的 HTML 字符串
+        // 使用 map 方法遍歷 subjectNames 陣列並生成對應的 HTML
+        subjectHTML = subjectNames.map(subjectName => {
+            return `<li><a class="icon-start" href="courses.html" title="link" target="_self"><i class="fal fa-angle-right"></i>${subjectName}<span class="qty"></span></a></li>`;
+        }).join(''); // 將生成的 HTML 字符串使用 join 方法合併成一個字符串
+        const itemHTML = `<li class="list-item list-dropdown">
+            <a class="category-toggle" href="#${fieldId}">${fieldName}<span class="qty"></span></a>
+            <ul class="menu-collapse">
+                ${subjectHTML}  
+            </ul>
+        </li>`;
+        fieldsSubjects.insertAdjacentHTML('beforeend', itemHTML);
+        console.log(itemHTML)
+           
+    }
+}
+
+// 分頁預設
 const pagingHandler = page => {    
-    loadCourses(page);
-    console.log('hi')
+    loadCourses(page);   
 }
 
 
