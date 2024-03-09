@@ -17,7 +17,7 @@ namespace FinalGroupMVCPrj.Models.ViewModels
         {
             IEnumerable<SelectListItem> JobSelectList = new List<SelectListItem>
                 {
-                new SelectListItem { Text = "未提供", Value = null },
+                new SelectListItem { Text = "未提供", Value = "未提供" },
                 new SelectListItem { Text = "自由業", Value = "自由業" },
      new SelectListItem  { Text = "學生", Value = "學生" },
 new SelectListItem { Text = "經營／人資", Value = "經營／人資" },
@@ -43,6 +43,22 @@ new SelectListItem { Text = "家事服務／清潔", Value = "家事服務／清
 new SelectListItem { Text = "其他新興產業", Value = "其他新興產業" }
                  };
             return JobSelectList;
+        }
+        public static IEnumerable<SelectListItem> GetEduSelectList()
+        {
+            IEnumerable<SelectListItem> EduSelectList = new List<SelectListItem>
+                {
+                new SelectListItem { Text = "未提供", Value = "未提供" },
+                new SelectListItem { Text = "博士", Value = "博士" },
+     new SelectListItem  { Text = "碩士", Value = "碩士" },
+     new SelectListItem  { Text = "大學", Value = "大學" },
+     new SelectListItem  { Text = "專科", Value = "專科" },
+     new SelectListItem  { Text = "高中", Value = "高中" },
+     new SelectListItem  { Text = "國中", Value = "國中" },
+     new SelectListItem  { Text = "國小", Value = "國小" },
+     new SelectListItem  { Text = "國小以下", Value = "國小以下" }
+                 };
+            return EduSelectList;
         }
     }
 }

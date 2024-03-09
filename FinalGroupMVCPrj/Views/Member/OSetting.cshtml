@@ -6,6 +6,13 @@
 @section Styles {
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-select@1.13.14/dist/css/bootstrap-select.min.css">
     <link href="~/css/owenadd/light_prefixed.css" rel="stylesheet" asp-append-version="true" />
+    <style>
+        input[type="date"]::-webkit-calendar-picker-indicator {
+            position: relative;
+            left: -200px; /* 負數代表向左偏移，可以根據需求調整 */
+            transform: scale(1.5);
+        }
+    </style>
 }
 <partial name="_SweetAlertPartial" />
 <!-- Breadcrumb start -->
@@ -13,7 +20,6 @@
     <div class="container">
         <div class="content text-center">
             <h2>帳號設定</h2>
-            <a href="http://localhost:4200/">4200</a>
         </div>
     </div>
 </div>
@@ -99,7 +105,35 @@
                                     <div class="col-lg-6">
                                         <div class="form-group mb-30">
                                             <label for="firstName">真實姓名 </label>
-                                            <input asp-for="@Model.Member.FRealName" class="form-control">
+@*                                             <input asp-for="@Model.Member.FRealName" class="form-control"> *@
+                                            <div title="*變更真實姓名需洽客服" class="pt-3" >@Model.Member.FRealName</div>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-6">
+                                        <div class="form-group mb-30">
+                                            @if (Model.Member.FBirthDate == null)
+                                            {
+                                                <label id="birthdateLbl" asp-for="@Model.Member.FBirthDate">
+                                                    生日<span class=""style="font-size:12px"> *儲存後欲變更需洽客服</span>
+                                                </label>
+                                                <input asp-for="@Model.Member.FBirthDate" type="date" class="form-control" >
+                                                <div id="afetrSaveBirth" title="*變更生日需洽客服" class="pt-3" style="display:none"></div>
+                                            }
+                                            else
+                                            {
+                                                <label asp-for="@Model.Member.FBirthDate">
+                                                    生日
+                                                </label>
+                                                <div title="*變更生日需洽客服" class="pt-3" >@(((DateTime)Model.Member.FBirthDate).ToString("yyyy/MM/dd"))</div>
+                                            }
+
+                                        </div>
+                                    </div>
+                         
+                                    <div class="col-lg-6">
+                                        <div class="form-group mb-30">
+                                            <label asp-for="@Model.Member.FPhone">電話</label>
+                                            <input asp-for="@Model.Member.FPhone" class="form-control">
                                         </div>
                                     </div>
                                     <div class="col-lg-6">
@@ -111,27 +145,10 @@
                                     <div class="col-lg-6">
                                         <div class="form-group mb-30">
                                             <label for="country">性別 </label>
-                                            <select class="niceselect form-control" id="country">
-                                                <option value=null>其他</option>
-                                                <option value=false>女</option>
-                                                <option value=true>男</option>
-                                            </select>
+                                            <select asp-for="@Model.Member.FGender" class="gender form-select p-3" asp-items="ViewBag.GenderSelectList"></select>
                                         </div>
                                     </div>
-                                    <div class="col-lg-6">
-                                        <div class="form-group mb-30">
-                                            <label asp-for="@Model.Member.FBirthDate">
-                                                生日
-                                            </label>
-                                            <input asp-for="@Model.Member.FBirthDate" type="date" class="form-control">
-                                        </div>
-                                    </div>
-                                    <div class="col-lg-6">
-                                        <div class="form-group mb-30">
-                                            <label asp-for="@Model.Member.FPhone">電話</label>
-                                            <input asp-for="@Model.Member.FPhone" class="form-control">
-                                        </div>
-                                    </div>
+
 
 
 
@@ -145,23 +162,13 @@
                                     <div class="col-lg-6">
                                         <div class="form-group mb-30">
                                             <label>職業類別 </label>
-                                            <select asp-for="@Model.Member.FJob" class="job niceselect form-control" asp-items="ViewBag.JobSelectList"></select>
+                                            <select asp-for="@Model.Member.FJob" class="job form-select p-3" asp-items="ViewBag.JobSelectList"></select>
                                         </div>
                                     </div>
                                     <div class="col-lg-6">
                                         <div class="form-group mb-30">
-                                            <label for="country">最高學歷 </label>
-                                            <select class="niceselect form-control" id="country">
-                                                <option value="未提供">未提供</option>
-                                                <option value="博士">博士</option>
-                                                <option value="碩士">碩士</option>
-                                                <option value="大學">大學</option>
-                                                <option value="專科">專科</option>
-                                                <option value="專科">專科</option>0
-                                                <option value="國中">國中</option>
-                                                <option value="國小">國小</option>
-                                                <option value="國小以下">國小以下</option>
-                                            </select>
+                                            <label>最高學歷 </label>
+                                            <select asp-for="@Model.Member.FEducation" class="education form-select p-3" asp-items="ViewBag.EduSelectList"></select>
                                         </div>
                                     </div>
                                     <div class="col-lg-6">
@@ -169,20 +176,8 @@
                                             <div class="form-group mb-30">
                                                 <label title="至多可選三個">想學習的領域</label>
                                                 <br />
-                                                <select class="wishField " name="multiple" data-placeholder="至多可選三個" multiple>
-                                                    <option value=1>台北市</option>
-                                                    <option value=2>新北市</option>
-                                                    <option value=3>基隆市</option>
-                                                    <option value=4>桃園市</option>
-                                                    <option value=5>新竹縣</option>
-                                                    <option selected value=6>新竹市</option>
-                                                    <option value=7>苗栗縣</option>
-                                                    <option value=8>台中市</option>
-                                                    <option value=9>彰化縣</option>
-                                                    <option value=10>南投市</option>
-                                                    <option value=11>嘉義縣</option>
-                                                    <option selected value=12>嘉義市</option>
-                                                </select>
+                                                <select asp-items="ViewBag.FieldSelectList" class="wishFieldLcSelect" name="multiple" data-placeholder="至多可選三個" multiple>
+                                                    </select>
                                             </div>
                                         </div>
                                         <div class="col-lg-6">
@@ -196,7 +191,7 @@
                                         </div>
                                         
                                     </div>
-                                    <div class="d-flex justify-content-end"> <a href="javascript:fetchMemberData()" class="btn btn-lg  btn-primary radius-sm " aria-label="button" style=" white-space: nowrap">儲存</a></div>
+                                    <div class="d-flex justify-content-end"> <a href="javascript:saveMemberData()" class="btn btn-lg  btn-primary radius-sm " aria-label="button" style=" white-space: nowrap">儲存</a></div>
                                 </div>
                             </div>
 
@@ -211,12 +206,9 @@
 </div>
 <!-- Checkout-area end -->
 @section Scripts {
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.bundle.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap-select@1.13.14/dist/js/bootstrap-select.min.js"></script>
-    <script src="~/js/owenscript/lc_select.js" asp-append-version="true"></script>
+    <script src="~/js/owenscript/lc_select.js" asp-append-version="true">//多選select的插件</script>
     <script src="~/js/owenscript/bundle.min.js"></script>
-    <script src="~/js/owenscript/membersetting.js"></script>
+    <script src="~/js/owenscript/membersetting.js" asp-append-version="true"></script>
     <script type="text/javascript">
         let LineLoginUrl = "@Url.Action("GetLineLoginUrl", "Home")";
     </script>
@@ -280,28 +272,89 @@
             }
         }
     </script>
+    <script src="
+https://cdn.jsdelivr.net/npm/moment@2.30.1/moment.min.js
+    ">//格式化日期的插件</script>
         <script >
+            //儲存基本資訊和其他資訊
         const memberDetailVm = {
             Member: {
-                FShowName: "test"
+                FMemberId: @Model.Member.FMemberId,
+                FShowName: "",
+                FBirthDate: null,
+                FPhone: "",
+                FGender: null,
+                FJob: null,
+                FEducation:null
             },
-            Cities: new Array(),
+            Cities: [],
             WishFields: []
         };
-        document.querySelectorAll('.liveCityLcSelect').forEach(function (el) {
-        el.addEventListener('change', (e) => {
-                console.log(e.target.selectedOptions)
-        });
-    });
-
+        function saveMemberData(){
+            Swal.fire({
+                title: "確認儲存帳號資訊?",
+                text: ``,
+                icon: "info",
+                showCancelButton: true,
+                confirmButtonColor: "#30C2EC",
+                cancelButtonColor: "#d33",
+                confirmButtonText: "確定",
+                cancelButtonText: "取消"
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    fetchMemberData();
+                }
+            })
+        }
         async function fetchMemberData() {
-            const memberId = @Model.Member.FMemberId;
-            //基本資訊填值
 
+            //基本資訊填值
+            //生日
+            const birthdate = document.getElementById('Member_FBirthDate');
+            if (birthdate !== null) {
+                if (birthdate.value !== '') {
+                    memberDetailVm.Member.FBirthDate = birthdate.value;
+                }
+            }
+            //顯示名稱
+            const showName = document.getElementById('Member_FShowName');
+            memberDetailVm.Member.FShowName = showName.value;
+            //電話
+            const phone = document.getElementById('Member_FPhone');
+            memberDetailVm.Member.FPhone = phone.value;
+            //性別
+            const gender = document.getElementById('Member_FGender');
+            for (const option of gender.selectedOptions) {
+                let val = null
+              if(option.value !==null){
+                  if(option.value ==="false"){
+                      val = false;
+                    } else if (option.value === "true") {
+                      val = true;
+                  }
+              }
+                memberDetailVm.Member.FGender = val;
+            }
             //其他資訊填值
+            //職業類別
+            const job = document.getElementById('Member_FJob');
+            for (const option of job.selectedOptions) {
+                memberDetailVm.Member.FJob = option.value
+            }
+            //最高學歷
+            const education = document.getElementById('Member_FEducation');
+            for (const option of education.selectedOptions) {
+                memberDetailVm.Member.FEducation = option.value
+            }
+            //生活縣市
             const citySelectedOptions = document.querySelector('.liveCityLcSelect').selectedOptions;
             for (const option of citySelectedOptions) {
                 memberDetailVm.Cities.push(option.value);
+            }
+            //想學習的領域
+            const wishFieldSelectedOptions = document.querySelector('.wishFieldLcSelect').selectedOptions;
+            for (const option of wishFieldSelectedOptions) {
+                memberDetailVm.WishFields.push(option.value);
             }
 
             try {
@@ -312,7 +365,22 @@
                     "headers": { "Content-Type": "application/json" }
                 });
                 if (response.ok) {
-               
+                    Swal.fire({
+                        position: "center",
+                        icon: "success",
+                        title: "資料儲存成功",
+                        showConfirmButton: false,
+                        timer: 1500
+                    });
+                    const afetrSaveBirth = document.getElementById('afetrSaveBirth');
+                    if (birthdate !== null&&birthdate.value!=="") {
+                        birthdate.style.display ='none'
+                        afetrSaveBirth.style.display = 'block';
+                        afetrSaveBirth .innerHTML= moment(birthdate.value).format('YYYY/MM/DD');
+                        document.getElementById('birthdateLbl').innerHTML = "生日";
+                    }
+                    navShowName.innerHTML = showName.value;
+                    userShowName.innerHTML = showName.value;
                     };
             } catch (error) {
                 Swal.fire({
