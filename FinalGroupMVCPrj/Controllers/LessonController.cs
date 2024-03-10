@@ -23,6 +23,18 @@ namespace FinalGroupMVCPrj.Controllers
         public async Task<IActionResult> Index()
         {
             var fields = await _context.TCourseFields.Select(u => u.FFieldName).ToListAsync();
+            // 取得課程領域科目資訊
+            var fieldWithSubjects = _context.TCourseSubjects
+             .GroupBy(subject => subject.FFieldId) // 根據 FieldId 對 Subject 進行分組
+             .Select(group => new CourseSubjectData
+             {
+                 FieldId = group.Key, // 取得分組的 FieldId
+                 FieldName = _context.TCourseFields.FirstOrDefault(field => field.FFieldId == group.Key) != null ?
+                            _context.TCourseFields.First(field => field.FFieldId == group.Key).FFieldName :
+                            null, // 如果結果不為 null，則取得相應的 FieldName，否則設為 null
+                 SubjectNames = group.Select(subject => subject.FSubjectName).ToList() // 取得每個分組的 SubjectName
+             })
+             .ToList();
             var courseList = await _context.TLessonCourses
             .Include(course => course.FTeacher) // 加載 Teacher 導航屬性
             .Select(course => new LessonCourseVM
@@ -45,6 +57,7 @@ namespace FinalGroupMVCPrj.Controllers
                 fields = fields,
                 fieldName = course.FSubject.FField.FFieldName,
                 fieldNumber = course.FSubject.FFieldId,
+                fieldWithSubjects = fieldWithSubjects
             })
             .ToListAsync();
             return View(courseList);
@@ -71,7 +84,7 @@ namespace FinalGroupMVCPrj.Controllers
             return Json(searchResults);
         }
 
-        //■ ==========================     子謙作業區      ==========================■
+       
         // GET: {baseUrl}/Lesson/CourseList
         //課程篩選用API
         [HttpGet]
@@ -79,18 +92,7 @@ namespace FinalGroupMVCPrj.Controllers
         {
             int pageSize = courseListDTO.PageSize ?? 9;
             int skip = (courseListDTO.Page - 1) * pageSize;
-            // 取得課程領域科目資訊
-            var fieldWithSubjects = _context.TCourseSubjects
-             .GroupBy(subject => subject.FFieldId) // 根據 FieldId 對 Subject 進行分組
-             .Select(group => new
-             {
-                 FieldId = group.Key, // 取得分組的 FieldId
-                 FieldName = _context.TCourseFields.FirstOrDefault(field => field.FFieldId == group.Key) != null ?
-                            _context.TCourseFields.First(field => field.FFieldId == group.Key).FFieldName :
-                            null, // 如果結果不為 null，則取得相應的 FieldName，否則設為 null
-                 SubjectNames = group.Select(subject => subject.FSubjectName).ToList() // 取得每個分組的 SubjectName
-             })
-             .ToList();
+            
             // 全部資料
             var query = _context.TLessonCourses.AsQueryable();
             // 關鍵字查詢
@@ -176,7 +178,7 @@ namespace FinalGroupMVCPrj.Controllers
                 currentPage = courseListDTO.Page,
                 pageSize,
                 courses = courseList,
-                fieldWithSubjects
+                
             };
 
             return Json(response);

@@ -37,7 +37,22 @@
                                 <div id="categories" class="collapse show">
                                     <div class="accordion-body mt-20 scroll-y">
                                         <ul id="fieldsSubjects" class="list-group">
-                                            <!-- Add class .list-dropdown for dropdown-menu -->                                          
+                                            <!-- Add class .list-dropdown for dropdown-menu --> 
+                                            @foreach(var course in Model.Take(1))
+                                            {
+                                                @foreach(var detail in course.fieldWithSubjects)
+                                                {
+                                                    <li class="list-item list-dropdown">
+                                                        <a class="category-toggle" href="#@(detail.FieldId)">@(detail.FieldName)</a>
+                                                        <ul class="menu-collapse">
+                                                            @foreach(var subject in detail.SubjectNames)
+                                                            {
+                                                                <li><a class="icon-start" href="courses.html" title="link" target="_self"><i class="fal fa-angle-right"></i>@(subject)</a></li>
+                                                            }                                                                                                                   
+                                                        </ul>
+                                                    </li>
+                                                }                                               
+                                            }                                           
                                         </ul>
                                     </div>
                                 </div>
@@ -45,28 +60,32 @@
                             <div class="widget widget-type py-20">
                                 <h5 class="title">
                                     <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#topic" aria-expanded="true" aria-controls="topic">
-                                        Topic
+                                        猜猜你喜歡的項目
                                     </button>
                                 </h5>
                                 <div id="topic" class="collapse show">
                                     <div class="accordion-body mt-20 scroll-y">
                                         <ul class="list-group custom-checkbox">
-                                            <li>
-                                                <input class="input-checkbox" type="checkbox" name="checkbox" id="checkbox1" value="">
-                                                <label class="form-check-label" for="checkbox1"><span>Python</span><span class="qty">(67)</span></label>
-                                            </li>
-                                            <li>
-                                                <input class="input-checkbox" type="checkbox" name="checkbox" id="checkbox2" value="">
-                                                <label class="form-check-label" for="checkbox2"><span>JavaScript</span><span class="qty">(32)</span></label>
-                                            </li>
-                                            <li>
-                                                <input class="input-checkbox" type="checkbox" name="checkbox" id="checkbox3" value="">
-                                                <label class="form-check-label" for="checkbox3"><span>Machine Learning</span><span class="qty">(13)</span></label>
-                                            </li>
-                                            <li>
-                                                <input class="input-checkbox" type="checkbox" name="checkbox" id="checkbox4" value="">
-                                                <label class="form-check-label" for="checkbox4"><span>Wordpress</span><span class="qty">(64)</span></label>
-                                            </li>
+                                            @{
+                                                var checkIndex = 1;
+                                            }
+                                            @foreach (var course in Model.Take(1))
+                                            {
+                                                    
+                                                @foreach (var detail in course.fieldWithSubjects.Take(3))
+                                                {
+                                                            @foreach (var subject in detail.SubjectNames)
+                                                            {                                                               
+                                                                <li>
+                                                                    <input class="input-checkbox" type="checkbox" name="checkbox@(checkIndex)" id="checkbox@(checkIndex)" value="">
+                                                                    <label class="form-check-label" for="checkbox@(checkIndex)"><span>@(subject)</span></label>
+                                                                </li>
+                                                            checkIndex++;
+                                                            }                                                     
+                                                }
+                                            }
+                                           
+                                           
                                         </ul>
                                     </div>
                                 </div>
@@ -74,7 +93,7 @@
                             <div class="widget widget-price py-20">
                                 <h5 class="title">
                                     <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#price" aria-expanded="true" aria-controls="price">
-                                        Price
+                                      價格
                                     </button>
                                 </h5>
                                 <div id="price" class="collapse show">
@@ -82,13 +101,13 @@
                                         <div class="row gx-sm-3">
                                             <div class="col-md-6">
                                                 <div class="form-group mb-20">
-                                                    <label class="mb-1">Minimum</label>
+                                                    <label class="mb-1">最低</label>
                                                     <input class="form-control size-md" type="number" name="min" id="min">
                                                 </div>
                                             </div>
                                             <div class="col-md-6">
                                                 <div class="form-group mb-20">
-                                                    <label class="mb-1">Maximum</label>
+                                                    <label class="mb-1">最高</label>
                                                     <input class="form-control size-md" type="number" name="max" id="max">
                                                 </div>
                                             </div>
@@ -97,7 +116,7 @@
                                             <div class="price-slider" data-range-slider='filterPriceSlider'></div>
                                             <div class="price-value">
                                                 <span>
-                                                    Price:
+                                                    價格
                                                     <span class="filter-price-range" data-range-value='filterPriceSliderValue'></span>
                                                 </span>
                                             </div>
@@ -108,7 +127,7 @@
                             <div class="widget widget-ratings py-20">
                                 <h5 class="title">
                                     <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#sort" aria-expanded="true" aria-controls="sort">
-                                        Ratings
+                                        評價
                                     </button>
                                 </h5>
                                 <div id="sort" class="collapse show">
