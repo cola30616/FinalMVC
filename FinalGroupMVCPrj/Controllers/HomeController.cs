@@ -14,6 +14,7 @@ using Azure.Core;
 using System.Collections.Specialized;
 using System.Net;
 using System.Text;
+using Microsoft.AspNetCore.Http;
 
 
 
@@ -82,13 +83,20 @@ namespace FinalGroupMVCPrj.Controllers
 
         [HttpPost]
         public IActionResult Login(TMember member)
-        {
+            {
             var dbMember = _context.TMembers
-                .Where(m => m.FEmail == member.FEmail && m.FPassword == member.FPassword)
+                .Where(m => m.FEmail == member.FEmail)
                 .SingleOrDefault();
             if (dbMember == null)
             {
-                return BadRequest("帳號密錯誤");
+                return BadRequest("帳號不存在");
+            }
+            //測試解密驗證
+            bool pwCheck = BCrypt.Net.BCrypt.EnhancedVerify(member.FPassword, dbMember.FPassword);
+            //
+            if (!pwCheck)
+            {
+                return BadRequest("密碼錯誤");
             }
             else if ((bool)!dbMember.FEmailVerification)
             {
@@ -110,6 +118,8 @@ namespace FinalGroupMVCPrj.Controllers
                 return Ok();
             }
         }
+
+        //舊版同步登入
         [HttpPost]
         public IActionResult Login2(TMember member)
         {
@@ -140,6 +150,8 @@ namespace FinalGroupMVCPrj.Controllers
                 return RedirectToAction("Index");
             }
         }
+        
+        //登出
         public IActionResult Logout()
         {
             HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
@@ -301,63 +313,8 @@ namespace FinalGroupMVCPrj.Controllers
                         return StatusCode((int)statusCode);
                     }
                 }
-
-
-                
-
-                //    //方案總管>參考>右鍵>管理Nuget套件 搜尋 System.IdentityModel.Tokens.Jwt 來安裝
-                //    var jst = new System.IdentityModel.Tokens.Jwt.JwtSecurityToken(id_token);
-                //    LineUserProfile user = new LineUserProfile();
-                //    //↓自行決定要從id_token的Payload中抓什麼user資料
-                //    user.userId = jst.Payload.Sub;
-                //    user.displayName = jst.Payload["name"].ToString();
-                //    user.pictureUrl = jst.Payload["picture"].ToString();
-                //    if (jst.Payload.ContainsKey("email") && !string.IsNullOrEmpty(Convert.ToString(jst.Payload["email"])))
-                //    {//有包含email，使用者有授權email個資存取，並且用戶的email有值
-                //        user.email = jst.Payload["email"].ToString();
-                //    }
-
-
-                //    string access_token = tokenObj.access_token;
-                //    ViewBag.access_token = access_token;
-                //    #region 接下來是為了抓用戶的statusMessage狀態消息，如果你不想要可以省略不發出下面的Request
-
-                //    //Social API v2.1 Getting user profiles
-                //    //https://developers.line.biz/en/docs/social-api/getting-user-profiles/
-                //    //取回User Profile
-                //    string profile_url = "https://api.line.me/v2/profile";
-
-
-                //    HttpWebRequest req = (HttpWebRequest)WebRequest.Create(profile_url);
-                //    req.Headers.Add("Authorization", "Bearer " + access_token);
-                //    req.Method = "GET";
-                //    //API回傳的字串
-                //    string resStr = "";
-                //    //發出Request
-                //    using (HttpWebResponse res = (HttpWebResponse)req.GetResponse())
-                //    {
-                //        using (StreamReader sr = new StreamReader(res.GetResponseStream(), Encoding.UTF8))
-                //        {
-                //            resStr = sr.ReadToEnd();
-                //        }//end using  
-                //    }
-
-
-
-                //    LineUserProfile userProfile = JsonConvert.DeserializeObject<LineUserProfile>(resStr);
-                //    user.statusMessage = userProfile.statusMessage;//補上狀態訊息
-
-                //    #endregion
-
-                //    ViewBag.user = JsonConvert.SerializeObject(user, new JsonSerializerSettings
-                //    {
-                //        ReferenceLoopHandling = ReferenceLoopHandling.Ignore,
-                //        Formatting = Formatting.Indented
-                //    });
-
-
             }//end if 
-            return Content("失敗");
+            return StatusCode(500,"系統異常");
         }
         [HttpPost]
         public IActionResult LineLinkCancel( int id)

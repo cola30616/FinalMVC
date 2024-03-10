@@ -60,11 +60,11 @@
                         </div>
                  </div>
              
-                    <form asp-controller="Home" asp-action="Login" >
+                    <form id="pageForm"  >
                             <div class="row">
                             <div class="signupTogle col-12" style="display:none">
                                 <div class="form-group mb-20">
-                                    <input asp-for="FRealName" class="form-control" placeholder="真實姓名">
+                                    <input asp-for="FRealName" class="pageFormText form-control" placeholder="真實姓名">
                                     <span >註冊後可設定顯示名稱</span>
                                     <br />
                                     <span asp-validation-for="FRealName" class="text-danger"></span>
@@ -74,28 +74,29 @@
                                 <div class="col-12">
                                     <div class="form-group mb-20">
                                     
-                                    <input asp-for="FEmail" class="form-control" placeholder="電子信箱" value="caixiaofang@email.com">
+                                    <input asp-for="FEmail" class="pageFormText form-control" placeholder="電子信箱" value="caixiaofang@email.com">
                                     <span asp-validation-for="FEmail" class="text-danger"></span>
                                     </div>
                                 </div>
                                 <div class="col-12">
                                     <div class="form-group mb-20">
                                         <div class="position-relative">
-                                        <input asp-for="FPassword" type="password" class="form-control" placeholder="密碼" value="123456">
+                                        <input asp-for="FPassword" type="password" class="pageFormText form-control" placeholder="密碼" value="">
                                             <span class="show-password-field">
                                             <i class="show-icon"></i>
                                             </span>
-                                        <span asp-validation-for="FPassword" class="text-danger"></span>
+                                        <span asp-validation-for="FPassword" class=" text-danger"></span>
                                         </div>
                                     </div>
                                 <div class="signupTogle col-12" style="display:none">
                                     <div class="form-group mb-20" >
                                         <div class="position-relative">
-                                            <input type="password" class="form-control" placeholder="確認密碼" value="">
+                                            <input type="password" class="pageFormText form-control" placeholder="確認密碼" value="">
                                             <span class="show-password-field">
                                                 <i class="show-icon"></i>
                                             </span>
                                             <span class="text-danger"></span>
+                                            <span id="confirmPW" class=" text-danger"></span>
                                         </div>
                                     </div>
                                 </div>
@@ -105,14 +106,14 @@
                                         <label class="form-check-label" for="checkbox3"><span> 我想收到優惠活動通知</span></label>
                                     </div>
                                     <div class=" custom-checkbox mb-10 font-sm">
-                                        <input class="input-checkbox" type="checkbox" name="checkbox" id="checkbox4" value="">
+                                        <input class="input-checkbox" type="checkbox" name="checkbox" id="agreeCheckbox" value="">
                                         <label class="form-check-label" for="checkbox4"><span> 我同意來學樂平台的<span class="color-primary" style="cursor: pointer"> 服務條款＆隱私政策</span></span></label>
                                     </div>
                                 </div>
                             </div>
 
                             <div class="text-center mt-10">
-                                <a href="javascript:checkSubmitBtn()" id="submitBtn" class="btn btn-lg btn-primary rounded-pill w-100" type="submit" aria-label="Login">登入</a>
+                                <button typeof="submit" id="submitBtn" class="btn btn-lg btn-primary rounded-pill w-100" type="submit" aria-label="Login">登入</button>
                             </div>
                             <div class=" loginTogle" style="display:block">
                                 <div class=" d-flex justify-content-between flex-wrap gap-2 mt-30" >
@@ -139,79 +140,47 @@
     <script src="https://cdn.jsdelivr.net/npm/platform@1.3.6/platform.js"></script>
 <script>
         document.addEventListener('DOMContentLoaded', function () {
+
             const signupTogle = document.querySelectorAll(".signupTogle");
             const loginTogle = document.querySelectorAll(".loginTogle");
             const toggleToSignup = document.getElementById("toggleToSignup")
             const toggleToLogin = document.getElementById("toggleToLogin")
             const submitBtn = document.getElementById("submitBtn")
+            const FEmail = document.getElementById("FEmail")
+            const FPassword = document.getElementById("FPassword")
             toggleToSignup.addEventListener("click", () => {
                 ToSignup();
+                clearForm()
             });
 
             toggleToLogin.addEventListener("click", () => {
                 ToLogin();
-
-                // 使用 Bowser 解析用户代理字符串
-                //const userAgent = navigator.userAgent;
-                //console.log(userAgent);
-                //const platformInfo = platform.parse();
-
-                // 获取浏览器、操作系统等信息
-                //    const browserName = platformInfo.name;
-                //    const browserVersion = platformInfo.version;
-                //    const osName = platformInfo.os.family;
-                //    const product = platformInfo.product;
-                //    console.log('Browser:', browserName, 'Version:', browserVersion);
-                //    console.log('Operating System:', osName);
-                //    console.log(platformInfo);
-                //    if ('geolocation' in navigator) {
-                //        navigator.geolocation.getCurrentPosition(
-                //            successCallback,
-                //            errorCallback,
-                //            { enableHighAccuracy: true }
-                //        );
-                //    } else {
-                //        console.log('不支援Geolocation API');
-                //    }
-
-                //    function successCallback(position) {
-                //        const latitude = position.coords.latitude;
-                //        const longitude = position.coords.longitude;
-
-                //        //網站資訊https://nominatim.org/release-docs/develop/api/Reverse/
-                //        const apiUrl = `https://nominatim.openstreetmap.org/reverse?format=json&lat=${latitude}&lon=${longitude}&zoom=12`;
-                //        fetch(apiUrl)
-                //            .then(response => response.json())
-                //            .then(data => {
-                //                console.log(data.address.suburb);
-                //            })
-                //            .catch(error => {
-                //                console.error('錯誤：', error);
-                //            });
-                //    }
-
-                //    function errorCallback(error) {
-                //        // 获取位置信息失败
-                //        console.error('获取位置信息失败', error.message);
-                //    }
-                ////取得ip資訊
-                //    fetch('https://ipinfo.io/json')
-                //        .then(response => response.json())
-                //        .then(data => {
-                //            console.log(data);
-                //        })
-                //        .catch(error => console.error('取得IP錯誤', error));
-
+                clearForm()
             });
 
+            document.getElementById("pageForm").addEventListener('submit', handleFormSubmit);
+            function handleFormSubmit(event) {
+                event.preventDefault(); // 防止表單直接提交
+                checkSubmitBtn();
+            }
 
+
+            function clearForm() {
+                document.getElementById("pageForm").reset()
+                var spanElements = document.querySelectorAll('span[data-valmsg-for]');
+
+                // 清空每個元素的 innerHTML
+                //本來裡面會放生成的錯誤訊息
+                spanElements.forEach(function (spanElement) {
+                    spanElement.innerHTML = '';
+                });
+            }
 
             function ToSignup() {
                 signupTogle.forEach((element) => {
                     element.style.display = "block";
                 });
                 loginTogle.forEach((element) => {
-                    console.log("hi2");
                     element.style.display = "none";
                 });
                 submitBtn.innerHTML = "註冊"
@@ -250,13 +219,165 @@
         }
     </script>
     <script>
+
         function checkSubmitBtn() {
             if (submitBtn.innerHTML == "登入") {
-                alert('登入')
-
+                fetchLogin()
             } else if (submitBtn.innerHTML == "註冊") {
-                alert('註冊')
+                fetchSignUp();
             }  
+        }
+               let toSavePlatformInfo = "";
+               let toSaveGeoInfo1 = "";
+                let toSaveGeoInfo2 = "";
+                let toSaveIPInfo = "";
+
+       async function fetchLogin(){
+           const loginFormData = new FormData(document.querySelector('#pageForm'));
+           const response = await fetch('@Url.Content("~/Home/Login")', {
+                body: loginFormData,
+                method:'POST'
+           })
+           if (response.ok) {
+               // 使用platform.js解析瀏覽器和OS系統資訊
+               //取得內容範例：Chrome 122.0.0.0 on Windows 10 64-bit
+               const userAgent = navigator.userAgent;
+               console.log(userAgent);
+               const platformInfo = platform.parse();
+               toSavePlatformInfo = platformInfo.description;
+               try {
+                   await Promise.all([
+                       fetchLocationInfo(),
+                       fetchIPInfo()
+                   ]);
+                   let toSentGeoInfo = "";
+                   if (toSaveGeoInfo1 === "") {
+                       toSentGeoInfo = toSaveGeoInfo2;
+                   } else {
+                       toSentGeoInfo = toSaveGeoInfo1;
+                   }
+                   (async () => {
+                       const response = await fetch(`@Url.Content("~/Member/SaveLoginLog")?ip=${toSaveIPInfo}&geoInfo=${toSentGeoInfo}&browerNOs=${toSavePlatformInfo}`, {
+                           method: 'POST'
+                       })
+
+                   })();
+                   
+                   location.href = '@Url.Content("~/Home/Index")'
+
+               } catch (err) {
+                   alert(err)
+               }
+           } else {
+            const errorMsg = await response.text();
+                Swal.fire({
+                    position: "center",
+                    icon: "error",
+                    title: errorMsg,
+                    showConfirmButton: false,
+                    timer: 1500
+                });
+           }
+        }
+
+        // 取得地理位置資訊
+        async function fetchLocationInfo() {
+            return new Promise((resolve, reject) => {
+                if ('geolocation' in navigator) {
+                    navigator.geolocation.getCurrentPosition(
+                        successGeoCallback,
+                        errorGeoCallback,
+                        { enableHighAccuracy: true }
+                    );
+                } else {
+                    reject('不支援 Geolocation API');
+                }
+
+                function successGeoCallback(position) {
+                    const latitude = position.coords.latitude;
+                    const longitude = position.coords.longitude;
+
+                    // 網站資訊https://nominatim.org/release-docs/develop/api/Reverse/
+                    const apiUrl = `https://nominatim.openstreetmap.org/reverse?format=json&lat=${latitude}&lon=${longitude}&zoom=12`;
+
+                    fetch(apiUrl)
+                        .then(response => response.json())
+                        .then(data => {
+                            console.log(data);
+                            const address = data.address;
+                            toSaveGeoInfo1 = `${address.country}/${address.city}/${address.suburb}`;
+                            console.log(toSaveGeoInfo1);
+
+                            // 在此處呼叫 resolve()
+                            resolve();
+                        })
+                        .catch(error => {
+                            console.error('錯誤：', error);
+                            // 如果有錯誤，也應該在此處呼叫 resolve()
+                            resolve();
+                        });
+                }
+
+
+                function errorGeoCallback(error) {
+                                // 获取位置信息失败
+                                switch (error.code) {
+                                    case error.PERMISSION_DENIED:
+                                        console.log('使用者拒絕提供位置資訊');
+                                        break;
+                                    case error.POSITION_UNAVAILABLE:
+                                        console.log('無法取得使用者位置');
+                                        break;
+                                    case error.TIMEOUT:
+                                        console.log('取得位置逾時');
+                                        break;
+                                    case error.UNKNOWN_ERROR:
+                                        console.log('發生未知錯誤');
+                                        break;
+                                }
+                    resolve();
+                }
+            });
+        }
+
+        // 取得 IP 資訊
+        async function fetchIPInfo() {
+            return new Promise((resolve, reject) => {
+                fetch('https://ipinfo.io/json')
+                    .then(response => response.json())
+                    .then(data => {
+                        // 其他邏輯...
+                        toSaveIPInfo = data.ip
+                        toSaveGeoInfo2 = `${data.country}/${data.region}/${data.city}`
+                        console.log(toSaveIPInfo)
+                        console.log(toSaveGeoInfo2)
+                        resolve();
+                    })
+                    .catch(error => {
+                        console.error('取得 IP 錯誤', error);
+                        reject(error);
+                    });
+            });
+        }
+
+        async function fetchSignUp() {
+            const signUpFormData = new FormData(document.querySelector('#pageForm'));
+            const response = await fetch('@Url.Content("~/Member/SignUp")', {
+                body: signUpFormData,
+                method: 'POST'
+            })
+            if (response.ok) { 
+                alert('註冊成功');
+            }else{
+                const errorMsg = await response.text();
+                Swal.fire({
+                    position: "center",
+                    icon: "error",
+                    title: errorMsg,
+                    showConfirmButton: false,
+                    timer: 1500
+                });
+            }
         }
 
     </script>

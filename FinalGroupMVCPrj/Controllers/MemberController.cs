@@ -1,5 +1,6 @@
 ﻿using FinalGroupMVCPrj.Models;
 using FinalGroupMVCPrj.Models.ViewModels;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
@@ -215,5 +216,65 @@ namespace FinalGroupMVCPrj.Controllers
                 return StatusCode(500, "系統異常：" + ex);
             }
         }
+        // POST: Member/SaveLoginLog
+        //動作簡述：儲存登入資訊
+        [HttpPost]
+        public async Task<IActionResult> SaveLoginLog(string ip, string geoInfo, string browerNOs)
+        {
+            try
+            {
+                int memberId = await Task.Run(() => GetCurrentMemberId());
+                if (memberId == 0) { return StatusCode(500, "登入系統異常"); }
+                TMemberLoginLog memberLoginLog = new TMemberLoginLog
+                {
+                    FMemberId = memberId,
+                    FLoginDateTime = DateTime.Now,
+                    FLoginIp = ip,
+                    FLoginGeoInfo = geoInfo,
+                    FLoginBrowerNos = browerNOs,
+                };
+                _context.TMemberLoginLogs.Add(memberLoginLog);
+                await _context.SaveChangesAsync();
+                return Ok();
+            }catch (Exception ex)
+            {
+                    return StatusCode(500, $"系統異常：{ex}");
+             }
+        }
+
+        [AllowAnonymous]
+        // POST: Member/SignUp
+        //動作簡述：儲存登入資訊
+        [HttpPost]
+        public async Task<IActionResult> SignUp(TMember member)
+        {
+            try
+            {
+                var dbMember = _context.TMembers.SingleOrDefault(m=> m.FEmail == member.FEmail);
+                if(dbMember != null) { return BadRequest("此信箱已有人使用"); }
+                string beforePassword = member.FPassword;
+                string afterPassword = BCrypt.Net.BCrypt.EnhancedHashPassword(beforePassword, 13);
+                TMember newMember = new TMember
+                {
+                    FRealName = member.FRealName,
+                    FShowName = member.FRealName,
+                    FPassword = afterPassword,
+                    FRegisterDatetime = DateTime.Now,
+                    FEmail = member.FEmail,
+                    FEmailVerification = false,
+                    FGetCampaignInfo = member.FGetCampaignInfo,
+                    FQualifiedTeacher = false,
+                    FStatus = true
+                };
+                _context.TMembers.Add(newMember);
+                await _context.SaveChangesAsync();
+                return Ok("註冊成功請驗證信箱");
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, $"系統異常：{ex}");
+            }
+        }
+
     }
 }
