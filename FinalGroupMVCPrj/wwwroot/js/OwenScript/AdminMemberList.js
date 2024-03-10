@@ -1,5 +1,4 @@
 ﻿let dataTable; // 這段要記得加，先宣告datatable的變數
-
 $(document).ready(function () {
     loadDataTable();
 })
