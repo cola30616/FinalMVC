@@ -91,6 +91,7 @@ namespace FinalGroupMVCPrj.Controllers
             {
                 return BadRequest("帳號不存在");
             }
+
             //測試解密驗證
             bool pwCheck = BCrypt.Net.BCrypt.EnhancedVerify(member.FPassword, dbMember.FPassword);
             //

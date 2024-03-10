@@ -91,12 +91,12 @@
                                 <div class="signupTogle col-12" style="display:none">
                                     <div class="form-group mb-20" >
                                         <div class="position-relative">
-                                            <input type="password" class="pageFormText form-control" placeholder="確認密碼" value="">
+                                            <input id="confirmPW" type="password" class="pageFormText form-control" placeholder="確認密碼" value="">
                                             <span class="show-password-field">
                                                 <i class="show-icon"></i>
                                             </span>
                                             <span class="text-danger"></span>
-                                            <span id="confirmPW" class=" text-danger"></span>
+                                            <span id="cPwMsg" class=" text-danger"></span>
                                         </div>
                                     </div>
                                 </div>
@@ -106,9 +106,10 @@
                                         <label class="form-check-label" for="checkbox3"><span> 我想收到優惠活動通知</span></label>
                                     </div>
                                     <div class=" custom-checkbox mb-10 font-sm">
-                                        <input class="input-checkbox" type="checkbox" name="checkbox" id="agreeCheckbox" value="">
-                                        <label class="form-check-label" for="checkbox4"><span> 我同意來學樂平台的<span class="color-primary" style="cursor: pointer"> 服務條款＆隱私政策</span></span></label>
+                                        <input class="input-checkbox" type="checkbox" name="checkbox" id="agreeCheckbox" >
+                                        <label class="form-check-label" for="agreeCheckbox"><span> 我同意來學樂平台的<span class="color-primary" style="cursor: pointer"> 服務條款＆隱私政策</span></span></label>
                                     </div>
+                                    <span id="cAgreeMsg" class=" text-danger"></span>
                                 </div>
                             </div>
 
@@ -139,15 +140,13 @@
     }
     <script src="https://cdn.jsdelivr.net/npm/platform@1.3.6/platform.js"></script>
 <script>
-        document.addEventListener('DOMContentLoaded', function () {
-
             const signupTogle = document.querySelectorAll(".signupTogle");
             const loginTogle = document.querySelectorAll(".loginTogle");
             const toggleToSignup = document.getElementById("toggleToSignup")
             const toggleToLogin = document.getElementById("toggleToLogin")
             const submitBtn = document.getElementById("submitBtn")
-            const FEmail = document.getElementById("FEmail")
-            const FPassword = document.getElementById("FPassword")
+
+            //切換登入和註冊表單
             toggleToSignup.addEventListener("click", () => {
                 ToSignup();
                 clearForm()
@@ -196,7 +195,26 @@
                 submitBtn.innerHTML = "登入"
             };
 
-        });
+            //判斷確認密碼是否一致
+        document.getElementById('confirmPW').addEventListener('change', checkConfirmPW);
+    function checkConfirmPW(e) {
+        let pw = document.getElementById('FPassword').value;
+        if (e.target.value !== pw) {
+            document.getElementById('cPwMsg').innerHTML = "密碼不一致";
+        } else {
+                document.getElementById('cPwMsg').innerHTML = "";
+                }
+    }
+
+    //判斷是否按下同意
+        document.getElementById('agreeCheckbox').addEventListener('change', checkAgree);
+        function checkAgree(e) {
+            if (e.target.checked == true) {
+                document.getElementById('cAgreeMsg').innerHTML = "";
+            } else {
+                document.getElementById('cAgreeMsg').innerHTML = "請閱讀並同意服務條款＆隱私政策";
+            }
+        }
 </script>
     <script type="text/javascript">
         let LineLoginUrl = "@Url.Action("GetLineLoginUrl", "Home")";
@@ -220,10 +238,30 @@
     </script>
     <script>
 
+        //判斷提交登入還是註冊
         function checkSubmitBtn() {
             if (submitBtn.innerHTML == "登入") {
+                if (document.getElementById("FPassword").value === "") { return; }
+                if (document.getElementById("FEmail").value === "") { return; }
                 fetchLogin()
             } else if (submitBtn.innerHTML == "註冊") {
+                if (document.getElementById("FPassword").value === "") { return; }
+                if (document.getElementById("FEmail").value === "") { return; }
+                if (document.getElementById("FRealName").value === "") { return; }
+                const confirmPW = document.getElementById("confirmPW")
+                if (confirmPW.value === "") { return; }
+                let pw = document.getElementById('FPassword').value;
+                if (confirmPW.value !== pw) {
+                    document.getElementById('cPwMsg').innerHTML = "密碼不一致";
+                    return;
+                }
+                if (document.getElementById("cPwMsg").innerHTML !== "") { return; }
+
+                const agreeCheckbox = document.getElementById("agreeCheckbox")
+                if (agreeCheckbox.checked == false) {
+                    document.getElementById('cAgreeMsg').innerHTML = "請閱讀並同意服務條款＆隱私政策";
+                    return;
+                }
                 fetchSignUp();
             }  
         }
@@ -231,7 +269,7 @@
                let toSaveGeoInfo1 = "";
                 let toSaveGeoInfo2 = "";
                 let toSaveIPInfo = "";
-
+//提交登入
        async function fetchLogin(){
            const loginFormData = new FormData(document.querySelector('#pageForm'));
            const response = await fetch('@Url.Content("~/Home/Login")', {
@@ -246,6 +284,7 @@
                const platformInfo = platform.parse();
                toSavePlatformInfo = platformInfo.description;
                try {
+                   //等待方法執行完
                    await Promise.all([
                        fetchLocationInfo(),
                        fetchIPInfo()
@@ -275,7 +314,7 @@
                     icon: "error",
                     title: errorMsg,
                     showConfirmButton: false,
-                    timer: 1500
+                    timer: 1700
                 });
            }
         }
@@ -360,6 +399,7 @@
             });
         }
 
+//提交註冊
         async function fetchSignUp() {
             const signUpFormData = new FormData(document.querySelector('#pageForm'));
             const response = await fetch('@Url.Content("~/Member/SignUp")', {
@@ -370,6 +410,24 @@
                 alert('註冊成功');
             }else{
                 const errorMsg = await response.text();
+                //切換註冊到登入
+                if (errorMsg == "此信箱已有人使用") {
+                    const email = document.getElementById("FEmail").value;
+                    ToLogin();
+                    clearForm();
+                    $('html,body').scrollTop(0);
+                    document.getElementById("FEmail").value = email;
+                    Swal.fire({
+                        position: "center",
+                        icon: "info",
+                        title: "此信箱已註冊，請嘗試登入",
+                        showConfirmButton: false,
+                        timer: 1500
+                    });
+                   
+                    return;
+                }
+
                 Swal.fire({
                     position: "center",
                     icon: "error",
