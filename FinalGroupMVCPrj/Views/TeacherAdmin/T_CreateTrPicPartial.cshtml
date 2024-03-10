@@ -10,7 +10,7 @@
             <form asp-controller="TeacherAdmin" asp-action="TAddtrimage" id="addForm" method="post" enctype="multipart/form-data">
                 <div class="modal-body" style=" display:flex ;">
                     <!-- 拖曳圖片 -->
-                    <div id="divdropzone" style="text-align: center;padding:100px; border: 2px dashed  #ADADAD;">
+                    <div id="divdropzone" action="uploadimage" class="dropzone" style="text-align: center;padding:100px; border: 2px dashed  #ADADAD;">
                         <!-- 自訂dropzonejs的預設文字 -->
                         <div class="dz-message" data-dz-message><span>Your Custom Message</span></div>
                         <img src="~/images/TonyAdd/image_upload_icon.png" /><br>
@@ -40,6 +40,9 @@
                             <input asp-for="FImageName" class="form-control" id="floatingInput" placeholder="">
                             <!-- 標題1  -->
                             <label for="floatingInput">標題</label>
+                        </div>
+                        <div class="form-floating mb-3">
+                            <input class="form-control" id="iptdataURL" >
                         </div>
                     </div>
                 </div>

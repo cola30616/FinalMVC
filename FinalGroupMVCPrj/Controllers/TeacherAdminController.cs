@@ -197,7 +197,18 @@ namespace FinalGroupMVCPrj.Controllers
             {
                 file.CopyTo(fs);
             }
-            return RedirectToAction("TrelatedPic");
+            var responseData = new
+            {
+                success = true,
+                message = "檔案上傳成功",
+                fileName = fileName,
+                filePath = filePath
+                // 其他您需要傳遞的資訊
+            };
+
+            // 回傳 JSON 資料
+            return Json(responseData);
+            //return RedirectToAction("TrelatedPic");
         }
         public byte[] ConvertIFormFileToByteArray(IFormFile file)
         {
