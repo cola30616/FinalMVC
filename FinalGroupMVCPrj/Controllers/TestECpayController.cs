@@ -13,7 +13,7 @@ namespace FinalGroupMVCPrj.Controllers
     {
         public IActionResult Index2()
         {
-            var orderId = "ecpay20240309191035";
+            var orderId = "ecpay20240309191038";
             var order = new Dictionary<string, string>
     {
         //綠界需要的參數
@@ -22,8 +22,8 @@ namespace FinalGroupMVCPrj.Controllers
         { "TotalAmount",  "100"},
         { "TradeDesc",  "測試"},
         { "ItemName",  "商品名稱測試"},
-        { "ReturnURL",  "https://9826-118-166-35-124.ngrok-free.app/TestECpay/ECpayResult"},
-         { "OrderResultURL",  "https://9826-118-166-35-124.ngrok-free.app/TestECpay/ECpayResult2"},
+        { "ReturnURL",  "https://localhost:7031/Login"},
+         { "ClientBackURL",  "https://localhost:7031"},
         { "MerchantID",  "3002607"},
         { "PaymentType",  "aio"},
         { "ChoosePayment",  "Credit"},
