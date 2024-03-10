@@ -81,7 +81,37 @@ namespace FinalGroupMVCPrj.Controllers
         }
 
         [HttpPost]
-        public IActionResult Login(TMember member, string? actionName, string? controllerName, object? routeValues)
+        public IActionResult Login(TMember member)
+        {
+            var dbMember = _context.TMembers
+                .Where(m => m.FEmail == member.FEmail && m.FPassword == member.FPassword)
+                .SingleOrDefault();
+            if (dbMember == null)
+            {
+                return BadRequest("帳號密錯誤");
+            }
+            else if ((bool)!dbMember.FEmailVerification)
+            {
+                return BadRequest("信箱未驗證");
+            }
+            else
+            {
+                var claims = new List<Claim>{
+                  new Claim("MemberId", dbMember.FMemberId.ToString()),
+                new Claim(ClaimTypes.Name, dbMember.FShowName),
+                new Claim(ClaimTypes.Email, dbMember.FEmail)
+                };
+                if (dbMember.FQualifiedTeacher)
+                {
+                    claims.Add(new Claim(ClaimTypes.Role, "Teacher"));
+                }
+                var claimsIdentity = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);
+                HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, new ClaimsPrincipal(claimsIdentity));
+                return Ok();
+            }
+        }
+        [HttpPost]
+        public IActionResult Login2(TMember member)
         {
             var dbMember = _context.TMembers
                 .Where(m => m.FEmail == member.FEmail && m.FPassword == member.FPassword)
