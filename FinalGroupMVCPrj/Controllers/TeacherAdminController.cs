@@ -111,9 +111,9 @@ namespace FinalGroupMVCPrj.Controllers
         
         // POST: TeacherAdmin/TAddtrimage
         //動作簡述：新增單張圖片
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> TAddtrimage(TTeacherImage trimg)
+        //[HttpPost]
+        //[ValidateAntiForgeryToken]
+        public async Task<IActionResult> TAddtrimage(TTeacherImage trimg,IFormFile file)
         {
             trimg.FTeacherId= GetCurrentTeacherId();
             trimg.FImageSize = null;

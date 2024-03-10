@@ -231,7 +231,12 @@
     </script>
     <script>
         Dropzone.options.divdropzone = {
+            // 設置為 false，禁用自動處理佇列
+            autoProcessQueue: false,
+
             init: function () {
+
+
                 // this.on("success", function (file, response) {
                 //     // 在上傳成功後執行的動作
                 //     console.log(response); // 這裡的 response 就是伺服器回傳的資料
@@ -243,6 +248,7 @@
                 //     //console.log(dataURL);
                 // });
                 this.on("addedfile", function (file) {
+                    file.accepted = true;
                     // 在檔案被加入佇列時執行的動作
                     var reader = new FileReader();
                     reader.onload = function (e) {
@@ -252,6 +258,14 @@
                     };
                     reader.readAsDataURL(file);
                 });
+
+                document.getElementById('inpSubmit').addEventListener('click', function () {
+                     var myDropzone = Dropzone.forElement(".dropzone");
+                     myDropzone.processQueue();
+                    //divdropzone.processQueue(); // 手動觸發上傳
+
+                });
+     
             }
         };
     </script>

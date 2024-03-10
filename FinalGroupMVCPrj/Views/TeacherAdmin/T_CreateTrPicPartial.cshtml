@@ -7,10 +7,10 @@
                 <h5 class="modal-title" id="exampleModalLabel">上傳圖片</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
-            <form asp-controller="TeacherAdmin" asp-action="TAddtrimage" id="addForm" method="post" enctype="multipart/form-data">
+            <form asp-controller="TeacherAdmin" asp-action="TAddtrimage" id="addForm"  enctype="multipart/form-data">
                 <div class="modal-body" style=" display:flex ;">
                     <!-- 拖曳圖片 -->
-                    <div id="divdropzone" action="uploadimage" class="dropzone" style="text-align: center;padding:100px; border: 2px dashed  #ADADAD;">
+                    <div id="divdropzone" action="TAddtrimage" class="dropzone" style="text-align: center;padding:100px; border: 2px dashed  #ADADAD;">
                         <!-- 自訂dropzonejs的預設文字 -->
                         <div class="dz-message" data-dz-message><span>Your Custom Message</span></div>
                         <img src="~/images/TonyAdd/image_upload_icon.png" /><br>
