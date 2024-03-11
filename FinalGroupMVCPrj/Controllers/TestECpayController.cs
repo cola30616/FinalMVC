@@ -13,7 +13,7 @@ namespace FinalGroupMVCPrj.Controllers
     {
         public IActionResult Index2()
         {
-            var orderId = "ecpay20240309191038";
+            var orderId = "ecpay20240309191048";
             var order = new Dictionary<string, string>
     {
         //綠界需要的參數
@@ -23,7 +23,7 @@ namespace FinalGroupMVCPrj.Controllers
         { "TradeDesc",  "測試"},
         { "ItemName",  "商品名稱測試"},
         { "ReturnURL",  "https://localhost:7031/Login"},
-         { "ClientBackURL",  "https://localhost:7031"},
+         { "OrderResultURL",  "https://localhost:7031/TestECpay/ECpayResult"},
         { "MerchantID",  "3002607"},
         { "PaymentType",  "aio"},
         { "ChoosePayment",  "Credit"},
@@ -33,9 +33,13 @@ namespace FinalGroupMVCPrj.Controllers
             order["CheckMacValue"] = GetCheckMacValue(order);
             return View(order);
         }
-        public IActionResult ECpayResult(JObject info)
+        public IActionResult ECpayResult(int RtnCode, string MerchantTradeNo)
         {
-            return Content("");
+            if(RtnCode == 1)
+            {
+                return Content("交易成功" + MerchantTradeNo);
+            }
+            return Content("交易失敗" + MerchantTradeNo);
         }        
 
         public IActionResult ECpayResult2(JObject info)
