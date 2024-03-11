@@ -99,7 +99,10 @@
         //寄出驗證信的函式
         async function fetchResendEmail() {
             const email = document.getElementById("toResendEmail").innerText
-            const response = await fetch(`@Url.Content("~/Member/SendVetifyEmail")?email=${email}`, {
+            resentBtn.disabled = true;
+            isButtonDisabled = true;
+            resentBtn.textContent = "寄送信件中...";
+                    const response = await fetch(`@Url.Content("~/Member/SendVetifyEmail")?email=${email}`, {
                 method: 'POST'
             })
             if (!response.ok) {
