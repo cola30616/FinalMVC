@@ -396,14 +396,35 @@ namespace FinalGroupMVCPrj.Controllers
         {
             JwtSecurityTokenHandler tokenHandler = new JwtSecurityTokenHandler();
             JwtSecurityToken jwtToken = tokenHandler.ReadJwtToken(token);
-            //string exp = jwtToken.Claims.FirstOrDefault(c => c.Type == "exp")?.Value;
-            if(jwtToken.ValidTo < DateTime.UtcNow)
+            string? email = jwtToken.Claims.FirstOrDefault(c => c.Type == "email")?.Value;
+            if (email == null) { return StatusCode(500, "系統異常"); }
+
+            if (jwtToken.ValidTo < DateTime.UtcNow)
             {
-                return Content("過期");
+                TempData["Error"] = "連結已失效，請登入重新取得驗證信！";
+                return RedirectToAction("Login", "Home");
             }
             else
             {
-                return Content("有效");
+                try
+                {
+                    var dbMember = _context.TMembers.SingleOrDefault(m => m.FEmail == email);
+                    if (dbMember == null) { return StatusCode(500, "資料庫系統異常1" ); }
+                    if (dbMember.FEmailVerification == true) {
+                        TempData["Error"] = "此會員已驗證信箱，請嘗試登入";
+                        return RedirectToAction("Login", "Home");
+                    }
+                    dbMember.FEmailVerification = true;
+                    _context.TMembers.Update(dbMember);
+                    _context.SaveChanges();
+                        TempData["Success"] = "信箱驗證成功！";
+                    return RedirectToAction("Login", "Home");
+
+                }
+                catch (Exception ex)
+                {
+                    return StatusCode(500, "資料庫系統異常2"+ex);
+                }
             }
             //return Content(jwtToken.ValidTo.ToString() + "   " + DateTime.UtcNow.ToString());
         }

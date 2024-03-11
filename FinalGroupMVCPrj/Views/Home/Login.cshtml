@@ -2,7 +2,7 @@
 @{
     ViewData["Title"] = "Login";
 }
-
+<partial name="_SweetAlertPartial" />
 <!-- Breadcrumb start -->
 <div class="breadcrumb-area bg-img bg-cover" data-bg-image="/images/owenadd/來學樂登入banner.png">
         <div class="container">
@@ -261,8 +261,9 @@
                 if (agreeCheckbox.checked == false) {
                     document.getElementById('cAgreeMsg').innerHTML = "請閱讀並同意服務條款＆隱私政策";
                     return;
-                }
+                }                
                 fetchSignUp();
+
             }  
         }
                let toSavePlatformInfo = "";
@@ -309,15 +310,22 @@
                }
            } else {
             const errorMsg = await response.text();
-                Swal.fire({
+            Swal.fire({
                     position: "center",
                     icon: "error",
                     title: errorMsg,
                     showConfirmButton: false,
                     timer: 1700
-                });
+            }).then(()=>{
+                   if (errorMsg === "信箱未驗證") {
+                       const reSendEmail = document.getElementById("FEmail").value;
+                       location.href = `@Url.Content("~/Home/VertifyEmail")?email=${reSendEmail}`;
+                   }
+               })
            }
         }
+
+        //
 
         // 取得地理位置資訊
         async function fetchLocationInfo() {
@@ -401,6 +409,14 @@
 
 //提交註冊
         async function fetchSignUp() {
+            //等待fetch結果時顯示
+            Swal.fire({
+                position: 'center',
+                icon: 'info',
+                title: '註冊中...',
+                showConfirmButton: false,
+                allowOutsideClick: false
+            });
             const signUpFormData = new FormData(document.querySelector('#pageForm'));
             const response = await fetch('@Url.Content("~/Member/SignUp")', {
                 body: signUpFormData,
@@ -410,6 +426,7 @@
                 await fetchSendVertifyEmail();
             }else{
                 const errorMsg = await response.text();
+                Swal.close();
                 //切換註冊到登入
                 if (errorMsg == "此信箱已有人使用") {
                     const email = document.getElementById("FEmail").value;
@@ -444,6 +461,7 @@
             const response = await fetch(`@Url.Content("~/Member/SendVetifyEmail")?email=${email}`, {
                 method: 'POST'
             })
+            Swal.close();
             if (response.ok) {
                 Swal.fire({
                     position: "center",
@@ -451,7 +469,7 @@
                     title: "註冊成功，請至信箱查看驗證信",
                     showConfirmButton: false,
                     timer: 1500
-                });
+                }).then(() => { location.href = "@Url.Action("Index", "Home")"; })
             }else{
                 const errorMsg = await response.text();
                 Swal.fire({

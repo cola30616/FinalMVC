@@ -268,12 +268,20 @@ namespace FinalGroupMVCPrj.Controllers
                             SingleOrDefault(m => m.FNote == userId);
                         int currentMemberId = GetCurrentMemberId();
                         //沒有綁定的人要登入
-                        if (dbMember == null && currentMemberId == 0) { return Content("尚未綁定Line帳號"); }
+                        if (dbMember == null && currentMemberId == 0) 
+                        {
+                            TempData["Error"] = "尚未綁定的Line帳號，請登入後前往綁定";
+                            return RedirectToAction("Login", "Home");
+                        }
                         //已登入，在帳號設定頁面請求綁定
                         else if (dbMember == null && currentMemberId != 0)
                         {
                             var toAddLineMember = _context.TMembers.SingleOrDefault(m => m.FMemberId == currentMemberId);
-                            if (toAddLineMember == null) { return Content("資料庫系統異常，找不到已登入會員"); }
+                            if (toAddLineMember == null) 
+                            {
+                                TempData["Error"] = "資料庫系統異常，找不到已登入會員";
+                                return RedirectToAction("Login", "Home");
+                            }
                             toAddLineMember.FNote = userId;
                             try
                             {
@@ -284,12 +292,13 @@ namespace FinalGroupMVCPrj.Controllers
                             }
                             catch (Exception e)
                             {
-                                return Content("資料庫系統異常，無法綁定" + e);
+                                TempData["Error"] = "資料庫系統異常，無法綁定" + e;
+                                return RedirectToAction("Login", "Home");
                             }
                         }
                         else if (dbMember != null && currentMemberId != 0)
                         {
-                            TempData["Error"] = "此Line帳號已其他帳號綁定！";
+                            TempData["Error"] = "此Line帳號已有其他帳號綁定！";
                             return RedirectToAction("Setting", "Member");
                         }
                             var claims = new List<Claim>{
