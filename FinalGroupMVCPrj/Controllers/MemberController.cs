@@ -6,8 +6,16 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.AspNetCore.Mvc.Routing;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.IdentityModel.Tokens;
 using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
+using NuGet.Common;
+using System.IdentityModel.Tokens.Jwt;
+using System.Security.Claims;
+using System.Security.Cryptography;
+using System.Text;
 
 namespace FinalGroupMVCPrj.Controllers
 {
@@ -15,10 +23,12 @@ namespace FinalGroupMVCPrj.Controllers
     {
         private readonly LifeShareLearnContext _context;  //資料庫
         private readonly IMailService _mailService;
-        public MemberController(LifeShareLearnContext context, IMailService _MailService)
+        private readonly IConfiguration _configuration;
+        public MemberController(LifeShareLearnContext context, IMailService _MailService, IConfiguration configuration)
         {
             _context = context;
             _mailService = _MailService;
+            _configuration = configuration;
         }
         // GET: Member/Setting
         //動作簡述：回傳設定會員資訊的頁面
@@ -284,6 +294,118 @@ namespace FinalGroupMVCPrj.Controllers
         public bool SendEmail(MailData mailData)
         {
             return _mailService.SendMail(mailData);
+        }
+        [AllowAnonymous]
+        [HttpPost]
+        public IActionResult SendVetifyEmail(string email)
+        {
+            var dbMember = _context.TMembers.SingleOrDefault(m=> m.FEmail == email);
+            if (dbMember == null) { return BadRequest("此信箱尚未註冊"); }
+            if (dbMember.FEmailVerification == true) { return BadRequest("此信箱已驗證，請前往登入"); }
+            string? emailVetifyURL = GetEmailVetifyURL(email);
+            if (string.IsNullOrEmpty(emailVetifyURL)) { return StatusCode(500,"系統異常：產生驗證連結失敗"); }
+            MailData mailData = new MailData
+            {
+                EmailToId = email,
+                EmailSubject = "來學樂帳號電子信箱驗證",
+                EmailBody = $@"
+    <html>
+    <head>
+        <style>
+            .btn {{
+                display: inline-block;
+                font-weight: 400;
+                text-align: center;
+                white-space: nowrap;
+                vertical-align: middle;
+                user-select: none;
+                border: 1px solid transparent;
+                padding: 0.375rem 0.75rem;
+                font-size: 1rem;
+                line-height: 1.5;
+                border-radius: 0.25rem;
+                transition: color 0.15s ease-in-out, background-color 0.15s ease-in-out, border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+            }}
+            .btn-primary {{
+                color: #fff;
+                background-color: #30C2EC;
+                border-color: #30C2EC;
+            }}
+        </style>
+    </head>
+    <body>
+        <h2>請點擊此按鈕驗證您的信箱：</h2>
+        <a href='{emailVetifyURL}' class='btn btn-primary'>驗證信箱</a>
+<p>*此連結將在一分鐘後失效</p>
+    </body>
+    </html>
+",
+                EmailToName = email
+            };
+            if (SendEmail(mailData))
+            {
+                return Ok();
+            }
+            else
+            {
+                return StatusCode(500, "系統異常：寄送驗證信失敗");
+            }
+        }
+
+
+        [AllowAnonymous]
+        public string GetEmailVetifyURL(string email)
+        {
+            int? memberId = _context.TMembers.SingleOrDefault(m => m.FEmail == email)?.FMemberId;
+            if (memberId == null) { return null; }
+            //int? memberId = 6;
+            if (memberId == null) { return null; }
+            var claims = new List<Claim>
+{
+    new Claim(JwtRegisteredClaimNames.Email, email),
+     new Claim("memberId", memberId.ToString())
+};
+
+            var expirationTime = DateTime.UtcNow.AddMinutes(1);
+            var creds = new SigningCredentials(new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_configuration["JWT:KEY"])), SecurityAlgorithms.HmacSha256);
+            var jwt = new JwtSecurityToken(
+                claims: claims,
+                expires: expirationTime,
+                signingCredentials: creds
+            );
+            var token = new JwtSecurityTokenHandler().WriteToken(jwt);
+            //string orignal = Url.Action("VertifyEmail", "Member",new { token = token });
+            string orignal = Url.Action(action: "VertifyEmail", controller: "Member", new { token = token }, protocol: "https");
+            //string orignal = token;
+
+            return orignal;
+        }
+
+        [AllowAnonymous]
+        public IActionResult TestGetURL(string email)
+        {
+            string url = GetEmailVetifyURL(email)??"";
+            //JwtSecurityTokenHandler tokenHandler = new JwtSecurityTokenHandler();
+            //JwtSecurityToken jwtToken = tokenHandler.ReadJwtToken(url);
+            //string exp = jwtToken.Claims.FirstOrDefault(c => c.Type == "exp")?.Value;
+            //    return Content(jwtToken.ValidTo.ToString()+"   " + DateTime.UtcNow.ToString());
+            return Content(url);
+        }
+        [AllowAnonymous]
+        public IActionResult VertifyEmail(string token)
+        {
+            JwtSecurityTokenHandler tokenHandler = new JwtSecurityTokenHandler();
+            JwtSecurityToken jwtToken = tokenHandler.ReadJwtToken(token);
+            //string exp = jwtToken.Claims.FirstOrDefault(c => c.Type == "exp")?.Value;
+            if(jwtToken.ValidTo < DateTime.UtcNow)
+            {
+                return Content("過期");
+            }
+            else
+            {
+                return Content("有效");
+            }
+            //return Content(jwtToken.ValidTo.ToString() + "   " + DateTime.UtcNow.ToString());
         }
     }
 }

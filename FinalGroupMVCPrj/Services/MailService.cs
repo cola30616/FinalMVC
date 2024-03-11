@@ -31,7 +31,7 @@ namespace FinalGroupMVCPrj.Services
                     emailMessage.Subject = mailData.EmailSubject;
 
                     BodyBuilder emailBodyBuilder = new BodyBuilder();
-                    emailBodyBuilder.TextBody = mailData.EmailBody;
+                    emailBodyBuilder.HtmlBody = mailData.EmailBody;
 
                     emailMessage.Body = emailBodyBuilder.ToMessageBody();
                     //this is the SmtpClient from the Mailkit.Net.Smtp namespace, not the System.Net.Mail one
