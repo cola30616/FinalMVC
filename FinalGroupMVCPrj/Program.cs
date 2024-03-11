@@ -1,10 +1,14 @@
+using FinalGroupMVCPrj;
 using FinalGroupMVCPrj.Data;
 using FinalGroupMVCPrj.Models;
+using FinalGroupMVCPrj.Services;
+using MailKit;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.CookiePolicy;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc.Authorization;
 using Microsoft.EntityFrameworkCore;
+
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -39,6 +43,9 @@ builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationSc
 
 //全部的控制器預設要有登入狀態，除非[AllowAnonymous]
 builder.Services.AddMvc(options => options.Filters.Add(new AuthorizeFilter()));
+
+builder.Services.Configure<MailSetting>(builder.Configuration.GetSection("MailSettings"));
+builder.Services.AddTransient<FinalGroupMVCPrj.Services.IMailService, FinalGroupMVCPrj.Services.MailService>();
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.

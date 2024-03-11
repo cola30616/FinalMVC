@@ -1,5 +1,7 @@
 ﻿using FinalGroupMVCPrj.Models;
+using FinalGroupMVCPrj.Models.DTO;
 using FinalGroupMVCPrj.Models.ViewModels;
+using FinalGroupMVCPrj.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
@@ -12,9 +14,11 @@ namespace FinalGroupMVCPrj.Controllers
     public class MemberController : UserInfoController
     {
         private readonly LifeShareLearnContext _context;  //資料庫
-        public MemberController(LifeShareLearnContext context)
+        private readonly IMailService _mailService;
+        public MemberController(LifeShareLearnContext context, IMailService _MailService)
         {
             _context = context;
+            _mailService = _MailService;
         }
         // GET: Member/Setting
         //動作簡述：回傳設定會員資訊的頁面
@@ -275,6 +279,11 @@ namespace FinalGroupMVCPrj.Controllers
                 return StatusCode(500, $"系統異常：{ex}");
             }
         }
-
+        [AllowAnonymous]
+        [HttpPost]
+        public bool SendEmail(MailData mailData)
+        {
+            return _mailService.SendMail(mailData);
+        }
     }
 }
