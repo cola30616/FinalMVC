@@ -337,6 +337,14 @@ namespace FinalGroupMVCPrj.Controllers
                 return BadRequest("資料庫系統異常，無法取消連結：" + e);
             }
         }
+
+        [HttpGet]
+        public IActionResult VertifyEmail(string email)
+        {
+
+            ViewBag.ToVertifyEmail = email;
+            return View();
+        }
     }
     public class LineLoginToken
     {

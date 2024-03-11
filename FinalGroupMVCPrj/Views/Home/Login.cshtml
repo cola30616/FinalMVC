@@ -407,7 +407,7 @@
                 method: 'POST'
             })
             if (response.ok) { 
-                alert('註冊成功');
+                await fetchSendVertifyEmail();
             }else{
                 const errorMsg = await response.text();
                 //切換註冊到登入
@@ -432,6 +432,32 @@
                     position: "center",
                     icon: "error",
                     title: errorMsg,
+                    showConfirmButton: false,
+                    timer: 1500
+                });
+            }
+        }
+
+        //寄送驗證信
+        async function fetchSendVertifyEmail() {
+         const email = document.getElementById("FEmail").value;
+            const response = await fetch(`@Url.Content("~/Member/SendVetifyEmail")?email=${email}`, {
+                method: 'POST'
+            })
+            if (response.ok) {
+                Swal.fire({
+                    position: "center",
+                    icon: "success",
+                    title: "註冊成功，請至信箱查看驗證信",
+                    showConfirmButton: false,
+                    timer: 1500
+                });
+            }else{
+                const errorMsg = await response.text();
+                Swal.fire({
+                    position: "center",
+                    icon: "error",
+                    title: `註冊成功，但${errorMsg}`,
                     showConfirmButton: false,
                     timer: 1500
                 });

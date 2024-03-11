@@ -1,0 +1,92 @@
+﻿@model TMember
+@{
+    ViewData["Title"] = "Login";
+}
+
+<!-- Breadcrumb start -->
+<div class="breadcrumb-area bg-img bg-cover" data-bg-image="/images/owenadd/來學樂登入banner.png">
+        <div class="container">
+            <div class="content text-center">
+               @*  <h2>登入</h2> *@
+            </div>
+        </div>
+    </div>
+    <!-- Breadcrumb end -->
+
+    <!-- Authentication Start -->
+    <div class="authentication-area ">
+        <div class="container">
+            <div class="row">
+                <div class="col-12">
+                <div class="main-form">
+                    <div class="loginTogle mt-50 mb-15" style="display:block">
+                        <div id="result"></div>
+                        <div class=" d-flex justify-content-between flex-wrap gap-2 " >
+                            <div class="  d-flex align-items-center ">
+                                <h3 class="title" data-splitting="" data-aos="">驗證信箱</h3>
+                            </div>
+                        </div>
+                        <div class=" d-flex flex-wrap gap-2 mt-2">
+                            <div class="link font-sm d-flex align-items-center  text-dark">
+                                <p>已重新發送您驗證信到您的信箱：</p>
+                            </div>
+                        </div>
+                    </div>
+                    <p class="mb-4" style="font-size:20px">@ViewBag.ToVertifyEmail</p>
+                    <button disabled typeof="button" id="resentBtn" class="btn btn-lg btn-primary rounded-pill w-100"  aria-label="Login">重新發送</button>
+             
+               
+                    </div>
+         
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Authentication End -->
+
+    @section Scripts{
+    <script>
+        // 获取按钮和计时器元素
+        const resentBtn = document.getElementById('resentBtn');
+
+        // 设置初始状态
+        let isButtonDisabled = true;
+        let countdownSeconds = 60;
+
+        // 更新按钮状态和计时器显示
+        function updateButtonAndCountdown() {
+            resentBtn.disabled = isButtonDisabled;
+            resentBtn.textContent = isButtonDisabled ? `等待 ${countdownSeconds} 秒後重新發送` : '重新發送';
+        }
+
+        // 启动计时器
+        function startCountdown() {
+            isButtonDisabled = true;
+            updateButtonAndCountdown();
+
+            const intervalId = setInterval(() => {
+                countdownSeconds--;
+
+                if (countdownSeconds <= 0) {
+                    isButtonDisabled = false;
+                    countdownSeconds = 60;
+                    clearInterval(intervalId);
+                }
+
+                updateButtonAndCountdown();
+            }, 1000);
+        }
+
+        // 点击按钮时触发的事件
+        resentBtn.addEventListener('click', () => {
+            if (!isButtonDisabled) {
+                // 在这里可以添加重新发送的逻辑，此处仅演示计时器的效果
+                startCountdown();
+            }
+        });
+
+        // 初始状态
+        startCountdown();
+    </script>
+
+    }
