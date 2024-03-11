@@ -1,4 +1,5 @@
 ﻿let HtmlAdded = false; // 確認分頁建立過了
+let url = '';
 //載入課程資料
 const FilterSortData = {
     page: 1,
@@ -8,16 +9,51 @@ const FilterSortData = {
     subjectName: undefined,
     minPrice: undefined,
     maxPrice: undefined,
-    sortBy: 'asc',
-    sortType: 'newest'
+    sortBy: 'desc',
+    sortType: 'enrollment'
 };
 
+const handleSubjects = (filterData) => {
+    FilterSortData.fieldId = filterData.fieldId;
+    FilterSortData.subjectName = filterData.subjectName;
+    loadCourses(FilterSortData);
+}
+const handlePriceInput = () => {
+    // 獲取最低價格和最高價格
+    const minPrice = document.getElementById('min').value;
+    const maxPrice = document.getElementById('max').value;
+
+    // 更新篩選條件並重新加載課程列表
+    FilterSortData.minPrice = minPrice;
+    FilterSortData.maxPrice = maxPrice;
+    loadCourses(FilterSortData);
+}
+
+const handleSorting = (value) => {
+    if (value === 'enrollment') {
+        FilterSortData.sortBy = 'enrollment';
+        FilterSortData.sortType = 'desc'; //
+    } else if (value === 'rate') {
+        FilterSortData.sortBy = 'rate';
+        FilterSortData.sortType = 'desc'; 
+    } else if (value === 'newest') {
+        FilterSortData.sortBy = 'newest';
+        FilterSortData.sortType = 'desc'; 
+    } else if (value === 'Hot') {
+        FilterSortData.sortBy = 'Hot';
+        FilterSortData.sortType = 'desc'; 
+    }
+
+    // 調用 loadCourses 函數重新加載課程列表
+    loadCourses(FilterSortData);
+}
+
 const loadCourses = async (FilterSortData) => {
-    const { page = 1, pageSize = 9 , keyword, fieldId, subjectName, minPrice, maxPrice, sortBy, sortType } = FilterSortData;
+    const { page = 1, pageSize = 9 , keyword, fieldId, subjectName, minPrice = 0, maxPrice = 1000, sortBy, sortType } = FilterSortData;
     const urlParams = new URLSearchParams();
     urlParams.append('Page', page);
     urlParams.append('PageSize', pageSize);
-    if (keyword) urlParams.append('keyword', encodeURIComponent(keyword));
+    if (keyword) urlParams.append('keyword', keyword);
     if (fieldId) urlParams.append('FieldId', fieldId);    
     if (subjectName) urlParams.append('subjectName', subjectName);
     if (minPrice) urlParams.append('minPrice', minPrice);
@@ -25,7 +61,7 @@ const loadCourses = async (FilterSortData) => {
     if (sortBy) urlParams.append('sortBy', sortBy);
     if (sortType) urlParams.append('sortType', sortType);
     
-    const url = `/Lesson/CourseList?${urlParams.toString()}`; 
+    url = `/Lesson/CourseList?${urlParams.toString()}`; 
     console.log(url) 
     
     const response = await fetch(url);
@@ -48,7 +84,14 @@ const loadCourses = async (FilterSortData) => {
     }    
 };
 
+const pagingHandler = page => {
+    FilterSortData.page = page
+    loadCourses(FilterSortData);   
+}
 
+
+// 頁面載入時，順便載入JS file
+loadCourses(FilterSortData);
 
 // 模板的bug 暫時棄用
 //const createFilterHtml = (data) => {
@@ -63,21 +106,13 @@ const loadCourses = async (FilterSortData) => {
 //        const itemHTML = `<li class="list-item list-dropdown">
 //            <a class="category-toggle" href="#${fieldId}">${fieldName}<span class="qty"></span></a>
 //            <ul class="menu-collapse">
-//                ${subjectHTML}  
+//                ${subjectHTML}
 //            </ul>
 //        </li>`;
 //        fieldsSubjects.insertAdjacentHTML('beforeend', itemHTML);
 //        console.log(itemHTML)
-           
+
 //    }
 //}
 
 // 分頁預設
-const pagingHandler = page => {    
-    loadCourses(page);   
-}
-
-
-// 頁面載入時，順便載入JS file
-loadCourses(FilterSortData);
-

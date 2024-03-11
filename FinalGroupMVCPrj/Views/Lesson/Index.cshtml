@@ -49,7 +49,7 @@
                                                             {
                                                                  @foreach(var subject in detail.SubjectNames)
                                                             {
-                                                                    <li><button class="icon-start" title="link" target="_self" onclick="loadCourses({ fieldId: @(detail.FieldId), subjectName: '@(subject)' })"><i class="fal fa-angle-right"></i>@subject</button></li>
+                                                                    <li><button class="icon-start" title="link" target="_self" onclick="handleSubjects({ fieldId: @(detail.FieldId), subjectName: '@(subject)' })"><i class="fal fa-angle-right"></i>@subject</button></li>
                                                             }    
                                                             }
                                                                                                                                                                             
@@ -61,39 +61,7 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="widget widget-type py-20">
-                                <h5 class="title">
-                                    <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#topic" aria-expanded="true" aria-controls="topic">
-                                        猜猜你喜歡的項目
-                                    </button>
-                                </h5>
-                                <div id="topic" class="collapse show">
-                                    <div class="accordion-body mt-20 scroll-y">
-                                        <ul class="list-group custom-checkbox">
-                                            @{
-                                                var checkIndex = 1;
-                                            }
-                                            @foreach (var course in Model.Take(1))
-                                            {
-                                                    
-                                                @foreach (var detail in course.fieldWithSubjects.Take(3))
-                                                {
-                                                            @foreach (var subject in detail.SubjectNames)
-                                                            {                                                               
-                                                                <li>
-                                                                    <input class="input-checkbox" type="checkbox" name="checkbox@(checkIndex)" id="checkbox@(checkIndex)" value="">
-                                                                    <label class="form-check-label" for="checkbox@(checkIndex)"><span>@(subject)</span></label>
-                                                                </li>
-                                                            checkIndex++;
-                                                            }                                                     
-                                                }
-                                            }
-                                           
-                                           
-                                        </ul>
-                                    </div>
-                                </div>
-                            </div>
+                           
                             <div class="widget widget-price py-20">
                                 <h5 class="title">
                                     <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#price" aria-expanded="true" aria-controls="price">
@@ -106,13 +74,13 @@
                                             <div class="col-md-6">
                                                 <div class="form-group mb-20">
                                                     <label class="mb-1">最低</label>
-                                                    <input class="form-control size-md" type="number" name="min" id="min">
+                                                    <input class="form-control size-md" type="number" name="min" id="min" onchange="handlePriceInput()" onInput="handlePriceInput()">
                                                 </div>
                                             </div>
                                             <div class="col-md-6">
                                                 <div class="form-group mb-20">
                                                     <label class="mb-1">最高</label>
-                                                    <input class="form-control size-md" type="number" name="max" id="max">
+                                                    <input class="form-control size-md" type="number" name="max" id="max" onchange="handlePriceInput()" onInput="handlePriceInput()">
                                                 </div>
                                             </div>
                                         </div>
@@ -229,10 +197,10 @@
                                 <li class="item">
                                     <div class="sort-item d-flex align-items-center">
                                         <label class="me-2 font-sm">篩選依據</label>
-                                        <select name="type" class="niceselect right">
-                                            <option value="people">上課人數</option>
+                                        <select name="type" class="niceselect right" onchange="handleSorting(this.value)">
+                                            <option value="enrollment" >上課人數</option>
                                             <option value="rate">評價</option>
-                                            <option value="New">最新</option>
+                                            <option value="newest">最新</option>
                                             <option value="Hot">最熱門</option>                                     
                                         </select>
                                     </div>
