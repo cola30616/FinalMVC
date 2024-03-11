@@ -1,12 +1,25 @@
 ﻿let HtmlAdded = false; // 確認分頁建立過了
 //載入課程資料
-const loadCourses = async ( page = 1, pageSize = 9, keyword, fieldId, subjectId, minPrice, maxPrice, sortBy, sortType ) => {
+const FilterSortData = {
+    page: 1,
+    pageSize: 9,
+    keyword: '',
+    fieldId: undefined,
+    subjectName: undefined,
+    minPrice: undefined,
+    maxPrice: undefined,
+    sortBy: 'asc',
+    sortType: 'newest'
+};
+
+const loadCourses = async (FilterSortData) => {
+    const { page = 1, pageSize = 9 , keyword, fieldId, subjectName, minPrice, maxPrice, sortBy, sortType } = FilterSortData;
     const urlParams = new URLSearchParams();
     urlParams.append('Page', page);
     urlParams.append('PageSize', pageSize);
-    if (keyword) urlParams.append('keyword', keyword);
-    if (fieldId) urlParams.append('FieldId', fieldId);
-    if (subjectId) urlParams.append('SubjectId', subjectId);
+    if (keyword) urlParams.append('keyword', encodeURIComponent(keyword));
+    if (fieldId) urlParams.append('FieldId', fieldId);    
+    if (subjectName) urlParams.append('subjectName', subjectName);
     if (minPrice) urlParams.append('minPrice', minPrice);
     if (maxPrice) urlParams.append('maxPrice', maxPrice);
     if (sortBy) urlParams.append('sortBy', sortBy);
@@ -32,9 +45,7 @@ const loadCourses = async ( page = 1, pageSize = 9, keyword, fieldId, subjectId,
             TotalPage.insertAdjacentHTML('beforeend', itemHTML);
         }
         HtmlAdded = true; // 將標記設置為 true，表示已經新增過分頁
-    }
-   
-   
+    }    
 };
 
 
@@ -68,5 +79,5 @@ const pagingHandler = page => {
 
 
 // 頁面載入時，順便載入JS file
-loadCourses();
+loadCourses(FilterSortData);
 

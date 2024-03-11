@@ -45,10 +45,14 @@
                                                     <li class="list-item list-dropdown">
                                                         <a class="category-toggle" href="#@(detail.FieldId)">@(detail.FieldName)</a>
                                                         <ul class="menu-collapse">
-                                                            @foreach(var subject in detail.SubjectNames)
+                                                            @if(detail.SubjectNames is not null)
                                                             {
-                                                                <li><a class="icon-start" href="courses.html" title="link" target="_self"><i class="fal fa-angle-right"></i>@(subject)</a></li>
-                                                            }                                                                                                                   
+                                                                 @foreach(var subject in detail.SubjectNames)
+                                                            {
+                                                                    <li><button class="icon-start" title="link" target="_self" onclick="loadCourses({ fieldId: @(detail.FieldId), subjectName: '@(subject)' })"><i class="fal fa-angle-right"></i>@subject</button></li>
+                                                            }    
+                                                            }
+                                                                                                                                                                            
                                                         </ul>
                                                     </li>
                                                 }                                               

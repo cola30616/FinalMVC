@@ -4,7 +4,7 @@
     {
         public string? Keyword { get; set; }
         public int? FieldId { get; set; }
-        public int? SubjectId { get; set; }
+        public string? subjectName { get; set; }
         public decimal? MinPrice { get; set; }
         public decimal? MaxPrice { get; set; }
         public float? MinRating { get; set; }

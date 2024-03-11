@@ -111,9 +111,9 @@ namespace FinalGroupMVCPrj.Controllers
                 query = query.Where(course => course.FSubject.FFieldId == courseListDTO.FieldId);
             }
 
-            if (courseListDTO.SubjectId.HasValue)
+            if (!string.IsNullOrEmpty(courseListDTO.subjectName))
             {
-                query = query.Where(course => course.FSubjectId == courseListDTO.SubjectId);
+                query = query.Where(course => course.FSubject.FSubjectName == courseListDTO.subjectName);
             }
 
             if (courseListDTO.MinPrice.HasValue)
@@ -138,7 +138,7 @@ namespace FinalGroupMVCPrj.Controllers
 
             if (!string.IsNullOrEmpty(courseListDTO.SortBy))
             {
-                switch (courseListDTO.SortBy)
+                switch (courseListDTO.SortType)
                 {                  
                     case "newest":
                         query = query.OrderByDescending(course => course.FLessonDate);

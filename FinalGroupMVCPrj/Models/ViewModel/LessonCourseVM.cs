@@ -28,6 +28,8 @@
         public int FieldId { get; set; }
         public string? FieldName { get; set; }
         public List<string>? SubjectNames { get; set; }
+
+       
     }
 
 }
