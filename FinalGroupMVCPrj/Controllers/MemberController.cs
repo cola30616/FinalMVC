@@ -276,7 +276,7 @@ namespace FinalGroupMVCPrj.Controllers
                     FRegisterDatetime = DateTime.Now,
                     FEmail = member.FEmail,
                     FEmailVerification = false,
-                    FGetCampaignInfo = member.FGetCampaignInfo,
+                    FGetCampaignInfo = true,
                     FQualifiedTeacher = false,
                     FStatus = true
                 };

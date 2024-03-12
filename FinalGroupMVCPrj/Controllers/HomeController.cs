@@ -91,10 +91,17 @@ namespace FinalGroupMVCPrj.Controllers
             {
                 return BadRequest("帳號不存在");
             }
-
+            bool pwCheck = false;
             //測試解密驗證
-            bool pwCheck = BCrypt.Net.BCrypt.EnhancedVerify(member.FPassword, dbMember.FPassword);
-            //
+            try
+            {
+                pwCheck = BCrypt.Net.BCrypt.EnhancedVerify(member.FPassword, dbMember.FPassword);
+            }catch (Exception ex)
+            {
+                return StatusCode(500, "密碼系統異常");
+            }
+
+
             if (!pwCheck)
             {
                 return BadRequest("密碼錯誤");
