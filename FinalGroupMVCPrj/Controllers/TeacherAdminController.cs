@@ -205,7 +205,6 @@ namespace FinalGroupMVCPrj.Controllers
                                 ModificationDescription = orderDetail.FModificationDescription,
                             };
             return Json(new { data = OrderData });
-        }
-       
+        }       
     }
 }
