@@ -186,7 +186,15 @@
                                 <div class="course-default border radius-md mb-30">
                                     <figure class="course-img">
                                         <a asp-controller="Lesson" asp-action="Details" asp-route-id="@course.lessonCourse.FLessonCourseId" title="Image" target="_self" class="lazy-container ratio ratio-2-3">
-                                            <img class="lazyload" src="/images/placeholder.png" data-src="/images/course/pro-1.jpg" alt="course">
+                                            @if (course.imageData != null)
+                                            {
+                                                <img class="lazyload" src="data:image;base64,@(Convert.ToBase64String(course.imageData))" alt="Image" />
+                                            }
+                                            else
+                                            {
+                                                <img class="lazyload" src="/images/placeholder.png" data-src="/images/course/pro-1.jpg" alt="course">
+                                            }
+                                          
                                         </a>
                                         <div class="hover-show">
                                             <a asp-controller="Lesson" asp-action="Details" asp-route-id="@course.lessonCourse.FLessonCourseId" class="btn btn-md btn-primary rounded-pill" title="Enroll Now" target="_self">立即預約</a>
@@ -209,12 +217,17 @@
                                                         </a>
                                                     </span>
                                                 </div>
-                                                <span class="font-sm icon-start"><i class="fas fa-clock"></i>課程時數</span>
+                                                
                                             </div>
                                         </div>
                                         <div class="course-bottom-info px-3 py-2">
-                                            <span class="font-sm"><i class="fas fa-usd-circle"></i>價格</span>
-                                            <span class="font-sm"><i class="fas fa-book-alt"></i>課程堂數</span>
+                                            <span class="font-sm"><i class="fas fa-usd-circle"></i>
+                                                NT @if (course.lessonCourse.FPrice is not null)
+                                                {
+                                                    @((decimal)Math.Floor((double)course.lessonCourse.FPrice))
+                                                }
+                                           </span>
+                                            
                                         </div>
                                     </div>
                                 </div>
@@ -286,7 +299,14 @@
                                             <div class="course-default border radius-md mb-30">
                                                 <figure class="course-img">
                                                     <a href="course-details.html" title="Image" target="_self" class="lazy-container ratio ratio-2-3">
-                                                        <img class="lazyload" src="/images/placeholder.png" data-src="/images/course/pro-5.jpg" alt="course">
+                                                         @if (course.imageData != null)
+                                            {
+                                                <img class="lazyload" src="data:image;base64,@(Convert.ToBase64String(course.imageData))" alt="Image" />
+                                            }
+                                            else
+                                            {
+                                                <img class="lazyload" src="/images/placeholder.png" data-src="/images/course/pro-1.jpg" alt="course">
+                                            }
                                                     </a>
                                                     <div class="hover-show">
                                                         <a asp-controller="Lesson" asp-action="Details" asp-route-id="@course.lessonCourse.FLessonCourseId" class="btn btn-md btn-primary rounded-pill" title="Enroll Now" target="_self">前往課程</a>
@@ -314,7 +334,14 @@
                                                         </div>
                                                     </div>
                                                     <div class="course-bottom-info px-3 py-2">
-                                                        <span class="font-sm"><i class="fas fa-usd-circle"></i>NT @((decimal)Math.Floor((double)course.lessonCourse.FPrice))</span>
+
+                                                        <span class="font-sm">
+                                                            <i class="fas fa-usd-circle"></i>
+                                                            NT @if (course.lessonCourse.FPrice is not null)
+                                                            {
+                                                                @((decimal)Math.Floor((double)course.lessonCourse.FPrice))
+                                                            }
+                                                        </span>
                                                         <!--這個堂數有考慮新增嗎-->
                                                         @* <span class="font-sm"><i class="fas fa-book-alt"></i>11 Lessons</span> *@
                                                     </div>

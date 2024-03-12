@@ -1,6 +1,6 @@
 ﻿ @model IEnumerable<LessonCourseVM>
 <!-- Breadcrumb start -->
-<div class="breadcrumb-area bg-img bg-cover" data-bg-image="/images/breadcrumb-bg.jpg">
+<div class="breadcrumb-area bg-img bg-cover" data-bg-image="/images/OwenAdd/breadcrumb-bg.jpg">
     <div class="container">
         <div class="content text-center">
             <h2>課程清單</h2>
@@ -74,13 +74,13 @@
                                             <div class="col-md-6">
                                                 <div class="form-group mb-20">
                                                     <label class="mb-1">最低</label>
-                                                    <input class="form-control size-md" type="number" name="min" id="min" onchange="handlePriceInput()" onInput="handlePriceInput()">
+                                                    <input class="form-control size-md" type="number" name="min" id="min" onInput="handlePriceInput()">
                                                 </div>
                                             </div>
                                             <div class="col-md-6">
                                                 <div class="form-group mb-20">
                                                     <label class="mb-1">最高</label>
-                                                    <input class="form-control size-md" type="number" name="max" id="max" onchange="handlePriceInput()" onInput="handlePriceInput()">
+                                                    <input class="form-control size-md" type="number" name="max" id="max" onInput="handlePriceInput()">
                                                 </div>
                                             </div>
                                         </div>
@@ -185,7 +185,7 @@
                 <div class="sort-area" data-aos="fade-up">
                     <div class="row align-items-center">
                         <div class="col-lg-6">
-                            <h5 class="mb-20">目前有 <span class="color-primary">@Model.Count()</span> 堂課</h5>
+                            <h5 class="mb-20">目前有 <span class="color-primary" id="totalClasses"></span> 堂課</h5>
                         </div>
                         <div class="col-6 d-lg-none">
                             <button class="btn btn-sm btn-outline icon-end radius-sm mb-20" type="button" data-bs-toggle="offcanvas" data-bs-target="#widgetOffcanvas" aria-controls="widgetOffcanvas">
@@ -214,20 +214,7 @@
 
                 </div>
                 <nav class="pagination-nav mt-15 mb-25" data-aos="fade-up">
-                    <ul id="course-total-page" class="pagination justify-content-center">
-                        @* <li class="page-item">
-                            <a class="page-link" href="courses.html" aria-label="Previous">
-                                <i class="far fa-angle-left"></i>
-                            </a>
-                        </li> *@
-                        @* <li class="page-item active"><a class="page-link" href="courses.html">1</a></li>
-                        <li class="page-item"><a class="page-link" href="courses.html">2</a></li>
-                        <li class="page-item"><a class="page-link" href="courses.html">3</a></li> *@
-                        @* <li class="page-item">
-                            <a class="page-link" href="courses.html" aria-label="Next">
-                                <i class="far fa-angle-right"></i>
-                            </a>
-                        </li> *@
+                    <ul id="course-total-page" class="pagination justify-content-center">                       
                     </ul>
                 </nav>
             </div>

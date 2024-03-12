@@ -206,11 +206,10 @@ namespace FinalGroupMVCPrj.Controllers
 
 
         // 這邊使用viewComponent
-        public async Task<IViewComponentResult> InvokeAsync(int page = 1, int pageSize = 9)
+        public async Task<IViewComponentResult> InvokeAsync()
         {
             var fields = await _context.TCourseFields.Select(u => u.FFieldName).ToListAsync();
-            var courseList = await _context.TLessonCourses
-                .Include(course => course.FTeacher)
+            var courseList = await _context.TLessonCourses               
                 .Select(course => new LessonCourseVM
                 {
                     lessonCourse = course,
@@ -227,9 +226,7 @@ namespace FinalGroupMVCPrj.Controllers
                     fields = fields,
                     fieldName = course.FSubject.FField.FFieldName,
                     fieldNumber = course.FSubject.FFieldId,
-                })
-                .Skip((page - 1) * pageSize)
-                .Take(pageSize)
+                })               
                 .ToListAsync();
 
             return View(courseList);

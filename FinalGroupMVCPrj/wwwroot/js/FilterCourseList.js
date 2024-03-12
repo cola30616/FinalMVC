@@ -1,5 +1,5 @@
-﻿let PageAdded = false; // 確認分頁建立過了
-
+﻿const TotalPage = document.getElementById('course-total-page');
+const totalClasses = document.getElementById('totalClasses');
 //載入課程資料
 const FilterSortData = {
     page: 1,
@@ -62,30 +62,30 @@ const loadCourses = async (FilterSortData) => {
     if (sortBy) urlParams.append('sortBy', sortBy);
     if (sortType) urlParams.append('sortType', sortType);
     
-    let url = `/Lesson/CourseList?${urlParams.toString()}`; 
-   
+    let url = `/Lesson/CourseList?${urlParams.toString()}`;
+    console.log(url)
     
     const response = await fetch(url);
     if (!response.ok) {
         throw new Error('Network response was not ok');
     }
     const data = await response.json();
-      
+    console.log(data)
+    addPaging(data)  
     createCourseHtml(data)
-    // 如果分頁和篩選功能尚未新增過，就會新增一次
-    if (!PageAdded) {
-        // 新增篩選功能
-       
-        const TotalPage = document.getElementById('course-total-page');
-        for (let i = 1; i <= data.totalPages; i++) {
-            const itemHTML = `<li class="page-item"><button class="page-link" onclick="pagingHandler(${i})">${i}</button></li>`;
-            TotalPage.insertAdjacentHTML('beforeend', itemHTML);
-        }
-        PageAdded = true; // 將標記設置為 true，表示已經新增過分頁
-    }    
+    totalClasses.textContent = data.totalCount
+    
+    
 };
 
-// 處理分業
+const addPaging = (data) => {
+    TotalPage.innerHTML = '';
+    for (let i = 1; i <= data.totalPages; i++) {
+        const itemHTML = `<li class="page-item"><button class="page-link" onclick="pagingHandler(${i})">${i}</button></li>`;
+        TotalPage.insertAdjacentHTML('beforeend', itemHTML);
+    }   
+}
+// 處理分頁
 const pagingHandler = page => {
     FilterSortData.page = page
     loadCourses(FilterSortData);   
@@ -95,13 +95,13 @@ const createCourseHtml = data => {
     const createCourseHtml = document.getElementById('createCourseHtml');
     createCourseHtml.innerHTML = '';
     for (const item of data.courses) {
-        
+       /* <img class="" src="data:image;base64,@(Convert.ToBase64String(item.imageData))" alt="Image" />*/
         let html = ''
         html = `<div class="col-xl-4 col-sm-6">
     <div class="course-default border radius-md mb-25">
         <figure class="course-img">
             <a href="/Lesson/Details/${item.lessonCourse.fLessonCourseId}" title="" target="_self" class="lazy-container ratio ratio-2-3">
-                <img class="" src="/images/course/pro-5.jpg" alt="course">
+                <img src="data:image/gif;base64,${item.imageData} alt="Image"">                    
             </a>
             <div class="hover-show">
                 <a href="/Lesson/Details/${item.lessonCourse.fLessonCourseId}" class="btn btn-md btn-primary rounded-pill" title="Enroll Now" target="_self">立即預約</a>
@@ -137,8 +137,6 @@ const createCourseHtml = data => {
     }
 
 }
-
-
 
 // 頁面載入時，順便載入JS file
 loadCourses(FilterSortData);
