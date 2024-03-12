@@ -1,4 +1,6 @@
-﻿<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+﻿@model OrderDetailViewModel
+
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
 <!-- Breadcrumb start -->
 <div class="breadcrumb-area bg-img bg-cover" data-bg-image="assets/images/breadcrumb-bg.jpg">
@@ -30,13 +32,13 @@
             </div>
             <div class="col-xl-8 col-lg-7">
                 <div class="content-title mb-40" data-aos="fade-up">
-                    <h3 class="title mt-0 mb-1 fs-1">新手ETF選股</h3>
+                    <h3 class="title mt-0 mb-1 fs-1">@Html.DisplayFor(model => model.FName)</h3>
                     <span class=" fs-4 ">
-                        課程資訊：堅強的信心，能使平凡的人做出驚人的事業。帶著這句話，我們還要更加慎重的審視這個問題。我們要學會站在他人的角度思考。既然如此，不要先入為主覺得股票很簡單，實際上，股票可能比你想的還要更複雜。
+                        課程資訊：@Html.DisplayFor(model => model.FDescription)
                     </span>
                     <div class="content-text mt-20">
                         <p class="fs-3 fw-bold">
-                            地點：大成投資台北總部15樓
+                            地點：@Html.DisplayFor(model => model.FDescription) @* 要改成FAddressDetail*@
                         </p>
                     </div>
                 </div>
@@ -57,21 +59,21 @@
                             <div class="col-lg-6">
                                 <div class="form-group mb-30 fs-4">
                                     <label for="firstName">姓名 </label>
-                                    <input type="text" id="readOnlyInput" value="預設資料" class="form-control fs-4" readonly>
+                                    <input type="text" id="readOnlyInput" value=@Html.DisplayFor(model => model.FRealName) class="form-control fs-4" readonly>
 @*                                     <input id="firstName" type="text" class="form-control fs-3" name="firstName" placeholder="First Name" required="">
  *@                                </div>
                             </div>
                             <div class="col-lg-6">
                                 <div class="form-group mb-30 fs-4">
                                     <label for="phone">手機號碼 </label>
-                                    <input type="text" id="readOnlyInput" value="預設資料" class="form-control fs-4" readonly>
+                                    <input type="text" id="readOnlyInput" value=@Html.DisplayFor(model => model.FPhone) class="form-control fs-4" readonly>
 @*                                     <input id="phone" type="text" class="form-control fs-3" name="phone" placeholder="Phone Number" required="">
  *@                                </div>
                             </div>
                             <div class="col-lg-6">
                                 <div class="form-group mb-30 fs-4">
                                     <label for="email">Email </label>
-                                    <input type="text" id="readOnlyInput" value="預設資料" class="form-control fs-4" readonly>
+                                    <input type="text" id="readOnlyInput" value=@Html.DisplayFor(model => model.FEmail) class="form-control fs-4" readonly>
 @*                                     <input id="email" type="email" class="form-control fs-3" name="email" placeholder="Email Address" required="">
  *@                                </div>
                                 <div class="form-group mb-30 fs-5">
