@@ -7,8 +7,8 @@ const FilterSortData = {
     keyword: '',
     fieldId: undefined,
     subjectName: undefined,
-    minPrice: undefined,
-    maxPrice: undefined,
+    minPrice: 100,
+    maxPrice: 2000,
     sortBy: 'desc',
     sortType: 'enrollment'
 };
@@ -49,7 +49,7 @@ const handleSorting = (value) => {
 }
 
 const loadCourses = async (FilterSortData) => {
-    const { page = 1, pageSize = 9 , keyword, fieldId, subjectName, minPrice = 0, maxPrice = 1000, sortBy, sortType } = FilterSortData;
+    const { page = 1, pageSize = 9 , keyword, fieldId, subjectName, minPrice = 100, maxPrice = 1000, sortBy, sortType } = FilterSortData;
     const urlParams = new URLSearchParams();
     urlParams.append('Page', page);
     urlParams.append('PageSize', pageSize);
@@ -70,7 +70,7 @@ const loadCourses = async (FilterSortData) => {
     }
     const data = await response.json();
     console.log(data)    
-    
+    createCourseHtml(data)
     // 如果分頁和篩選功能尚未新增過，就會新增一次
     if (!HtmlAdded) {
         // 新增篩選功能
@@ -88,6 +88,54 @@ const pagingHandler = page => {
     FilterSortData.page = page
     loadCourses(FilterSortData);   
 }
+
+const createCourseHtml = data => {
+    const createCourseHtml = document.getElementById('createCourseHtml');
+    createCourseHtml.innerHTML = '';
+    for (const item of data.courses) {
+        
+        let html = ''
+        html = `<div class="col-xl-4 col-sm-6">
+    <div class="course-default border radius-md mb-25">
+        <figure class="course-img">
+            <a href="/Lesson/Details/${item.lessonCourse.fLessonCourseId}" title="" target="_self" class="lazy-container ratio ratio-2-3">
+                <img class="" src="/images/course/pro-5.jpg" alt="course">
+            </a>
+            <div class="hover-show">
+                <a href="/Lesson/Details/${item.lessonCourse.fLessonCourseId}" class="btn btn-md btn-primary rounded-pill" title="Enroll Now" target="_self">立即預約</a>
+            </div>
+        </figure>
+        <div class="course-details">
+            <div class="p-3">
+                <a href="/Lesson/Details/${item.lessonCourse.fLessonCourseId}" target="_self" title="${item.fieldName}" class="tag font-sm color-primary mb-1">${item.fieldName}/${item.subjectName}</a>
+                <h6 class="course-title lc-2 mb-0">
+                    <a href="/Lesson/Details/${item.lessonCourse.fLessonCourseId}" target="_self" title="Link">
+                        ${item.lessonCourse.fName}
+                    </a>
+                </h6>
+                <div class="authors mt-15">
+                    <div class="author">
+                        <img class="radius-sm" src="/images/avatar-1.jpg" alt="Image">
+                        <span class="font-sm">
+
+                            <a href="/Teacher/Info/${item.id}" target="_self" title=" ${item.lessonCourse.teacherName}">
+                                 ${item.teacherName}
+                            </a>
+                        </span>
+                    </div>                   
+                </div>
+            </div>
+            <div class="course-bottom-info px-3 py-2">                
+                <span class="font-sm"><i class="fas fa-usd-circle"></i>NT ${item.lessonCourse.fPrice}</span>                               
+            </div>
+        </div>
+    </div>
+</div>`
+        createCourseHtml.insertAdjacentHTML('beforeend', html)
+    }
+
+}
+
 
 
 // 頁面載入時，順便載入JS file

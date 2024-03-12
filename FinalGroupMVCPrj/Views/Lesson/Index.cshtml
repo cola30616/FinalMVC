@@ -210,7 +210,9 @@
                     </div>
                 </div>
                 <!--課程和分頁的code-->
-                @await Component.InvokeAsync("CourseItemView", new { page = 1, pageSize = 9 })
+                <div id="createCourseHtml" class="row" data-aos="fade-up">                  
+
+                </div>
                 <nav class="pagination-nav mt-15 mb-25" data-aos="fade-up">
                     <ul id="course-total-page" class="pagination justify-content-center">
                         @* <li class="page-item">

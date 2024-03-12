@@ -428,12 +428,12 @@
     // Filter price slider
     if (filterSliders) {
         noUiSlider.create(filterSliders, {
-            start: [0, 2000],
+            start: [100, 2000],
             connect: !0,
             step: 10,
             margin: 10,
             range: {
-                min: 0,
+                min: 100,
                 max: 2000
             }
         }), filterSliders.noUiSlider.on("update", function(values, handle) {
