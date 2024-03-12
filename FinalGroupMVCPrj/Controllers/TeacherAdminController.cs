@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using System.IO;
 using System.Security.Cryptography.Pkcs;
 
 namespace FinalGroupMVCPrj.Controllers
@@ -108,15 +109,20 @@ namespace FinalGroupMVCPrj.Controllers
             return View(teacher);
         }
         /////////////////////////////////////// ///////////////////////////////////////
-        
+
+
         // POST: TeacherAdmin/TAddtrimage
         //動作簡述：新增單張圖片
-        //[HttpPost]
-        //[ValidateAntiForgeryToken]
-        public async Task<IActionResult> TAddtrimage(TTeacherImage trimg,IFormFile file)
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> TAddtrimage(TTeacherImage trimg)
         {
-            trimg.FTeacherId= GetCurrentTeacherId();
+            //byte[] fileBytes = await ConvertFileToByteArrayAsync(file);
+            //trimg.FImageLink = fileBytes;
+            //trimg.FImageLink = await ConvertFileToByteArrayAsync(file);
+            trimg.FTeacherId = GetCurrentTeacherId();
             trimg.FImageSize = null;
+            if (trimg.FImageName == null) { trimg.FImageName = "尚未命名"; }
             if (ModelState.IsValid)
             {
                 //await UploadImages(trimg,file);
@@ -125,7 +131,7 @@ namespace FinalGroupMVCPrj.Controllers
                 await _context.SaveChangesAsync();
                 return RedirectToAction("TRelatedPic");
             }
-            return View(trimg);
+            return Content("新增失敗");
         }
         //方法簡述：處理上傳的圖片
         private async Task ReadUploadImage(TTeacherImage image)
@@ -134,15 +140,14 @@ namespace FinalGroupMVCPrj.Controllers
             if (Request.Form.Files["FImageLink"] != null)
             //如果有值
             {
-
-                //建立物件放在using裡面，碰到又大括號後自動回收
-                //OpenReadStream把檔案(Request.Form.Files["Picture"])開啟讀取串流
-                using (BinaryReader br = new BinaryReader(Request.Form.Files["FImageLink"].OpenReadStream()))
-                {
-                    //把BinaryReader讀到的東西，放入Entity的參數:FImageLink
-                    //ReadBytes 需要的參數是int //Length:檔案長度(型態是long)
-                    image.FImageLink = br.ReadBytes((int)Request.Form.Files["FImageLink"].Length);
-                }
+                    //建立物件放在using裡面，碰到又大括號後自動回收
+                    //OpenReadStream把檔案(Request.Form.Files["Picture"])開啟讀取串流
+                    using (BinaryReader br = new BinaryReader(Request.Form.Files["FImageLink"].OpenReadStream()))
+                    {
+                        //把BinaryReader讀到的東西，放入Entity的參數:FImageLink
+                        //ReadBytes 需要的參數是int //Length:檔案長度(型態是long)
+                        image.FImageLink = br.ReadBytes((int)Request.Form.Files["FImageLink"].Length);
+                    }
             }
             else
             //如果沒值//如果user沒有換圖
@@ -156,6 +161,14 @@ namespace FinalGroupMVCPrj.Controllers
             }
         }
 
+        private async Task<byte[]> ConvertFileToByteArrayAsync(IFormFile file)
+        {
+            using (var memoryStream = new MemoryStream())
+            {
+                await file.CopyToAsync(memoryStream);
+                return memoryStream.ToArray();
+            }
+        }
         // GET: TeacherAdmin/TRelatedPic
         //動作簡述：回傳老師相關圖片
         [HttpGet]
@@ -172,6 +185,7 @@ namespace FinalGroupMVCPrj.Controllers
                     ImageName = t.FImageName,
                     ImageLink = t.FImageLink,
                     Category = t.FCategory,
+                    TeacherImageModel = t,
                 })
             );
             return View("TRelatedPic",vBasicVMCollection);
@@ -218,11 +232,39 @@ namespace FinalGroupMVCPrj.Controllers
                 return ms.ToArray();
             }
         }
-
-        //■ ==========================     子謙作業區      ==========================■
-        [HttpGet]
+        // POST: TeacherAdmin/TdeletePic
+        //動作簡述：刪除老師相關圖片(單張)
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> TdeletePic(int id)
+        {
+            var dimage = await _context.TTeacherImages.FindAsync(id);
+            if (dimage != null)
+            {
+                _context.TTeacherImages.Remove(dimage);
+            }
+            await _context.SaveChangesAsync();
+            return RedirectToAction(nameof(TRelatedPic));
+        }
+        public async Task<IActionResult> TeditPic(TTeacherImage trimg)
+        {
+            trimg.FTeacherId = GetCurrentTeacherId();
+            trimg.FImageSize = null;
+            if (trimg.FImageName == null) { trimg.FImageName = "尚未命名"; }
+            //驗證成功
+            if (ModelState.IsValid)
+            {
+                await ReadUploadImage(trimg);
+                _context.Update(trimg);
+                await _context.SaveChangesAsync();
+                return RedirectToAction("TRelatedPic");
+            }
+            return Content("修改失敗");
+        }
+       //■ ==========================     子謙作業區      ==========================■
+       [HttpGet]
         public IActionResult VideoIntro()
-        {           
+        {
             return View();
         }
         [HttpGet]

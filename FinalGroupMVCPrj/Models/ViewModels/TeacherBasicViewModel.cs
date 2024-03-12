@@ -29,5 +29,6 @@ namespace FinalGroupMVCPrj.Models.ViewModels
         public string? ImageName { get; set; }
         public byte[]? ImageLink { get; set; }
         public string? Category { get; set; }
+        public TTeacherImage? TeacherImageModel { get; set; }
     }
 }
