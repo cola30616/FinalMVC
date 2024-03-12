@@ -8,5 +8,6 @@ namespace FinalGroupMVCPrj.Models.ViewModels
         public TOrderDetail orderDetail { get; set; }
         public TLessonCourse lessonCourse { get; set; }
         public TMember member { get; set; }
+
     }
 }
