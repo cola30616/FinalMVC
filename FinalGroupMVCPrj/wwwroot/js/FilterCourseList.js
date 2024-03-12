@@ -1,9 +1,9 @@
-﻿let HtmlAdded = false; // 確認分頁建立過了
-let url = '';
+﻿let PageAdded = false; // 確認分頁建立過了
+
 //載入課程資料
 const FilterSortData = {
     page: 1,
-    pageSize: 9,
+    pageSize: 6,
     keyword: '',
     fieldId: undefined,
     subjectName: undefined,
@@ -49,7 +49,8 @@ const handleSorting = (value) => {
 }
 
 const loadCourses = async (FilterSortData) => {
-    const { page = 1, pageSize = 9 , keyword, fieldId, subjectName, minPrice = 100, maxPrice = 1000, sortBy, sortType } = FilterSortData;
+    const { page = 1, pageSize = 6, keyword, fieldId, subjectName, minPrice = 100, maxPrice = 2000, sortBy, sortType } = FilterSortData;
+    // 生成url 的工具
     const urlParams = new URLSearchParams();
     urlParams.append('Page', page);
     urlParams.append('PageSize', pageSize);
@@ -61,18 +62,18 @@ const loadCourses = async (FilterSortData) => {
     if (sortBy) urlParams.append('sortBy', sortBy);
     if (sortType) urlParams.append('sortType', sortType);
     
-    url = `/Lesson/CourseList?${urlParams.toString()}`; 
-    console.log(url) 
+    let url = `/Lesson/CourseList?${urlParams.toString()}`; 
+   
     
     const response = await fetch(url);
     if (!response.ok) {
         throw new Error('Network response was not ok');
     }
     const data = await response.json();
-    console.log(data)    
+      
     createCourseHtml(data)
     // 如果分頁和篩選功能尚未新增過，就會新增一次
-    if (!HtmlAdded) {
+    if (!PageAdded) {
         // 新增篩選功能
        
         const TotalPage = document.getElementById('course-total-page');
@@ -80,10 +81,11 @@ const loadCourses = async (FilterSortData) => {
             const itemHTML = `<li class="page-item"><button class="page-link" onclick="pagingHandler(${i})">${i}</button></li>`;
             TotalPage.insertAdjacentHTML('beforeend', itemHTML);
         }
-        HtmlAdded = true; // 將標記設置為 true，表示已經新增過分頁
+        PageAdded = true; // 將標記設置為 true，表示已經新增過分頁
     }    
 };
 
+// 處理分業
 const pagingHandler = page => {
     FilterSortData.page = page
     loadCourses(FilterSortData);   
@@ -141,7 +143,7 @@ const createCourseHtml = data => {
 // 頁面載入時，順便載入JS file
 loadCourses(FilterSortData);
 
-// 模板的bug 暫時棄用
+// 模板的bug 暫時棄用，可能會用到程式碼，留著考古
 //const createFilterHtml = (data) => {
 //    const fieldsSubjects = document.getElementById('fieldsSubjects');
 //    for (const item of data.fieldWithSubjects) {
