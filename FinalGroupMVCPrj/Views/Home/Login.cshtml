@@ -74,7 +74,7 @@
                                 <div class="col-12">
                                     <div class="form-group mb-20">
                                     
-                                    <input asp-for="FEmail" class="pageFormText form-control" placeholder="電子信箱" value="caixiaofang@email.com">
+                                    <input asp-for="FEmail" class="pageFormText form-control" placeholder="電子信箱" value="">
                                     <span asp-validation-for="FEmail" class="text-danger"></span>
                                     </div>
                                 </div>
@@ -272,6 +272,13 @@
                 let toSaveIPInfo = "";
 //提交登入
        async function fetchLogin(){
+            Swal.fire({
+                position: 'center',
+                icon: 'info',
+                title: '登入中',
+                showConfirmButton: false,
+                allowOutsideClick: false
+            });
            const loginFormData = new FormData(document.querySelector('#pageForm'));
            const response = await fetch('@Url.Content("~/Home/Login")', {
                 body: loginFormData,
@@ -302,14 +309,16 @@
                        })
 
                    })();
-                   
+                   Swal.close();
                    location.href = '@Url.Content("~/Home/Index")'
 
                } catch (err) {
+                    Swal.close();
                    alert(err)
                }
            } else {
             const errorMsg = await response.text();
+             Swal.close();
             Swal.fire({
                     position: "center",
                     icon: "error",
