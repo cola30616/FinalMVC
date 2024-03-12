@@ -1,7 +1,6 @@
 ﻿using FinalGroupMVCPrj.Models;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authentication;
-using FinalGroupMVCPrj.Models.ViewModel;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using System.Diagnostics;
@@ -9,6 +8,7 @@ using System.Security.Claims;
 using Microsoft.AspNetCore.Authorization;
 using Newtonsoft.Json;
 using FinalGroupMVCPrj.Models.DTO;
+using FinalGroupMVCPrj.Models.ViewModels;
 
 
 

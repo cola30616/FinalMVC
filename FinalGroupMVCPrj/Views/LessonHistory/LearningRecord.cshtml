@@ -1,10 +1,11 @@
-﻿<section class="course-area latest ptb-100">
+﻿@model LearningRecordVM
+<section class="course-area latest ptb-100">
     <div class="container">
         <div class="row">
             <div class="col-12">
                 <div class="section-title title-inline mb-30" data-aos="fade-up">
                     <h2 class="title mb-20">                        
-                        <span>這裡要放會員照片跟會員名稱</span>
+                        <span></span>
                         <img class="title-shape lazyload" src="/images/placeholder.png" data-src="/images/shape/title-shape.png" alt="Shape">
                     </h2>                 
                 </div>
@@ -24,134 +25,131 @@
             </div>
             <div class="col-12">
                 <div class="tab-content" data-aos="fade-up">
-                    <!--課程未開始-->
+                    <!--課程未開始-->                   
                     <div class="tab-pane slide show active" id="tab1">
-                        <div class="row">
-                            <div class="col-xl-3 col-lg-4 col-sm-6">
-                                <div class="course-default border radius-md mb-30">
-                                    <figure class="course-img">
-                                        <a href="course-details.html" title="Image" target="_self" class="lazy-container ratio ratio-2-3">
-                                            <img class="lazyload" src="/images/placeholder.png" data-src="/images/course/pro-5.jpg" alt="course">
-                                        </a>
-                                        <div class="hover-show">
-                                            <a href="course-details.html" class="btn btn-md btn-primary rounded-pill" title="Enroll Now" target="_self">Enroll Now</a>
-                                        </div>
-                                    </figure>
-                                    <div class="course-details">
-                                        <div class="p-3">
-                                            <a href="course-details.html" target="_self" title="Design" class="tag font-sm color-primary mb-1">Design</a>
-                                            <h6 class="course-title lc-2 mb-0">
-                                                <a href="course-details.html" target="_self" title="Link">
-                                                    Photoshop Master Course: From Beginner to Photoshop Pro
+                       
+                        @foreach (var course in Model.SuccessRecord)
+                        {
+                            if (course.FLessonDate.HasValue && DateTime.Now.CompareTo(course.FLessonDate.Value) < 0)
+                            {
+                                <div class="row">
+                                    <div class="col-xl-3 col-lg-4 col-sm-6">
+                                        <div class="course-default border radius-md mb-30">
+                                            <figure class="course-img">
+                                                <a asp-controller="Lesson" asp-action="Details" asp-route-id="@course.FLessonCourseId" title="Image" target="_self" class="lazy-container ratio ratio-2-3">
+                                                    @if (course.FPhoto != null)
+                                                    {
+                                                        <img class="lazyload" src="data:image;base64,@(Convert.ToBase64String(course.FPhoto))" alt="Image" />
+                                                    }
+                                                    else
+                                                    {
+                                                        <img class="lazyload" src="/images/placeholder.png" data-src="/images/course/pro-1.jpg" alt="course">
+                                                    }
                                                 </a>
-                                            </h6>
-                                            <div class="authors mt-15">
-                                                <div class="author">
-                                                    <img class="lazyload blur-up radius-sm" src="/images/placeholder.png" data-src="/images/avatar-1.jpg" alt="Image">
-                                                    <span class="font-sm">
-                                                        <a href="course-details.html" target="_self" title="James Hobert">
-                                                            James Hobert
-                                                        </a>
-                                                    </span>
+                                                <div class="hover-show">
+                                                    <a asp-controller="Lesson" asp-action="Details" asp-route-id="@course.FLessonCourseId" class="btn btn-md btn-primary rounded-pill" title="Enroll Now" target="_self">查詢課程細節</a>
                                                 </div>
-                                                <span class="font-sm icon-start"><i class="fas fa-clock"></i>06h 00m</span>
+                                            </figure>
+                                            <div class="course-details">
+                                                <div class="p-3">                                                  
+                                                    <h6 class="course-title lc-2 mb-0">
+                                                        <a asp-controller="Lesson" asp-action="Details" asp-route-id="@course.FLessonCourseId" target="_self" title="Link">
+                                                            @course.FName
+                                                        </a>
+                                                    </h6>
+                                                    
+                                                </div>
+                                               
                                             </div>
-                                        </div>
-                                        <div class="course-bottom-info px-3 py-2">
-                                            <span class="font-sm"><i class="fas fa-usd-circle"></i>$13.99</span>
-                                            <span class="font-sm"><i class="fas fa-book-alt"></i>11 Lessons</span>
                                         </div>
                                     </div>
                                 </div>
-                            </div>                           
-                        </div>
-                       
+                            }
+                        }
+                                        
                     </div>
                     <!--課程已完成-->
                     <div class="tab-pane slide" id="tab2">
-                        <div class="row">
-                            <div class="col-xl-3 col-lg-4 col-sm-6">
-                                <div class="course-default border radius-md mb-30">
-                                    <figure class="course-img">
-                                        <a href="course-details.html" title="Image" target="_self" class="lazy-container ratio ratio-2-3">
-                                            <img class="lazyload" src="/images/placeholder.png" data-src="/images/course/pro-9.jpg" alt="course">
-                                        </a>
-                                        <div class="hover-show">
-                                            <a href="course-details.html" class="btn btn-md btn-primary rounded-pill" title="Enroll Now" target="_self">Enroll Now</a>
-                                        </div>
-                                    </figure>
-                                    <div class="course-details">
-                                        <div class="p-3">
-                                            <a href="course-details.html" target="_self" title="Marketing" class="tag font-sm color-primary mb-1">Marketing</a>
-                                            <h6 class="course-title lc-2 mb-0">
-                                                <a href="course-details.html" target="_self" title="Link">
-                                                    Digital Marketing: 14 Strategic and Tactical Courses in 1
+                        @foreach (var course in Model.SuccessRecord)
+                        {
+                            if (course.FLessonDate.HasValue && DateTime.Now.CompareTo(course.FLessonDate.Value) >= 0)
+                            {
+                                <div class="row">
+                                    <div class="col-xl-3 col-lg-4 col-sm-6">
+                                        <div class="course-default border radius-md mb-30">
+                                            <figure class="course-img">
+                                                <a asp-controller="Lesson" asp-action="Details" asp-route-id="@course.FLessonCourseId" title="Image" target="_self" class="lazy-container ratio ratio-2-3">
+                                                    @if (course.FPhoto != null)
+                                                    {
+                                                        <img class="lazyload" src="data:image;base64,@(Convert.ToBase64String(course.FPhoto))" alt="Image" />
+                                                    }
+                                                    else
+                                                    {
+                                                        <img class="lazyload" src="/images/placeholder.png" data-src="/images/course/pro-1.jpg" alt="course">
+                                                    }
                                                 </a>
-                                            </h6>
-                                            <div class="authors mt-15">
-                                                <div class="author">
-                                                    <img class="lazyload blur-up radius-sm" src="/images/placeholder.png" data-src="/images/avatar-5.jpg" alt="Image">
-                                                    <span class="font-sm">
-                                                        <a href="course-details.html" target="_self" title="Mike Russel">
-                                                            Mike Russel
-                                                        </a>
-                                                    </span>
+                                                <div class="hover-show">
+                                                    <a asp-controller="Lesson" asp-action="Details" asp-route-id="@course.FLessonCourseId" class="btn btn-md btn-primary rounded-pill" title="Enroll Now" target="_self">查詢課程細節</a>
                                                 </div>
-                                                <span class="font-sm icon-start"><i class="fas fa-clock"></i>06h 00m</span>
+                                            </figure>
+                                            <div class="course-details">
+                                                <div class="p-3">
+                                                    <h6 class="course-title lc-2 mb-0">
+                                                        <a asp-controller="Lesson" asp-action="Details" asp-route-id="@course.FLessonCourseId" target="_self" title="Link">
+                                                            @course.FName
+                                                        </a>
+                                                    </h6>
+                                                  
+                                                </div>
+
                                             </div>
-                                        </div>
-                                        <div class="course-bottom-info px-3 py-2">
-                                            <span class="font-sm"><i class="fas fa-usd-circle"></i>$13.99</span>
-                                            <span class="font-sm"><i class="fas fa-book-alt"></i>11 Lessons</span>
                                         </div>
                                     </div>
                                 </div>
-                            </div>
-                           
-                        </div>
+                            }
+                        }
                         
                     </div>
-                    <!--課程已結束-->
+                    <!--課程已取消-->
                     <div class="tab-pane slide" id="tab3">
-                        <div class="row">
-                            <div class="col-xl-3 col-lg-4 col-sm-6">
-                                <div class="course-default border radius-md mb-30">
-                                    <figure class="course-img">
-                                        <a href="course-details.html" title="Image" target="_self" class="lazy-container ratio ratio-2-3">
-                                            <img class="lazyload" src="/images/placeholder.png" data-src="/images/course/pro-7.jpg" alt="course">
-                                        </a>
-                                        <div class="hover-show">
-                                            <a href="course-details.html" class="btn btn-md btn-primary rounded-pill" title="Enroll Now" target="_self">Enroll Now</a>
-                                        </div>
-                                    </figure>
-                                    <div class="course-details">
-                                        <div class="p-3">
-                                            <a href="course-details.html" target="_self" title="Development" class="tag font-sm color-primary mb-1">Development</a>
-                                            <h6 class="course-title lc-2 mb-0">
-                                                <a href="course-details.html" target="_self" title="Link">
-                                                    Java Swing (GUI) Programming: From Beginner to Expert
+                        @foreach (var course in Model.CancelRecord)
+                        {
+                            if (course.FLessonDate.HasValue && DateTime.Now.CompareTo(course.FLessonDate.Value) > 0)
+                            {
+                                <div class="row">
+                                    <div class="col-xl-3 col-lg-4 col-sm-6">
+                                        <div class="course-default border radius-md mb-30">
+                                            <figure class="course-img">
+                                                <a asp-controller="Lesson" asp-action="Details" asp-route-id="@course.FLessonCourseId" title="Image" target="_self" class="lazy-container ratio ratio-2-3">
+                                                    @if (course.FPhoto != null)
+                                                    {
+                                                        <img class="lazyload" src="data:image;base64,@(Convert.ToBase64String(course.FPhoto))" alt="Image" />
+                                                    }
+                                                    else
+                                                    {
+                                                        <img class="lazyload" src="/images/placeholder.png" data-src="/images/course/pro-1.jpg" alt="course">
+                                                    }
                                                 </a>
-                                            </h6>
-                                            <div class="authors mt-15">
-                                                <div class="author">
-                                                    <img class="lazyload blur-up radius-sm" src="/images/placeholder.png" data-src="/images/avatar-3.jpg" alt="Image">
-                                                    <span class="font-sm">
-                                                        <a href="course-details.html" target="_self" title="Neil Fontaine">
-                                                            Neil Fontaine
-                                                        </a>
-                                                    </span>
+                                                <div class="hover-show">
+                                                    <a asp-controller="Lesson" asp-action="Details" asp-route-id="@course.FLessonCourseId" class="btn btn-md btn-primary rounded-pill" title="Enroll Now" target="_self">查詢課程細節</a>
                                                 </div>
-                                                <span class="font-sm icon-start"><i class="fas fa-clock"></i>06h 00m</span>
+                                            </figure>
+                                            <div class="course-details">
+                                                <div class="p-3">
+                                                    <h6 class="course-title lc-2 mb-0">
+                                                        <a asp-controller="Lesson" asp-action="Details" asp-route-id="@course.FLessonCourseId" target="_self" title="Link">
+                                                            @course.FName
+                                                        </a>
+                                                    </h6>
+                                             
+                                                </div>
+
                                             </div>
-                                        </div>
-                                        <div class="course-bottom-info px-3 py-2">
-                                            <span class="font-sm"><i class="fas fa-usd-circle"></i>$13.99</span>
-                                            <span class="font-sm"><i class="fas fa-book-alt"></i>08 Lessons</span>
                                         </div>
                                     </div>
                                 </div>
-                            </div>                           
-                        </div>
+                            }
+                        }
                         
                     </div>
                    
