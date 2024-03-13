@@ -428,22 +428,32 @@
     // Filter price slider
     if (filterSliders) {
         noUiSlider.create(filterSliders, {
-            start: [200, 500],
+            start: [100, 2000],
             connect: !0,
             step: 10,
             margin: 10,
             range: {
-                min: 0,
-                max: 1000
+                min: 100,
+                max: 2000
             }
-        }), filterSliders.noUiSlider.on("update", function(values, handle) {
+        }), filterSliders.noUiSlider.on("update", function (values, handle) {
+            values = values.map(value => Math.floor(value));
             $("[data-range-value='filterPriceSliderValue']").text("$" + values.join(" - " + "$"));
-            inputs[handle].value = values[handle];
+            inputs[handle].value = values[handle]; 
+            // 莉程基㎝程蔼基
+            const minPrice = input0.value;
+            const maxPrice = input1.value;
+
+            // 穝縵匡兵ン穝更揭祘
+            FilterSortData.minPrice = minPrice;
+            FilterSortData.maxPrice = maxPrice;
+            loadCourses(FilterSortData);
         })
         inputs.forEach(function(input, handle) {
             if (input) {
                 input.addEventListener('change', function() {
                     filterSliders.noUiSlider.setHandle(handle, this.value);
+                    
                 });
             }
         });

@@ -1,7 +1,6 @@
 ﻿using FinalGroupMVCPrj.Models;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authentication;
-using FinalGroupMVCPrj.Models.ViewModel;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using System.Diagnostics;
@@ -9,6 +8,7 @@ using System.Security.Claims;
 using Microsoft.AspNetCore.Authorization;
 using Newtonsoft.Json;
 using FinalGroupMVCPrj.Models.DTO;
+using FinalGroupMVCPrj.Models.ViewModels;
 
 
 
@@ -50,6 +50,7 @@ namespace FinalGroupMVCPrj.Controllers
                 // 新增老師
                 teacher = course.FTeacher, // 將加載的 Teacher 導航屬性賦值給 ViewModel 的 teacher 屬性
                 fields = fields,
+                fieldName = course.FSubject.FField.FFieldName,
                 fieldNumber = course.FSubject.FFieldId,
             })
             .ToListAsync();
