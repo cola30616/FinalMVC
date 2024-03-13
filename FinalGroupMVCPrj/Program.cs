@@ -1,16 +1,20 @@
+using FinalGroupMVCPrj;
 using FinalGroupMVCPrj.Data;
 using FinalGroupMVCPrj.Models;
+using FinalGroupMVCPrj.Services;
+using MailKit;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.CookiePolicy;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc.Authorization;
 using Microsoft.EntityFrameworkCore;
 
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 var connectionString = builder.Configuration.GetConnectionString("DefaultConnection") ?? throw new InvalidOperationException("Connection string 'DefaultConnection' not found.");
-//CORS設定
+//CORS�]�w
 builder.Services.AddCors(options =>
 { options.AddPolicy("AllowAll", builder => builder.AllowAnyOrigin().AllowAnyHeader().AllowAnyMethod()); }
 );
@@ -31,17 +35,20 @@ builder.Services.AddControllersWithViews();
 builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
     .AddCookie(option =>
     {
-        //未登入時會自動導到這個網址
+        //���n�J�ɷ|�۰ʾɨ�o�Ӻ�}
         option.LoginPath = new PathString("/Home/Login");
-        //登入但沒有權限會導到這個網址
+        //�n�J���S���v���|�ɨ�o�Ӻ�}
         option.AccessDeniedPath = new PathString("/Home/AccessDenied");
     });
 
-//全部的控制器預設要有登入狀態，除非[AllowAnonymous]
+//����������w�]�n���n�J���A�A���D[AllowAnonymous]
 builder.Services.AddMvc(options => options.Filters.Add(new AuthorizeFilter()));
 
 builder.Services.AddSignalR();
 
+
+builder.Services.Configure<MailSetting>(builder.Configuration.GetSection("MailSettings"));
+builder.Services.AddTransient<FinalGroupMVCPrj.Services.IMailService, FinalGroupMVCPrj.Services.MailService>();
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.

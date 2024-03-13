@@ -264,15 +264,15 @@
                     <div class="mb-2">    <span>*資料僅限用於異常帳號處理與優化行銷</span></div>
                     <div class="d-flex gap-2 align-items-center  mb-3">
                         <span>指定最晚日期</span>
-                        <input class="form-control" type="date" style="width:20%" />
+                        <input id="logDate" class="form-control" type="date" style="width:20%" />
                     </div>
                     <table class="table table-striped table-hover">
                         <thead>
                             <tr>
-                                <th scope="col">#</th>
-                                <th scope="col">登入時間</th>
+                                <th scope="col" >#</th>
+                                <th scope="col" style="width:10%">登入時間</th>
                                 <th scope="col">IP</th>
-                                <th scope="col">地區</th>
+                                <th scope="col" style="width:30%">地區</th>
                                 <th scope="col">瀏覽器與系統</th>
                             </tr>
                         </thead>
@@ -290,10 +290,33 @@
     </div>
 </div>
 @section  Scripts {
-    <script src="~/js/owenscript/adminmemberlist.js" asp-append-version="true"></script>
+@*     <script src="~/js/owenscript/adminmemberlist.js" asp-append-version="true"></script> *@
+    <script src="
+https://cdn.jsdelivr.net/npm/moment@2.30.1/moment.min.js
+        ">//格式化日期的插件</script>
     <script>
         let loadedDataCount = 0;
         const dataPerPage = 5;
+        let maxDataCount = 30;
+        let remain = true;
+        let currentMemberId = 6;
+        let lastDate = new Date()
+        lastDate.setDate(lastDate.getDate()+1)
+        lastDate = moment(lastDate).format('YYYY-MM-DD')
+
+
+        document.getElementById('logDate').addEventListener('change', changeLogDate);
+        function changeLogDate(e){
+            lastDate = new Date(e.target.value);
+            lastDate.setDate(lastDate.getDate() + 1)
+            lastDate = moment(lastDate).format('YYYY-MM-DD')
+            document.getElementById('table-body').innerHTML = "";
+            loadedDataCount = 0
+            remain = true;
+            document.getElementById('load-more-btn').disabled = false;
+            document.getElementById('load-more-btn').innerHTML = "載入5筆";
+            loadMoreData();
+        }
 
        //生成隨機資料
         function generateRandomData(count) {
@@ -309,6 +332,8 @@
             }
             return data;
         }
+
+
         // 生成隨機日期時間
         function generateRandomDateTime() {
             const year = 2023;
@@ -339,6 +364,33 @@
             return `${randomBrowser} / ${randomSystem}`;
         }
 
+        //取得資料
+        async function getData() {
+            const data = [];
+            const toPush = await fetchLoginHistory()
+            if (toPush === null) { return null; }
+            toPush.forEach((element) => {     
+                data.push({
+                    id: ++loadedDataCount ,
+                    loginTime: element.fLoginDateTime,
+                    ip: element.fLoginIp,
+                    region: element.fLoginGeoInfo,
+                    browserSystem: element.fLoginBrowerNos
+                }); })
+            return data;
+        }
+        async function fetchLoginHistory(){
+            const response = await fetch(`@Url.Content("~/AdminMember/LoginHistory")?memberId=${currentMemberId}&toSkip=${loadedDataCount}&lastDate=${lastDate}`, {
+                method: 'GET'
+            })
+    const data = await response.json();
+    console.log(data);
+            if (response.ok) {
+                return data
+            } else {
+                return null;
+            }
+        }
 
         function insertDataToTable(data) {
             const tbody = document.getElementById('table-body');
@@ -346,7 +398,7 @@
                 const row = document.createElement('tr');
                 row.innerHTML = `
                 <th scope="row">${item.id}</th>
-                <td>${item.loginTime}</td>
+                        <td>${moment(item.loginTime).format('YYYY/MM/DD HH:mm:ss')}</td>
                 <td>${item.ip}</td>
                 <td>${item.region}</td>
                 <td>${item.browserSystem}</td>
@@ -356,25 +408,64 @@
         }
 
         // 載入更多資料
-        function loadMoreData() {
-            if (loadedDataCount < 30) {
-                const remainingDataCount = Math.min(dataPerPage, 30 - loadedDataCount);
-                const newData = generateRandomData(remainingDataCount);
+        async function loadMoreData() {
+            if (remain !== false) {
+                const newData = await getData();
+                if (newData === null) { return; }
+                if (newData.length < 5) { remain = false}
                 insertDataToTable(newData);
-                loadedDataCount += remainingDataCount;
-
+     
+                }
                 // 檢查是否載入所有資料
-                if (loadedDataCount === 30) {
+                if (remain ===false) {
                     document.getElementById('load-more-btn').disabled = true;
                     document.getElementById('load-more-btn').innerHTML = "已無紀錄可載入";
                 }
             }
-        }
 
         //載入更多資料的點擊事件
         document.getElementById('load-more-btn').addEventListener('click', loadMoreData);
 
         // 最一開始載入
         loadMoreData();
+    </script>
+    <script>
+        let dataTable; // 這段要記得加，先宣告datatable的變數
+        $(document).ready(function () {
+            loadDataTable();
+        })
+
+        function loadDataTable() {
+            // html 欄位跟 ajax 的欄位務必相同
+            dataTable = $('#memberListTable').DataTable({
+                "ajax": { url: '/AdminMember/ListDataJson' },
+                "columns": [
+                    { data: 'memberId', "width": "7%" },
+                    { data: 'registerDateTime', "width": "12%" },
+                    { data: 'realName', "width": "8%" },
+                    { data: 'showName', "width": "10%" },
+                    { data: 'email', "width": "15%" },
+                    { data: 'emailVerification', "width": "7%" },
+                    { data: 'getCampInfo', "width": "8%" },
+                    { data: 'status', "width": "7%" },
+                    {
+                        // 這段是新增及刪除按鈕 ， 刪除用到onclick 事件，觸發下方的Delete
+                        data: 'memberId',
+                        "render": function (data) {
+                            return `<div class="" role="">
+                                <button  memberId=${data}" class="btn btn-primary mx-2" data-bs-toggle="modal" data-bs-target="#staticBackdrop"><i class="fa-solid fa-gear"></i></button>
+                            </div>`
+                        },
+                        "width": "5%"
+                    },
+                ],
+                language: {
+                    url: "https://cdn.datatables.net/plug-ins/1.13.7/i18n/zh-HANT.json"
+                },
+                order: [[0, 'dsc']]
+
+
+            });
+        }
     </script>
 }

@@ -41,5 +41,17 @@ namespace FinalGroupMVCPrj.Controllers
                             })); ;
             return Json(new{data = mBasicVMCollection});
         }
+        public IActionResult LoginHistory(int memberId, int toSkip, DateTime? lastDate)
+        {
+            var q = _context.TMemberLoginLogs.Where(l => l.FMemberId == memberId);
+            if(lastDate != null)
+            {
+                q = q.Where(l => l.FLoginDateTime <= lastDate);
+            }
+
+            var   loginHistory =  q.Skip(toSkip).Take(5).ToList();
+
+            return Json(loginHistory);
+        }
     }
 }

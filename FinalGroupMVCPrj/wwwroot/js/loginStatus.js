@@ -5,7 +5,7 @@
     let memberId = 0;
     const toLogin = document.getElementById('toLogin');
     const isLogin = document.getElementById('isLogin');
-    const memberPic = document.getElementById('memberPic');
+    const memberPic = document.querySelectorAll('.memberPic');
     const navShowName = document.getElementById('navShowName');
     const userShowName = document.getElementById('userShowName');
     const userEmail = document.getElementById('userEmail');
@@ -41,7 +41,7 @@
             photoUrl = await response.text();
 
             if (photoUrl !== '') {
-                memberPic.src = photoUrl;
+                memberPic.forEach((e) => { e.src = photoUrl; })
             }
         } catch (error) {
             console.error('Error fetching member Photo:', error);

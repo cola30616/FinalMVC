@@ -13,7 +13,7 @@ namespace FinalGroupMVCPrj.Models.Metadatas
         [Column("fRegisterDatetime", TypeName = "datetime")]
         public DateTime FRegisterDatetime { get; set; }
 
-        [Required]
+        [Required(ErrorMessage = "未填寫真實姓名")]
         [Column("fRealName")]
         [StringLength(50)]
         public string FRealName { get; set; }
