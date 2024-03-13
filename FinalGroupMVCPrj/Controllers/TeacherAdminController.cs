@@ -1,12 +1,15 @@
 ﻿using FinalGroupMVCPrj.Models;
 using FinalGroupMVCPrj.Models.DTO;
+using FinalGroupMVCPrj.Models.ViewModel;
 using FinalGroupMVCPrj.Models.ViewModels;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using System.Data;
 using System.IO;
 using System.Security.Cryptography.Pkcs;
+using static NuGet.Packaging.PackagingConstants;
 
 namespace FinalGroupMVCPrj.Controllers
 {
@@ -368,6 +371,35 @@ namespace FinalGroupMVCPrj.Controllers
             return Json(new { success = true, message = "刪除成功" });
         }
 
-
+        //■ ==========================     育蘋作業區      ==========================■
+        public IActionResult OrderList()
+        {
+            return View();
+        }
+        public IActionResult ListDataJson()
+        {
+            int currentTeacherId = GetCurrentTeacherId();
+            if (currentTeacherId==0) 
+            {
+                return BadRequest("目前沒有老師登入");
+            }
+            var OrderData = from order in _context.TOrders
+                            join orderDetail in _context.TOrderDetails on order.FOrderId equals orderDetail.FOrderId
+                            join member in _context.TMembers on order.FMemberId equals member.FMemberId
+                            join lessoncourse in _context.TLessonCourses on orderDetail.FLessonCourseId equals lessoncourse.FLessonCourseId
+                            where lessoncourse.FTeacherId == currentTeacherId
+                            select new 
+                            {
+                                OrderID = order.FOrderId,
+                                RealName = member.FRealName,
+                                Email = member.FEmail,
+                                OrderDate = order.FOrderDate,
+                                Name = lessoncourse.FName,
+                                Price = lessoncourse.FPrice,
+                                OrderValid = orderDetail.FOrderValid,
+                                ModificationDescription = orderDetail.FModificationDescription,
+                            };
+            return Json(new { data = OrderData });
+        }       
     }
 }
