@@ -387,16 +387,16 @@ namespace FinalGroupMVCPrj.Controllers
                             join member in _context.TMembers on order.FMemberId equals member.FMemberId
                             join lessoncourse in _context.TLessonCourses on orderDetail.FLessonCourseId equals lessoncourse.FLessonCourseId
                             where lessoncourse.FTeacherId == currentTeacherId
-                            select new 
+                            select new OrderBasicViewModel
                             {
-                                OrderID = order.FOrderId,
-                                RealName = member.FRealName,
-                                Email = member.FEmail,
-                                OrderDate = order.FOrderDate,
-                                Name = lessoncourse.FName,
-                                Price = lessoncourse.FPrice,
-                                OrderValid = orderDetail.FOrderValid,
-                                ModificationDescription = orderDetail.FModificationDescription,
+                                FOrderId = order.FOrderId,
+                                FRealName = member.FRealName,
+                                FEmail = member.FEmail,
+                                FOrderDate = order.FOrderDate,
+                                FName = lessoncourse.FName,
+                                FLessonPrice = lessoncourse.FPrice,
+                                FOrderValid = orderDetail.FOrderValid,
+                                FModificationDescription = orderDetail.FModificationDescription,
                             };
             return Json(new { data = OrderData });
         }       

@@ -23,7 +23,7 @@ namespace FinalGroupMVCPrj.Models.ViewModels
         public string? FName { get; set; }
 
         [Display(Name = "課程費用")]
-        public decimal FLessonPrice { get; set; }
+        public decimal? FLessonPrice { get; set; }
 
         [Display(Name = "課程是否成立")]
         public bool FOrderValid { get; set; }
