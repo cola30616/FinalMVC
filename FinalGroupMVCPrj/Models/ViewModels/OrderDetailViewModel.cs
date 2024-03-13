@@ -19,5 +19,6 @@ namespace FinalGroupMVCPrj.Models.ViewModels
 
         public TLessonCourse lessonCourse { get; set; }
         public TMember member { get; set; }
+
     }
 }
