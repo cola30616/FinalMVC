@@ -1,6 +1,5 @@
 ﻿using FinalGroupMVCPrj.Models;
 using FinalGroupMVCPrj.Models.DTO;
-using FinalGroupMVCPrj.Models.ViewModel;
 using FinalGroupMVCPrj.Models.ViewModels;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Hosting;
@@ -376,7 +375,7 @@ namespace FinalGroupMVCPrj.Controllers
         {
             return View();
         }
-        public IActionResult ListDataJson()
+        public IActionResult ListDataJson2()
         {
             int currentTeacherId = GetCurrentTeacherId();
             if (currentTeacherId==0) 
