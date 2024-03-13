@@ -318,7 +318,6 @@
     </footer>
     <!-- Footer-area end-->
     
-    @await RenderSectionAsync("Scripts", required: false)
 
     <!--首頁搜尋bar-->
     <script src="~/js/search.js" asp-append-version="true"></script>
@@ -355,8 +354,8 @@
 
     <!--Sweet alert-->
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-    
 
+    @await RenderSectionAsync("Scripts", required: false)
 </body>
 <script src="//cdn.datatables.net/2.0.1/js/dataTables.min.js" asp-append-version="true"></script>
 </html>

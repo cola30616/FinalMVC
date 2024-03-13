@@ -105,11 +105,42 @@
             </div>
             <br />
             <div class="text-center">
-                <button id="" class="fs-3 btn btn-lg btn-primary radius-sm w-100" type="button" aria-label="button" data-bs-toggle="modal" data-bs-target="#orderSuccessModal">我要評價課程</button>
+                <button class="fs-3 btn btn-lg btn-primary radius-sm w-100" type="button" aria-label="button" data-bs-toggle="modal" data-bs-target="#evalModal" id="createBtn">我要評價課程</button>
+            </div>
+            <div class="text-center">
+                <button class="fs-3 btn btn-lg btn-primary radius-sm w-100" type="button" aria-label="button" data-bs-toggle="modal" data-bs-target="#editEvalModal" id="editBtn">修改課程評價</button>
             </div>
         </div>
     </div>
 </div>
+
+<!--FOrderDetailId儲存-->
+<div id="FOrderDetailId" data-value="@ViewBag.FOrderDetailId"></div>
+
+<!--評價彈跳視窗-->
+<div id="createPartial"></div>
+<!---->
+<!--修改評價彈跳視窗-->
+<div id="editPartial"></div>
+<!---->
+
+<script src="https://code.jquery.com/jquery-3.7.1.min.js"
+        integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo="
+        crossorigin="anonymous">
+</script>
+
+@section Style {
+    <link rel="stylesheet" href="~/css/BenAdd/ValStyle.css" />
+}
+
+<!--判斷是否評價過-->
+<script src="~/js/BenScript/isValuated.js"></script>
+
+<!--新建評價-->
+<script src="~/js/BenScript/CreateEvalPartial.js"></script>
+
+<!--編輯評價-->
+<script src="~/js/BenScript/EditEvalPartial.js"></script>
 
 @section Scripts{
     <script>
