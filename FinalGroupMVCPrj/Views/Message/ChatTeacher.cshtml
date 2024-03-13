@@ -1,7 +1,9 @@
-﻿@{
+﻿@model ChatTeacherViewModel
+@{
     ViewData["Title"] = "ChatTeacher";
     Layout = "~/Views/Shared/_LayoutTeacherAdmin.cshtml";
 }
+<div id="teacherId" teacherId="@ViewBag.teacherId"></div>
 <div class="ChatContainer">
     <div class="leftSide">
         <!--header-->
@@ -26,7 +28,7 @@
 
             <!--chat list-->
             <div class="chatlist">
-                <div class="block active">
+                <div class="block active" data-chatbox-id="chatBox1">
                     <div class="imgbx">
                         <img src="~/images/chat/img1.jpg" class="cover" />
                     </div>
@@ -83,11 +85,8 @@
 
         <!--chatbox-->
 
-
-
-        <div class="chatBox">
-
-            <div class="message std_message">
+        <div class="chatBox" id="chatBox" style="height:560px;overflow:auto;">
+            <div class="message std_message" id="outputMsg">
                 <div class="d-flex">
                     <div class="flex-shrink-0">
                         <div class="chat-avtar">
@@ -97,14 +96,14 @@
                     </div>
                     <div class="flex-grow-1 mx-3">
                         <div class="msg-content">
-                            <p class="mb-0">Hey. Very Good morning. How are you?</p>
+                            <p class="mb-0" id="msgtxt">Hey. Very Good morning. How are you?</p>
                         </div>
-                        <p class="mb-0 text-muted text-sm msg_time">11:23 AM</p>
+                        <p class="mb-0 text-muted text-sm msg_time" id="time">11:23 AM</p>
                     </div>
                 </div>
             </div>
 
-            <div class="message my_message">
+            <div class="message my_message" id="inputMsg">
                 <div class="d-flex">
                     <div class="flex-shrink-0">
                         <ul class="list-inline ms-auto mb-0">
@@ -117,9 +116,9 @@
                     </div>
                     <div class="flex-grow-1 mx-3">
                         <div class="msg-content">
-                            <p class="mb-0">Good.Thank you<br />wdwd</p>
+                            <p class="mb-0" id="msgtxt">Good.Thank you<br />wdwd</p>
                         </div>
-                        <p class="mb-0 text-muted text-sm msg_time">11:23 AM</p>
+                        <p class="mb-0 text-muted text-sm msg_time" id="time">11:23 AM</p>
                     </div>
                     <div class="flex-shrink-0">
                         <div class="chat-avtar">
@@ -128,22 +127,19 @@
                     </div>
                 </div>
             </div>
-
-
         </div>
 
         <!--chat input-->
         <div class="chatbox_input">
             <ion-icon name="happy-outline"></ion-icon>
             <ion-icon name="attach-outline"></ion-icon>
-            <input type="text" placeholder="Type a message" />
-            <a href="#" class="avtar avtar-s btn-link-primary">
+            <input type="text" id="messageInput" placeholder="Type a message" onkeypress="handleKeyPress(event)">
+            <a href="#" id="sendButton" class="avtar avtar-s btn-link-primary" onclick="sendMessage()">
                 <ion-icon name="send-outline"></ion-icon>
+            </a>
             </a>
         </div>
     </div>
-
-
 </div>
 
 <script type="module"
@@ -152,15 +148,11 @@
         src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
 
 @section Style {
-    <link rel="stylesheet" href="~/css/chat/chatstyle.css" />
-    <style>
-    </style>
+    <link rel="stylesheet" href="~/css/BenAdd/ChStyle.css" />
 }
 
 @section Scripts {
-    <script>
 
-    </script>
 }
-
-
+<script src="~/js/BenScript/signalr.js">  </script>
+<script src="~/js/BenScript/ChatTeacher.js"></script>
