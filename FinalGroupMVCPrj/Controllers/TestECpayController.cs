@@ -13,8 +13,10 @@ namespace FinalGroupMVCPrj.Controllers
     {
         public IActionResult Index2()
         {
+            //Id之後要改成特定格式: 240330 + 00001
             var orderId = "ecpay20240309191048";
-            var order = new Dictionary<string, string>
+            //用來儲存綠界金流所需的不同參數。這些參數包括訂單編號、訂單日期、總金額、交易描述、商品名稱等。
+            var order = new Dictionary<string, string> 
     {
         //綠界需要的參數
         { "MerchantTradeNo",  orderId},
@@ -23,16 +25,18 @@ namespace FinalGroupMVCPrj.Controllers
         { "TradeDesc",  "測試"},
         { "ItemName",  "商品名稱測試"},
         { "ReturnURL",  "https://localhost:7031/Login"},
-         { "OrderResultURL",  "https://localhost:7031/TestECpay/ECpayResult"},
+        { "OrderResultURL",  "https://localhost:7031/TestECpay/ECpayResult"},
         { "MerchantID",  "3002607"},
         { "PaymentType",  "aio"},
         { "ChoosePayment",  "Credit"},
         { "EncryptType",  "1"},
     };
-            //檢查碼
+            //檢查碼，用於確保訂單資訊的完整性
             order["CheckMacValue"] = GetCheckMacValue(order);
             return View(order);
         }
+
+        //訂單交易成功與否及該筆訂單編號，RtnCode=1為成功
         public IActionResult ECpayResult(int RtnCode, string MerchantTradeNo)
         {
             if(RtnCode == 1)
@@ -40,8 +44,9 @@ namespace FinalGroupMVCPrj.Controllers
                 return Content("交易成功" + MerchantTradeNo);
             }
             return Content("交易失敗" + MerchantTradeNo);
-        }        
+        }
 
+        //JObject 是 Newtonsoft.Json 套件中的類型，它表示一個動態的、可變的 JSON 物件。
         public IActionResult ECpayResult2(JObject info)
         {
             return Content("");
