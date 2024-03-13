@@ -222,6 +222,7 @@ namespace FinalGroupMVCPrj.Controllers
                 FDescription = querystring.FDescription,
                 FEditorDes = querystring.FEditorDes,
                 FRequirement = querystring.FRequirement,
+                FTeacherId = querystring.FTeacherId,
 
                 //// 評價部分
                 FLessonCourseId = querystring.FLessonCourseId,
