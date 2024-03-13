@@ -8,6 +8,7 @@
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <form asp-controller="TeacherAdmin" asp-action="TeditPic" id="divdropzone" class="dropzone"  enctype="multipart/form-data">
+                <input type="hidden" asp-for="FTeacherImagesId" />
                 <div class="modal-body" style=" display:flex ;">
                     <!-- 拖曳圖片 -->
                     <div @* id="divdropzone"  class="dropzone" *@ style="text-align: center;padding:100px; border: 2px dashed  #ADADAD;">

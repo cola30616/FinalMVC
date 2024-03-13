@@ -115,7 +115,7 @@
                             <input type="hidden" name="id" value="@item.TeacherImagesId" />
                             <button type="submit" class="btn btn-danger btn-sm" style="width:35px;height:30px;" title="刪除"><i class="bi bi-trash"></i></button>
                         </form>
-                        <button class="btn btn-primary btn-sm" style="width:35px;height:30px" title="編輯" data-bs-toggle="modal" data-bs-target="#editModal" onclick="editPicture(@item.TeacherImagesId)"><i class="fa-solid fa-pencil"></i></button>
+                        <button class="btn btn-primary btn-sm" style="width:35px;height:30px" title="編輯" data-bs-toggle="modal1" data-bs-target="#editModal" onclick="editPicture(@item.TeacherImagesId)"><i class="fa-solid fa-pencil"></i></button>
                     </div>
                     <div class="gallery_product col-sm-3 col-xs-6 filter   @item.Category " style="width:345px;height:240px">
                         <img src="@Url.Action("GetPicture","TeacherAdmin",new {id=item.TeacherImagesId })" title="@item.ImageName" style="width:360px;height:240px" />
@@ -125,7 +125,7 @@
                     </div>
                 </div>
                 <!-- 編輯圖片的modal彈跳視窗-->
-                 <partial name="T_EditTrPicPartial" model="@item.TeacherImageModel"></partial> 
+                @*  <partial name="T_EditTrPicPartial" model="@item.TeacherImageModel"></partial>  *@
             }
         </div>
     </div>

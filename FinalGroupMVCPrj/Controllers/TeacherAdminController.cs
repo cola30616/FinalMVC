@@ -176,7 +176,7 @@ namespace FinalGroupMVCPrj.Controllers
             return View("TRelatedPic",vBasicVMCollection);
         }
         // GET: /TeacherAdmin/EditPartialViewInfo
-        //動作簡述：
+        //動作簡述：顯示編輯畫面的資訊
         public IActionResult EditPartialViewInfo(int teacherImagesId)
         {
             var a = _context.TTeacherImages
@@ -210,17 +210,17 @@ namespace FinalGroupMVCPrj.Controllers
             return RedirectToAction(nameof(TRelatedPic));
         }
         // GET: TeacherAdmin/TEdit
-        //動作簡述：產生編輯modal畫面
+        //動作簡述：產生編輯modal畫面(未使用)
         public async Task<IActionResult> TEdit(int? id)
         {
             var teacherimage = await _context.TTeacherImages.FindAsync(id);
             return PartialView("T_EditTrPicPartial", teacherimage);
         }
-        public async Task<IActionResult> TeditPic(TTeacherImage trimg)
+        // GET: TeacherAdmin/TeditPic
+        //動作簡述：編輯單張圖片
+        public async Task<IActionResult> TeditPic(int id,TTeacherImage trimg)
         {
-            trimg.FTeacherId = GetCurrentTeacherId();
-            trimg.FImageSize = null;
-            if (trimg.FImageName == null) { trimg.FImageName = "尚未命名"; }
+            if (id != trimg.FTeacherImagesId) { return NotFound(); }
             //驗證成功
             if (ModelState.IsValid)
             {
