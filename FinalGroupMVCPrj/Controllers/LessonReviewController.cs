@@ -1,5 +1,4 @@
 ﻿using FinalGroupMVCPrj.Models;
-using FinalGroupMVCPrj.Models.ViewModel;
 using FinalGroupMVCPrj.Models.ViewModels;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
