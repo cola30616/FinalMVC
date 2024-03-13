@@ -40,7 +40,7 @@ namespace FinalGroupMVCPrj.Models.ViewModels
 
         //[Required(ErrorMessage = "課程售價為必填欄位")]
         [Display(Name = "售價")]
-        public decimal FPrice { get; set; }
+        public decimal? FPrice { get; set; }
 
         //[Required(ErrorMessage = "課程作業說明為必填欄位")]
         [Display(Name = "作業說明")]
@@ -48,23 +48,23 @@ namespace FinalGroupMVCPrj.Models.ViewModels
 
         //[Required(ErrorMessage = "課程人數上限為必填欄位")]
         [Display(Name = "課程人數上限")]
-        public int FMaxPeople { get; set; }
+        public int? FMaxPeople { get; set; }
 
         //[Required(ErrorMessage = "課程人數下限為必填欄位")]
         [Display(Name = "課程人數下限")]
-        public int FMinPeople { get; set; }
+        public int? FMinPeople { get; set; }
 
         //[Required(ErrorMessage = "課程開始日期為必填欄位")]
         [Display(Name = "開課日期")]
-        public DateTime FLessonDate { get; set; }
+        public DateTime? FLessonDate { get; set; }
 
         //[Required(ErrorMessage = "課程開始時間為必填欄位")]
         [Display(Name = "開課時間")]
-        public TimeSpan FStartTime { get; set; }
+        public TimeSpan? FStartTime { get; set; }
 
         //[Required(ErrorMessage = "課程結束時間為必填欄位")]
         [Display(Name = "結束時間")]
-        public TimeSpan FEndTime { get; set; }
+        public TimeSpan? FEndTime { get; set; }
 
         //[Required(ErrorMessage = "場地類型為必填欄位")]
         [Display(Name = "場地類型")]
@@ -73,20 +73,20 @@ namespace FinalGroupMVCPrj.Models.ViewModels
 
         //[Required(ErrorMessage = "場地資訊為必填欄位")]
         [Display(Name = "場地資訊")]
-        public string FOnlineLink { get; set; }
+        public string? FOnlineLink { get; set; }
 
-        public string FVenueName { get; set; }
+        public string? FVenueName { get; set; }
 
         public int? FDistrictId { get; set; }
 
-        public string FAddressDetail { get; set; }
+        public string? FAddressDetail { get; set; }
 
         //[Required(ErrorMessage = "課程報名截止日期為必填欄位")]
         [Display(Name = "課程報名截止日期")]
-        public DateTime FRegDeadline { get; set; }
+        public DateTime? FRegDeadline { get; set; }
 
         [Display(Name = "狀態")]
-        public bool FStatus { get; set; }
+        public bool? FStatus { get; set; }
 
         public string? FStatusNote { get; set; }
       

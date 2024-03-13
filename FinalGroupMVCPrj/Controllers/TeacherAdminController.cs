@@ -24,7 +24,7 @@ namespace FinalGroupMVCPrj.Controllers
             _hostEnv = env;
         }
         //■ ==========================     翊妏作業區      ==========================■
-        public string lessoncode = "";
+
         // GET: TeacherAdmin/LessonList
         //動作簡述：回傳老師課程清單資訊
         [HttpGet]
@@ -44,7 +44,7 @@ namespace FinalGroupMVCPrj.Controllers
                 Filed = _context.TCourseFields.Where(x => x.FFieldId == querystring.FSubject.FFieldId).Select(x => x.FFieldName).FirstOrDefault(),
                 Price = (int)querystring.FPrice,
                 LessonDate = querystring.FLessonDate,
-                Time = (querystring.FEndTime.Value.TotalHours - querystring.FStartTime.Value.TotalHours).ToString() + "hr",
+                Time = ((querystring.FEndTime.Value.TotalHours == null ? 0: querystring.FEndTime.Value.TotalHours) - (querystring.FStartTime.Value.TotalHours == null ? 0: querystring.FStartTime.Value.TotalHours)).ToString() + "hr",
                 MaxPeople = querystring.FMaxPeople,
                 RegPeople = _context.TOrderDetails.Where(x => x.FLessonCourseId == querystring.FLessonCourseId).Count(),
                 Status = querystring.FStatus,
@@ -65,22 +65,59 @@ namespace FinalGroupMVCPrj.Controllers
         [RequestFormLimits(MultipartBodyLengthLimit = 10240000)]
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> LessonCreate( TLessonCourse lesson)
+        public async Task<IActionResult> LessonCreate(LessonCreateViewModel lesson)
         {
-            lesson.FTeacherId = GetCurrentTeacherId();
-            //建立沒按功能鍵
-            var count = _context.TLessonCourses.Where(x => x.FSubjectId == Convert.ToInt32(lesson.FSubject)).Count();
-            lesson.FCode = lessoncode + (count+1);
-            
-            //lesson.FFiledid = Convert.ToInt32(lesson.FFiled);
-            //FVenueType綁不動、全部asp-validation-for沒顯現
+            string code = "";
+            try
+            {
+                TLessonCourse course = new TLessonCourse();
+                code = loadCode(Convert.ToInt32(lesson.FFiled), Convert.ToInt32(lesson.FSubject));
+                course.FVenueName = lesson.FVenueName;
+                course.FTeacherId = GetCurrentTeacherId();
+                course.FSubjectId = Convert.ToInt32(lesson.FSubject);
+                course.FName = lesson.FName;
+                var count = _context.TLessonCourses.Where(x => x.FSubjectId == Convert.ToInt32(lesson.FSubject)).Count();
+                course.FCode = $"{code}{(count + 1):D3}";
+                course.FDescription = lesson.FDescription;
+                course.FRequirement = lesson.FRequirement;
+                course.FPrice = lesson.FPrice;
+                course.FHomeworkDescription = lesson.FHomeworkDescription;
+                course.FMaxPeople = lesson.FMaxPeople;
+                course.FMinPeople = lesson.FMinPeople;
+                course.FLessonDate = lesson.FLessonDate;
+                course.FRegDeadline = lesson.FRegDeadline;
+                course.FStartTime = lesson.FStartTime;
+                course.FEndTime = lesson.FEndTime;
+                course.FVenueName  = lesson.FVenueName ;
+                course.FDistrictId = lesson.FDistrictId;
+                course.FAddressDetail = lesson.FAddressDetail;
+                if(lesson.FVenueName!=null || lesson.FDistrictId != null || lesson.FAddressDetail != null)
+                {
+                    course.FVenueType = true;
+                }
+                else
+                {
+                    course.FOnlineLink = "https://meet.google.com/tek-pkav-obh";
+                    course.FVenueType = false;
+                }
+                //status(lesson);
+                //確認未開放的邏輯
+                course.FStatus = "開放報名";
 
-            
-                await ReadUploadImage(lesson);
-                _context.Add(lesson);
+                if (course.FPhoto != null)
+                {
+                    await ReadUploadImage(course);
+                }
+                _context.Add(course);
                 await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(LessonList));
-           
+
+            }
+            catch (Exception e)
+            {
+                return View("Error", e);
+            }
+            return RedirectToAction(nameof(LessonList));
+
         }
 
         // GET: TeacherAdmin/LessonEdit
@@ -90,6 +127,18 @@ namespace FinalGroupMVCPrj.Controllers
             return View("LEdit");
         }
 
+        public string status(LessonCreateViewModel lesson)
+        {
+            string status = "";
+            //1.課程取消
+           // 2.未開放
+           
+           // 3.開放報名
+
+           // 4.報名截止
+           // 5.課程結束
+            return status;
+        }
 
         [HttpGet]
         public IActionResult TeacherAllowFiled()
@@ -110,8 +159,8 @@ namespace FinalGroupMVCPrj.Controllers
                                         ).Distinct().ToList();
             return Json(allowFiled);
         }
-       
-            [HttpGet]
+
+        [HttpGet]
         public IActionResult TeacherAllowSubject(int filedId)
         {
             int teacherid = GetCurrentTeacherId();
@@ -120,32 +169,32 @@ namespace FinalGroupMVCPrj.Controllers
                                             join cs in _context.TCourseSubjects on ts.FSubjectId equals cs.FSubjectId
                                             join cf in _context.TCourseFields on cs.FFieldId equals cf.FFieldId
                                             where ts.FTeacherId == teacherid && cf.FFieldId == filedId
-                                            select new {cs.FSubjectId,cs.FSubjectName}
+                                            select new { cs.FSubjectId, cs.FSubjectName }
                                         ).Distinct().ToList();
             return Json(allowSubject);
         }
         [HttpGet]
         public IActionResult allCity()
         {
-            var city = _context.TCities.Select(x=> new { x.FCityId, x.FCityName }).Distinct();
+            var city = _context.TCities.Select(x => new { x.FCityId, x.FCityName }).Distinct();
             return Json(city);
         }
 
         [HttpGet]
         public IActionResult allDistrict(int cityid)
         {
-            var district = _context.TCityDistricts.Where(x=>x.FCityId== cityid).Select(x => new {x.FDistrictId,x.FDistrictName});
+            var district = _context.TCityDistricts.Where(x => x.FCityId == cityid).Select(x => new { x.FDistrictId, x.FDistrictName });
             return Json(district);
         }
 
-        [HttpGet]
-        public IActionResult loadCode(int filedid, int subjectid)
+
+        public string loadCode(int? filedid, int? subjectid)
         {
             var code1 = _context.TCourseFields.Where(x => x.FFieldId == filedid).Select(x => x.FFieldCode).FirstOrDefault();
             var code2 = _context.TCourseSubjects.Where(x => x.FSubjectId == subjectid).Select(x => x.FSubjectCode).FirstOrDefault();
-            string code = code1+code2;
-            lessoncode = code;
-            return Content(code, "text/plain", Encoding.UTF8);
+            string code = code1 + code2;
+
+            return code;
         }
         public async Task<FileResult> showPicture(int id)
         {
@@ -244,7 +293,7 @@ namespace FinalGroupMVCPrj.Controllers
             // https://www.google.com/search?q=.net+core+mva+update+partial+model+property&rlz=1C1ONGR_zh-TWTW1027TW1027&oq=.net+core+mva+update+partial+model+property&gs_lcrp=EgZjaHJvbWUyBggAEEUYOdIBCTMwMzYzajBqMagCALACAA&sourceid=chrome&ie=UTF-8#ip=1
             // ======== 局部更新資料 start =========
             TTeacher? dbTeacher = _context.TTeachers.Where(t => t.FTeacherId == GetCurrentTeacherId()).FirstOrDefault();
-            if(dbTeacher == null )
+            if (dbTeacher == null)
             {
                 return BadRequest("系統異常");
             }
@@ -307,8 +356,8 @@ namespace FinalGroupMVCPrj.Controllers
             }
             return Content("新增失敗");
         }
-     
-       
+
+
         // GET: TeacherAdmin/TRelatedPic
         //動作簡述：回傳老師相關圖片
         [HttpGet]
@@ -328,7 +377,7 @@ namespace FinalGroupMVCPrj.Controllers
                     TeacherImageModel = t,
                 })
             );
-            return View("TRelatedPic",vBasicVMCollection);
+            return View("TRelatedPic", vBasicVMCollection);
         }
         // GET: /TeacherAdmin/EditPartialViewInfo
         //動作簡述：顯示編輯畫面的資訊
@@ -349,7 +398,7 @@ namespace FinalGroupMVCPrj.Controllers
             byte[]? Content = c?.FImageLink;
             return File(Content, "image/jpeg");
         }
-       
+
         // POST: TeacherAdmin/TdeletePic
         //動作簡述：刪除老師相關圖片(單張)
         [HttpPost]
@@ -373,7 +422,7 @@ namespace FinalGroupMVCPrj.Controllers
         }
         // GET: TeacherAdmin/TeditPic
         //動作簡述：編輯單張圖片
-        public async Task<IActionResult> TeditPic(int id,TTeacherImage trimg)
+        public async Task<IActionResult> TeditPic(int id, TTeacherImage trimg)
         {
             if (id != trimg.FTeacherImagesId) { return NotFound(); }
             //驗證成功
@@ -511,7 +560,7 @@ namespace FinalGroupMVCPrj.Controllers
         public IActionResult ListDataJson2()
         {
             int currentTeacherId = GetCurrentTeacherId();
-            if (currentTeacherId==0) 
+            if (currentTeacherId == 0)
             {
                 return BadRequest("目前沒有老師登入");
             }
@@ -520,7 +569,7 @@ namespace FinalGroupMVCPrj.Controllers
                             join member in _context.TMembers on order.FMemberId equals member.FMemberId
                             join lessoncourse in _context.TLessonCourses on orderDetail.FLessonCourseId equals lessoncourse.FLessonCourseId
                             where lessoncourse.FTeacherId == currentTeacherId
-                            select new 
+                            select new
                             {
                                 OrderID = order.FOrderId,
                                 RealName = member.FRealName,
@@ -532,6 +581,6 @@ namespace FinalGroupMVCPrj.Controllers
                                 ModificationDescription = orderDetail.FModificationDescription,
                             };
             return Json(new { data = OrderData });
-        }       
+        }
     }
 }

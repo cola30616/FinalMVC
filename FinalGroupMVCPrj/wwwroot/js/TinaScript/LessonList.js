@@ -33,10 +33,10 @@ function loadDataTable() {
                 "render": function (data) {
                     return `<div class="d-flex justify-content-between" role="">
     <a href="/TeacherAdmin/LessonEdit" class="btn btn-primary mx-2 flex-grow-1" lessonid=${data} ><i class="fa-solid fa-ellipsis-vertical"></i> 檢視</a>
-    <button lessonid=${data} class="btn btn-primary mx-2 flex-grow-1" data-bs-toggle="modal"><i class="fa-regular fa-rectangle-xmark"></i> 取消</button>
+    <button lessonid=${data} class="btn btn-primary mx-2 flex-grow-1" data-bs-toggle="modal"  data-bs-toggle="tooltip" data-bs-placement="bottom" title="取消"><i class="fa-regular fa-rectangle-xmark"></i></button>
 </div>`
                 },
-                "width": "15%"
+                "width": "10%"
             },
         ],
         language: {
