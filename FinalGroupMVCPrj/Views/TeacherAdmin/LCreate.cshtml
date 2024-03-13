@@ -1,5 +1,4 @@
-﻿@model LessonCreateViewModel
-@{
+﻿@{
     ViewData["Title"] = "LCreate";
     Layout = "~/Views/Shared/_LayoutTeacherAdmin.cshtml";
 }
@@ -11,71 +10,70 @@
             height: 92px;
             overflow: hidden;
         }
-
-            .pic img {
+        .pic img {
                 transform: scale(1,1);
                 transition: all 1s ease-out;
-            }
-
-                .pic img:hover {
-                    transform: scale(1.2,1.2);
-                    transform-origin: center center;
-                }
+        }
+        .pic img:hover {
+               transform: scale(1.2,1.2);
+               transform-origin: center center;
+        }
     </style>
 }
 <h1>新增課程</h1>
 <hr />
-<form asp-action="LessonCreate" id="OpenLesson" asp-controller="TeacherAdmin" method="post" enctype="multipart/form-data">
 <div class="container col-12">
     <div class="row">
         <div class="col-6">
             <div class=" bg-info-light text-center rounded-2 mb-2">基本資料</div>
             <div class="row mb-3">
                 <div class="col-sm-6">
-                        <select class="form-select" aria-label="Default select example" id="FFiled" name="FFiled" asp-for="FFiled">
+                    <select class="form-select" aria-label="Default select example">
                         <option selected>領域</option>
+                        <option value="1">One</option>
+                        <option value="2">Two</option>
+                        <option value="3">Three</option>
                     </select>
                 </div>
                 <div class="col-sm-6">
-                        <select class="form-select" aria-label="Default select example" id="FSubject" name="FSubject" asp-for="FSubject">
+                    <select class="form-select" aria-label="Default select example">
                         <option selected>科目</option>
+                        <option value="1">One</option>
+                        <option value="2">Two</option>
+                        <option value="3">Three</option>
                     </select>
                 </div>
             </div>
             <div class="row">
                 <div class="col-sm-6">
-                    <div class="input-group mb-3">
-                        <input type="text" class="form-control" placeholder="代號" id="FCode" placeholder="" asp-for="FCode">
-                            <span asp-validation-for="FCode" class="text-danger"></span>
+                    <div class="form-floating mb-3">
+                        <input type="text" class="form-control" id="floatingInput" placeholder="">
+                        <label for="floatingInput">代號</label>
                     </div>
                 </div>
                 <div class="col-sm-6">
-                    <button type="submit" class="btn btn-primary align-self-center">自動填入先前的資訊</button>
+                    <button type="submit" class="btn btn-primary align-self-center">自動帶入上筆資料</button>
                 </div>
             </div>
 
 
             <div class="form-floating mb-3">
-                <input type="text" class="form-control" id="floatingInput" placeholder="" asp-for="FName">
-                    <span asp-validation-for="FName" class="text-danger"></span>
+                <input type="text" class="form-control" id="floatingInput" placeholder="">
                 <label for="floatingInput">課名</label>
             </div>
             <div class="form-floating mb-3">
-                <input type="text" class="form-control" id="floatingInput" placeholder="" asp-for="FRequirement">
-                    <span asp-validation-for="FRequirement" class="text-danger"></span>
+                <input type="text" class="form-control" id="floatingInput" placeholder="">
                 <label for="floatingInput">要求</label>
             </div>
             <!--編輯器-->
             <div class="form-floating mb-3">
-                <textarea class="form-control" placeholder="Leave a comment here" id="floatingTextarea" style="height: 100px; resize: none;" asp-for="FDescription"></textarea>
-                    <span asp-validation-for="FDescription" class="text-danger"></span>
+                <textarea class="form-control" placeholder="Leave a comment here" id="floatingTextarea" style="height: 100px; resize: none;"></textarea>
                 <label for="floatingTextarea">課程介紹</label>
             </div>
 
 
             <div class="form-floating mb-3">
-                <textarea class="form-control" placeholder="Leave a comment here" id="floatingTextarea" style="height: 100px; resize: none;" asp-for="FHomeworkDescription"></textarea>
-                    <span asp-validation-for="FHomeworkDescription" class="text-danger"></span>
+                <textarea class="form-control" placeholder="Leave a comment here" id="floatingTextarea" style="height: 100px; resize: none;"></textarea>
                 <label for="floatingTextarea">作業</label>
             </div>
         </div>
@@ -83,45 +81,44 @@
         <div class="col-6">
             <div class="bg-warning-light text-center rounded-2 mb-2">其他資料</div>
             <!--封面照 croppie裁切-->
+
             <div class="container">
                 <div class="row">
                     <div class="col-sm-6">
-                            @* 檔案上傳  type="file"*@
                         <div class="mb-3">
-                                <input class="form-control" type="file" id="FPhoto" asp-for="FPhoto" accept="image/*">
+                            <input class="form-control" type="file" id="formFile">
                         </div>
                         <div class="mb-4">
                             <button type="submit" class="btn btn-primary">裁切圖片</button>
                         </div>
                     </div>
-                        @* 預覽圖 *@
                     <div class="col-sm-6 d-flex rounded border border-dark border-2 pic">
-                            <img src="~/images/defaultimage.png" class="rounded" alt="..." title="放大檢視" style="width:145px;height:90px" id="imgPreview">
+                        <img src="~/images/defaultimage.png" class="rounded" alt="..." title="放大檢視" style="width:145px;height:90px">
                     </div>
                 </div>
             </div>
 
 
+
+
             <div class="input-group mb-3">
                 <span class="input-group-text">$</span>
-                <input type="text" class="form-control" aria-label="Amount (to the nearest dollar)" placeholder="售價" asp-for="FPrice">
-                    <span class="input-group-text">元</span>
-                    <span asp-validation-for="FPrice" class="text-danger"></span>
+                <input type="text" class="form-control" aria-label="Amount (to the nearest dollar)" placeholder="售價">
+                <span class="input-group-text">元</span>
             </div>
-
             <!--人數-->
+
+
             <div class="row">
                 <div class="col-sm-6">
                     <div class="form-floating mb-3">
-                        <input type="number" class="form-control" id="floatingInput1" placeholder="" asp-for="FMinPeople">
-                            <span asp-validation-for="FMinPeople" class="text-danger"></span>
+                        <input type="number" class="form-control" id="floatingInput1" placeholder="">
                         <label for="floatingInput1">最低人數</label>
                     </div>
                 </div>
                 <div class="col-sm-6">
                     <div class="form-floating mb-3">
-                        <input type="number" class="form-control" id="floatingInput2" placeholder="" asp-for="FMaxPeople">
-                            <span asp-validation-for="FMaxPeople" class="text-danger"></span>
+                        <input type="number" class="form-control" id="floatingInput2" placeholder="">
                         <label for="floatingInput2">名額</label>
                     </div>
                 </div>
@@ -130,30 +127,27 @@
             <div class="row">
                 <div class="col-sm-6">
                     <label>開課日期</label>
-                    <input type="date" class="form-control" asp-for="FLessonDate">
-                        <span asp-validation-for="FLessonDate" class="text-danger"></span>
+                    <input type="date" class="form-control">
                 </div>
+
                 <div class="col-sm-6">
                     <label>報名截止日期</label>
-                    <input type="date" class="form-control" asp-for="FRegDeadline">
-                        <span asp-validation-for="FRegDeadline" class="text-danger"></span>
+                    <input type="date" class="form-control">
                 </div>
             </div>
 
             <div class="row mb-3">
                 <div class="col-sm-6">
                     <label for="inputTime1" class="col-form-label">開始時間</label>
-                        <div class="input-group">                           
-                            <input type="time" class="form-control" id="inputTime1" asp-for="FStartTime" step="1800" min="08:00"> 
-                            <span asp-validation-for="FStartTime" class="text-danger"></span>                            
-                        </div>
-
+                    <div class="input-group">
+                        <input type="time" class="form-control" id="inputTime1">
+                    </div>
                 </div>
+
                 <div class="col-sm-6">
                     <label for="inputTime2" class="col-form-label">結束時間</label>
                     <div class="input-group">
-                            <input type="time" class="form-control" id="inputTime2" asp-for="FEndTime" step="1800">
-                            <span asp-validation-for="FEndTime" class="text-danger"></span>
+                        <input type="time" class="form-control" id="inputTime2">
                     </div>
                 </div>
             </div>
@@ -163,7 +157,7 @@
                 <div class="col-sm-6">
                     <fieldset>
                         <div class="form-check">
-                                <input class="form-check-input" type="radio" name="VenueType" asp-for="FVenueType" id="onclass" value=true checked>
+                            <input class="form-check-input" type="radio" name="VenueType" id="onclass" value="true" checked>
                             <label class="form-check-label" for="onclass">
                                 實體
                             </label>
@@ -173,7 +167,7 @@
                 <div class="col-sm-6">
                     <fieldset>
                         <div class="form-check">
-                                <input class="form-check-input" type="radio" name="VenueType" asp-for="FVenueType" id="online" value=false>
+                            <input class="form-check-input" type="radio" name="VenueType" id="online" value="false">
                             <label class="form-check-label" for="online">
                                 線上
                             </label>
@@ -185,24 +179,19 @@
             <!--詳細場地資訊-->
             <div id="onClassInfo">
                 <div class="input-group mb-3">
-                    <input type="text" class="form-control" aria-label="Amount (to the nearest dollar)" placeholder="場地名稱" asp-for="FVenueName">
-                        <span asp-validation-for="FVenueName" class="text-danger"></span>
+                    <input type="text" class="form-control" aria-label="Amount (to the nearest dollar)" placeholder="場地名稱">
                 </div>
                 <div class="row mb-3">
-                    <div class="col-sm-3">
-                        <select class="form-select" aria-label="Default select example" id="city" name="city">
-                            <option selected>縣市</option>
-                        </select>
-                    </div>
-                    <div class="col-sm-3">
-                        <select class="form-select" aria-label="Default select example" asp-for="FDistrictId" id="district">
+                    <div class="col-sm-4">
+                        <select class="form-select" aria-label="Default select example">
                             <option selected>地區</option>
-
+                            <option value="1">One</option>
+                            <option value="2">Two</option>
+                            <option value="3">Three</option>
                         </select>
                     </div>
-                    <div class="col-sm-6">
-                        <input type="text" class="form-control" aria-label="Amount (to the nearest dollar)" placeholder="詳細地址" asp-for="FAddressDetail">
-                            <span asp-validation-for="FAddressDetail" class="text-danger"></span>
+                    <div class="col-sm-8">
+                        <input type="text" class="form-control" aria-label="Amount (to the nearest dollar)" placeholder="詳細地址">
                     </div>
                 </div>
             </div>
@@ -215,117 +204,21 @@
 <div class="row r">
     <div class="col-1 ">
     </div>
-    @*     <!-- 進度條 -->
+    <!-- 進度條 -->
     <div class="col-7 ">
-    <div class="progress">
-    <div class="progress-bar progress-bar-striped bg-info" role="progressbar" style="width: 25%" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100">25%</div>
+        <div class="progress">
+            <div class="progress-bar progress-bar-striped bg-info" role="progressbar" style="width: 25%" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100">25%</div>
+        </div>
     </div>
-    </div> *@
 
     <!-- 按鈕 -->
-    <div class="col-12  d-flex text-align-end">
-        <button type="submit" class="btn btn-primary me-2" value="Create" >確定</button>
+    <div class="col-4  d-flex text-align-end">
+        <button type="button" class="btn btn-primary me-2">確定</button>
         <button type="button" class="btn btn-secondary">取消</button>
     </div>
 </div>
-</form>
 
 @section Scripts {
     <script src="~/js/tinascript/changevenuetype.js" asp-append-version="true"></script>
-    <script src="~/js/tinascript/previewimage.js" asp-append-version="true"></script>
-    <!--帶出老師可開的領域-->
-    <script>
-        const filed = document.querySelector('#FFiled');
-        const subject = document.querySelector('#FSubject');
-        const code = document.querySelector('#FCode');
-
-        const loadfiled = async () => {
-            const url = `@Url.Content("~/TeacherAdmin/TeacherAllowFiled")`;
-            const response = await fetch(url);
-            const data = await response.json();
-            const options = data.map((item) => {
-                return `<option value=${item.fFieldId}>${item.fFieldName}</option>`;
-            })
-            filed.innerHTML += options.join('');
-            loadSubject();
-        };
-        (() => {
-            loadfiled();
-        })();
-
-        const loadSubject = async () => {
-            const filedid = filed.options[filed.selectedIndex].value;
-
-            const url = `@Url.Content("~/TeacherAdmin/TeacherAllowSubject")?filedId=${filedid}`;
-            const response = await fetch(url);
-            const data = await response.json();
-            const options = data.map((item) => {
-                return `<option value=${item.fSubjectId}>${item.fSubjectName}</option>`;
-            })
-            subject.innerHTML += options.join('');
-            loadCode();
-        };
-
-        const loadCode = async () => {
-            const filedid = filed.options[filed.selectedIndex].value;
-            const subjectid = subject.options[subject.selectedIndex].value;
-
-
-            const url = `@Url.Content("~/TeacherAdmin/loadCode")?filedid=${filedid}&subjectid=${subjectid}`;
-            const response = await fetch(url);
-            const data = await response.text();
-
-
-            code.innerHTML = `<input type="text" class="form-control" placeholder="代號" id="FCode" placeholder="" asp-for="FCode" value="${data}">`;
-
-        };
-        filed.addEventListener('change', loadSubject);
-        subject.addEventListener('change', loadCode);
-
-    </script>
-    <!--帶出縣市區域-->
-    <script>
-        const city = document.querySelector('#city');
-        const district = document.querySelector('#district');
-
-        const loadcity = async () => {
-            const url = `@Url.Content("~/TeacherAdmin/allCity")`;
-            const response = await fetch(url);
-            const data = await response.json();
-            const options = data.map((item) => {
-                return `<option value=${item.fCityId}>${item.fCityName}</option>`;
-            })
-            city.innerHTML += options.join('');
-            //loadSubject();
-        };
-        (() => {
-            loadcity();
-        })();
-
-        const loadDistrict = async () => {
-            const cittyid = city.options[city.selectedIndex].value;
-
-            const url = `@Url.Content("~/TeacherAdmin/allDistrict")?cityid=${cittyid}`;
-            const response = await fetch(url);
-            const data = await response.json();
-            console.log(data);
-            const options = data.map((item) => {
-                return `<option value=${item.fDistrictId}>${item.fDistrictName}</option>`;
-            })
-            district.innerHTML = options.join('');
-        };
-
-        city.addEventListener('change', loadDistrict);
-    </script>
-
-    <!---->
-<script>
-
-    $("#FPhoto").on("change", function () {
-        console.log("Hello");
-        previewImage(this, $('#imgPreview'));
-    });
-
-</script> 
-
+   
 } 
