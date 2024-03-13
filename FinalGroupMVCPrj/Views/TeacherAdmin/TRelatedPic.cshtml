@@ -1,41 +1,44 @@
-﻿@{
+﻿@model IEnumerable<TeacherBasicViewModel>
+@{
     ViewData["Title"] = "TRelatedPic";
     Layout = "~/Views/Shared/_LayoutTeacherAdmin.cshtml";
 }
-<style>
-    .hidden {
-        display: none;
-    }
-    * {
-        padding: 0;
-        margin: 0;
-    }
+@section Styles {
+    <style>
+        .hidden {
+            display: none;
+        }
 
-    /*	general	*/
+        * {
+            padding: 0;
+            margin: 0;
+        }
 
-    section {
-        padding: 50px 0;
-    }
+        /*	general	*/
 
-    /*	gallery */
+        section {
+            padding: 50px 0;
+        }
 
-    .gallery-title {
-        font-size: 36px;
-        color: #3F6184;
-        text-align: center;
-        font-weight: 500;
-        margin-bottom: 70px;
-    }
+        /*	gallery */
 
-    .btn btn-outline-secondary {
-        font-size: 18px;
-        border: 2px solid #3F6184;
-        padding: 5px 10px;
-        text-align: center;
-        color: #3F6184;
-        margin-bottom: 30px;
-        background: transparent;
-    }
+        .gallery-title {
+            font-size: 36px;
+            color: #3F6184;
+            text-align: center;
+            font-weight: 500;
+            margin-bottom: 70px;
+        }
+
+        .btn btn-outline-secondary {
+            font-size: 18px;
+            border: 2px solid #3F6184;
+            padding: 5px 10px;
+            text-align: center;
+            color: #3F6184;
+            margin-bottom: 30px;
+            background: transparent;
+        }
 
         .btn.btn-outline-secondary:hover,
         .btn.btn-outline-secondary:focus,
@@ -45,38 +48,39 @@
             outline: none;
         }
 
-    .gallery_product {
-        margin-inline: 20px;
-        margin-bottom: 15px;
-        padding: 0;
-        position: relative;
-    }
-
-        .gallery_product .img-info {
-            position: absolute;
-            background: rgba(0,0,0,0.3);
-            left: 0;
-            right: -5%;
-            bottom: 0;
-            padding: 20px;
-            overflow: hidden;
-            color: #fff;
-            top: 0;
-            display: none;
-            -webkit-transition: 2s;
-            transition: 2s;
-            text-align:center;
-
+        .gallery_product {
+            margin-inline: 20px;
+            margin-bottom: 15px;
+            padding: 0;
+            position: relative;
         }
 
-        .gallery_product:hover .img-info {
-            display: block;
-            -webkit-transition: 2s;
-            transition: 2s;
-        }
+            .gallery_product .img-info {
+                position: absolute;
+                background: rgba(0,0,0,0.3);
+                left: 0;
+                right: -5%;
+                bottom: 0;
+                padding: 20px;
+                overflow: hidden;
+                color: #fff;
+                top: 0;
+                display: none;
+                -webkit-transition: 2s;
+                transition: 2s;
+                text-align: center;
+            }
 
-    /*	end gallery */
-</style>
+            .gallery_product:hover .img-info {
+                display: block;
+                -webkit-transition: 2s;
+                transition: 2s;
+            }
+
+        /*	end gallery */
+    </style>
+}
+
 
 <script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
 <!------ Include the above in your HEAD tag ---------->
@@ -93,171 +97,207 @@
         <!-- 分類圖片 -->
         <div align="justify" style="margin:10px">
             <button class="btn btn-outline-secondary" data-filter="all">所有</button>
-            <button class="btn btn-outline-secondary" data-filter="category1">Designing</button>
-            <button class="btn btn-outline-secondary" data-filter="category2">Development</button>
-            <button class="btn btn-outline-secondary" data-filter="category3">Graphics</button>
+            <button class="btn btn-outline-secondary" data-filter="教育背景">教育背景</button>
+            <button class="btn btn-outline-secondary" data-filter="證照證書">證照證書</button>
+            <button class="btn btn-outline-secondary" data-filter="作品">作品</button>
         </div>
 
         <br />
-        <!-- 圖片們 -->
-        <div class="gallery_product col-sm-3 col-xs-6 filter category1">
-            <a class="fancybox" rel="ligthbox" href="https://picsum.photos/400/250?image=122">
-                <img class="img-responsive" alt="" src="https://picsum.photos/400/250?image=122" />
-                <div class='img-info' >
-                    <h4 >Image Title 1</h4>
-                    
-                </div>
-            </a>
-        </div>
+        <div id="divImages" style="display:flex;flex-wrap: wrap;border-color:red">
 
-        <div class="gallery_product col-sm-3 col-xs-6 filter category2">
-            <a class="fancybox" rel="ligthbox" href="https://picsum.photos/400/250?image=526">
-                <img class="img-responsive" alt="" src="https://picsum.photos/400/250?image=526" />
-                <div class='img-info'>
-                    <h4>Image Title 2</h4>
-                 
+            <!-- 圖片們 -->
+            @foreach (TeacherBasicViewModel item in Model)
+            {
+                <div>
+                    <!-- 刪除功能 -->
+                    <div style="display: flex; align-items: center;margin-bottom:0" class=" gallery_product col-sm-3 col-xs-6 filter   @item.Category ">
+                        <form asp-controller="TeacherAdmin" asp-action="TdeletePic" method="post">
+                            <input type="hidden" name="id" value="@item.TeacherImagesId" />
+                            <button type="submit" class="btn btn-danger btn-sm" style="width:35px;height:30px;" title="刪除"><i class="bi bi-trash"></i></button>
+                        </form>
+                        <button class="btn btn-primary btn-sm" style="width:35px;height:30px" title="編輯" data-bs-toggle="modal1" data-bs-target="#editModal" onclick="editPicture(@item.TeacherImagesId)"><i class="fa-solid fa-pencil"></i></button>
+                    </div>
+                    <div class="gallery_product col-sm-3 col-xs-6 filter   @item.Category " style="width:345px;height:240px">
+                        <img src="@Url.Action("GetPicture","TeacherAdmin",new {id=item.TeacherImagesId })" title="@item.ImageName" style="width:360px;height:240px" />
+                        <div class='img-info'>
+                            <h4>@item.ImageName</h4>
+                        </div>
+                    </div>
                 </div>
-            </a>
+                <!-- 編輯圖片的modal彈跳視窗-->
+                @*  <partial name="T_EditTrPicPartial" model="@item.TeacherImageModel"></partial>  *@
+            }
         </div>
-
-        <div class="gallery_product col-sm-3 col-xs-6 filter category3">
-            <a class="fancybox" rel="ligthbox" href="https://picsum.photos/400/250?image=626">
-                <img class="img-responsive" alt="" src="https://picsum.photos/400/250?image=626" />
-                <div class='img-info'>
-                    <h4>Image Title 3</h4>
-            
-                </div>
-            </a>
-        </div>
-
-        <div class="gallery_product col-sm-3 col-xs-6 filter category1">
-            <a class="fancybox" rel="ligthbox" href="https://picsum.photos/400/250?image=626">
-                <img class="img-responsive" alt="" src="https://picsum.photos/400/250?image=626" />
-                <div class='img-info'>
-                    <h4>Image Title 4</h4>
-            
-                </div>
-            </a>
-        </div>
-
-        <div class="gallery_product col-sm-3 col-xs-6 filter category2">
-            <a class="fancybox" rel="ligthbox" href="https://picsum.photos/400/250?image=486">
-                <img class="img-responsive" alt="" src="https://picsum.photos/400/250?image=486" />
-                <div class='img-info'>
-                    <h4>Image Title 5</h4>
-          
-                </div>
-            </a>
-        </div>
-
-        <div class="gallery_product col-sm-3 col-xs-6 filter category3">
-            <a class="fancybox" rel="ligthbox" href="https://picsum.photos/400/250?image=846">
-                <img class="img-responsive" alt="" src="https://picsum.photos/400/250?image=846" />
-                <div class='img-info'>
-                    <h4>Image Title 6</h4>
-         
-                </div>
-            </a>
-        </div>
-
-        <div class="gallery_product col-sm-3 col-xs-6 filter category1">
-            <a class="fancybox" rel="ligthbox" href="https://picsum.photos/400/250?image=1066">
-                <img class="img-responsive" alt="" src="https://picsum.photos/400/250?image=1066" />
-                <div class='img-info'>
-                    <h4>Image Title 7</h4>
-        
-                </div>
-            </a>
-        </div>
-
-        <div class="gallery_product col-sm-3 col-xs-6 filter category2">
-            <a class="fancybox" rel="ligthbox" href="https://picsum.photos/400/250?image=506">
-                <img class="img-responsive" alt="" src="https://picsum.photos/400/250?image=506" />
-                <div class='img-info'>
-                    <h4>Image Title 8</h4>
-          
-                </div>
-            </a>
-        </div>
-
-        <div class="gallery_product col-sm-3 col-xs-6 filter category3">
-            <a class="fancybox" rel="ligthbox" href="https://picsum.photos/400/250?image=1026">
-                <img class="img-responsive" alt="" src="https://picsum.photos/400/250?image=1026" />
-                <div class='img-info'>
-                    <h4>Image Title 9</h4>
-                
-                </div>
-            </a>
-        </div>
-
-        <div class="gallery_product col-sm-3 col-xs-6 filter category1">
-            <a class="fancybox" rel="ligthbox" href="https://picsum.photos/400/250?image=1077">
-                <img class="img-responsive" alt="" src="https://picsum.photos/400/250?image=1077" />
-                <div class='img-info'>
-                    <h4>Image Title 10</h4>
-      
-                </div>
-            </a>
-        </div>
-
-        <div class="gallery_product col-sm-3 col-xs-6 filter category2">
-            <a class="fancybox" rel="ligthbox" href="https://picsum.photos/400/250?image=102">
-                <img class="img-responsive" alt="" src="https://picsum.photos/400/250?image=102" />
-                <div class='img-info'>
-                    <h4>Image Title 11</h4>
-          
-                </div>
-            </a>
-        </div>
-
-        <div class="gallery_product col-sm-3 col-xs-6 filter category3">
-            <a class="fancybox" rel="ligthbox" href="https://picsum.photos/400/250?image=106">
-                <img class="img-responsive" alt="" src="https://picsum.photos/400/250?image=106" />
-                <div class='img-info' >
-                    <h4 >Image Title 12</h4>
-        
-                </div>
-            </a>
-        </div>
-
     </div>
 </div>
+
 <!-- html畫面end -->
 <!-- 新增圖片的modal彈跳視窗-->
-<partial name="T_CreateTrPicPartial" model="new TTeacher()"></partial>
+<partial name="T_CreateTrPicPartial" model="new TTeacherImage()"></partial>
+<!-- 編輯圖片的modal彈跳視窗--><!-- model="item.TeacherImageModel" -->
+@* <partial name="T_EditTrPicPartial" ></partial> *@
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.2.5/jquery.fancybox.min.js"></script>
+@section Scripts {
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.2.5/jquery.fancybox.min.js"></script>
+    <script>
+        /*	gallery */
+        $(document).ready(function () {
 
-<script>
-    /*	gallery */
-    $(document).ready(function () {
+            $(".btn.btn-outline-secondary").click(function () {
+                var value = $(this).attr('data-filter');
 
-        $(".btn.btn-outline-secondary").click(function () {
-            var value = $(this).attr('data-filter');
+                if (value == "all") {
+                    $('.filter').show('1000');
+                }
+                else {
+                    $(".filter").not('.' + value).hide('3000');
+                    $('.filter').filter('.' + value).show('3000');
 
-            if (value == "all") {
-                $('.filter').show('1000');
-            }
-            else {
-                $(".filter").not('.' + value).hide('3000');
-                $('.filter').filter('.' + value).show('3000');
+                }
 
-            }
-
-            if ($(".btn.btn-outline-secondary").removeClass("active")) {
-                $(this).removeClass("active");
-            }
-            $(this).addClass("active");
+                if ($(".btn.btn-outline-secondary").removeClass("active")) {
+                    $(this).removeClass("active");
+                }
+                $(this).addClass("active");
+            });
         });
-    });
-    /*	end gallery */
+        /*	end gallery */
 
-    $(document).ready(function () {
-        $(".fancybox").fancybox({
-            openEffect: "none",
-            closeEffect: "none"
+        $(document).ready(function () {
+            $(".fancybox").fancybox({
+                openEffect: "none",
+                closeEffect: "none"
+            });
         });
-    });
 
-</script>
+    </script>
+    @* script功能 : 預覽上傳的圖片、 *@
+    <script>
+        //判斷有沒有值不斷要有值第一個檔案要有值
+        function previewImage(inputFile, img) {
+            //判斷檔案控制項有沒有值 且 第一個檔案要有值
+            if (inputFile.files != null && inputFile.files[0] != null) {
+                //限制檔案上傳格式
+                var allowTpye = "image.*";
+                // 判斷檔案有沒有符合上傳的格式
+                if (inputFile.files[0].type.match(allowTpye)) {
+                    //上傳檔案並預覽圖片內容
+                    var reader = new FileReader();
+                    //檔案讀取完成後處理load事件//函式參數e抓事件發生的內容
+                    reader.onload = function (e) {
+                        //替換頁面檔案，prev():前一個//讀到的檔案內容(e.target.result)丟給src
+                        img.attr("src", e.target.result);
+                        //改title內容，改成name屬性
+                        img.attr("title", inputFile.files[0].name);
+                        //class選擇器:依據樣式選擇器找到btn
+                        $("#inpSubmit").prop('disabled', false);
+                        //id選擇器:依據樣式選擇器找到div
+                        $("#divwarning").hide();
+                    };
+                    //從load事件拿檔案(e.target.result)
+                    reader.readAsDataURL(inputFile.files[0]);
+                }
+                else {
+                    //class選擇器:依據樣式選擇器找到btn
+                    $("#inpSubmit").prop('disabled', true);
+                    //id選擇器:依據樣式選擇器找到div
+                    $("#divwarning").show();
+                }
+            }
+        }
+        $("#Inputfile").change(function () {
+            // alert("change");
+            previewImage(this, $("#imgPreview"));
+        });
+      
+    </script>
+    @* script功能 : 拖曳上傳圖片、 *@
+@*     <script src="https://unpkg.com/dropzone@5/dist/min/dropzone.min.js"></script> *@
+   
+    <script>
+        // If you are using JavaScript/ECMAScript modules:
+        //import Dropzone from "dropzone";
 
+        // If you are using CommonJS modules:
+        //const { Dropzone } = require("dropzone");
+
+        // If you are using an older version than Dropzone 6.0.0,
+        // then you need to disabled the autoDiscover behaviour here:
+        // Dropzone.autoDiscover = false;
+
+        // let myDropzone = new Dropzone("#my-form");
+        // myDropzone.on("addedfile", file => {
+        //     console.log(`File added: ${file.name}`);
+        // });
+
+        // $("#divdropzone").dropzone({ url: "/TeacherAdmin/uploadimage" });
+        // Dropzone.options.myAwesomeDropzone = {
+        //     paramName: "file", // The name that will be used to transfer the file
+        //     maxFilesize: 2, // MB
+        //     accept: function (file, done) {
+        //         if (file.name == "justinbieber.jpg") {
+        //             done("Naha, you don't.");
+        //         }
+        //         else { done(); }
+        //     }
+        // };
+        // Dropzone.options.myAwesomeDropzone = false;
+        // Dropzone.autoDiscover = false;
+        // $("#divdropzone").on('addedfile', function (file) {
+        //     console.log(file.name);
+        // });
+    </script>
+    
+    <script>
+        // console.log("a111111111111111111111111111111);
+        // Dropzone.options.divdropzone = {
+        //     // 設置為 false，禁用自動處理佇列
+        //     autoProcessQueue: false,
+
+        //     init: function () {
+
+
+        //         // this.on("success", function (file, response) {
+        //         //     // 在上傳成功後執行的動作
+        //         //     console.log(response); // 這裡的 response 就是伺服器回傳的資料
+        //         // });
+
+        //         // this.on("addedfile", function (file) {
+        //         //     // 在檔案被加入佇列時執行的動作
+        //         //     console.log(file);
+        //         //     //console.log(dataURL);
+        //         // });
+        //         this.on("addedfile", function (file) {
+        //             file.accepted = true;
+        //             // 在檔案被加入佇列時執行的動作
+        //             var reader = new FileReader();
+        //             reader.onload = function (e) {
+        //                 var dataURL = e.target.result;
+        //                 console.log(dataURL);
+        //                 document.getElementById("iptdataURL").value = dataURL;
+        //             };
+        //             reader.readAsDataURL(file);
+        //         });
+
+        //         document.getElementById('inpSubmit').addEventListener('click', function () {
+        //              var myDropzone = Dropzone.forElement(".dropzone");
+        //             console.log("aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa");
+        //              myDropzone.processQueue();
+        //             //divdropzone.processQueue(); // 手動觸發上傳
+
+        //         });
+     
+        //     }
+        // };
+    </script>
+    @* script功能 : 編輯的partialview欄位顯示 *@
+    <script>
+        async  function editPicture(teacherImagesId) {
+            const response = await  fetch(`@Url.Content("~/TeacherAdmin/EditPartialViewInfo")?teacherImagesId=${teacherImagesId}`)
+            const datas = await response.json();
+            console.log(datas)
+            document.querySelector('#editfloatingInput').value = datas.imageName;
+            document.querySelector('#editselect').value = datas.category;
+        }
+    </script>
+}

@@ -4,6 +4,7 @@ namespace FinalGroupMVCPrj.Models.ViewModels
 {
     public class TeacherBasicViewModel
     {
+        ////////////////////////// TTeacher ///////////////////////////
         public int? TeacherId { get; set; }
         [Display(Name = "老師名稱")]
         public string? TeacherName { get; set; }
@@ -20,5 +21,14 @@ namespace FinalGroupMVCPrj.Models.ViewModels
         [Display(Name = "已開科目")]
         public IEnumerable<string>? SubjectName { get; set; }
         public TTeacher? TeacherModel { get; set; }
+
+
+
+        ////////////////////////TTeacherImage/////////////////////////////
+        public int? TeacherImagesId { get; set; }
+        public string? ImageName { get; set; }
+        public byte[]? ImageLink { get; set; }
+        public string? Category { get; set; }
+        public TTeacherImage? TeacherImageModel { get; set; }
     }
 }
