@@ -41,7 +41,7 @@
                         <nav aria-label="breadcrumb">
                             <ol class="breadcrumb">
                                 <!--老師-->
-                                <li class="breadcrumb-item active" aria-current="page"><a asp-action="Info" asp-controller="Teacher" asp-route-id="@Model.FTeacherId"><img id="avatorimg" src="/images/dog.png" style="height: 40px;height: 40px;" class="border border-primary rounded-circle  "></a>@Html.DisplayFor(x => x.FTeacher.FTeacherName)</li>
+                                <li class="breadcrumb-item active" aria-current="page"><a asp-action="Info" asp-controller="Teacher" asp-route-id="@Model.FTeacherId"><img teacherid="@Model.FTeacherId" id="avatorimg" src="~/images/people.png" style="height: 40px;height: 40px;" class="border border-primary rounded-circle  "> @Html.DisplayFor(x => x.FTeacher.FTeacherName)</a></li>
                             </ol>
                         </nav>
                         <!--課名-->
@@ -72,7 +72,7 @@
                                 @* @Html.DisplayFor(m => m.FPrice) *@
                                 @{
                                     int price = Convert.ToInt32(Model.FPrice);
-                                        @price
+                                                    @price
                                 }
 
                             </li>
@@ -156,7 +156,7 @@
                                                                 詳細地址:
                                                                 @{
                                                                     string alladdress = Model.FCity + Model.FDistrict + Model.FAddressDetail;
-                                                                        @alladdress
+                                                                                    @alladdress
                                                                 }
 
 
@@ -408,11 +408,23 @@
 
 
 @section Scripts{
+    <!--帶入老師頭像-->
     <script>
         const img = document.querySelector("#avatorimg");
         console.log(img);
+        const id = parseInt(img.getAttribute('teacherid'));
+        console.log(id);
         (async() => {
-            const url = 
+            const url = `@Url.Content("~/Teacher/TeacherPhoto")?id=${id}`;
+            const response = await fetch(url);
+            const data = await response.text();
+            if (data == '') {
+                console.log('Hello');
+                img.setAttribute('src', "/images/people.png");
+            } else {
+                img.setAttribute('src', data);
+            }
+           
         })();
     </script>
 }
