@@ -38,12 +38,12 @@ namespace FinalGroupMVCPrj.Controllers
             }
 
             // 將得到的資料放到OrderDetailViewModel
-            var kViewModel = new OrderDetailViewModel
+            var OrderDetailViewModel = new OrderDetailViewModel
             {
-                lessonCourse = lessonCourse,
-                member = member
+                FRealName= member.FRealName,              
+                FDescription = lessonCourse.FDescription
             };
-            return View("OrderDetailViewModel",member);
+            return View("Detail", OrderDetailViewModel);
         }                  
     }
 }
