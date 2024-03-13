@@ -3,6 +3,7 @@ using FinalGroupMVCPrj.Models.DTO;
 using FinalGroupMVCPrj.Models.ViewModel;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using System.Runtime.Versioning;
 
 namespace FinalGroupMVCPrj.Controllers
 {
@@ -13,22 +14,63 @@ namespace FinalGroupMVCPrj.Controllers
         {
             _context = context;
         }
+        //PortfolioListDTO portfolioRead = new PortfolioListDTO();
+        List<PortfolioListDTO> portfolioRead = new List<PortfolioListDTO>();
         //回傳作品清單，https://localhost:7031/Portfolio/List
-        [HttpGet]
-        public IActionResult List()
-		{
+        //[HttpGet]
+        //public IActionResult List()
+        //{
             //PortfolioListDTO portfolioListDTO = new PortfolioListDTO();
             //var portfolioList = await _context.TCourseworks
             //    .select(m => m.FMemberId == GetCurrentMemberId());         
-            IEnumerable<PortfolioListDTO> portfolioList =
-                new List<PortfolioListDTO>(_context.TCourseworks
-                .Select(c => new PortfolioListDTO
-                {
-                    FName = c.FName,
-                    FDescrpition = c.FDescrpition,
-                }));
+            //IEnumerable<PortfolioListDTO> portfolioList =
+            //    new List<PortfolioListDTO>(_context.TCourseworks
+            //    .Select(c => new PortfolioListDTO
+            //    {
+            //        FName = c.FName,
+            //        FDescrpition = c.FDescrpition,
+            //    }));
 
-            return View(portfolioList);
-		}
+            //return View(portfolioList);
+            //}
+            [HttpGet]
+        public IActionResult List(int id)
+        {
+            
+            var result = portfolioRead.
+                Where(m => m.FMemberId==id);
+
+            if(result != null)
+            {
+                //var result2 = _context.TCourseworks
+                //    .Select(c => new List<PortfolioListDTO>
+                //    {
+                //         FName = c.FName,
+                //        FDescrpition = c.FDescrpition,
+                //    });
+                    IEnumerable<PortfolioListDTO> portfolioList =
+                    new List<PortfolioListDTO>(_context.TCourseworks
+                        .Select(c => new PortfolioListDTO
+                            {
+                                FName = c.FName,
+                                FDescrpition = c.FDescrpition,
+                            }));
+                }
+            return View();
+        }
+        //[HttpPost]
+        //public IActionResult data(int id) 
+        //{
+        //    while (true) { 
+        //        if (portfolioRead.FMemberId == null) 
+        //            break; 
+        //    }
+        //    portfolioRead.FMemberId = id;
+        //    return View();
+        //}
+        //public RedirectToRouteResult List(int id)
+        //{
+        //    portfolioRead.FMemberId = id;
+        //    return  RedirectToAction("portfolioList", new {id=id});
 	}
 }
