@@ -1,4 +1,7 @@
-﻿<!-- Breadcrumb start -->
+﻿@using FinalGroupMVCPrj.Models.DTO
+@model IEnumerable<PortfolioListDTO>
+
+<!-- Breadcrumb start -->
 <div class="breadcrumb-area bg-img bg-cover" data-bg-image="/images/breadcrumb-bg.jpg">
     <div class="container">
         <div class="content text-center">
@@ -32,13 +35,13 @@
                                 <li><i class="fal fa-calendar"></i>18 JULY 2023</li>
                                 <li><i class="fal fa-tag"></i>App Development</li>
                             </ul>
-                            <h4 class="title">
-                                法式馬卡龍
-                            </h4>
+                            
+                                <h4 class="title">                                    
+                                @Html.DisplayFor(m => m.FirstOrDefault().FName)                                 
+                            </h4>                           
                             <p>
-                                每一顆馬卡龍充滿創意地搭配了不同口味的內餡，從濃郁的巧克力、香濃的咖啡，到清新的草莓、柔滑的榛果奶油，每一口都帶來一場層次豐富的味蕾冒險。
-                                仔細觀察，你會發現每一顆馬卡龍的表面都細膩而光滑，仿佛是烘焙藝術家的巧手在其中繪畫。微妙的質感和色澤交織出一種極致的視覺享受，令人難以抗拒。
-                                整體而言，這款馬卡龍甜點不僅是味覺的盛宴，更是一場視覺藝術的饗宴。每一口都彷彿帶你穿越到甜蜜的夢境，讓人陶醉其中，難以忘懷。
+                                @Html.DisplayFor(m => m.FirstOrDefault().FDescrpition)
+                          
                             </p>
                             <blockquote class="blockquote mb-30">
                                 <i class="fas fa-quote-left"></i>
@@ -73,7 +76,7 @@
                                             <div class="comment-content">
                                                 <h6 class="name">Adam Haul</h6>
                                                 <p>
-                                                    這款馬卡龍甜點令人驚艷，色彩繽紛的外皮包覆著多種創意內餡，從巧克力到草莓，層次豐富。每一顆馬卡龍都如藝術品般細膩，質感和色澤讓人難以置信。品嚐時，甜點散發出令人心醉的香氣，帶來極致的味蕾享受。整體而言，這是一場視覺和味覺的盛宴，讓人陶醉其中，難以忘懷。
+                                                    @Html.DisplayFor(m => m.FirstOrDefault().FComment)
                                                 </p>
                                                 <a href="blog-single.html" class="font-sm color-primary" target="_self" title="Reply">Reply</a>
                                             </div>
