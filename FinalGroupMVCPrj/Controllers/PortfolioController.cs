@@ -18,13 +18,13 @@ namespace FinalGroupMVCPrj.Controllers
         List<PortfolioListDTO> portfolioRead = new List<PortfolioListDTO>();
         //回傳作品清單，https://localhost:7031/Portfolio/List
         [HttpGet]
-        public IActionResult List()
+        public IActionResult List(int id = 1)
         {
             PortfolioListDTO portfolioListDTO = new PortfolioListDTO();
-            //var portfolioList = await _context.TCourseworks
-            //    .select(m => m.FMemberId == GetCurrentMemberId());
+
             IEnumerable<PortfolioListDTO> portfolioList =
                 new List<PortfolioListDTO>(_context.TCourseworks
+                .Where(m => m.FCourseworkId == id)
                 .Select(c => new PortfolioListDTO
                 {
                     FName = c.FName,
