@@ -9,7 +9,7 @@ public partial class TChatMessageTeacher
 {
     public int FMessageId { get; set; }
 
-    public int FChatRoomId { get; set; }
+    public int? FChatRoomId { get; set; }
 
     public int FTeacherId { get; set; }
 
@@ -19,5 +19,11 @@ public partial class TChatMessageTeacher
 
     public DateTime FMessageTime { get; set; }
 
+    public bool FIsTeacherMsg { get; set; }
+
     public virtual TChatRoomTeacher FChatRoom { get; set; }
+
+    public virtual TMember FMember { get; set; }
+
+    public virtual TTeacher FTeacher { get; set; }
 }

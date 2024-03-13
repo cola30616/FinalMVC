@@ -46,51 +46,98 @@
 <!-- Checkout-area start -->
 <div class="shopping-area pt-100 pb-60">
     <div class="d-flex container">
-        <div class="flex-grow-1 row gx-xl-5">
-                <div class="col-lg-8">
-                    <div class="billing-details" data-aos="fade-up">
-                        <h4 class="mb-20 fs-2">訂單編號</h4>
-                        <div class="col-lg-6">
-                            <div class="form-group mb-30 fs-4">
-                                <label for="firstName">240226?????<span class="color-red"></span> </label>
-                            </div>
-                        </div>
-                        <h4 class="mb-20 fs-2">訂單狀態</h4>
-                        <div class="col-lg-6">
-                            <div class="form-group mb-30 fs-4">
-                                <label for="firstName">成立/取消<span class="color-red"></span> </label>
-                            </div>
-                        </div>
-                        <h4 class="mb-20 fs-2">訂單成立時間</h4>
-                        <div class="col-lg-6">
-                            <div class="form-group mb-30 fs-4">
-                                <label for="firstName">2024/02/26 12:00<span class="color-red"></span> </label>
-                            </div>
-                        </div>
-                        <h4 class="mb-20 fs-2">訂單金額</h4>
-                        <div class="col-lg-6">
-                            <div class="form-group mb-30 fs-4">
-                                <label for="firstName">$8,000<span class="color-red"></span> </label>
-                            </div>
-                        </div>
-
-                    </div>
-                </div>           
-        </div>
-        <div class="flex-grow-1">
+        <div class="flex-grow-1 row gx-xl-5" style="width:50%">
             <div class="col-lg-8">
                 <div class="billing-details" data-aos="fade-up">
-                    <h4 class="mb-20 fs-2">取消辦法</h4>
+                    <h4 class="mb-20 fs-2">訂單編號</h4>
                     <div class="col-lg-6">
                         <div class="form-group mb-30 fs-4">
                             <label for="firstName">240226?????<span class="color-red"></span> </label>
                         </div>
                     </div>
-                    
+                    <h4 class="mb-20 fs-2">訂單狀態</h4>
+                    <div class="col-lg-6">
+                        <div class="form-group mb-30 fs-4">
+                            <label for="firstName">成立/取消<span class="color-red"></span> </label>
+                        </div>
+                    </div>
+                    <h4 class="mb-20 fs-2">訂單成立時間</h4>
+                    <div class="col-lg-6">
+                        <div class="form-group mb-30 fs-4">
+                            <label for="firstName">2024/02/26 12:00<span class="color-red"></span> </label>
+                        </div>
+                    </div>
+                    <h4 class="mb-20 fs-2">訂單金額</h4>
+                    <div class="col-lg-6">
+                        <div class="form-group mb-30 fs-4">
+                            <label for="firstName">$8,000<span class="color-red"></span> </label>
+                        </div>
+                    </div>
 
                 </div>
             </div>
-            
         </div>
+        <div class="flex-grow-1" style="width:50%">
+            <div class="billing-details" data-aos="fade-up">
+                <h4 class="mb-20 fs-2">★取消辦法</h4>
+                <div>
+                    <div class="col-lg-12 fs-4">
+                        <ol class="indented-list" style="padding-right: 20px list-style:cjk-ideographic;list-style-position:outside">
+                            <li>事假需於5日前申請，病假需於3小時前申請(並附上就診證明)。</li>
+                            <li>若未依規定請假，恕不順延與退費。</li>
+                            <li>若課程已開始上課，恕不提供退費服務。</li>
+                        </ol>
+                    </div>
+                </div>
+            </div>
+            <br />
+            <div class="text-center">
+                <button class="fs-3 btn btn-lg btn-primary radius-sm w-100" type="button" aria-label="button" data-bs-toggle="modal" data-bs-target="#orderSuccessModal">我要取消報名</button>
+            </div>
+            <br />
+            <h4 class="mb-20 fs-2">取消原因</h4>
+            <div class="col-lg-6">
+                <div class="form-group mb-30 fs-4">
+                    <label for="firstName">私人因素</label>
+                </div>
+            </div>
+            <br />
+            <div class="text-center">
+                <button class="fs-3 btn btn-lg btn-primary radius-sm w-100" type="button" aria-label="button" data-bs-toggle="modal" data-bs-target="#evalModal" id="createBtn">我要評價課程</button>
+            </div>
+            <div class="text-center">
+                <button class="fs-3 btn btn-lg btn-primary radius-sm w-100" type="button" aria-label="button" data-bs-toggle="modal" data-bs-target="#editEvalModal" id="editBtn">修改課程評價</button>
+            </div>
+        </div>
+
     </div>
 </div>
+
+<!--FOrderDetailId儲存-->
+<div id="FOrderDetailId" data-value="@ViewBag.FOrderDetailId"></div>
+
+<!--評價彈跳視窗-->
+<div id="createPartial"></div>
+<!---->
+
+<!--修改評價彈跳視窗-->
+<div id="editPartial"></div>
+<!---->
+
+<script src="https://code.jquery.com/jquery-3.7.1.min.js"
+        integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo="
+        crossorigin="anonymous">
+</script>
+
+@section Style {
+    <link rel="stylesheet" href="~/css/BenAdd/ValStyle.css" />
+}
+
+<!--判斷是否評價過-->
+<script src="~/js/BenScript/isValuated.js"></script>
+
+<!--新建評價-->
+<script src="~/js/BenScript/CreateEvalPartial.js"></script>
+
+<!--編輯評價-->
+<script src="~/js/BenScript/EditEvalPartial.js"></script>

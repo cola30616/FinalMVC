@@ -10,7 +10,7 @@ var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 var connectionString = builder.Configuration.GetConnectionString("DefaultConnection") ?? throw new InvalidOperationException("Connection string 'DefaultConnection' not found.");
-//CORS³]©w
+//CORSè¨­å®š
 builder.Services.AddCors(options =>
 { options.AddPolicy("AllowAll", builder => builder.AllowAnyOrigin().AllowAnyHeader().AllowAnyMethod()); }
 );
@@ -31,14 +31,17 @@ builder.Services.AddControllersWithViews();
 builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
     .AddCookie(option =>
     {
-        //¥¼µn¤J®É·|¦Û°Ê¾É¨ì³o­Óºô§}
+        //æœªç™»å…¥æ™‚æœƒè‡ªå‹•å°Žåˆ°é€™å€‹ç¶²å€
         option.LoginPath = new PathString("/Home/Login");
-        //µn¤J¦ý¨S¦³Åv­­·|¾É¨ì³o­Óºô§}
+        //ç™»å…¥ä½†æ²’æœ‰æ¬Šé™æœƒå°Žåˆ°é€™å€‹ç¶²å€
         option.AccessDeniedPath = new PathString("/Home/AccessDenied");
     });
 
-//¥þ³¡ªº±±¨î¾¹¹w³]­n¦³µn¤Jª¬ºA¡A°£«D[AllowAnonymous]
+//å…¨éƒ¨çš„æŽ§åˆ¶å™¨é è¨­è¦æœ‰ç™»å…¥ç‹€æ…‹ï¼Œé™¤éž[AllowAnonymous]
 builder.Services.AddMvc(options => options.Filters.Add(new AuthorizeFilter()));
+
+builder.Services.AddSignalR();
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
@@ -66,5 +69,6 @@ app.MapControllerRoute(
     name: "default",
     pattern: "{controller=Home}/{action=Index}/{id?}");
 app.MapRazorPages();
+
 
 app.Run();

@@ -88,8 +88,8 @@ public partial class LifeShareLearnContext : DbContext
     public virtual DbSet<TVideoUploadUrl> TVideoUploadUrls { get; set; }
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-         //#warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see http://go.microsoft.com/fwlink/?LinkId=723263.
-         => optionsBuilder.UseSqlServer("Data Source=.;Initial Catalog=LifeShareLearn;Integrated Security=True;Encrypt=False;TrustServerCertificate=True");
+       //#warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see http://go.microsoft.com/fwlink/?LinkId=723263.
+       => optionsBuilder.UseSqlServer("Data Source=.;Initial Catalog=LifeShareLearn;Integrated Security=True;Encrypt=False;TrustServerCertificate=True");
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
@@ -129,10 +129,9 @@ public partial class LifeShareLearnContext : DbContext
 
             entity.ToTable("tChatMessageTeacher");
 
-            entity.Property(e => e.FMessageId)
-                .ValueGeneratedNever()
-                .HasColumnName("fMessageId");
+            entity.Property(e => e.FMessageId).HasColumnName("fMessageId");
             entity.Property(e => e.FChatRoomId).HasColumnName("fChatRoomId");
+            entity.Property(e => e.FIsTeacherMsg).HasColumnName("fIsTeacherMsg");
             entity.Property(e => e.FMemberId).HasColumnName("fMemberId");
             entity.Property(e => e.FMessage).HasColumnName("fMessage");
             entity.Property(e => e.FMessageTime)
@@ -142,8 +141,17 @@ public partial class LifeShareLearnContext : DbContext
 
             entity.HasOne(d => d.FChatRoom).WithMany(p => p.TChatMessageTeachers)
                 .HasForeignKey(d => d.FChatRoomId)
-                .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("FK_tChatMessageTeacher_tChatRoomTeacher");
+
+            entity.HasOne(d => d.FMember).WithMany(p => p.TChatMessageTeachers)
+                .HasForeignKey(d => d.FMemberId)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("FK_tChatMessageTeacher_tMember");
+
+            entity.HasOne(d => d.FTeacher).WithMany(p => p.TChatMessageTeachers)
+                .HasForeignKey(d => d.FTeacherId)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("FK_tChatMessageTeacher_tTeacher");
         });
 
         modelBuilder.Entity<TChatRoomTeacher>(entity =>

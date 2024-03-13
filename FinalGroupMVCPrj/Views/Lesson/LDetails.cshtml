@@ -1,8 +1,4 @@
-﻿@*
-    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-*@
-@{
-}
+﻿@model LessonDetailViewModel
 @section Style {
     <style>
 
@@ -52,8 +48,10 @@
                             <span class=" center  badge-sm rounded bg-primary text-bg-primary"> 科目</span>&nbsp;
                             <span class=" center  badge-lg rounded" style="background-color: #ace6f7;"> 線上</span>
                         </div>
-                            <ul class="list-group list-group-horizontal align-items-center">
-                                <!-- <li class="d-inline-block">
+                            <ul  class="list-group list-group-horizontal align-items-center">
+                            <div FLessonCourseId= "@Model.FLessonCourseId" id="avgevalpartial"></div>
+                            @* <partial name="_BValuateAvgPartial" model="@Model" /> *@
+@*                               <li class="d-inline-block">
                                     <div class="ratings size-md gap-2">
                                         <span class="badge bg-success size-md">Bestseller</span>
                                         <div class="rate bg-img" data-bg-image="/images/rate-star-md.png">
@@ -61,7 +59,7 @@
                                         </div>
                                         <span class="ratings-total">(5.0)</span>
                                     </div>
-                                </li> -->
+                                </li>  *@
                                 <li class="d-inline-block icon-start font-sm">
                                     <i class="fa-regular fa-user"></i>已報名 15人
                                 </li>
@@ -101,7 +99,7 @@
                                         <button class="nav-link hover-effect btn-md rounded-pill active" data-bs-toggle="tab" data-bs-target="#tab1" type="button">關於課程</button>
                                     </li>
                                     <li class="nav-item">
-                                        <button class="nav-link hover-effect btn-md rounded-pill" data-bs-toggle="tab" data-bs-target="#tab5" type="button">評價</button>
+                                    <button class="nav-link hover-effect btn-md rounded-pill" FLessonCourseId ="@Model.FLessonCourseId" id="valbtn" data-bs-toggle="tab" data-bs-target="#tab5" type="button">評價</button>
                                     </li>
                                 </ul>
                            
@@ -164,10 +162,8 @@
 
                             </div>
                         </div>
-
                         <!-- 評價 -->
-                                 <partial name="_BValuatePartial" />                                                   
-
+                            <div id="evaluationListContainer"></div>
                                 </div>
                             </div>
                         </div>
@@ -354,3 +350,15 @@
         </div>
     </section>
     <!-- Course-area end -->
+
+<script src="~/js/BenScript/LessonEvalList.js"></script>
+<script src="~/js/BenScript/LessonAvg.js"></script>
+
+
+
+
+
+
+
+
+

@@ -1,8 +1,12 @@
 ﻿using FinalGroupMVCPrj.Models;
 using FinalGroupMVCPrj.Models.ViewModel;
+using FinalGroupMVCPrj.Models.ViewModels;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
+using System.Xml.Linq;
+using static Microsoft.EntityFrameworkCore.DbLoggerCategory;
 
 namespace FinalGroupMVCPrj.Controllers
 {
@@ -59,9 +63,40 @@ namespace FinalGroupMVCPrj.Controllers
 
         //■ ==========================     翊妏 作業區      ==========================■
         [HttpGet]
-        public IActionResult Details()
+        public IActionResult Details(int? id)
         {
-            return View("LDetails");
+            var querystring = _context.TLessonCourses.Where(x => x.FLessonCourseId == id).FirstOrDefault();
+            if (querystring == null)
+            {
+                return NotFound();
+            }
+            var detail = new LessonDetailViewModel
+            {
+                FTeacher = querystring.FTeacher,
+                FName = querystring.FName,
+                //FField = querystring.F,
+                FSubject = querystring.FSubject,
+                FVenueType = querystring.FVenueType,
+                FRegPeople = _context.TOrderDetails.Where(x => x.FLessonCourseId == id).Count(),
+                FPrice = querystring.FPrice,
+                FTime = (querystring.FEndTime.Value.Hours - querystring.FStartTime.Value.Hours).ToString(),
+                FMaxPeople = querystring.FMaxPeople,
+                FMinPeople = querystring.FMinPeople,
+                FVenueName = querystring.FVenueName,
+                FDistrict = _context.TCityDistricts.Where(x => x.FDistrictId == querystring.FDistrictId).Select(x => x.FDistrictName).FirstOrDefault(),
+                FAddressDetail = querystring.FAddressDetail,
+                FOnlineLink = querystring.FOnlineLink,
+                FLessonDate = querystring.FLessonDate,
+                FStartTime = querystring.FStartTime,
+                FEndTime = querystring.FEndTime,
+                FRegDeadline = querystring.FRegDeadline,
+                FDescription = querystring.FDescription,
+                FEditorDes = querystring.FEditorDes,
+                FRequirement = querystring.FRequirement,
+                FLessonCourseId = querystring.FLessonCourseId
+            };
+
+            return View("LDetails", detail);
         }
     }
 }

@@ -1,0 +1,64 @@
+﻿@model TLessonEvaluation
+<div class="modal fade" id="editEvalModal" tabindex="-1" aria-labelledby="editEvalModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-xl" style="width:550px;">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="editEvalModalLabel">評價</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" id="EditCancel"></button>
+            </div>
+            <form id="EditForm">
+                <div class="modal-body" style="display: flex; justify-content: center;">
+                    <div class="rating" data-vote="0">
+
+                        <div class="star hidden" style="display: none;">
+                            <span class="full" data-value="0"></span>
+                        </div>
+
+                        <div class="star">
+                            <span class="full" data-value="1"></span>
+                            <span class="selected"></span>
+                        </div>
+
+                        <div class="star">
+                            <span class="full" data-value="2"></span>
+                            <span class="selected"></span>
+                        </div>
+
+                        <div class="star">
+                            <span class="full" data-value="3"></span>
+                            <span class="selected"></span>
+                        </div>
+
+                        <div class="star">
+                            <span class="full" data-value="4"></span>
+                            <span class="selected"></span>
+                        </div>
+
+                        <div class="star">
+                            <span class="full" data-value="5"></span>
+                            <span class="selected"></span>
+                        </div>
+
+                        <div class="score">
+                            <input asp-for="FScore" style="display:none;" />
+                            <span class="score-rating js-score" id="editRatingScore" score="@Model.FScore">@Model.FScore</span>
+                            <span>/</span>
+                            <span class="total">5</span>
+                        </div>
+                    </div>
+
+                </div>
+                <!--評價內容部分-->
+
+                <div class="mb-3">
+                    <label for="editComment" class="form-label" style="display:flex;justify-content:center;">評價內容</label>
+                    <textarea asp-for="FComment" class="form-control" style=" width:400px; height:auto; margin-left:auto;margin-right:auto;" id="editComment" rows="6"></textarea>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" id="EditCancel">取消</button>
+                    <button type="submit" class="btn btn-primary" id="scoreEditbtn">修改評價</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
