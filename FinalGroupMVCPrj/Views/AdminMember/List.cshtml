@@ -106,13 +106,13 @@
                 <!-- 標籤選取區 -->
                 <ul class="nav nav-tabs" id="myTab" role="tablist">
                     <li class="nav-item" role="presentation">
-                        <button class="nav-link active" id="home-tab" data-bs-toggle="tab" data-bs-target="#home" type="button" role="tab" aria-controls="home" aria-selected="true">基本資訊</button>
+                        <button class="nav-link active" id="basic-tab" data-bs-toggle="tab" data-bs-target="#home" type="button" role="tab" aria-controls="home" aria-selected="true">基本資訊</button>
                     </li>
                     <li class="nav-item" role="presentation">
                         <button class="nav-link" id="profile-tab" data-bs-toggle="tab" data-bs-target="#profile" type="button" role="tab" aria-controls="profile" aria-selected="false">其他資訊</button>
                     </li>
                     <li class="nav-item" role="presentation">
-                        <button class="nav-link" id="contact-tab" data-bs-toggle="tab" data-bs-target="#contact" type="button" role="tab" aria-controls="contact" aria-selected="false">登入紀錄</button>
+                        <button class="nav-link" id="lgHistory-tab" data-bs-toggle="tab" data-bs-target="#contact" type="button" role="tab" aria-controls="contact" aria-selected="false">登入紀錄</button>
                     </li>
                 </ul> 
             </div>
@@ -120,7 +120,7 @@
             <!--標籤內容區-->
             <div class="tab-content pt-2" id="myTabContent">
                 <!--基本資訊標籤內容區-->
-                <div class="tab-pane fade show active p-3" id="home" role="tabpanel" aria-labelledby="home-tab">
+                <div class="tab-pane fade show active p-3" id="home" role="tabpanel" aria-labelledby="basic-tab">
                     <div class="d-flex  gap-4">
                         <!--第一區-->
                         <div class=" form-block mb-30 d-flex align-items-center flex-column gap-4 " data-aos="fade-up" style="width:50%;height:50%">
@@ -260,7 +260,7 @@
 
                 </div>
                 <!--登入記錄標籤內容區-->
-                <div class="tab-pane fade p-3" id="contact" role="tabpanel" aria-labelledby="contact-tab" style="max-height: 500px; overflow-y: auto;">
+                <div class="tab-pane fade p-3" id="contact" role="tabpanel" aria-labelledby="lgHistory-tab" style="max-height: 500px; overflow-y: auto;">
                     <div class="mb-2">    <span>*資料僅限用於異常帳號處理與優化行銷</span></div>
                     <div class="d-flex gap-2 align-items-center  mb-3">
                         <span>指定最晚日期</span>
@@ -300,6 +300,7 @@ https://cdn.jsdelivr.net/npm/moment@2.30.1/moment.min.js
         let maxDataCount = 30;
         let remain = true;
         let currentMemberId = 6;
+        let currentMemberData = null;
         let lastDate = new Date()
         lastDate.setDate(lastDate.getDate()+1)
         lastDate = moment(lastDate).format('YYYY-MM-DD')
@@ -332,8 +333,6 @@ https://cdn.jsdelivr.net/npm/moment@2.30.1/moment.min.js
             }
             return data;
         }
-
-
         // 生成隨機日期時間
         function generateRandomDateTime() {
             const year = 2023;
@@ -384,7 +383,6 @@ https://cdn.jsdelivr.net/npm/moment@2.30.1/moment.min.js
                 method: 'GET'
             })
     const data = await response.json();
-    console.log(data);
             if (response.ok) {
                 return data
             } else {
@@ -426,8 +424,18 @@ https://cdn.jsdelivr.net/npm/moment@2.30.1/moment.min.js
         //載入更多資料的點擊事件
         document.getElementById('load-more-btn').addEventListener('click', loadMoreData);
 
-        // 最一開始載入
-        loadMoreData();
+        // // 最一開始載入
+        // loadMoreData();
+        document.getElementById("lgHistory-tab").addEventListener('click', () => {
+            document.getElementById('table-body').innerHTML=""
+            remain = true;
+            loadedDataCount = 0;
+            lastDate = new Date()
+            lastDate.setDate(lastDate.getDate() + 1)
+            lastDate = moment(lastDate).format('YYYY-MM-DD')
+            document.getElementById('logDate').value=""
+            loadMoreData();
+        })
     </script>
     <script>
         let dataTable; // 這段要記得加，先宣告datatable的變數
@@ -453,7 +461,7 @@ https://cdn.jsdelivr.net/npm/moment@2.30.1/moment.min.js
                         data: 'memberId',
                         "render": function (data) {
                             return `<div class="" role="">
-                                <button  memberId=${data}" class="btn btn-primary mx-2" data-bs-toggle="modal" data-bs-target="#staticBackdrop"><i class="fa-solid fa-gear"></i></button>
+                                                                <button  onclick="loadMemDetail('${data}')" memberId="${data}" class="btn btn-primary mx-2" data-bs-toggle="modal" data-bs-target="#staticBackdrop"><i class="fa-solid fa-gear"></i></button >
                             </div>`
                         },
                         "width": "5%"
@@ -467,5 +475,37 @@ https://cdn.jsdelivr.net/npm/moment@2.30.1/moment.min.js
 
             });
         }
+
+        async function loadMemDetail(memberId) {
+          
+            if (isNaN(memberId)) {
+                callSwalError("系統異常請稍後再試")
+                return;
+            }  
+            currentMemberId = Number(memberId);
+            await fetchMemberDetail(currentMemberId)
+            var basicTab= document.querySelector('#basic-tab')
+            var tab = new bootstrap.Tab(basicTab)
+            tab.show()
+        }
+        async function fetchMemberDetail(memberId) {
+            const response = await fetch(`@Url.Content("~/AdminMember/Detail")?id=${memberId}`, {
+                "method": "GET",
+            });
+            if (!response.ok) {
+                callSwalError("系統異常請稍後再試")
+                }
+            const data = await response.json();
+            console.log(data);
+        }
+            function callSwalError(text) {
+                Swal.fire({
+                    position: "center",
+                    icon: "error",
+                    title: text,
+                    showConfirmButton: false,
+                    timer: 1500
+                })
+            }
     </script>
 }
