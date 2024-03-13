@@ -1,5 +1,6 @@
 ﻿using FinalGroupMVCPrj.Models;
 using FinalGroupMVCPrj.Models.DTO;
+using FinalGroupMVCPrj.Models.ViewModel;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using System.Runtime.Versioning;

@@ -320,7 +320,7 @@ public partial class LifeShareLearnContext : DbContext
             entity.Property(e => e.FName)
                 .IsRequired()
                 .HasMaxLength(50)
-                .HasColumnName("fName");
+                .HasColumnName("fName");//更正是FName
             entity.Property(e => e.FOrderDetailId).HasColumnName("fOrderDetail_Id");
             entity.Property(e => e.FShareAudience)
                 .HasMaxLength(50)
