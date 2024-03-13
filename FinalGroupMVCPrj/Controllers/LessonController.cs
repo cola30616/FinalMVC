@@ -224,8 +224,7 @@ namespace FinalGroupMVCPrj.Controllers
                 FRequirement = querystring.FRequirement,
 
                 //// 評價部分
-                //FAvgScore = querystring.TOrderDetails.SelectMany(order => order.TLessonEvaluations).Any()? 
-                //Math.Round(querystring.TOrderDetails.SelectMany(order => order.TLessonEvaluations).Average(evaluation => evaluation.FScore), 1) :0
+                FLessonCourseId = querystring.FLessonCourseId,
             }).ToListAsync();
 
             return View("LDetails", detail[0]);
