@@ -17,47 +17,47 @@ namespace FinalGroupMVCPrj.Controllers
         //PortfolioListDTO portfolioRead = new PortfolioListDTO();
         List<PortfolioListDTO> portfolioRead = new List<PortfolioListDTO>();
         //回傳作品清單，https://localhost:7031/Portfolio/List
-        //[HttpGet]
-        //public IActionResult List()
-        //{
-            //PortfolioListDTO portfolioListDTO = new PortfolioListDTO();
-            //var portfolioList = await _context.TCourseworks
-            //    .select(m => m.FMemberId == GetCurrentMemberId());         
-            //IEnumerable<PortfolioListDTO> portfolioList =
-            //    new List<PortfolioListDTO>(_context.TCourseworks
-            //    .Select(c => new PortfolioListDTO
-            //    {
-            //        FName = c.FName,
-            //        FDescrpition = c.FDescrpition,
-            //    }));
-
-            //return View(portfolioList);
-            //}
-            [HttpGet]
-        public IActionResult List(int id)
+        [HttpGet]
+        public IActionResult List()
         {
-            
-            var result = portfolioRead.
-                Where(m => m.FMemberId==id);
+            PortfolioListDTO portfolioListDTO = new PortfolioListDTO();
+            //var portfolioList = await _context.TCourseworks
+            //    .select(m => m.FMemberId == GetCurrentMemberId());
+            IEnumerable<PortfolioListDTO> portfolioList =
+                new List<PortfolioListDTO>(_context.TCourseworks
+                .Select(c => new PortfolioListDTO
+                {
+                    FName = c.FName,
+                    FDescrpition = c.FDescrpition,
+                }));
 
-            if(result != null)
-            {
-                //var result2 = _context.TCourseworks
-                //    .Select(c => new List<PortfolioListDTO>
-                //    {
-                //         FName = c.FName,
-                //        FDescrpition = c.FDescrpition,
-                //    });
-                    IEnumerable<PortfolioListDTO> portfolioList =
-                    new List<PortfolioListDTO>(_context.TCourseworks
-                        .Select(c => new PortfolioListDTO
-                            {
-                                FName = c.FName,
-                                FDescrpition = c.FDescrpition,
-                            }));
-                }
-            return View();
+            return View(portfolioList);
         }
+        //    [HttpGet]
+        //public IActionResult List(int id)
+        //{
+
+        //    var result = portfolioRead.
+        //        Where(m => m.FMemberId==id);
+
+        //    if(result != null)
+        //    {
+        //        //var result2 = _context.TCourseworks
+        //        //    .Select(c => new List<PortfolioListDTO>
+        //        //    {
+        //        //         FName = c.FName,
+        //        //        FDescrpition = c.FDescrpition,
+        //        //    });
+        //            IEnumerable<PortfolioListDTO> portfolioList =
+        //            new List<PortfolioListDTO>(_context.TCourseworks
+        //                .Select(c => new PortfolioListDTO
+        //                    {
+        //                        FName = c.FName,
+        //                        FDescrpition = c.FDescrpition,
+        //                    }));
+        //        }
+        //    return View(result);
+        //}
         //[HttpPost]
         //public IActionResult data(int id) 
         //{
@@ -72,5 +72,5 @@ namespace FinalGroupMVCPrj.Controllers
         //{
         //    portfolioRead.FMemberId = id;
         //    return  RedirectToAction("portfolioList", new {id=id});
-	}
+    }
 }
