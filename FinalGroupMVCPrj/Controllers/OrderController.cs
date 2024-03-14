@@ -30,7 +30,7 @@ namespace FinalGroupMVCPrj.Controllers
             }
 
             // 取得TMember資料
-            TMember? member = _context.TMembers.FirstOrDefault(m => m.FMemberId == GetCurrentMemberId()); 
+            TMember? member = _context.TMembers.FirstOrDefault(m => m.FMemberId == GetCurrentMemberId());
             if (member == null)
             {
                 return NotFound();
@@ -39,10 +39,13 @@ namespace FinalGroupMVCPrj.Controllers
             // 將得到的資料放到OrderDetailViewModel
             var OrderDetailViewModel = new OrderDetailViewModel
             {
-                FRealName= member.FRealName,              
-                FDescription = lessonCourse.FDescription
+                FName = lessonCourse.FName,
+                FDescription = lessonCourse.FDescription,                
+                FRealName = member.FRealName,
+                FPhone= member.FPhone,
+                FEmail = member.FEmail,
             };
             return View("Detail", OrderDetailViewModel);
-        }                  
+        }
     }
 }

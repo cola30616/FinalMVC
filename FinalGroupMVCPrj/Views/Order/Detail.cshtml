@@ -3,7 +3,7 @@
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
 <!-- Breadcrumb start -->
-<div class="breadcrumb-area bg-img bg-cover" data-bg-image="assets/images/breadcrumb-bg.jpg">
+<div class="breadcrumb-area bg-img bg-cover" data-bg-image="/images/owenadd/breadcrumb-bg.jpg">
     <div class="container">
         <div class="content text-center">
             <h2>訂單資訊</h2>
@@ -20,24 +20,24 @@
 <!-- Mentor-details-area start -->
 
 
-<section class="mentor-details pt-100 pb-60">
+<section class="mentor-details pt-60 pb-30">
     <div class="container">
         <div class="row gx-xl-5 align-items-center">
             <div class="col-xl-4 col-lg-5">
                 <div class="content-img mb-40" data-aos="fade-up">
-                    <div class="lazy-container ratio ratio-1-1 radius-md">
-                        <img class="lazyload blur-up" src="assets/images/placeholder.png" data-src="assets/images/mentor/mentor-1.jpg" alt="Mentor">
+                    <div class="lazy-container ratio ratio-3-2 radius-md">
+                        <img class="lazyload blur-up" src="" alt="課程照片"> @* 要改成FPhoto*@
                     </div>
                 </div>
             </div>
             <div class="col-xl-8 col-lg-7">
                 <div class="content-title mb-40" data-aos="fade-up">
-                    <h3 class="title mt-0 mb-1 fs-1">@Html.DisplayFor(model => model.FName)</h3>
-                    <span class=" fs-4 ">
+                    <h3 class="title mt-0 mb-1 fs-3">@Html.DisplayFor(model => model.FName)</h3>
+                    <span class=" fs-5 ">
                         課程資訊：@Html.DisplayFor(model => model.FDescription)
                     </span>
                     <div class="content-text mt-20">
-                        <p class="fs-3 fw-bold">
+                        <p class="fs-5 fw-bold">
                             地點：@Html.DisplayFor(model => model.FDescription) @* 要改成FAddressDetail*@
                         </p>
                     </div>
@@ -48,46 +48,49 @@
 </section>
 <!-- Mentor-details-area end -->
 <!-- Checkout-area start -->
-<div class="shopping-area pt-100 pb-60">
+<div class="shopping-area pt-30 pb-60">
     <div class="container">
         <form>
             <div class="row gx-xl-5">
                 <div class="col-lg-8">
                     <div class="billing-details" data-aos="fade-up">
-                        <h4 class="mb-20 fs-2">訂購人資訊</h4>
+                        <h4 class="mb-20 fs-4">訂購人資訊</h4>
                         <div class="row">
                             <div class="col-lg-6">
-                                <div class="form-group mb-30 fs-4">
+                                <div class="form-group mb-30 fs-5">
                                     <label for="firstName">姓名 </label>
-                                    <input type="text" id="readOnlyInput" value=@Html.DisplayFor(model => model.FRealName) class="form-control fs-4" readonly>
+                                    <input type="text" id="readOnlyInput" value=@Html.DisplayFor(model => model.FRealName) class="form-control fs-5" readonly>
 @*                                     <input id="firstName" type="text" class="form-control fs-3" name="firstName" placeholder="First Name" required="">
  *@                                </div>
                             </div>
                             <div class="col-lg-6">
-                                <div class="form-group mb-30 fs-4">
+                                <div class="form-group mb-30 fs-5">
                                     <label for="phone">手機號碼 </label>
-                                    <input type="text" id="readOnlyInput" value=@Html.DisplayFor(model => model.FPhone) class="form-control fs-4" readonly>
+                                    <input type="text" id="readOnlyInput" value=@Html.DisplayFor(model => model.FPhone) class="form-control fs-5" readonly>
 @*                                     <input id="phone" type="text" class="form-control fs-3" name="phone" placeholder="Phone Number" required="">
  *@                                </div>
                             </div>
                             <div class="col-lg-6">
-                                <div class="form-group mb-30 fs-4">
-                                    <label for="email">Email </label>
-                                    <input type="text" id="readOnlyInput" value=@Html.DisplayFor(model => model.FEmail) class="form-control fs-4" readonly>
-@*                                     <input id="email" type="email" class="form-control fs-3" name="email" placeholder="Email Address" required="">
- *@                                </div>
                                 <div class="form-group mb-30 fs-5">
-                                    <label for="email">資料如欲修改，請至<a href="/會員中心的URL" style="color: blue;">  會員中心</a></label>
+                                    <label for="email">Email </label>
+                                    <input type="text" id="readOnlyInput" value=@Html.DisplayFor(model => model.FEmail) class="form-control fs-5" readonly>
+@*                                     <input id="email" type="email" class="form-control fs-3" name="email" placeholder="Email Address" required="">
+ *@                                </div>                                
+                                </div>
+                            </div>
+                            <div class="col-lg-6">
+                                <div class="form-group mb-30 fs-5">
+                                    <label for="email">資料如欲修改，請至<a href="https://localhost:7031/Member/Setting" style="color: blue;">  會員中心</a></label>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
-
+           
                 <div data-aos="fade-up">
                     <h4 class="mb-20">付款方式</h4>
-                    <div class="form-group mb-20">
-                        <select id="payment-gateway" class="niceselect form-control fs-4">
+                    <div class="form-group mb-40">
+                        <select id="payment-gateway" class="niceselect form-control fs-5">
                             <option value="" selected="">信用卡付款</option>
                         </select>
                     </div>
@@ -154,10 +157,10 @@
                 }).then((result) => {
                     if (result.isConfirmed) {
                         // 導回首頁
-                        window.location.href = '/URL';
+                        window.location.href = 'https://localhost:7031';
                     } else if (result.dismiss === Swal.DismissReason.cancel) {
-                        // 導回檢視訂單頁面or子謙的課程記錄清單
-                        window.location.href = '/URL';
+                        // 導回檢視課程記錄清單
+                        window.location.href = 'https://localhost:7031/lessonhistory/LearningRecord';
                     }
                 });
             });

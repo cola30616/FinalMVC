@@ -6,16 +6,30 @@ $(document).ready(function () {
 
 function loadDataTable() {
     dataTable = $('#OrderListTable').DataTable({
-        "ajax": { url: '/TeacherAdmin/ListDataJson' },
+        "ajax": { url: '/TeacherAdmin/ListDataJson2' },
         "columns": [
-            { data: 'orderID', "width": "5%", className: 'text-center' },
-            { data: 'realName', "width": "5%", className: 'text-center' },
-            { data: 'email', "width": "7%", className: 'text-center' },
-            { data: 'orderDate', "width": "7%", className: 'text-center' },
-            { data: 'name', "width": "7%", className: 'text-center' },
-            { data: 'price', "width": "5%", className: 'text-center' },
-            { data: 'orderValid', "width": "5%", className: 'text-center' },
-            { data: 'modificationDescription', "width": "10%", className: 'text-center' },
+            { data: 'fOrderId', "width": "5%", className: 'text-center' },
+            { data: 'fRealName', "width": "5%", className: 'text-center' },
+            { data: 'fEmail', "width": "7%", className: 'text-center' },
+            {
+                data: 'fOrderDate',
+                "width": "7%",
+                className: 'text-center',
+                 "render": function (data) {
+                    return data.substring(0, 10).replace(/-/g, '/');
+                }
+            },
+            { data: 'fName', "width": "7%", className: 'text-center' },
+            { data: 'fLessonPrice', "width": "5%", className: 'text-center' },
+            {
+                data: 'fOrderValid',
+                "width": "5%",
+                className: 'text-center',
+                "render": function (data) {
+                    return data==true ? "是" : "否";
+                }
+            },
+            { data: 'fModificationDescription', "width": "10%", className: 'text-center' },
             //{
             //    // 這段是新增及刪除按鈕 ， 刪除用到onclick 事件，觸發下方的Delete
             //    data: 'orderID',

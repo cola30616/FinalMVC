@@ -36,7 +36,7 @@
                                     <div class="col-xl-3 col-lg-4 col-sm-6">
                                         <div class="course-default border radius-md mb-30">
                                             <figure class="course-img">
-                                                <a asp-controller="Lesson" asp-action="Details" asp-route-id="@course.FLessonCourseId" title="Image" target="_self" class="lazy-container ratio ratio-2-3">
+                                                <a asp-controller="LessonHistory" asp-action="Detail" asp-route-id="@Model.FOrderId" title="Image" target="_self" class="lazy-container ratio ratio-2-3">
                                                     @if (course.FPhoto != null)
                                                     {
                                                         <img class="lazyload" src="data:image;base64,@(Convert.ToBase64String(course.FPhoto))" alt="Image" />
@@ -47,13 +47,13 @@
                                                     }
                                                 </a>
                                                 <div class="hover-show">
-                                                    <a asp-controller="Lesson" asp-action="Details" asp-route-id="@course.FLessonCourseId" class="btn btn-md btn-primary rounded-pill" title="Enroll Now" target="_self">查詢課程細節</a>
+                                                    <a asp-controller="LessonHistory" asp-action="Detail" asp-route-id="@Model.FOrderId" class="btn btn-md btn-primary rounded-pill" title="Enroll Now" target="_self">查詢課程細節</a>
                                                 </div>
                                             </figure>
                                             <div class="course-details">
                                                 <div class="p-3">                                                  
                                                     <h6 class="course-title lc-2 mb-0">
-                                                        <a asp-controller="Lesson" asp-action="Details" asp-route-id="@course.FLessonCourseId" target="_self" title="Link">
+                                                        <a asp-controller="LessonHistory" asp-action="Detail" asp-route-id="@Model.FOrderId" target="_self" title="Link">
                                                             @course.FName
                                                         </a>
                                                     </h6>
@@ -78,7 +78,7 @@
                                     <div class="col-xl-3 col-lg-4 col-sm-6">
                                         <div class="course-default border radius-md mb-30">
                                             <figure class="course-img">
-                                                <a asp-controller="Lesson" asp-action="Details" asp-route-id="@course.FLessonCourseId" title="Image" target="_self" class="lazy-container ratio ratio-2-3">
+                                                <a asp-controller="LessonHistory" asp-action="Detail" asp-route-id="@Model.FOrderId" title="Image" target="_self" class="lazy-container ratio ratio-2-3">
                                                     @if (course.FPhoto != null)
                                                     {
                                                         <img class="lazyload" src="data:image;base64,@(Convert.ToBase64String(course.FPhoto))" alt="Image" />
@@ -89,13 +89,13 @@
                                                     }
                                                 </a>
                                                 <div class="hover-show">
-                                                    <a asp-controller="Lesson" asp-action="Details" asp-route-id="@course.FLessonCourseId" class="btn btn-md btn-primary rounded-pill" title="Enroll Now" target="_self">查詢課程細節</a>
+                                                    <a asp-controller="LessonHistory" asp-action="Detail" asp-route-id="@Model.FOrderId" class="btn btn-md btn-primary rounded-pill" title="Enroll Now" target="_self">查詢課程細節</a>
                                                 </div>
                                             </figure>
                                             <div class="course-details">
                                                 <div class="p-3">
                                                     <h6 class="course-title lc-2 mb-0">
-                                                        <a asp-controller="Lesson" asp-action="Details" asp-route-id="@course.FLessonCourseId" target="_self" title="Link">
+                                                        <a asp-controller="LessonHistory" asp-action="Detail" asp-route-id="@Model.FOrderId" target="_self" title="Link">
                                                             @course.FName
                                                         </a>
                                                     </h6>
@@ -120,7 +120,7 @@
                                     <div class="col-xl-3 col-lg-4 col-sm-6">
                                         <div class="course-default border radius-md mb-30">
                                             <figure class="course-img">
-                                                <a asp-controller="Lesson" asp-action="Details" asp-route-id="@course.FLessonCourseId" title="Image" target="_self" class="lazy-container ratio ratio-2-3">
+                                                <a asp-controller="LessonHistory" asp-action="Detail" asp-route-id="@Model.FOrderId" title="Image" target="_self" class="lazy-container ratio ratio-2-3">
                                                     @if (course.FPhoto != null)
                                                     {
                                                         <img class="lazyload" src="data:image;base64,@(Convert.ToBase64String(course.FPhoto))" alt="Image" />
@@ -131,13 +131,13 @@
                                                     }
                                                 </a>
                                                 <div class="hover-show">
-                                                    <a asp-controller="Lesson" asp-action="Details" asp-route-id="@course.FLessonCourseId" class="btn btn-md btn-primary rounded-pill" title="Enroll Now" target="_self">查詢課程細節</a>
+                                                    <a asp-controller="LessonHistory" asp-action="Detail" asp-route-id="@Model.FOrderId" class="btn btn-md btn-primary rounded-pill" title="Enroll Now" target="_self">查詢課程細節</a>
                                                 </div>
                                             </figure>
                                             <div class="course-details">
                                                 <div class="p-3">
                                                     <h6 class="course-title lc-2 mb-0">
-                                                        <a asp-controller="Lesson" asp-action="Details" asp-route-id="@course.FLessonCourseId" target="_self" title="Link">
+                                                        <a asp-controller="LessonHistory" asp-action="Detail" asp-route-id="@Model.FOrderId" target="_self" title="Link">
                                                             @course.FName
                                                         </a>
                                                     </h6>

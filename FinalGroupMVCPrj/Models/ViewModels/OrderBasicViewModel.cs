@@ -27,7 +27,7 @@ namespace FinalGroupMVCPrj.Models.ViewModels
 
         [Display(Name = "課程是否成立")]
         public bool FOrderValid { get; set; }
-        public string DisplayFOrderValid => FOrderValid ? "是" : "否";
+        //public string DisplayFOrderValid { get; set; }  => FOrderValid ? "是" : "否";
 
         [Display(Name = "課程狀態描述")]
         public string? FModificationDescription { get; set; }
