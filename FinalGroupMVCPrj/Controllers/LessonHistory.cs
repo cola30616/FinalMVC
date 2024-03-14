@@ -73,7 +73,7 @@ namespace FinalGroupMVCPrj.Controllers
             {
                 orderDetail.FOrderValid = false;
                 _context.SaveChanges();
-                return Ok();
+                return Ok(orderDetail);
             }
             return NotFound();
         }

@@ -110,7 +110,7 @@
 
 @section Scripts{
     <script>
-        const OrderID = document.getElementById('OrderID');
+        const OrderID = document.getElementById('OrderID').textContent
         $(document).ready(function () {
             // 點擊事件
             $('#cancelOrderButton').click(function () {
@@ -133,9 +133,9 @@
                     allowOutsideClick: false
                 }).then((result) => {
                     if (result.isConfirmed) {
-                        // 第2個彈跳視窗  
+                        // 第2個彈跳視窗
                         Swal.fire({
-                            title: "您是否確定取消課程？", 
+                            title: "您是否確定取消課程？",
                             text: "(取消後如欲上課，請至課程列表再次重新報名)",
                             icon: "warning",
                             showCancelButton: true,
@@ -149,8 +149,8 @@
                                     type: 'POST',
                                     url: `/LessonHistory/CancelOrder/${OrderID}`,
                                     success: function () {
-                                    // 更新成功後執行下一步操作
-                                    // 第3個彈跳樹窗
+                                        // 更新成功後執行下一步操作
+                                        // 第3個彈跳樹窗
                                         Swal.fire({
                                             title: "已收到您的取消報名申請！",
                                             showCancelButton: true,
@@ -159,14 +159,18 @@
                                             cancelButtonText: "檢視課程紀錄頁面"
                                         }).then((result) => {
                                             if (result.isConfirmed) {
-                                                window.location.href = 'https://localhost:7031';
+                                                window.location.href = '';
                                             } else if (result.dismiss === Swal.DismissReason.cancel) {
-                                                window.location.href = 'https://localhost:7031/lessonhistory/LearningRecord';
+                                                window.location.href = '/lessonhistory/LearningRecord';
                                             }
                                         });
                                     }
                                 });
                             }
                         });
+                    }
+                });
+            });
+        });
     </script>
 }
