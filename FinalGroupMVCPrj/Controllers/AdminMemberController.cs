@@ -147,9 +147,9 @@ namespace FinalGroupMVCPrj.Controllers
         {
             try
             {
-                // 获取数据表内容
-                var data = await _context.TMembers.Include(m => m.TMemberCitiesLists).Include(m => m.TMemberWishFields).Select(m=>
-                 new AdminMemberDTO
+               //要輸出CSV的資料
+                var data = await _context.TMembers.Include(m => m.TMemberCitiesLists).Include(m => m.TMemberWishFields).Select(m =>
+                 new AdminMemberCSV
                  {
                      MemberId = m.FMemberId,
                      RegDate = m.FRegisterDatetime.ToString("yyyy/MM/dd HH:mm"),
@@ -159,49 +159,34 @@ namespace FinalGroupMVCPrj.Controllers
                      EmailVerification = m.FEmailVerification ? "已驗證" : "未驗證",
                      Phone = m.FPhone,
                      GetCampInfo = m.FGetCampaignInfo ? "是" : "否",
-                     Birth = m.FBirthDate==null?"": ((DateTime)m.FBirthDate).ToString("yyyy-MM-dd"),
+                     Birth = m.FBirthDate == null ? "" : ((DateTime)m.FBirthDate).ToString("yyyy-MM-dd"),
                      Gender = m.FGender == true ? "男" : (m.FGender == false ? "女" : "其他／不便透露"),
                      Job = m.FJob,
                      Education = m.FEducation,
                      Note = string.IsNullOrEmpty(m.FNote) ? "未連結任何帳號" : "LINE",
-                     Cities =
+                     Cities = String.Join("／",
                     m.TMemberCitiesLists.Join(
                         _context.TCities, m => m.FCityId, c => c.FCityId,
-                        (m, c) => c.FCityName),
+                        (m, c) => c.FCityName)),
                      WishFields =
-                                        m.TMemberWishFields.Join(
+                                        String.Join("／", m.TMemberWishFields.Join(
                         _context.TCourseFields, m => m.FFieldId, f => f.FFieldId,
-                        (m, f) => f.FFieldName)
-                 }).ToListAsync(); // YourTable代表你的数据表实体类
+                        (m, f) => f.FFieldName))
+                 }).ToListAsync();
 
-                // 创建CSV文件流
+                // CSV MemoryStream
                 using (var memoryStream = new MemoryStream())
                 using (var writer = new StreamWriter(memoryStream, Encoding.UTF8))
                 using (var csv = new CsvHelper.CsvWriter(writer, CultureInfo.InvariantCulture))
                 {
-                    // 获取实体类的属性列表
-                    var properties = typeof(AdminMemberDTO).GetProperties();
 
-                    // 写入表头
-                    foreach (var property in properties)
-                    {
-                        var displayName = property.GetCustomAttributes(typeof(DisplayAttribute), true)
-                                                  .OfType<DisplayAttribute>()
-                                                  .FirstOrDefault()?.Name ?? property.Name;
-                        csv.WriteField(displayName);
-                    }
-                    csv.NextRecord();
-                    //// 设置CSV写入器的配置
-                    //csv.Configuration.Delimiter = ",";
-                    //csv.Configuration.QuoteAllFields = true;
-
-                    // 写入CSV数据
+                    // 寫入資料
                     csv.WriteRecords(data);
                     writer.Flush();
                     memoryStream.Position = 0;
 
-                    // 返回CSV文件
-                    return File(memoryStream.ToArray(), "text/csv", "data.csv");
+                    // 回傳CSV文件
+                    return File(memoryStream.ToArray(), "text/csv", $"{DateTime.Now.ToString("yyyy-MM-dd-HH-mm")}"+ "_會員資料.csv");
                 }
             }
             catch (Exception ex)
@@ -209,7 +194,7 @@ namespace FinalGroupMVCPrj.Controllers
                 // 在控制台输出异常信息
                 Console.WriteLine($"Error generating CSV file: {ex.Message}");
                 // 返回适当的错误信息给用户
-                return StatusCode(StatusCodes.Status500InternalServerError, "An error occurred while generating the CSV file.");
+                return StatusCode(StatusCodes.Status500InternalServerError, "CSV下載失敗，請稍後再試");
             }
         }
     }
