@@ -98,7 +98,7 @@
                         <div class="d-flex justify-content-between">
                 <!-- 最上排會員資訊&關閉 -->
               <div class="d-flex gap-2 px-2 mb-3 mt-2">
-                    <span class="fw-bold">會員編號：</span><span>1</span> <span>陳小美</span><span>example@gmail.com</span>
+                    <span class="fw-bold">會員編號：</span><span id="curMemId">1</span> <span id="curMemRealName">陳小美</span><span id="curMemEmail">example@gmail.com</span>
               </div>
                 <button type="button" class="btn" data-bs-dismiss="modal" aria-label="Close"><i class="fa-solid fa-x"></i></button>
             </div>
@@ -109,7 +109,7 @@
                         <button class="nav-link active" id="basic-tab" data-bs-toggle="tab" data-bs-target="#home" type="button" role="tab" aria-controls="home" aria-selected="true">基本資訊</button>
                     </li>
                     <li class="nav-item" role="presentation">
-                        <button class="nav-link" id="profile-tab" data-bs-toggle="tab" data-bs-target="#profile" type="button" role="tab" aria-controls="profile" aria-selected="false">其他資訊</button>
+                        <button class="nav-link" id="other-tab" data-bs-toggle="tab" data-bs-target="#profile" type="button" role="tab" aria-controls="profile" aria-selected="false">其他資訊</button>
                     </li>
                     <li class="nav-item" role="presentation">
                         <button class="nav-link" id="lgHistory-tab" data-bs-toggle="tab" data-bs-target="#contact" type="button" role="tab" aria-controls="contact" aria-selected="false">登入紀錄</button>
@@ -126,26 +126,26 @@
                         <div class=" form-block mb-30 d-flex align-items-center flex-column gap-4 " data-aos="fade-up" style="width:50%;height:50%">
                             <div class="course d-flex flex-column align-items-center ">
                                 <div class="position-relative">
-                                    <img class="lazyload rounded-pill border border-2" src="/images/owenadd/membernophoto.jpg" data-src="/images/owenadd/membernophoto.jpg" alt="course" style="width:200px;height:200px">
-                                    <button title="移除違規頭像" class="btn border border-2 position-absolute translate-middle d-flex justify-content-center align-items-center" style="top: 85%; left: 85%; width: 50px; height: 50px; border-radius: 50%; background-color: white; color: lightgray">
-                                        <i class="fa-solid fa-trash-can fa-xl" style="color:red"></i>
+                                    <img id="memPhoto" class="lazyload rounded-pill border border-2" src="/images/owenadd/membernophoto.jpg" alt="course" style="width:200px;height:200px">
+                                    <button id="deleteBtn" onclick="removeMemPhoto()" title="移除違規頭像" class="btn border border-2 position-absolute translate-middle d-flex justify-content-center align-items-center" style="top: 85%; left: 85%; width: 50px; height: 50px; border-radius: 50%; background-color: white; color: lightgray">
+                                        <i id="deleteBtnIcn" class="fa-solid fa-trash-can fa-xl" style="color:red"></i>
                                     </button>
                                 </div>
                             </div>
                                 <div class="d-flex flex-column">
                                         <div class="d-flex gap-2 align-items-center mb-2 ">
                                         <span class="fw-bold">註冊日期：</span>
-                                            <span >2024-03-04 10:08</span>
+                                            <span id="memRegDate" >2024-03-04 10:08</span>
                                         </div>
                                             <div class="d-flex gap-2 mb-2">
                                         <span class="fw-bold">電子信箱：</span>
-                                                <span >example@gmail.com</span>
+                                                <span id="memEmail" >example@gmail.com</span>
                                                 <span></span>
-                                                <span class="text-success" >已驗證</span>
+                                                <span id="memEmailVertify" class="text-success" >已驗證</span>
                                         </div>
                                         <div class="mb-2">
-                                        <label class="fw-bold">連結帳號：  </label>
-                                            <span>Google、Line</span>
+                                        <label  class="fw-bold">連結帳號：  </label>
+                                    <span id ="memConnectAccount">Google、Line</span>
                                         </div>
                                 </div>
 
@@ -155,37 +155,37 @@
                             <div class="mb-4"><span>※編輯&nbsp; <i class="fa-solid fa-pen-to-square"></i>&nbsp;僅限用於違規資料或必要</span></div>
                             <div class="d-flex gap-3 align-items-end">
                                 <div class="flex-grow-1 form-group mb-3">
-                                    <label for="firstName">真實姓名 </label>
-                                    <input disabled id="firstName" type="text" class="form-control" name="firstName" value="王小明">
+                                    <label for="memRealName">真實姓名 </label>
+                                    <input disabled id="memRealName" type="text" class="form-control"  value="王小明">
                                 </div>       
                                 <div class="editValue pb-4" style="cursor:pointer"><i class="fa-solid fa-pen-to-square"></i></div>
                             </div>
                             <div class="d-flex gap-3 align-items-end">
                                 <div class="flex-grow-1 form-group mb-3">
-                                    <label for="lastName">顯示名稱 </label>
-                                    <input disabled id="lastName" type="text" class="form-control" name="lastName" placeholder="" required="">
+                                    <label for="memShowName">顯示名稱 </label>
+                                    <input disabled id="memShowName" type="text" class="form-control" placeholder="">
                                 </div>
                                 <div class="editValue pb-4" style="cursor:pointer"><i class="fa-solid fa-pen-to-square"></i></div>
                             </div>
                             <div class="d-flex gap-3 align-items-end">
                                 <div class="flex-grow-1 form-group mb-3">
-                                    <label for="company_name">電話</label>
-                                    <input disabled id="phone" type="text" class="form-control" name="lastName" placeholder="" required="">
+                                    <label for="memPhone">電話</label>
+                                    <input id="memPhone" disabled type="text" class="form-control">
                                 </div>
                                 <div class="editValue pb-4" style="cursor:pointer"><i class="fa-solid fa-pen-to-square"></i></div>
                             </div>
                             <div class="d-flex gap-3 align-items-end">
                                 <div class="flex-grow-1 form-group mb-3">
-                                    <label for="email">生日  </label>
-                                    <input disabled id="birth" type="date" class="form-control" name="lastName" placeholder="" required="">
+                                    <label for="memBirth">生日  </label>
+                                    <input id ="memBirth" disabled type="date" class="form-control" placeholder="" required="">
                                 </div>
                                 <div class="editValue pb-4" style="cursor:pointer"><i class="fa-solid fa-pen-to-square"></i></div>
                             </div>
 
                             <div class="d-flex gap-3 align-items-end">
                                 <div class="flex-grow-1 form-group mb-3">
-                                    <label for="country">性別： </label>
-                                    <label>其他</label>
+                                    <label for="memGender">性別： </label>
+                                    <label id ="memGender">其他</label>
                                 </div>
                             </div>
                             <div class="d-flex gap-3 align-items-end">
@@ -196,36 +196,36 @@
                                 <div class="editValue pb-5" style="cursor:pointer"><i class="fa-solid fa-pen-to-square"></i></div>
                             </div>
                         </div>
-                        </div>
+                    </div>
                 </div>
                 <!--其他資訊標籤內容區-->
-                <div class="tab-pane fade p-3 mt-2 mb-4" id="profile" role="tabpanel" aria-labelledby="profile-tab">
+                <div class="tab-pane fade p-3 mt-2 mb-4" id="profile" role="tabpanel" aria-labelledby="other-tab">
                     <div class="d-flex flex-column ">
                         <div class="d-flex gap-3 align-items-end">
                             <div class="flex-grow-1 form-group mb-3">
-                                <label class="fw-bold">接收優惠活動通知： </label>
-                                <label>否</label>
+                                <label  class="fw-bold">接收優惠活動通知： </label>
+                                <label id ="memGetCampInfo">否</label>
                             </div>
                         </div>
                         <div class="d-flex gap-3">
                             <div class="flex-grow-1 d-flex flex-column gap-4 ">
                                 <div class="flex-grow-1 form-group">
                                     <label class="fw-bold">職業類別：</label>
-                                    <label for="company_name"> 餐飲／旅遊 ／美容美髮</label>
+                                    <label id="memJob"> 餐飲／旅遊 ／美容美髮</label>
                                 </div>
                                 <div class="flex-grow-1 form-group">
                                     <label class="fw-bold">想學習的領域：</label>
-                                    <label for="company_name">投資理財、語言學習、休閒運動</label>
+                                    <label id="memWishField">投資理財、語言學習、休閒運動</label>
                                 </div>
                             </div>
                             <div class="flex-grow-1 d-flex flex-column gap-4  ">
                                 <div class="flex-grow-1 form-group">
                                     <label class="fw-bold">最高學歷：</label>
-                                    <label for="company_name">未填寫</label>
+                                    <label id="memEducation">未填寫</label>
                                 </div>
                                 <div class="flex-grow-1 form-group">
                                     <label class="fw-bold">生活縣市：</label>
-                                    <label for="company_name">台北市、新竹市、桃園市</label>
+                                    <label id="memCities">台北市、新竹市、桃園市</label>
                                 </div>
                             </div>
                         </div>
@@ -295,17 +295,17 @@
 https://cdn.jsdelivr.net/npm/moment@2.30.1/moment.min.js
         ">//格式化日期的插件</script>
     <script>
-        let loadedDataCount = 0;
-        const dataPerPage = 5;
-        let maxDataCount = 30;
-        let remain = true;
-        let currentMemberId = 6;
+        //紀錄當前會員資訊變數
+        let currentMemberId = 0;
         let currentMemberData = null;
+        //登入記錄控制變數初始化
+        let loadedDataCount = 0;
+        let remain = true;
         let lastDate = new Date()
         lastDate.setDate(lastDate.getDate()+1)
         lastDate = moment(lastDate).format('YYYY-MM-DD')
 
-
+        //偵測指定最晚登入記錄時間input變化
         document.getElementById('logDate').addEventListener('change', changeLogDate);
         function changeLogDate(e){
             lastDate = new Date(e.target.value);
@@ -319,51 +319,7 @@ https://cdn.jsdelivr.net/npm/moment@2.30.1/moment.min.js
             loadMoreData();
         }
 
-       //生成隨機資料
-        function generateRandomData(count) {
-            const data = [];
-            for (let i = 1; i <= count; i++) {
-                data.push({
-                    id: loadedDataCount + i,
-                    loginTime: generateRandomDateTime(),
-                    ip: generateRandomIP(),
-                    region: generateRandomRegion(),
-                    browserSystem: generateRandomBrowserSystem()
-                });
-            }
-            return data;
-        }
-        // 生成隨機日期時間
-        function generateRandomDateTime() {
-            const year = 2023;
-            const month = Math.floor(Math.random() * 12) + 1; // 1-12
-            const day = Math.floor(Math.random() * 28) + 1; // 1-28 
-            const hours = Math.floor(Math.random() * 24); // 0-23
-            const minutes = Math.floor(Math.random() * 60); // 0-59
-            return `${year}-${month < 10 ? '0' + month : month}-${day < 10 ? '0' + day : day} ${hours < 10 ? '0' + hours : hours}:${minutes < 10 ? '0' + minutes : minutes}`;
-        }
-
-        // 生成隨機IP
-        function generateRandomIP() {
-            return `${Math.floor(Math.random() * 256)}.${Math.floor(Math.random() * 256)}.${Math.floor(Math.random() * 256)}.${Math.floor(Math.random() * 256)}`;
-        }
-
-        // 生成隨機國家/縣市/地區
-        function generateRandomRegion() {
-            const regions = ['台灣/台北市/大安區', '台灣/高雄市/小港區', '台灣/花蓮縣/花蓮市', '台灣/新北市/三重區'];
-            return regions[Math.floor(Math.random() * regions.length)];
-        }
-
-        // 生成隨機瀏覽器與系統
-        function generateRandomBrowserSystem() {
-            const browsers = ['Chrome 12.5', 'Firefox 5.5', 'Safari 16.7', 'Edge 9.3'];
-            const systems = ['Windows', 'MacOS', 'Linux','ios', 'android'];
-            const randomBrowser = browsers[Math.floor(Math.random() * browsers.length)];
-            const randomSystem = systems[Math.floor(Math.random() * systems.length)];
-            return `${randomBrowser} / ${randomSystem}`;
-        }
-
-        //取得資料
+        //取得登入記錄資料
         async function getData() {
             const data = [];
             const toPush = await fetchLoginHistory()
@@ -405,7 +361,7 @@ https://cdn.jsdelivr.net/npm/moment@2.30.1/moment.min.js
             });
         }
 
-        // 載入更多資料
+        // 載入更多登入記錄資料
         async function loadMoreData() {
             if (remain !== false) {
                 const newData = await getData();
@@ -421,12 +377,12 @@ https://cdn.jsdelivr.net/npm/moment@2.30.1/moment.min.js
                 }
             }
 
-        //載入更多資料的點擊事件
+        //載入更多登入記錄資料的點擊事件
         document.getElementById('load-more-btn').addEventListener('click', loadMoreData);
 
-        // // 最一開始載入
-        // loadMoreData();
+        //點擊登入紀錄標籤
         document.getElementById("lgHistory-tab").addEventListener('click', () => {
+            //初始化控制變數
             document.getElementById('table-body').innerHTML=""
             remain = true;
             loadedDataCount = 0;
@@ -434,15 +390,18 @@ https://cdn.jsdelivr.net/npm/moment@2.30.1/moment.min.js
             lastDate.setDate(lastDate.getDate() + 1)
             lastDate = moment(lastDate).format('YYYY-MM-DD')
             document.getElementById('logDate').value=""
+            document.getElementById('load-more-btn').disabled = false;
+            document.getElementById('load-more-btn').innerHTML = "載入5筆";
+            //載入資料
             loadMoreData();
         })
     </script>
     <script>
+        //會員清單頁面載入
         let dataTable; // 這段要記得加，先宣告datatable的變數
         $(document).ready(function () {
             loadDataTable();
         })
-
         function loadDataTable() {
             // html 欄位跟 ajax 的欄位務必相同
             dataTable = $('#memberListTable').DataTable({
@@ -484,10 +443,17 @@ https://cdn.jsdelivr.net/npm/moment@2.30.1/moment.min.js
             }  
             currentMemberId = Number(memberId);
             await fetchMemberDetail(currentMemberId)
+            document.querySelector('#curMemId').innerHTML = currentMemberId;
+            document.querySelector('#curMemRealName').innerHTML = currentMemberData.realName;
+            document.querySelector('#curMemEmail').innerHTML = currentMemberData.email;
+            await loadMemberBasicInfo()
+            await loadMemPhoto(currentMemberId)
             var basicTab= document.querySelector('#basic-tab')
             var tab = new bootstrap.Tab(basicTab)
             tab.show()
         }
+
+        //取得單筆會員資料
         async function fetchMemberDetail(memberId) {
             const response = await fetch(`@Url.Content("~/AdminMember/Detail")?id=${memberId}`, {
                 "method": "GET",
@@ -496,8 +462,102 @@ https://cdn.jsdelivr.net/npm/moment@2.30.1/moment.min.js
                 callSwalError("系統異常請稍後再試")
                 }
             const data = await response.json();
-            console.log(data);
+            currentMemberData = data;
         }
+
+        //載入會員基本資訊
+        function loadMemberBasicInfo(){
+            if (currentMemberData === null) { 
+                callSwalError("系統異常")
+                return; }
+            document.getElementById('memRegDate').innerHTML = currentMemberData.regDate
+            document.getElementById('memEmail').innerHTML = currentMemberData.email
+            document.getElementById('memEmailVertify').innerHTML = currentMemberData.emailVerification
+            if (currentMemberData.emailVerification === "已驗證") {
+                document.getElementById('memEmailVertify').classList.replace("text-danger", "text-success")
+            }else{
+                document.getElementById('memEmailVertify').classList.replace("text-success", "text-danger")
+            }
+
+            document.getElementById('memConnectAccount').innerHTML = currentMemberData.note
+            document.getElementById('memRealName').value = currentMemberData.realName
+            document.getElementById('memShowName').value = currentMemberData.showName
+            document.getElementById('memPhone').value = currentMemberData.phone
+            document.getElementById('memBirth').value = currentMemberData.birth
+            document.getElementById('memGender').innerHTML = currentMemberData.gender
+
+        }
+        //點擊其他資訊標籤
+        document.getElementById("other-tab").addEventListener('click', () => {
+            loadMemberOtherInfo()
+        })
+        function loadMemberOtherInfo() {
+            document.getElementById('memGetCampInfo').innerHTML = currentMemberData.getCampInfo
+            document.getElementById('memJob').innerHTML = currentMemberData.job
+            document.getElementById('memEducation').innerHTML = currentMemberData.education
+            document.getElementById('memCities').innerHTML = stringArrayJoin(currentMemberData.cities)
+            document.getElementById('memWishField').innerHTML = stringArrayJoin(currentMemberData.wishFields)
+        }
+        function stringArrayJoin(arr) {
+            if (!Array.isArray(arr)) { callSwalError("系統異常"); return; }
+            if (arr.length === 0) { return "未填寫"; }
+            return arr.join("、")
+        }
+        //取得會員頭像
+        async function loadMemPhoto(memberId) {
+            resetMemPhoto()
+            try {
+                const response = await fetch(`https://localhost:7031/AdminMember/MemberPhoto/${memberId}`, {
+                    method: "GET",
+                });
+                let photoUrl = '';
+                photoUrl = await response.text();
+                if (photoUrl !== '') {
+                deleteBtn.disabled = false;
+                deleteBtn.title = "移除違規頭像";
+                deleteBtnIcn.style.color = 'red'
+                    document.getElementById("memPhoto").title = `會員編號 ${currentMemberId} 頭像`;
+                    document.getElementById("memPhoto").src = photoUrl;
+                }
+            } catch (error) {
+                callSwalError(`載入圖片失敗：${error}`);
+            }
+        };
+
+        //移除會員違規頭像
+        async function removeMemPhoto() {
+            Swal.fire({
+                title: `確認移除會員編號${currentMemberId}的違規頭像？`,
+                text: "",
+                icon: "info",
+                showCancelButton: true,
+                confirmButtonColor: "#30C2EC",
+                cancelButtonColor: "#d33",
+                confirmButtonText: "確定",
+                cancelButtonText: "取消"
+            }).then(async (result) => {
+                if (result.isConfirmed) {
+                    try {
+                        const response = await fetch(`https://localhost:7031/AdminMember/RemoveMemberPhoto/${currentMemberId}`, {
+                            method: "POST",
+                        });
+                        if (!response.ok) { throw new Error(response.statusText); }
+                        resetMemPhoto()
+                        Swal.fire({
+                            position: "center",
+                            icon: "info",
+                            title: "已刪除會員違規頭像",
+                            showConfirmButton: false,
+                            timer: 1500
+                        });
+                    } catch (error) {
+                        callSwalError(`${error}`);
+                    }
+                }
+            })
+        }
+
+        //SweetAlert失敗訊息
             function callSwalError(text) {
                 Swal.fire({
                     position: "center",
@@ -506,6 +566,14 @@ https://cdn.jsdelivr.net/npm/moment@2.30.1/moment.min.js
                     showConfirmButton: false,
                     timer: 1500
                 })
+            }
+            function resetMemPhoto(){
+            const deleteBtn = document.getElementById("deleteBtn");
+            const deleteBtnIcn = document.getElementById("deleteBtnIcn");
+            deleteBtn.disabled = true;
+            document.getElementById("memPhoto").src = "/images/owenadd/membernophoto.jpg"
+            document.getElementById("memPhoto").title = "會員沒有頭像";
+            deleteBtnIcn.style.color = 'grey'
             }
     </script>
 }

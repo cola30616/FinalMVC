@@ -3,8 +3,12 @@ using FinalGroupMVCPrj.Models.DTO;
 using FinalGroupMVCPrj.Models.ViewModels;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.CodeAnalysis.Elfie.Serialization;
 using Microsoft.EntityFrameworkCore;
+using System.Globalization;
+using System.Text;
+using CsvHelper;
+using System.ComponentModel.DataAnnotations;
 
 namespace FinalGroupMVCPrj.Controllers
 {
@@ -68,13 +72,14 @@ namespace FinalGroupMVCPrj.Controllers
                 AdminMemberDTO mdVm = new AdminMemberDTO
                 {
                     MemberId = dbMember.FMemberId,
+                    RegDate = dbMember.FRegisterDatetime.ToString("yyyy/MM/dd HH:mm"),
                     RealName = dbMember.FRealName,
                     ShowName = dbMember.FShowName,
                     Email = dbMember.FEmail,
-                    EmailConfirmed = dbMember.FEmailVerification?"已驗證":"未驗證",
+                    EmailVerification = dbMember.FEmailVerification?"已驗證":"未驗證",
                     Phone = dbMember.FPhone,
                     GetCampInfo = dbMember.FGetCampaignInfo?"是":"否",
-                    Birth = dbMember.FBirthDate?.ToString("yyyy/MM/dd"),
+                    Birth = dbMember.FBirthDate?.ToString("yyyy-MM-dd"),
                     Gender = dbMember.FGender == true ? "男" : (dbMember.FGender == false ? "女" : "其他／不便透露"),
                     Job = dbMember.FJob,
                     Education = dbMember.FEducation,
@@ -94,6 +99,118 @@ namespace FinalGroupMVCPrj.Controllers
                 return StatusCode(500, "系統異常："+ex);
             }
 
+        }
+
+        // GET: AdminMember/MemberPhoto
+        //動作簡述：回傳會員頭像的url
+        [HttpGet]
+        public async Task<IActionResult> MemberPhoto(int? id)
+        {
+            string blobDataURL = "";
+            TMember? member = await _context.TMembers.FirstOrDefaultAsync(m => m.FMemberId == id);
+            byte[]? image = member?.FMemberProfilePic;
+            if (image == null || image.Length == 0)
+            {
+                blobDataURL = "";
+
+            }
+            else
+            {
+                string base64String = Convert.ToBase64String(image);
+                blobDataURL = $"data:image/jpeg;base64,{base64String}";
+            }
+            return Content(blobDataURL);
+        }
+        // POST: AdminMember/RemoveMemberPhoto
+        //動作簡述：回傳會員頭像的url
+        [HttpPost]
+        public async Task<IActionResult> RemoveMemberPhoto(int id)
+        {
+            try
+            {
+                if(id == 0) { return BadRequest("沒有指定會員"); }
+                TMember? dbMember = await _context.TMembers.FirstOrDefaultAsync(m => m.FMemberId == id);
+                if(dbMember == null) { return StatusCode(500, "資料庫系統異常請稍後再試" ); }
+                dbMember.FMemberProfilePic = null;
+                _context.TMembers.Update(dbMember);
+                await _context.SaveChangesAsync();
+                return Ok();
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500,"系統異常請稍後再試："+ex);
+            }
+        }
+
+
+        public async Task<IActionResult> DownloadCsv()
+        {
+            try
+            {
+                // 获取数据表内容
+                var data = await _context.TMembers.Include(m => m.TMemberCitiesLists).Include(m => m.TMemberWishFields).Select(m=>
+                 new AdminMemberDTO
+                 {
+                     MemberId = m.FMemberId,
+                     RegDate = m.FRegisterDatetime.ToString("yyyy/MM/dd HH:mm"),
+                     RealName = m.FRealName,
+                     ShowName = m.FShowName,
+                     Email = m.FEmail,
+                     EmailVerification = m.FEmailVerification ? "已驗證" : "未驗證",
+                     Phone = m.FPhone,
+                     GetCampInfo = m.FGetCampaignInfo ? "是" : "否",
+                     Birth = m.FBirthDate==null?"": ((DateTime)m.FBirthDate).ToString("yyyy-MM-dd"),
+                     Gender = m.FGender == true ? "男" : (m.FGender == false ? "女" : "其他／不便透露"),
+                     Job = m.FJob,
+                     Education = m.FEducation,
+                     Note = string.IsNullOrEmpty(m.FNote) ? "未連結任何帳號" : "LINE",
+                     Cities =
+                    m.TMemberCitiesLists.Join(
+                        _context.TCities, m => m.FCityId, c => c.FCityId,
+                        (m, c) => c.FCityName),
+                     WishFields =
+                                        m.TMemberWishFields.Join(
+                        _context.TCourseFields, m => m.FFieldId, f => f.FFieldId,
+                        (m, f) => f.FFieldName)
+                 }).ToListAsync(); // YourTable代表你的数据表实体类
+
+                // 创建CSV文件流
+                using (var memoryStream = new MemoryStream())
+                using (var writer = new StreamWriter(memoryStream, Encoding.UTF8))
+                using (var csv = new CsvHelper.CsvWriter(writer, CultureInfo.InvariantCulture))
+                {
+                    // 获取实体类的属性列表
+                    var properties = typeof(AdminMemberDTO).GetProperties();
+
+                    // 写入表头
+                    foreach (var property in properties)
+                    {
+                        var displayName = property.GetCustomAttributes(typeof(DisplayAttribute), true)
+                                                  .OfType<DisplayAttribute>()
+                                                  .FirstOrDefault()?.Name ?? property.Name;
+                        csv.WriteField(displayName);
+                    }
+                    csv.NextRecord();
+                    //// 设置CSV写入器的配置
+                    //csv.Configuration.Delimiter = ",";
+                    //csv.Configuration.QuoteAllFields = true;
+
+                    // 写入CSV数据
+                    csv.WriteRecords(data);
+                    writer.Flush();
+                    memoryStream.Position = 0;
+
+                    // 返回CSV文件
+                    return File(memoryStream.ToArray(), "text/csv", "data.csv");
+                }
+            }
+            catch (Exception ex)
+            {
+                // 在控制台输出异常信息
+                Console.WriteLine($"Error generating CSV file: {ex.Message}");
+                // 返回适当的错误信息给用户
+                return StatusCode(StatusCodes.Status500InternalServerError, "An error occurred while generating the CSV file.");
+            }
         }
     }
 }
