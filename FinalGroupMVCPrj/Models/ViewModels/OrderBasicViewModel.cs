@@ -12,6 +12,9 @@ namespace FinalGroupMVCPrj.Models.ViewModels
         [Display(Name = "會員姓名")]
         public string? FRealName { get; set; }
 
+        [Display(Name = "會員電話")]
+        public string? FPhone { get; set; }
+
         [Display(Name = "會員信箱")]
         public string? FEmail { get; set; }
 

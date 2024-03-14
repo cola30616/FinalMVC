@@ -391,6 +391,7 @@ namespace FinalGroupMVCPrj.Controllers
                             {
                                 FOrderId = order.FOrderId,
                                 FRealName = member.FRealName,
+                                FPhone= member.FPhone,
                                 FEmail = member.FEmail,
                                 FOrderDate = order.FOrderDate,
                                 FName = lessoncourse.FName,

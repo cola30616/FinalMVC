@@ -10,6 +10,7 @@ function loadDataTable() {
         "columns": [
             { data: 'fOrderId', "width": "5%", className: 'text-center' },
             { data: 'fRealName', "width": "5%", className: 'text-center' },
+            { data: 'fPhone', "width": "7%", className: 'text-center' },
             { data: 'fEmail', "width": "7%", className: 'text-center' },
             {
                 data: 'fOrderDate',
