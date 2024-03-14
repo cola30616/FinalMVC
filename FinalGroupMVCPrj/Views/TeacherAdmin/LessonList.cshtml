@@ -1,12 +1,12 @@
 ﻿@model IEnumerable< LessonListViewModel>
 
 
-    @{
+@{
     ViewData["Title"] = "LessonList";
     Layout = "~/Views/Shared/_LayoutTeacherAdmin.cshtml";
 }
 
-
+<partial name="_SweetAlertPartial" />
 <nav style="--bs-breadcrumb-divider: '|';">
     <ol class="breadcrumb">
         <li class="breadcrumb-item"><a asp-controller="TeacherAdmin" asp-action="LessonList"><i class="bi bi-house-door"></i>老師後台</a></li>
@@ -15,7 +15,9 @@
     </ol>
 </nav>
 <h1>老師後台課程清單</h1>
-<a asp-controller="TeacherAdmin" asp-action="LessonCreate" class="btn btn-primary" data-bs-toggle="tooltip" data-bs-placement="right" title="點擊新增課程"><i class="fa-regular fa-square-plus"></i> 開課</a>
+@* asp-controller="TeacherAdmin" asp-action="LessonCreate" *@
+<!--改成-->
+<button  onclick="loadHistoryCourse()" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#open"  data-bs-placement="right" title="點擊新增課程"><i class="fa-regular fa-square-plus"></i> 開課</button>
 
 <div class="row">
     <div class="col-sm-10">
@@ -57,7 +59,7 @@
 <table id="lessonListTable" class="datatable">
     <thead>
         <tr>
-            <th>@Html.DisplayNameFor(m=>m.Code)</th>
+            <th>@Html.DisplayNameFor(m => m.Code)</th>
             <th>@Html.DisplayNameFor(m => m.Name)</th>
             <th>@Html.DisplayNameFor(m => m.Filed)</th>
             <th>@Html.DisplayNameFor(m => m.Price)</th>
@@ -67,15 +69,208 @@
             <th>@Html.DisplayNameFor(m => m.RegPeople)</th>
             <th>@Html.DisplayNameFor(m => m.Status)</th>
             <th>@Html.DisplayNameFor(m => m.VenueType)</th>
-            <th></th> 
+            <th></th>
         </tr>
     </thead>
- 
+
 </table>
+
+
+
+<!--彈跳視窗-->
+<!-- Modal -->
+<div class="modal fade" id="open" tabindex="-1" aria-labelledby="openLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5" id="openLabel">請選擇開課類型</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div class="d-flex justify-content-center">
+                    <div class="mt-3 mb-3">
+                        <h6>建立全新課程</h6>
+                        <a class="btn btn-warning" asp-controller="TeacherAdmin" asp-action="LessonCreate">開新課程</a>
+                    </div>
+                </div>
+                <div class="d-flex justify-content-center mb-3">
+                    <h6>或</h6>
+                </div>
+                <div class="row">
+                    <div class="col-12 mb-3 mb-md-0 me-md-3 mt-2">
+                        <div class="d-flex justify-content-center">
+                            <h6>重新開之前開過的課</h6>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-8">
+                        <select id="opendCourse" class="form-select mb-3" aria-label="Default select example"></select>
+                    </div>
+                    <div class="col-md-4">
+                        <button type="button" class="btn btn-primary" name="code" value="" id="goToOpen">前往開課</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
 <!-- End Table with stripped rows -->
-
-
-
-@section Scripts{
+@section Scripts {
     <script src="~/js/tinascript/lessonlist.js" asp-append-version="true"></script>
+    
+    <script>
+        $(document).ready(function () {
+            loadHistoryCourse();
+        })
+        const  opendCourse = document.querySelector('#opendCourse');
+        async function  loadHistoryCourse(){
+            const url = `@Url.Content("~/TeacherAdmin/historycourse")`;
+            const response = await fetch(url);
+            const data = await response.json();
+             const options = data.map((item) => {
+                return `<option value=${item.fCode}>${item.fCode}-${item.fName}</option>`;
+            })
+                opendCourse.innerHTML = options.join('');
+        };
+
+        
+        document.querySelector('#goToOpen').addEventListener('click', function() {
+        const nameValue = this.getAttribute('name');
+        const codeValue = this.getAttribute('value');
+        
+       this.value=opendCourse.options[opendCourse.selectedIndex].value;
+        if (codeValue) {
+            const url = '/TeacherAdmin/LessonCreate?' + encodeURIComponent(nameValue) + '=' + encodeURIComponent(codeValue);
+            
+            window.location.href = url;
+        }
+    });
+    </script>
+
+    <!--SweetAlert Version Open-->
+    @* <script>
+        const open = document.querySelector("#open");
+
+        open.addEventListener('click', openCourseOption);
+
+        function openCourseOption() {
+            Swal.fire({
+                title: "開課類型",
+                text: `請先選擇開課類型`,
+                icon: "info",
+                html: `
+                            <div >
+                                <input type="radio" id="new" name="courseType" value="new">
+                                <label for="new">新課新開</label>
+                            </div>
+                            <div >
+                                <input type="radio" id="old" name="courseType" value="old">
+                                <label for="old">舊課新開</label>
+                            </div>`,
+
+
+                showCancelButton: false,
+                confirmButtonColor: "#30C2EC",
+                cancelButtonColor: "#d33",
+                confirmButtonText: "確定",
+                cancelButtonText: "取消"
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    const selectedValue = document.querySelector('input[name="courseType"]:checked').value;
+                    if (selectedValue === "new") {
+                        window.location.href = `${location.origin}/TeacherAdmin/LessonCreate`;
+                    }
+                    else if (selectedValue === "old") {
+
+                        choiceCode();
+
+                    }
+                }
+            });
+        }
+
+        const loadFiled = async () => {
+            const url = `@Url.Content("~/TeacherAdmin/TeacherOpenedFiled")`;
+            const response = await fetch(url);
+            const data = await response.json();
+            const options = data.map((item) => {
+                return `<option value=${item.fFieldId}>${item.fFieldName}</option>`;
+            })
+            openfiled.innerHTML += options.join('');
+
+        };
+
+        const loadsubject = async () => {
+
+            const selectedFiledId = openfiled.options[openfiled.selectedIndex].value;
+            const url = `@Url.Content("~/TeacherAdmin/TeacherOpenedSubject")?filedId=${selectedFiledId}`;
+            const response = await fetch(url);
+            const data = await response.json();
+            const options = data.map((item) => {
+                return `<option value=${item.fSubjectId}>${item.fSubjectName}</option>`;
+            })
+            opensubject.innerHTML = options.join('');
+
+        };
+
+        function choiceCode() {
+            swal.fire({
+                title: "選擇領域科目",
+                icon: "info",
+                html:
+                    `<select class="form-select" id="openfiled" aria-label="Default select example"><option> 請選擇 </option></select >
+                                     <select class="form-select" id="opensubject" aria-label="Default select example"><option> 請選擇 </option></select>`,
+                showCancelButton: true,
+                confirmButtonText: "確定",
+                cancelButtonText: "取消",
+                didOpen: () => {
+                    // 在對話框打開時填充 select 元素的選項
+                    loadFiled();
+                    const openfiled = document.getElementById('openfiled');
+                    console.log(openfiled);
+                    openfiled.addEventListener('change', loadsubject);
+                },
+                preConfirm: () => {
+                    return {
+                        openfiled: document.getElementById('openfiled').value,
+                        opensubject: document.getElementById('opensubject').value
+                    };
+                }
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    const { openfiled, opensubject } = result.value;
+                    console.log({ openfiled, opensubject });
+                    // Do something with the selected subjects
+                    window.location.href = `${location.origin}/TeacherAdmin/LessonEdit`;
+                }
+            });
+        }
+
+    </script> *@
+    <!--取消開課-->
+    <script>
+        const calloff = document.getElementById('calloff');
+        console.log(calloff);
+
+        function calloffCourse(lessonid) {
+            Swal.fire({
+                title: "取消開課",
+                text: `請填寫取消開課原因`,
+                icon: "info",
+                input: "text",
+                inputLabel: "填寫取消開課原因",
+                showCancelButton: true,
+                confirmButtonColor: "#30C2EC",
+                cancelButtonColor: "#d33",
+                confirmButtonText: "確定",
+                cancelButtonText: "取消"
+            }).then((result) => {
+                if (result.isConfirmed) {
+
+                }
+            });
+        }
+    </script>
 }

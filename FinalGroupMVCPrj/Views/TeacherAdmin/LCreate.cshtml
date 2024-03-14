@@ -23,6 +23,7 @@
                 }
     </style>
 }
+
 <h1>新增課程</h1>
 <hr />
 <form asp-action="LessonCreate" id="OpenLesson" asp-controller="TeacherAdmin" method="post" enctype="multipart/form-data">
@@ -37,46 +38,46 @@
                         </select>
                     </div>
                     <div class="col-sm-6">
-                        <select class="form-select" aria-label="Default select example" id="FSubject" name="FSubject" asp-for="FSubject">
+                        <select class="form-select" aria-label="Default select example" name="FSubject" asp-for="FSubject">
                             <option selected>科目</option>
                         </select>
                     </div>
                 </div>
-                <div class="row">
+              @*   <div class="row">
                     <div class="col-sm-6">
                         <div class="input-group mb-3">
-                            <input type="text" class="form-control" placeholder="代號" id="FCode" placeholder="" asp-for="FCode">
+                            <input type="text" class="form-control" placeholder="代號"  placeholder="" asp-for="FCode" autocomplete="off">
                             <span asp-validation-for="FCode" class="text-danger"></span>
                         </div>
                     </div>
                     <div class="col-sm-6">
                         <button type="submit" class="btn btn-primary align-self-center">自動填入先前的資訊</button>
                     </div>
-                </div>
+                </div> *@
 
 
                 <div class="form-floating mb-3">
-                    <input type="text" class="form-control" id="floatingInput" placeholder="" asp-for="FName">
+                    <input type="text" class="form-control" data-custom="fname" placeholder="" asp-for="FName">
                     <span asp-validation-for="FName" class="text-danger"></span>
-                    <label for="floatingInput">課名</label>
+                    <label for="FName">課名</label>
                 </div>
                 <div class="form-floating mb-3">
-                    <input type="text" class="form-control" id="floatingInput" placeholder="" asp-for="FRequirement">
+                    <input type="text" class="form-control" id="FRequirement" placeholder="" asp-for="FRequirement">
                     <span asp-validation-for="FRequirement" class="text-danger"></span>
-                    <label for="floatingInput">要求</label>
+                    <label for="FRequirement">要求</label>
                 </div>
                 <!--編輯器-->
                 <div class="form-floating mb-3">
-                    <textarea class="form-control" placeholder="Leave a comment here" id="floatingTextarea" style="height: 100px; resize: none;" asp-for="FDescription"></textarea>
+                    <textarea class="form-control" placeholder="Leave a comment here" id="FDescription" style="height: 100px; resize: none;" asp-for="FDescription"></textarea>
                     <span asp-validation-for="FDescription" class="text-danger"></span>
-                    <label for="floatingTextarea">課程介紹</label>
+                    <label for="FDescription">課程介紹</label>
                 </div>
 
 
                 <div class="form-floating mb-3">
-                    <textarea class="form-control" placeholder="Leave a comment here" id="floatingTextarea" style="height: 100px; resize: none;" asp-for="FHomeworkDescription"></textarea>
+                    <textarea class="form-control" placeholder="Leave a comment here" id="FHomeworkDescription" style="height: 100px; resize: none;" asp-for="FHomeworkDescription"></textarea>
                     <span asp-validation-for="FHomeworkDescription" class="text-danger"></span>
-                    <label for="floatingTextarea">作業</label>
+                    <label for="FHomeworkDescription">作業</label>
                 </div>
             </div>
 
@@ -113,16 +114,16 @@
                 <div class="row">
                     <div class="col-sm-6">
                         <div class="form-floating mb-3">
-                            <input type="number" class="form-control" id="floatingInput1" placeholder="" asp-for="FMinPeople">
+                            <input type="number" class="form-control" id="FMinPeople" placeholder="" asp-for="FMinPeople">
                             <span asp-validation-for="FMinPeople" class="text-danger"></span>
-                            <label for="floatingInput1">最低人數</label>
+                            <label for="FMinPeople">最低人數</label>
                         </div>
                     </div>
                     <div class="col-sm-6">
                         <div class="form-floating mb-3">
-                            <input type="number" class="form-control" id="floatingInput2" placeholder="" asp-for="FMaxPeople">
+                            <input type="number" class="form-control" id="FMaxPeople" placeholder="" asp-for="FMaxPeople">
                             <span asp-validation-for="FMaxPeople" class="text-danger"></span>
-                            <label for="floatingInput2">名額</label>
+                            <label for="FMaxPeople">名額</label>
                         </div>
                     </div>
                 </div>
@@ -144,7 +145,7 @@
                     <div class="col-sm-6">
                         <label for="inputTime1" class="col-form-label">開始時間</label>
                         <div class="input-group">
-                            <input type="time" class="form-control" id="inputTime1" asp-for="FStartTime" step="1800">
+                            <input type="time" class="form-control" id="FStartTime" asp-for="FStartTime" step="1800">
                             <span asp-validation-for="FStartTime" class="text-danger"></span>
                         </div>
 
@@ -152,7 +153,7 @@
                     <div class="col-sm-6">
                         <label for="inputTime2" class="col-form-label">結束時間</label>
                         <div class="input-group">
-                            <input type="time" class="form-control" id="inputTime2" asp-for="FEndTime">
+                            <input type="time" class="form-control" id="FEndTime" asp-for="FEndTime">
                             <span asp-validation-for="FEndTime" class="text-danger"></span>
                         </div>
                     </div>
@@ -225,10 +226,16 @@
         </div> *@
 
         <!-- 按鈕 -->
-        <div class="col-12  d-flex text-align-end">
-            <button type="submit" class="btn btn-primary me-2" value="Create">確定</button>
-            <button type="button" class="btn btn-secondary">取消</button>
+        <div class="col-12 d-flex justify-content-end">
+            <button type="button" class="btn btn-light me-2 text-light" id="demo1">demo1</button>
+            <button type="submit" class="btn btn-primary me-2" name ="status" value="TempSave" id="makeSure">暫存</button>
+            <button type="submit" class="btn btn-primary me-2" name="status" value="Create" id="makeSure">確定</button>
+            <a class="btn btn-secondary" asp-action="LessonList" asp-controller="TeacherAdmin">取消</a>
+            <div class="col-1"></div>
         </div>
+
+
+
     </div>
 </form>
 
@@ -236,6 +243,7 @@
     @{
         await Html.RenderPartialAsync("~/Views/Shared/_ValidationScriptsPartial.cshtml");
     }
+
     <script src="~/js/tinascript/changevenuetype.js" asp-append-version="true"></script>
     <script src="~/js/tinascript/previewimage.js" asp-append-version="true"></script>
     <!--帶出老師可開的領域-->
@@ -265,7 +273,7 @@
             const response = await fetch(url);
             const data = await response.json();
             const options = data.map((item) => {
-                return `<option value=${item.fSubjectId}>${item.fSubjectName}</option>`;
+                return `<option value=${item.fSubjectId} >${item.fSubjectName}</option>`;
             })
             subject.innerHTML = options.join('');
 
@@ -322,5 +330,51 @@
         });
 
     </script>
+    <!--SweetAlert-->
+    <!---->
+  
 
+  <!--Demo Button-->
+    <script>
+        const demo1 = document.querySelector("#demo1");
+
+        const code = document.querySelector('#FCode');
+
+        const name = document.querySelector('#FName');
+        const requirement = document.querySelector('#FRequirement');
+        const desc = document.querySelector('#FDescription');
+        const hw = document.querySelector('#FHomeworkDescription');
+        const price = document.querySelector('#FPrice');
+        const minpeo = document.querySelector('#FMinPeople');
+        const maxpeo = document.querySelector('#FMaxPeople');
+        const lessondate = document.querySelector('#FLessonDate');
+        const deadline = document.querySelector('#FRegDeadline');
+        const start = document.querySelector('#FStartTime');
+        const end = document.querySelector('#FEndTime');
+        const venue = document.querySelector('#FVenueType');
+        const vname = document.querySelector('#FVenueName');
+        const address = document.querySelector('#FAddressDetail');
+
+        name.getAttribute('value');
+        demo1.addEventListener('click', () => {
+            name.value = '台灣味道探索：手工製作台式鹹豆漿';
+            requirement.setAttribute('value', '參加者需要有基本的烹飪知識和技巧，對台灣文化和飲食有興趣。');
+            hw.innerHTML = '在課堂中，您將親自參與從黃豆的浸泡、研磨到烹煮的過程，並且學習調配不同的調味料，製作出獨特風味的鹹豆漿。';
+            price.setAttribute('value', 900);
+            start.setAttribute('value', '10:00');
+            end.setAttribute('value', '13:00');
+            minpeo.setAttribute('value', 8);
+            maxpeo.setAttribute('value', 15);
+            desc.innerHTML= '這門課程將帶領您學習製作台灣傳統的鹹豆漿，這是一道兼具營養與美味的台灣早餐。我們將從基礎的黃豆處理開始，到鹹豆漿的製作，讓您了解其中的技巧與妙處。';
+            lessondate.setAttribute('value', '2024-03-29');
+            deadline.setAttribute('value', '2024-03-27');
+            vname.setAttribute('value', '食之藝術工作坊');
+            address.setAttribute('value', '和平巷456弄78號');
+            city.selectedIndex = 0;
+            district.selectedIndex=11;
+            subject.selectedIndex='1';
+        });
+    </script>
+
+    
 } 

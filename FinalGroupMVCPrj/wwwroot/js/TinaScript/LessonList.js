@@ -32,8 +32,8 @@ function loadDataTable() {
                 data: 'lessonid',
                 "render": function (data) {
                     return `<div class="d-flex justify-content-between" role="">
-    <a href="/TeacherAdmin/LessonEdit" class="btn btn-primary mx-2 flex-grow-1" lessonid=${data} ><i class="fa-solid fa-ellipsis-vertical"></i> 檢視</a>
-    <button lessonid=${data} class="btn btn-primary mx-2 flex-grow-1" data-bs-toggle="modal"  data-bs-toggle="tooltip" data-bs-placement="bottom" title="取消"><i class="fa-regular fa-rectangle-xmark"></i></button>
+    <a href="/TeacherAdmin/LessonEdit/${data}" class="btn btn-primary mx-2 flex-grow-1" lessonid=${data} ><i class="fa-solid fa-ellipsis-vertical"></i> 檢視</a>
+    <button onclick="calloffCourse(${data})" lessonid=${data} id="calloff" class="btn btn-primary mx-2 flex-grow-1"  data-bs-toggle="tooltip" data-bs-placement="bottom" title="取消"><i class="fa-regular fa-rectangle-xmark"></i></button>
 </div>`
                 },
                 "width": "10%"
