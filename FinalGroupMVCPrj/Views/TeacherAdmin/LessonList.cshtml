@@ -108,7 +108,7 @@
                         <select id="opendCourse" class="form-select mb-3" aria-label="Default select example"></select>
                     </div>
                     <div class="col-md-4">
-                        <button type="button" class="btn btn-primary" name="code" value="" id="goToOpen">前往開課</button>
+                        <button onclick="goOpen()" type="button" class="btn btn-primary" name="code" value="" id="goToOpen">前往開課</button>
                     </div>
                 </div>
             </div>
@@ -122,6 +122,7 @@
     
     <script>
         $(document).ready(function () {
+            const goToOpen =document.querySelector('#goToOpen');
             loadHistoryCourse();
         })
         const  opendCourse = document.querySelector('#opendCourse');
@@ -135,18 +136,28 @@
                 opendCourse.innerHTML = options.join('');
         };
 
+        function goOpen () {
+            const nameValue = goToOpen.getAttribute('name');
+            const codeValue = goToOpen.getAttribute('value');
+
+            goToOpen.value = opendCourse.options[opendCourse.selectedIndex].value;
+            if (codeValue) {
+                const url = '/TeacherAdmin/LessonCreate?' + encodeURIComponent(nameValue) + '=' + encodeURIComponent(codeValue);
+
+                window.location.href = url;
+            }
+        };
+    //     goToOpen.addEventListener('click', function () {
+    //     const nameValue = this.getAttribute('name');
+    //     const codeValue = this.getAttribute('value');
         
-        document.querySelector('#goToOpen').addEventListener('click', function() {
-        const nameValue = this.getAttribute('name');
-        const codeValue = this.getAttribute('value');
-        
-       this.value=opendCourse.options[opendCourse.selectedIndex].value;
-        if (codeValue) {
-            const url = '/TeacherAdmin/LessonCreate?' + encodeURIComponent(nameValue) + '=' + encodeURIComponent(codeValue);
+    //    this.value=opendCourse.options[opendCourse.selectedIndex].value;
+    //     if (codeValue) {
+    //         const url = '/TeacherAdmin/LessonCreate?' + encodeURIComponent(nameValue) + '=' + encodeURIComponent(codeValue);
             
-            window.location.href = url;
-        }
-    });
+    //         window.location.href = url;
+    //     }
+    // });
     </script>
 
     <!--SweetAlert Version Open-->

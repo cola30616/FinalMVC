@@ -31,18 +31,39 @@
         <div class="row">
             <div class="col-6">
                 <div class=" bg-info-light text-center rounded-2 mb-2">基本資料</div>
-                <div class="row mb-3">
-                    <div class="col-sm-6">
-                        <select class="form-select" aria-label="Default select example" id="FFiled" name="FFiled">
-                            <option selected>領域</option>
-                        </select>
+                @* 隱藏屬性 *@
+                <input type="hidden" id="courseType" value="@ViewBag.courseType" />
+
+                @if (@ViewBag.courseType=="new")
+                {
+                    <div class="row mb-3">
+                        <div class="col-sm-6">
+                            <select class="form-select" aria-label="Default select example" id="FFiled" name="FFiled">
+                                <option selected>領域</option>
+                            </select>
+                        </div>
+                        <div class="col-sm-6">
+                            <select class="form-select" aria-label="Default select example" name="FSubject" asp-for="FSubject">
+                                <option selected>科目</option>
+                            </select>
+                        </div>
                     </div>
-                    <div class="col-sm-6">
-                        <select class="form-select" aria-label="Default select example" name="FSubject" asp-for="FSubject">
-                            <option selected>科目</option>
-                        </select>
+
+                }
+                else if (@ViewBag.courseType == "old")
+                {
+                    <div class="row mb-3">
+                        <div class="form-floating col-sm-6">
+                            <input type="text" class="form-control"  placeholder="" asp-for="FFiled" disabled>
+                            <label for="FFiled">領域</label>
+                        </div>
+                        <div class="form-floating col-sm-6">
+                            <input type="text" class="form-control"  placeholder="" asp-for="FSubject" disabled>
+                            <label for="FSubject">科目</label>
+                        </div>
                     </div>
-                </div>
+                }
+
               @*   <div class="row">
                     <div class="col-sm-6">
                         <div class="input-group mb-3">
@@ -55,7 +76,7 @@
                     </div>
                 </div> *@
 
-
+                <input type="text" class="form-control" asp-for="FCode" hidden> 
                 <div class="form-floating mb-3">
                     <input type="text" class="form-control" data-custom="fname" placeholder="" asp-for="FName">
                     <span asp-validation-for="FName" class="text-danger"></span>
@@ -89,16 +110,14 @@
                         <div class="col-sm-6">
                             @* 檔案上傳  type="file"*@
                             <div class="mb-3">
-                                <input class="form-control" type="file" id="FPhoto" asp-for="FPhoto" accept="image/*">
+                                <input class="form-control" type="file" asp-for="FPhoto" accept="image/*">
                             </div>
                             <div class="mb-4">
                                 <button type="submit" class="btn btn-primary">裁切圖片</button>
                             </div>
                         </div>
                         @* 預覽圖 *@
-                        <div class="col-sm-6 d-flex rounded border border-dark border-2 pic">
-                            <img src="~/images/defaultimage.png" class="rounded" alt="..." title="放大檢視" style="width:145px;height:90px" id="imgPreview">
-                        </div>
+                        <partial name="_LessonshowPicturePartial" />
                     </div>
                 </div>
 
@@ -160,11 +179,11 @@
                 </div>
 
                 <div class="row mb-3">
-                    <label>場地類型</label>
+                    <label asp-for="FVenueType">場地類型</label>
                     <div class="col-sm-6">
                         <fieldset>
                             <div class="form-check">
-                                <input class="form-check-input" type="radio" name="VenueType" asp-for="FVenueType" id="onclass" value=true checked>
+                                <input class="form-check-input" type="radio" asp-for="FVenueType" id="onclass" value="true" checked>
                                 <label class="form-check-label" for="onclass">
                                     實體
                                 </label>
@@ -174,7 +193,7 @@
                     <div class="col-sm-6">
                         <fieldset>
                             <div class="form-check">
-                                <input class="form-check-input" type="radio" name="VenueType" asp-for="FVenueType" id="online" value=false>
+                                <input class="form-check-input" type="radio" asp-for="FVenueType" id="online" value="false">
                                 <label class="form-check-label" for="online">
                                     線上
                                 </label>
@@ -182,6 +201,7 @@
                         </fieldset>
                     </div>
                 </div>
+
 
                 <!--詳細場地資訊-->
                 <div id="onClassInfo">
@@ -208,7 +228,7 @@
                     </div>
                 </div>
                 <div id="onlineInfo" hidden>
-                    <p class="text-primary"> &#10132;將於成功開課後自動產生課程會議室</p>
+                    <p class="text-primary"> &#10132;將於成功開課後自動產生課程會議室連結</p>
                 </div>
 
             </div>
@@ -251,6 +271,7 @@
         const filed = document.querySelector('#FFiled');
         const subject = document.querySelector('#FSubject');
 
+
         const loadfiled = async () => {
             const url = `@Url.Content("~/TeacherAdmin/TeacherAllowFiled")`;
             const response = await fetch(url);
@@ -261,10 +282,10 @@
             filed.innerHTML = options.join('');
             loadSubject();
         };
-        (() => {
+        if (courseType.value == "old") {
+        } else if (courseType.value == "new") {
             loadfiled();
-
-        })();
+        }
 
         const loadSubject = async () => {
             const filedid = filed.options[filed.selectedIndex].value;
@@ -282,14 +303,16 @@
 
         filed.addEventListener('change', loadSubject);
         document.addEventListener("DOMContentLoaded", async () => {
-            loadSubject();
+            if (courseType.value == "old") {
+            } else if (courseType.value == "new") { loadSubject(); }
+        
         });
     </script>
     <!--帶出縣市區域-->
     <script>
         const city = document.querySelector('#city');
         const district = document.querySelector('#district');
-
+        const courseType = document.querySelector('#courseType');
         const loadcity = async () => {
             const url = `@Url.Content("~/TeacherAdmin/allCity")`;
             const response = await fetch(url);
@@ -301,7 +324,9 @@
             loadDistrict();
         };
         (() => {
-            loadcity();
+            
+                  loadcity();
+            
         })();
 
         const loadDistrict = async () => {
@@ -323,16 +348,17 @@
 
     <!--Image-->
     <script>
-
         $("#FPhoto").on("change", function () {
             console.log("Hello");
             previewImage(this, $('#imgPreview'));
         });
 
     </script>
-    <!--SweetAlert-->
-    <!---->
-  
+    <script>
+        $("#FPhoto").on("change", function () {
+            previewImage(this, $('#FPhoto').prev());
+        });
+    </script>
 
   <!--Demo Button-->
     <script>

@@ -1,0 +1,15 @@
+﻿@model LessonCreateViewModel
+
+@if (Model.FPhoto != null)
+{
+    <div class="col-sm-6 d-flex rounded border border-dark border-2 pic">
+        <img id="imgPreview" class="lazyload" style="border-radius:6px;" data-src="@Url.Action("showPicture", "TeacherAdmin", new { id = Model.FLessonCourseId })" alt="course" title="@Model.FName">
+    </div>
+   
+}
+else
+{
+    <div class="col-sm-6 d-flex rounded border border-dark border-2 pic">
+        <img src="~/images/defaultimage.png" class="rounded" alt="..." title="放大檢視" style="width:145px;height:90px" id="imgPreview">
+    </div>
+}

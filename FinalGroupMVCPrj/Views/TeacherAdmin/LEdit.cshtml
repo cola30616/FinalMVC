@@ -162,11 +162,11 @@
             </div>
 
             <div class="row mb-3">
-                <label class="mb-2">場地類型</label>
+                <label asp-for="FVenueType">場地類型</label>
                 <div class="col-sm-6">
                     <fieldset>
                         <div class="form-check">
-                            <input class="form-check-input" type="radio" name="VenueType" id="onclass" value="true" checked>
+                            <input class="form-check-input" type="radio" asp-for="FVenueType" id="onclass" value="true" checked>
                             <label class="form-check-label" for="onclass">
                                 實體
                             </label>
@@ -176,7 +176,7 @@
                 <div class="col-sm-6">
                     <fieldset>
                         <div class="form-check">
-                            <input class="form-check-input" type="radio" name="VenueType" id="online" value="false">
+                            <input class="form-check-input" type="radio" asp-for="FVenueType" id="online" value="false">
                             <label class="form-check-label" for="online">
                                 線上
                             </label>
@@ -205,7 +205,7 @@
                 </div>
             </div>
             <div id="onlineInfo" hidden>
-                <p class="text-primary"> &#10132;將於成功開課後自動產生課程會議室</p>
+                <p class="text-primary"> &#10132;將於成功開課後自動產生課程會議室連結</p>
             </div>
 
         </div>

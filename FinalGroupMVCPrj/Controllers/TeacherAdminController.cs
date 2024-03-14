@@ -70,24 +70,35 @@ namespace FinalGroupMVCPrj.Controllers
                 var course = _context.TLessonCourses.Where(x=>x.FCode==code).FirstOrDefault();
                 if(course != null) {
                 lesson.FSubjectId = course.FSubjectId;
+                lesson.FSubject=  _context.TCourseSubjects.Where(x=>x.FSubjectId == lesson.FSubjectId).Select(x=>x.FSubjectName).FirstOrDefault();
+                lesson.FFiled = (from s in _context.TCourseSubjects
+                                     join f in _context.TCourseFields on s.FFieldId equals f.FFieldId
+                                     where s.FSubjectId==course.FSubjectId
+                                     select f.FFieldName).Distinct().FirstOrDefault(); 
                 lesson.FName = course.FName;
-                lesson.FCode = code;
+                lesson.FCode = course.FCode;
                 lesson.FTeacherId = GetCurrentTeacherId();
                 lesson.FDescription = course.FDescription;
                 lesson.FRequirement = course.FRequirement;
                 lesson.FPrice = course.FPrice;
                 lesson.FPhoto = course.FPhoto;
                 lesson.FHomeworkDescription = course.FHomeworkDescription;
+                lesson.FStartTime = course.FStartTime;
+                lesson.FEndTime = course.FEndTime;
                 lesson.FMaxPeople = course.FMaxPeople;
                 lesson.FMinPeople = course.FMinPeople;
                 lesson.FVenueName = course.FVenueName;
                 lesson.FAddressDetail = course.FAddressDetail;
                 //Venue Type->OnlineLink
                 lesson.FVenueType = course.FVenueType;
-                lesson.FOnlineLink = course.FOnlineLink;       
+                lesson.FOnlineLink = course.FOnlineLink;
+                TempData["courseType"]= "old";
+                    ViewBag.courseType = "old";
                 return View("LCreate", lesson); 
                 }
             }
+            TempData["courseType"] = "new";
+            ViewBag.courseType = "new";
             //直接開課
             return View("LCreate",new LessonCreateViewModel());
         }
@@ -108,7 +119,7 @@ namespace FinalGroupMVCPrj.Controllers
                 course.FSubjectId = Convert.ToInt32(lesson.FSubject);
                 course.FName = lesson.FName;
                 //history open
-                var count = _context.TLessonCourses.Where(x => x.FSubjectId == Convert.ToInt32(lesson.FSubject)&&x.FTeacherId== teacherid).Count();
+                var count = _context.TLessonCourses.Where(x => x.FSubjectId == Convert.ToInt32(lesson.FSubject)).Count();
                 course.FCode = lesson.FCode!=null? lesson.FCode : $"{code}{(count + 1):D3}";
                 course.FDescription = lesson.FDescription;
                 course.FRequirement = lesson.FRequirement;
@@ -123,15 +134,9 @@ namespace FinalGroupMVCPrj.Controllers
                 course.FVenueName = lesson.FVenueName;
                 course.FDistrictId = lesson.FDistrictId;
                 course.FAddressDetail = lesson.FAddressDetail;
-                if (lesson.FVenueName != null || lesson.FDistrictId != null || lesson.FAddressDetail != null)
-                {
-                    course.FVenueType = true;
-                }
-                else
-                {
-                    course.FOnlineLink = "https://meet.google.com/tek-pkav-obh";
-                    course.FVenueType = false;
-                }
+                course.FVenueType = lesson.FVenueType;
+                //會議室暫定用固定連結
+                course.FOnlineLink = lesson.FVenueType == false ? "https://meet.google.com/tek-pkav-obh" : null;                
              
                 course.FStatus = checkStatus(status);               
 
@@ -368,11 +373,17 @@ namespace FinalGroupMVCPrj.Controllers
         public IActionResult historycourse()
         {
             int teacherId = GetCurrentTeacherId();
-            var history = _context.TLessonCourses.Where(x=>x.FTeacherId==teacherId).Select(x=> new
-            {
-                x.FCode,
-                x.FName,
-            }).ToList();
+            var history = _context.TLessonCourses
+                  .Where(x => x.FTeacherId == teacherId)
+                  .Select(x => new
+                  {
+                      x.FCode,
+                      x.FName,
+                  })
+                  .GroupBy(x => x.FCode) // 根据 FCode 进行分组
+                  .Select(group => group.First()) // 选择每个分组中的第一个元素，确保 FCode 是唯一的
+                  .ToList();
+
             return Json(history);
         }
 
