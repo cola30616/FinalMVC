@@ -65,7 +65,7 @@ namespace FinalGroupMVCPrj.Controllers
             return View(courseList);
         }
 
-        #region 
+        
         //API Calls
 
         // Get: {baseUrl}/Lesson/Search?={searchText}
@@ -107,27 +107,27 @@ namespace FinalGroupMVCPrj.Controllers
                     course.FSubject.FField.FFieldName.Contains(courseListDTO.Keyword)
                 );
             }
-
+            // 領域篩選
             if (courseListDTO.FieldId.HasValue)
             {
                 query = query.Where(course => course.FSubject.FFieldId == courseListDTO.FieldId);
             }
-
+            // 科目篩選
             if (!string.IsNullOrEmpty(courseListDTO.subjectName))
             {
                 query = query.Where(course => course.FSubject.FSubjectName == courseListDTO.subjectName);
             }
-
+            // 最低價格篩選
             if (courseListDTO.MinPrice.HasValue)
             {
                 query = query.Where(course => course.FPrice >= courseListDTO.MinPrice);
             }
-
+            // 最高價格篩選
             if (courseListDTO.MaxPrice.HasValue)
             {
                 query = query.Where(course => course.FPrice <= courseListDTO.MaxPrice);
             }
-
+            // 評價
             //if (courseListDTO.MinRating.HasValue)
             //{
             //    query = query.Where(course => course.FSC >= courseListDTO.MinRating);
@@ -138,6 +138,7 @@ namespace FinalGroupMVCPrj.Controllers
             //    query = query.Where(course => course.FRating <= courseListDTO.MaxRating);
             //}
 
+            // 
             if (!string.IsNullOrEmpty(courseListDTO.SortBy))
             {
                 switch (courseListDTO.SortType)
@@ -185,7 +186,7 @@ namespace FinalGroupMVCPrj.Controllers
 
             return Json(response);
         }
-        #endregion
+        
 
 
         //■ ==========================     翊妏 作業區      ==========================■

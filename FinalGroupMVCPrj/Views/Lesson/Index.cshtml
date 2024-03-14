@@ -38,6 +38,9 @@
                                     <div class="accordion-body mt-20 scroll-y">
                                         <ul id="fieldsSubjects" class="list-group">
                                             <!-- Add class .list-dropdown for dropdown-menu --> 
+                                            <li class="list-item">
+                                                <a class="category-toggle" title="link" href="#"target="_self" onclick="handleAllCourses()">所有課程</a>
+                                            </li>
                                             @foreach(var course in Model.Take(1))
                                             {
                                                 @foreach(var detail in course.fieldWithSubjects)
@@ -222,7 +225,7 @@
     </div>
 </div>
 <!-- Course-area end -->
-@section Scripts {
+@section LessonScripts {
     <!--篩選功能-->
     <script src="~/js/clementscript/filtercourselist.js" asp-append-version="true"></script>
 }

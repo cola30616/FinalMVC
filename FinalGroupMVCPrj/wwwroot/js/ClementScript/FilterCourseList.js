@@ -18,6 +18,20 @@ const handleSubjects = (filterData) => {
     FilterSortData.subjectName = filterData.subjectName;
     loadCourses(FilterSortData);
 }
+const handleAllCourses = () => {
+    const originalData = {
+        page: 1,
+        pageSize: 6,
+        keyword: '',
+        fieldId: undefined,
+        subjectName: undefined,
+        minPrice: 100,
+        maxPrice: 2000,
+        sortBy: 'desc',
+        sortType: 'enrollment'
+    };
+    loadCourses(originalData);
+}
 const handlePriceInput = () => {
     // 獲取最低價格和最高價格
     const minPrice = document.getElementById('min').value;

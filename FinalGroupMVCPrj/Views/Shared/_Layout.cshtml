@@ -317,9 +317,7 @@
         </div>
     </footer>
     <!-- Footer-area end-->
-    
-    @await RenderSectionAsync("Scripts", required: false)
-
+    @await RenderSectionAsync("LessonScripts", required: false)
     <!--首頁搜尋bar-->
     <script src="~/js/clementscript/search.js" asp-append-version="true"></script> 
     <!-- Lazysizes --> 
@@ -345,7 +343,7 @@
     <!-- Main script JS -->
     <script src="~/js/script.js" asp-append-version="true"></script>
     <!--搜尋功能-->
-    
+    @await RenderSectionAsync("Scripts", required: false)
 
     <!--根據登入狀態改變前台網頁-->
     <script src="~/js/loginstatus.js"></script>
