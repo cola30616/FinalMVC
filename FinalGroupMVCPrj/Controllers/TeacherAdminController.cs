@@ -69,6 +69,7 @@ namespace FinalGroupMVCPrj.Controllers
                 LessonCreateViewModel lesson  =new LessonCreateViewModel();
                 var course = _context.TLessonCourses.Where(x=>x.FCode==code).FirstOrDefault();
                 if(course != null) {
+                lesson.FLessonCourseId= course.FLessonCourseId;
                 lesson.FSubjectId = course.FSubjectId;
                 lesson.FSubject=  _context.TCourseSubjects.Where(x=>x.FSubjectId == lesson.FSubjectId).Select(x=>x.FSubjectName).FirstOrDefault();
                 lesson.FFiled = (from s in _context.TCourseSubjects
@@ -78,26 +79,14 @@ namespace FinalGroupMVCPrj.Controllers
                 lesson.FName = course.FName;
                 lesson.FCode = course.FCode;
                 lesson.FTeacherId = GetCurrentTeacherId();
-                lesson.FDescription = course.FDescription;
-                lesson.FRequirement = course.FRequirement;
-                lesson.FPrice = course.FPrice;
-                lesson.FPhoto = course.FPhoto;
-                lesson.FHomeworkDescription = course.FHomeworkDescription;
-                lesson.FStartTime = course.FStartTime;
-                lesson.FEndTime = course.FEndTime;
-                lesson.FMaxPeople = course.FMaxPeople;
-                lesson.FMinPeople = course.FMinPeople;
-                lesson.FVenueName = course.FVenueName;
-                lesson.FAddressDetail = course.FAddressDetail;
-                //Venue Type->OnlineLink
-                lesson.FVenueType = course.FVenueType;
-                lesson.FOnlineLink = course.FOnlineLink;
-                TempData["courseType"]= "old";
+
+                    //lesson.FPhoto = course.FPhoto==null?null:ConvertByteArrayToIFormFile(course.FPhoto,course.FName);
                     ViewBag.courseType = "old";
-                return View("LCreate", lesson); 
+
+                    return View("LCreate", lesson); 
                 }
             }
-            TempData["courseType"] = "new";
+         
             ViewBag.courseType = "new";
             //直接開課
             return View("LCreate",new LessonCreateViewModel());
@@ -118,6 +107,7 @@ namespace FinalGroupMVCPrj.Controllers
                 course.FTeacherId = teacherid;
                 course.FSubjectId = Convert.ToInt32(lesson.FSubject);
                 course.FName = lesson.FName;
+                course.FEditorDes = lesson.FEditorDes;
                 //history open
                 var count = _context.TLessonCourses.Where(x => x.FSubjectId == Convert.ToInt32(lesson.FSubject)).Count();
                 course.FCode = lesson.FCode!=null? lesson.FCode : $"{code}{(count + 1):D3}";
@@ -138,11 +128,12 @@ namespace FinalGroupMVCPrj.Controllers
                 //會議室暫定用固定連結
                 course.FOnlineLink = lesson.FVenueType == false ? "https://meet.google.com/tek-pkav-obh" : null;                
              
-                course.FStatus = checkStatus(status);               
-
-                if (course.FPhoto != null)
+                course.FStatus = checkStatus(status);
+                // course.FPhoto = lesson.FPhoto;
+                if (lesson.FPhoto != null)
                 {
-                    await ReadUploadImage(course);
+
+                    course.FPhoto = await ReadUploadImage(lesson.FPhoto);
                 }
                 _context.Add(course);
                 await _context.SaveChangesAsync();
@@ -187,6 +178,7 @@ namespace FinalGroupMVCPrj.Controllers
             var course = await _context.TLessonCourses.FindAsync(id);
             if (course != null)
             {
+                course.FLessonCourseId = lesson.FLessonCourseId;
                 course.FVenueName = lesson.FVenueName;
                 course.FTeacherId = GetCurrentTeacherId();
                 course.FSubjectId = Convert.ToInt32(lesson.FSubject);
@@ -214,21 +206,39 @@ namespace FinalGroupMVCPrj.Controllers
                     course.FOnlineLink = "https://meet.google.com/tek-pkav-obh";
                     course.FVenueType = false;
                 }
-             
-                
 
-                if (course.FPhoto != null)
-                {
-                    await ReadUploadImage(course);
-                }
-                await ReadUploadImage(course);
+                //if (lesson.FPhoto != null)
+                //{
+                //    await ReadUploadImage(lesson.FPhoto);
+                //}
+
+                //if (course.FPhoto != null)
+                //{
+                //    await ReadUploadImage(course);
+                //}
+                //await ReadUploadImage(course);
                 _context.Update(course);
                 await _context.SaveChangesAsync();
             }
             return View("LEdit");
 
         }
+        public IFormFile ConvertByteArrayToIFormFile(byte[] fileBytes, string fileName)
+        {
+            // 创建一个内存流，并将 byte[] 写入其中
+            using (MemoryStream memoryStream = new MemoryStream(fileBytes))
+            {
+                // 使用 FormFile 类创建一个模拟的 IFormFile 对象
+                var formFile = new FormFile(memoryStream, 0, fileBytes.Length, "FPhoto", "II.png")
+                {
+                    Headers = new HeaderDictionary(),
+                    ContentType = "image/png", // 根据需要设置 ContentType
+                    ContentDisposition = "form-data; name=\"FPhoto\";filename=\"II.png\""
+                };
 
+                return formFile;
+            }
+        }
         public string checkStatus(string status)
         {
          string detail = "";
@@ -313,27 +323,41 @@ namespace FinalGroupMVCPrj.Controllers
         {
             TLessonCourse? c = await _context.TLessonCourses.FindAsync(id);
             byte[]? content = c?.FPhoto;
-            return File(content, "image/jpeg");
+            return File(content, "image/*");
         }
-        private async Task ReadUploadImage(TLessonCourse lesson)
+        private async Task<byte[]> ReadUploadImage(IFormFile photo)
         {
-            if (Request.Form.Files["FPhoto"] != null)
+            if(photo != null && photo.Length > 0)
             {
-                //using自動資源管理
-                using (BinaryReader br = new BinaryReader(
-                    Request.Form.Files["FPhoto"].OpenReadStream()))
+                using (var memoryStream = new MemoryStream())
                 {
-                    lesson.FPhoto = br.ReadBytes((int)Request.Form.Files["FPhoto"].Length);
+                    await photo.CopyToAsync(memoryStream);
+                    byte[] fileBytes = memoryStream.ToArray();
+                    return fileBytes;
+                    // 在这里可以将 fileBytes 保存到数据库或者进行其他操作
                 }
             }
             else
             {
-                //避免原本有圖的被覆蓋成預設沒圖
-                TLessonCourse c = await _context.TLessonCourses.FindAsync(lesson.FLessonCourseId);
-                lesson.FPhoto = c.FPhoto;
-                //解除c的追蹤
-                _context.Entry(c).State = EntityState.Detached;
+              return  null;
             }
+            //if (Request.Form.Files["FPhoto"] != null)
+            //{
+            //    using自動資源管理
+            //    using (BinaryReader br = new BinaryReader(
+            //        Request.Form.Files["FPhoto"].OpenReadStream()))
+            //    {
+            //        photo = br.ReadBytes((int)Request.Form.Files["FPhoto"].Length);
+            //    }
+            //}
+            //else
+            //{
+            //    //避免原本有圖的被覆蓋成預設沒圖
+            //   TLessonCourse c = await _context.TLessonCourses.FindAsync(photo);
+            //    photo.fphoto = c.fphoto;
+            //    //解除c的追蹤
+            //    _context.entry(c).state = entitystate.detached;
+            //}
         }
 
 

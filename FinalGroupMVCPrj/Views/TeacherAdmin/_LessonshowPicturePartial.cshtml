@@ -3,9 +3,9 @@
 @if (Model.FPhoto != null)
 {
     <div class="col-sm-6 d-flex rounded border border-dark border-2 pic">
-        <img id="imgPreview" class="lazyload" style="border-radius:6px;" data-src="@Url.Action("showPicture", "TeacherAdmin", new { id = Model.FLessonCourseId })" alt="course" title="@Model.FName">
+        <img id="imgPreview" class="lazyload" style="border-radius:6px;" src="@Url.Content("~/TeacherAdmin/showPicture?id=")@Model.FLessonCourseId" alt="course" title="@Model.FName">
     </div>
-   
+
 }
 else
 {

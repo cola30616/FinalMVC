@@ -220,10 +220,12 @@ namespace FinalGroupMVCPrj.Controllers
                 FEndTime = querystring.FEndTime,
                 FRegDeadline = querystring.FRegDeadline,
                 FDescription = querystring.FDescription,
+                //TinyMCE
                 FEditorDes = querystring.FEditorDes,
                 FRequirement = querystring.FRequirement,
                 FTeacherId = querystring.FTeacherId,
-
+               
+                
                 //// 評價部分
                 FLessonCourseId = querystring.FLessonCourseId,
             }).ToListAsync();

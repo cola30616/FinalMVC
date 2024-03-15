@@ -31,12 +31,15 @@ namespace FinalGroupMVCPrj.Models.ViewModels
 
         [Display(Name = "課程介紹")]
         public string? FDescription { get; set; }
+       
+        public string? FEditorDes { get; set; }
 
         [Display(Name = "課程要求")]
         public string? FRequirement { get; set; }
 
         [Display(Name = "封面")]
-        public byte[]? FPhoto { get; set; }
+        public IFormFile FPhoto { get; set; }
+        //public byte[]? FPhoto { get; set; }
 
         //[Required(ErrorMessage = "課程售價為必填欄位")]
         [Display(Name = "售價")]

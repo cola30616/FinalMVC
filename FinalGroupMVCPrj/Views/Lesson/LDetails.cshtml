@@ -193,7 +193,11 @@
                                 <div class="content pb-20">
                                     <h5 class="title mb-20">課程敘述</h5>
                                     <div class="row gl-xl-5 mt-20">
-                                        <p style="border-radius:8px">@Html.DisplayFor(m => m.FDescription)</p>
+                                        
+                                            @Html.Raw(Model.FEditorDes)
+                                                
+                                                                              
+                                        
                                     </div>
                                 </div>
                                 @* 課程要求 *@

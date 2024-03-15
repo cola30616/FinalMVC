@@ -48,9 +48,13 @@
                             </select>
                         </div>
                     </div>
-
+                    <div class="form-floating mb-3">
+                        <input type="text" class="form-control"  placeholder="" asp-for="FName">
+                        <span asp-validation-for="FName" class="text-danger"></span>
+                        <label for="FName">課名</label>
+                    </div>
                 }
-                else if (@ViewBag.courseType == "old")
+                else
                 {
                     <div class="row mb-3">
                         <div class="form-floating col-sm-6">
@@ -61,6 +65,10 @@
                             <input type="text" class="form-control"  placeholder="" asp-for="FSubject" disabled>
                             <label for="FSubject">科目</label>
                         </div>
+                    </div>
+                    <div class="form-floating mb-3">
+                        <input type="text" class="form-control" data-custom="fname" placeholder="" asp-for="FName" disabled>                        
+                        <label for="FName">課名</label>
                     </div>
                 }
 
@@ -77,21 +85,24 @@
                 </div> *@
 
                 <input type="text" class="form-control" asp-for="FCode" hidden> 
-                <div class="form-floating mb-3">
-                    <input type="text" class="form-control" data-custom="fname" placeholder="" asp-for="FName">
-                    <span asp-validation-for="FName" class="text-danger"></span>
-                    <label for="FName">課名</label>
-                </div>
+
                 <div class="form-floating mb-3">
                     <input type="text" class="form-control" id="FRequirement" placeholder="" asp-for="FRequirement">
                     <span asp-validation-for="FRequirement" class="text-danger"></span>
                     <label for="FRequirement">要求</label>
                 </div>
                 <!--編輯器-->
-                <div class="form-floating mb-3">
+@*                 <div class="form-floating mb-3">
                     <textarea class="form-control" placeholder="Leave a comment here" id="FDescription" style="height: 100px; resize: none;" asp-for="FDescription"></textarea>
                     <span asp-validation-for="FDescription" class="text-danger"></span>
                     <label for="FDescription">課程介紹</label>
+                </div> *@
+                <label for="FEditorDes">課程介紹</label>
+                <div class="form-floating mb-3">
+                    
+                    <textarea class="form-control" placeholder="Leave a comment here"  style="height: 100px; resize: none;" asp-for="FEditorDes"></textarea>
+                    <span asp-validation-for="FEditorDes" class="text-danger"></span>
+                    
                 </div>
 
 
@@ -117,7 +128,20 @@
                             </div>
                         </div>
                         @* 預覽圖 *@
-                        <partial name="_LessonshowPicturePartial" />
+                        @if (Model.FPhoto != null)
+                        {
+                            <div class="col-sm-6 d-flex rounded border border-dark border-2 pic">
+                                <img id="imgPreview" class="lazyload" style="border-radius:6px;" data-src="@Url.Content("~/TeacherAdmin/showPicture?id=")?id=@Model.FLessonCourseId" alt="course" title="@Model.FName">
+                            </div>
+
+                        }
+                        else
+                        {
+                            <div class="col-sm-6 d-flex rounded border border-dark border-2 pic">
+                                <img src="~/images/defaultimage.png" class="rounded" alt="..." title="放大檢視" style="width:145px;height:90px" id="imgPreview">
+                            </div>
+                        }
+
                     </div>
                 </div>
 
@@ -266,6 +290,8 @@
 
     <script src="~/js/tinascript/changevenuetype.js" asp-append-version="true"></script>
     <script src="~/js/tinascript/previewimage.js" asp-append-version="true"></script>
+    <script src="https://cdn.tiny.cloud/1/forirr314cvct8ywt434kbf87vah6743olso1oyjfnhh3vhi/tinymce/6/tinymce.min.js" referrerpolicy="origin"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/croppie/2.6.5/croppie.min.js" referrerpolicy="origin"></script>
     <!--帶出老師可開的領域-->
     <script>
         const filed = document.querySelector('#FFiled');
@@ -283,6 +309,8 @@
             loadSubject();
         };
         if (courseType.value == "old") {
+            console.log(document.getElementById("FPhoto"));
+            previewImage(document.getElementById("FPhoto"), $('#imgPreview'));
         } else if (courseType.value == "new") {
             loadfiled();
         }
@@ -348,17 +376,18 @@
 
     <!--Image-->
     <script>
+      
         $("#FPhoto").on("change", function () {
             console.log("Hello");
             previewImage(this, $('#imgPreview'));
         });
 
     </script>
-    <script>
+  @*   <script>
         $("#FPhoto").on("change", function () {
             previewImage(this, $('#FPhoto').prev());
         });
-    </script>
+    </script> *@
 
   <!--Demo Button-->
     <script>
@@ -368,7 +397,7 @@
 
         const name = document.querySelector('#FName');
         const requirement = document.querySelector('#FRequirement');
-        const desc = document.querySelector('#FDescription');
+        const desc = document.querySelector('#FEditorDes');
         const hw = document.querySelector('#FHomeworkDescription');
         const price = document.querySelector('#FPrice');
         const minpeo = document.querySelector('#FMinPeople');
@@ -401,6 +430,56 @@
             subject.selectedIndex='1';
         });
     </script>
+    <!--用錯誤訊息攔住阻止提交 -->
+    <script>
+        $(document).ready(function () {
+            $('form').submit(function (e) {
+                e.preventDefault(); // 阻止表单默认提交行为
+                var form = $(this);
+                $.ajax({
+                    url: form.attr('action'),
+                    method: form.attr('method'),
+                    data: form.serialize(),
+                    success: function (response) {
+                        // 在这里可以处理成功提交后的逻辑
+                    },
+                    error: function (xhr, status, error) {
+                        // 如果提交失败，则重新加载验证错误信息
+                        form.html(xhr.responseText);
+                    }
+                });
+            });
+        });
+    </script>
+    <!-- ====================TinyMCE==================== -->
+    <!-- 這一段放在自己要用的@section Script -->
+    <script>
 
-    
+        // 检查是否需要初始化 TinyMCE
+        function initTinyMCE() {
+            // 检查是否存在 id 或 name 为 'fEditorDes' 的 textarea
+            const textarea = document.getElementById('FEditorDes') || document.querySelector('textarea[name="FEditorDes"]');
+
+            // 如果存在，则初始化 TinyMCE
+            console.log(textarea)
+            if (textarea) {
+
+                tinymce.init({
+                    selector: 'textarea#FEditorDes',
+                    plugins: 'anchor autolink charmap codesample emoticons image link lists media searchreplace table visualblocks wordcount linkchecker',
+                    toolbar: 'undo redo | blocks fontfamily fontsize | bold italic underline strikethrough | link image media table | align lineheight | numlist bullist indent outdent | emoticons charmap | removeformat',
+                });
+                // 在此添加其他 TinyMCE 配置选项
+            }
+        }
+
+        // 在页面加载完成后调用函数
+        document.addEventListener('DOMContentLoaded', function () {
+            initTinyMCE();
+        });
+
+        
+    </script>
+
+
 } 
