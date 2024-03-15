@@ -44,9 +44,6 @@ namespace FinalGroupMVCPrj.Controllers
                 return NotFound();
             }
 
-            // 取得TLessonCourse資料
-
-
             // 取得TOrder、TOrderDetail資料
             var order = _context.TOrderDetails
                 .Include(od => od.FOrder)
@@ -66,12 +63,24 @@ namespace FinalGroupMVCPrj.Controllers
         }
 
         [HttpPost]
-        public IActionResult CancelOrder(int? id)
+        public IActionResult CancelOrder(int? id, string reason)
         {
+            string modificationDescription = null; //目前無法顯示取消原因，並且btn要變成灰色不能點選
+            switch (reason)
+            {
+                case "option1":
+                    modificationDescription = "事假";
+                    break;
+                case "option2":
+                    modificationDescription = "病假";
+                    break;
+            }
+
             var orderDetail = _context.TOrderDetails.FirstOrDefault(od => od.FOrderId == id);
             if (orderDetail != null)
             {
                 orderDetail.FOrderValid = false;
+                orderDetail.FModificationDescription = modificationDescription; //將取消原因文字寫入資料庫
                 _context.SaveChanges();
                 return Ok(orderDetail);
             }

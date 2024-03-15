@@ -11,6 +11,9 @@
         public DateTime FOrderDate { get; set; }
         public decimal? FLessonPrice { get; set; }
 
+        public string FModificationDescription { get; set; }
+
+
         public DateTime? FLessonDate { get; set; }
 
         public TOrder order { get; set; }
