@@ -68,7 +68,7 @@ namespace FinalGroupMVCPrj.Controllers
                     Reason = dbApplyLog.FReason,
                     PdfLink = dbApplyLog.FPdfLink,
                     ProgressStatus = dbApplyLog.FProgressStatus,
-                    ReviewDatetime = dbApplyLog.FReviewDatetime?.ToString("yyyy-MM-dd"),
+                    ReviewDatetime = dbApplyLog.FReviewDatetime?.ToString("yyyy/MM/dd HH:mm"),
                     FReviewResult = dbApplyLog.FReviewResult,
                     Note = dbApplyLog.FNote
                 };
@@ -86,7 +86,9 @@ namespace FinalGroupMVCPrj.Controllers
         {
             try
             {
-            if(ApplyLogId ==0 ||progerss == "待審核" || string.IsNullOrEmpty(progerss) || updatetime == null || updatetime < DateTime.Now.AddMinutes(-2))
+                if (updatetime == null) { return BadRequest("'請檢查提交參數"); }
+                DateTime updateTime = (DateTime)updatetime;
+                if (ApplyLogId ==0 ||progerss == "待審核" || string.IsNullOrEmpty(progerss) || updateTime < DateTime.Now.AddMinutes(-2))
             {
                 return BadRequest("'請檢查提交參數");
             }
@@ -95,7 +97,7 @@ namespace FinalGroupMVCPrj.Controllers
             if ("審核未通過審核通過".Contains(dbApplyLog.FProgressStatus)) { return BadRequest($"{dbApplyLog.FProgressStatus} 無法編輯狀態") ; }
             dbApplyLog.FProgressStatus = progerss;
             dbApplyLog.FNote = note;
-            dbApplyLog.FReviewDatetime = updatetime;
+            dbApplyLog.FReviewDatetime = updateTime;
             _context.TTeacherApplyLogs.Update(dbApplyLog);
             _context.SaveChanges();
             return Ok();

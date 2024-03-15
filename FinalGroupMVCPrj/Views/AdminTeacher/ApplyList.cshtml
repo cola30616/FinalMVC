@@ -213,6 +213,7 @@ https://cdn.jsdelivr.net/npm/moment@2.30.1/moment.min.js
         let curApplyLogId = 0;
         let currentApplyLogData = null;
         let toSubmitDate =''
+        let toChangeDate = ''
 
         let dataTable; // 這段要記得加，先宣告datatable的變數
 
@@ -316,6 +317,7 @@ https://cdn.jsdelivr.net/npm/moment@2.30.1/moment.min.js
                 document.querySelector('#warnNoNote').hidden = false;
             } else if (document.querySelector('#curADprogressStatus').value==="待審核") {
                 document.querySelector('#reviewBtn').hidden = true
+                document.querySelector('#warnNoNote').hidden = true;
             }
             else{
                 document.querySelector('#warnNoNote').hidden = true;
@@ -327,6 +329,7 @@ https://cdn.jsdelivr.net/npm/moment@2.30.1/moment.min.js
             const curADprogressStatus = document.querySelector('#curADprogressStatus').value
             if ("請補件請修正內容".includes(curADprogressStatus)) {
                 if (document.querySelector('#curADnote').value.trim() === "") {
+                    document.querySelector('#warnNoNote').hidden = false;
                     document.querySelector('#warnNoNote').classList.add('text-danger')
                     return
                 }
@@ -342,9 +345,9 @@ https://cdn.jsdelivr.net/npm/moment@2.30.1/moment.min.js
                     cancelButtonText: "取消"
                 }).then((result) => {
                     if (result.isConfirmed) {
-                        alert("送出")
-                        updateReview()
                         setDate()
+                        updateReview()
+                        
                     }
                 })
             } else if (curADprogressStatus === "審核通過") {
@@ -359,15 +362,13 @@ https://cdn.jsdelivr.net/npm/moment@2.30.1/moment.min.js
                     cancelButtonText: "取消"
                 }).then((result) => {
                     if (result.isConfirmed) {
-                        alert("送出")
                         setDate()
-                        if (updateReview() == true) {
-                            finalReviewCheck()
-                        }
+                        updateReview()
                     }
                 })
             } else if (curADprogressStatus === "審核未通過") {
                 if (document.querySelector('#curADnote').value.trim() === "") {
+                    document.querySelector('#warnNoNote').hidden = false;
                     document.querySelector('#warnNoNote').classList.add('text-danger')
                     return
                 }
@@ -382,11 +383,8 @@ https://cdn.jsdelivr.net/npm/moment@2.30.1/moment.min.js
                     cancelButtonText: "取消"
                 }).then((result) => {
                     if (result.isConfirmed) {
-                       alert("送出")
                         setDate()
-                        if (updateReview()==true) {
-                            finalReviewCheck()
-                        }
+                        updateReview()
                     }
                 })
             }
@@ -400,9 +398,13 @@ https://cdn.jsdelivr.net/npm/moment@2.30.1/moment.min.js
             }
         }
         function setDate() {
-            toSubmitDate = Date.now()
-            document.querySelector('#curADreviewDatetime').innerHTML = moment(toSubmitDate).format('YYYY/MM/DD HH:mm')
+            toSubmitDate = new Date()
+            toChangeDate = toSubmitDate
+            toSubmitDate = new Date(toSubmitDate.getTime() - (toSubmitDate.getTimezoneOffset() * 60000));
+            
             toSubmitDate = toSubmitDate.toISOString()
+
+            console.log(toSubmitDate)
         }
         async function updateReview(){
             try {
@@ -416,13 +418,18 @@ https://cdn.jsdelivr.net/npm/moment@2.30.1/moment.min.js
                 Swal.fire({
                     position: "center",
                     icon: "info",
-                    title:"成功送出審核",
+                    title: "審核成功送出",
                     showConfirmButton: false,
                     timer: 1500
                 });
+                let formattedDateTime = moment(toChangeDate).format('YYYY/MM/DD HH:mm');
+
+                document.querySelector('#curADreviewDatetime').innerHTML = formattedDateTime
+                finalReviewCheck()
+                dataTable.ajax.reload();
                 return true
             } catch (error) {
-                callSwalError(`${error}`);
+                callSwalError("系統異常請稍後再試");
                 return false;
             }
         }
