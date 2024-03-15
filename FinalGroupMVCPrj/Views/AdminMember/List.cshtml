@@ -434,7 +434,7 @@ https://cdn.jsdelivr.net/npm/moment@2.30.1/moment.min.js
 
             });
         }
-
+        //載入單筆會員資料
         async function loadMemDetail(memberId) {
           
             if (isNaN(memberId)) {
@@ -443,6 +443,7 @@ https://cdn.jsdelivr.net/npm/moment@2.30.1/moment.min.js
             }  
             currentMemberId = Number(memberId);
             await fetchMemberDetail(currentMemberId)
+            if (currentMemberData === null) { return; }
             document.querySelector('#curMemId').innerHTML = currentMemberId;
             document.querySelector('#curMemRealName').innerHTML = currentMemberData.realName;
             document.querySelector('#curMemEmail').innerHTML = currentMemberData.email;
@@ -460,6 +461,7 @@ https://cdn.jsdelivr.net/npm/moment@2.30.1/moment.min.js
             });
             if (!response.ok) {
                 callSwalError("系統異常請稍後再試")
+                return;
                 }
             const data = await response.json();
             currentMemberData = data;
@@ -507,7 +509,7 @@ https://cdn.jsdelivr.net/npm/moment@2.30.1/moment.min.js
         async function loadMemPhoto(memberId) {
             resetMemPhoto()
             try {
-                const response = await fetch(`https://localhost:7031/AdminMember/MemberPhoto/${memberId}`, {
+                const response = await fetch(`@Url.Content("~/AdminMember/MemberPhoto")?id=${memberId}`, {
                     method: "GET",
                 });
                 let photoUrl = '';
@@ -538,7 +540,7 @@ https://cdn.jsdelivr.net/npm/moment@2.30.1/moment.min.js
             }).then(async (result) => {
                 if (result.isConfirmed) {
                     try {
-                        const response = await fetch(`https://localhost:7031/AdminMember/RemoveMemberPhoto/${currentMemberId}`, {
+                        const response = await fetch(`@Url.Content("~/AdminMember/RemoveMemberPhoto")?id=${currentMemberId}`, {
                             method: "POST",
                         });
                         if (!response.ok) { throw new Error(response.statusText); }

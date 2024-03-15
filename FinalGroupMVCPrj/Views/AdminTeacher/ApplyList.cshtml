@@ -89,7 +89,7 @@
             <div class="d-flex justify-content-between">
                 <!-- 最上排申請人資訊&關閉-->
                 <div class="d-flex gap-2 px-2 mb-3 mt-2">
-                    <span class="fw-bold">申請人會員編號：</span>8 <span>陳思婷</span><span>tinachen@email.com</span>
+                    <span class="fw-bold">申請人會員編號：</span><span id="memberId">8 </span><span id="memberRealName">陳思婷</span><span id="memberEmail">tinachen@email.com</span>
                 </div>
                 <button type="button" class="btn" data-bs-dismiss="modal" aria-label="Close"><i class="fa-solid fa-x"></i></button>
             </div>
@@ -97,7 +97,7 @@
                 <!-- Default Tabs -->
                 <ul class="nav nav-tabs" id="myTab" role="tablist">
                     <li class="nav-item" role="presentation">
-                        <button class="nav-link active" id="home-tab" data-bs-toggle="tab" data-bs-target="#home" type="button" role="tab" aria-controls="home" aria-selected="true">基本資訊/文件</button>
+                        <button class="nav-link active" id="basic-tab" data-bs-toggle="tab" data-bs-target="#home" type="button" role="tab" aria-controls="home" aria-selected="true">基本資訊／文件</button>
                     </li>
                     <li class="nav-item" role="presentation">
                         <button class="nav-link" id="profile-tab" data-bs-toggle="tab" data-bs-target="#profile" type="button" role="tab" aria-controls="profile" aria-selected="false">自我介紹</button>
@@ -110,37 +110,37 @@
                 <!--標籤內容區-->
                 <div class="tab-content pt-2" id="myTabContent" style="height:225px">
                     <!--基本資訊標籤內容區-->
-                <div class="tab-pane fade show active px-3 py-4" id="home" role="tabpanel" aria-labelledby="home-tab">
+                <div class="tab-pane fade show active px-3 py-4" id="home" role="tabpanel" aria-labelledby="basic-tab">
                     <div class="d-flex flex-column ">
                         <div class="d-flex gap-3 align-items-end">
                             <div class="flex-grow-1 form-group mb-3">
                                 <label class="fw-bold">申請時間： </label>
-                                <label>2024/03/05 10:05</label>
+                                <label id="curADdate">2024/03/05 10:05</label>
                             </div>
                         </div>
                         <div class="d-flex gap-3">
                             <div class="flex-grow-1 d-flex flex-column gap-4 ">
                                 <div class="flex-grow-1 form-group">
                                     <label class="fw-bold">真實姓名：</label>
-                                    <label for="company_name">陳思婷</label>
+                                    <label id="curADrealname"></label>
                                 </div>
                                 <div class="flex-grow-1 form-group">
                                     <label class="fw-bold">欲使用的老師名稱：</label>
-                                    <label for="company_name">婷婷老師</label>
+                                    <label id="curADteachername"></label>
                                 </div>
                                 <div class="flex-grow-1 form-group">
                                     <label class="fw-bold">公開聯絡方式：</label>
-                                    <label for="company_name"> Line：tina8548</label>
+                                    <label id="curADteachcontactInfo"> </label>
                                 </div>
                             </div>
                             <div class="flex-grow-1 d-flex flex-column gap-4  ">
                                 <div class="form-group">
                                     <label class="fw-bold">完整申請文件連結：</label>
-                                    <a href="#">前往連結</a>
+                                    <a id="curADtpdfLink" href="#" target="_blank">前往連結</a>
                                 </div>
                                 <div class="form-group">
                                     <label class="fw-bold">教學計劃或影片連結：</label>
-                                    <a href="#">前往連結</a>
+                                    <a id="curADteacherPlanLink" href="#" target="_blank">前往連結</a>
                                 </div>
                             </div>
                         </div>
@@ -148,25 +148,30 @@
                     </div>
                     <!--自我介紹標籤內容區-->
                 <div class="tab-pane fade p-3" id="profile" role="tabpanel" aria-labelledby="profile-tab" style="max-height: 500px; overflow-y: auto;">
-                    我是一位教育界的專業人士，擁有豐富的教學經驗和卓越的教育背景。我畢業於優秀的教育學院，取得了教育學碩士學位，並持有相關領域的專業資格證書。
+                    <p id="curADintroduction">
+                        我是一位教育界的專業人士，擁有豐富的教學經驗和卓越的教育背景。我畢業於優秀的教育學院，取得了教育學碩士學位，並持有相關領域的專業資格證書。
 
-                    在我的職業生涯中，我擔任過多個年級和科目的教學工作，涵蓋了豐富的學科領域。我的教學風格強調互動式學習和啟發式教學法，以激發學生的學習興趣並提高他們的學習成就。我致力於創造一個積極、支持性的教室環境，鼓勵學生發揮他們的潛力。
+                        在我的職業生涯中，我擔任過多個年級和科目的教學工作，涵蓋了豐富的學科領域。我的教學風格強調互動式學習和啟發式教學法，以激發學生的學習興趣並提高他們的學習成就。我致力於創造一個積極、支持性的教室環境，鼓勵學生發揮他們的潛力。
 
-                    我熱愛教育事業，並不斷參與專業發展活動，以保持對教學方法和教育趨勢的了解。我強調個性化教學，根據學生的需要調整教學內容，以確保每個學生都能夠充分理解和應用所學知識。
+                        我熱愛教育事業，並不斷參與專業發展活動，以保持對教學方法和教育趨勢的了解。我強調個性化教學，根據學生的需要調整教學內容，以確保每個學生都能夠充分理解和應用所學知識。
 
-                    作為一位教育者，我深知教育對個人和社會的重要性，並以培育出具有扎實知識和全面素養的學生成為我的使命。我期待成為您學校的一員，為學生的成長和發展做出積極貢獻。
+                        作為一位教育者，我深知教育對個人和社會的重要性，並以培育出具有扎實知識和全面素養的學生成為我的使命。我期待成為您學校的一員，為學生的成長和發展做出積極貢獻。
 
+                   </p>
+                 
                     </div>
                     <!--申請動機標籤內容區-->
                     <div class="tab-pane fade p-3" id="contact" role="tabpanel" aria-labelledby="contact-tab" style="max-height: 500px; overflow-y: auto;">
-                    我是一位教育界的專業人士，擁有豐富的教學經驗和卓越的教育背景。我畢業於優秀的教育學院，取得了教育學碩士學位，並持有相關領域的專業資格證書。
+                    <p id="curADreason">
+                        我是一位教育界的專業人士，擁有豐富的教學經驗和卓越的教育背景。我畢業於優秀的教育學院，取得了教育學碩士學位，並持有相關領域的專業資格證書。
 
-                    在我的職業生涯中，我擔任過多個年級和科目的教學工作，涵蓋了豐富的學科領域。我的教學風格強調互動式學習和啟發式教學法，以激發學生的學習興趣並提高他們的學習成就。我致力於創造一個積極、支持性的教室環境，鼓勵學生發揮他們的潛力。
+                        在我的職業生涯中，我擔任過多個年級和科目的教學工作，涵蓋了豐富的學科領域。我的教學風格強調互動式學習和啟發式教學法，以激發學生的學習興趣並提高他們的學習成就。我致力於創造一個積極、支持性的教室環境，鼓勵學生發揮他們的潛力。
 
-                    我熱愛教育事業，並不斷參與專業發展活動，以保持對教學方法和教育趨勢的了解。我強調個性化教學，根據學生的需要調整教學內容，以確保每個學生都能夠充分理解和應用所學知識。
+                        我熱愛教育事業，並不斷參與專業發展活動，以保持對教學方法和教育趨勢的了解。我強調個性化教學，根據學生的需要調整教學內容，以確保每個學生都能夠充分理解和應用所學知識。
 
-                    作為一位教育者，我深知教育對個人和社會的重要性，並以培育出具有扎實知識和全面素養的學生成為我的使命。我期待成為您學校的一員，為學生的成長和發展做出積極貢獻。
+                        作為一位教育者，我深知教育對個人和社會的重要性，並以培育出具有扎實知識和全面素養的學生成為我的使命。我期待成為您學校的一員，為學生的成長和發展做出積極貢獻。
 
+                    </p>
                     </div>
                 </div><!-- End Default Tabs -->
             <div class="px-2 ">
@@ -178,7 +183,7 @@
                     <div class="flex-grow-1 d-flex gap-2 align-items-center">
                         <h6 class="m-0">審核狀態：</h6>
                         <div class="" style="width:25%">
-                            <select class="form-select" aria-label="Default select example">
+                            <select id="curADprogressStatus" class="form-select" aria-label="Default select example">
                                 <option value="待審核" selected>待審核</option>
                                 <option value="請補件">請補件</option>
                                 <option value="請修正內容">請修正內容</option>
@@ -186,13 +191,13 @@
                                 <option value="審核未通過">審核未通過</option>
                             </select>
                         </div>
-                        <button class="btn btn-primary mx-2">送出</button>
+                        <button onclick="submitReview()" id="reviewBtn" class="btn btn-primary mx-2">送出</button>
                     </div>
-                    <span>更新時間：2024/03/05 10:05</span>
+                    <span>更新時間：<span id="curADreviewDatetime">2024/03/05 10:05</span></span>
                 </div>
-               
-             <textarea class="flex-grow-1 form-control my-3" placeholder="說明"></textarea>
 
+                <textarea id="curADnote" class="flex-grow-1 form-control my-3" placeholder="說明"></textarea>
+                <span id="warnNoNote" hidden class="">※需填寫說明</span>
 
                 </div>
 
@@ -200,5 +205,239 @@
     </div>
 </div>
 @section Scripts {
-    <script src="~/js/owenscript/admintapplylist.js" asp-append-version="true"></script>
+    <script src="
+https://cdn.jsdelivr.net/npm/moment@2.30.1/moment.min.js
+            ">//格式化日期的插件</script>
+    <script>
+        //紀錄當前單筆申請資訊變數
+        let curApplyLogId = 0;
+        let currentApplyLogData = null;
+        let toSubmitDate =''
+
+        let dataTable; // 這段要記得加，先宣告datatable的變數
+
+        $(document).ready(function () {
+            loadDataTable();
+        })
+
+        function loadDataTable() {
+            // html 欄位跟 ajax 的欄位務必相同
+            dataTable = $('#tApplyListTable').DataTable({
+                "ajax": { url: '/AdminTeacher/ListDataJson' },
+                "columns": [
+                    { data: 'applyDatetime', "width": "12%" },
+                    { data: 'realName', "width": "8%" },
+                    { data: 'teacherName', "width": "10%" },
+                    { data: 'reviewDatetime', "width": "12%" },
+                    { data: 'progressStatus', "width": "7%" },
+                    { data: 'note', "width": "15%" },
+                    {
+                        // 這段是新增及刪除按鈕 ， 刪除用到onclick 事件，觸發下方的Delete
+                        data: 'applyLogId',
+                        "render": function (data) {
+                            return `<div class="" role="">
+                                                        <button  onclick="loadApplyDetail('${data}')" applyLogId=${data}" class="btn btn-primary mx-2" data-bs-toggle="modal" data-bs-target="#staticBackdrop"><i class="fa-solid fa-gear"></i></button>
+                            </div>`
+                        },
+                        "width": "5%"
+                    },
+                ],
+                language: {
+                    url: "https://cdn.datatables.net/plug-ins/1.13.7/i18n/zh-HANT.json"
+                },
+                order: [[1, 'dsc']]
+
+
+            });
+        }
+    </script>
+    <script>
+        // 載入單筆申請資料
+        async function loadApplyDetail(applyLogId) {
+
+            if (isNaN(applyLogId)) {
+                callSwalError("系統異常請稍後再試")
+                return;
+            }
+            curApplyLogId = Number(applyLogId);
+            await fetchApplyDetail(applyLogId)
+            if (currentApplyLogData === null) { return; }
+            document.querySelector('#memberId').innerHTML = currentApplyLogData.fMemberId;
+            document.querySelector('#memberRealName').innerHTML = currentApplyLogData.memberRealName;
+            document.querySelector('#memberEmail').innerHTML = currentApplyLogData.memberEmail;
+            await loadInfo()
+            var basicTab = document.querySelector('#basic-tab')
+            var tab = new bootstrap.Tab(basicTab)
+            tab.show()
+        }
+
+        //取得單筆申請資料
+        async function fetchApplyDetail(applyLogId) {
+            const response = await fetch(`@Url.Content("~/AdminTeacher/ApplyDetail")?id=${applyLogId}`, {
+                "method": "GET",
+            });
+            if (!response.ok) {
+                callSwalError("系統異常請稍後再試")
+                return;
+            }
+            const data = await response.json();
+            currentApplyLogData = data;
+        }
+        //載入所有單筆資料到畫面
+        function loadInfo() {
+            //初始化表單
+            document.querySelector('#reviewBtn').hidden = false
+            document.querySelector('#curADprogressStatus').disabled = false
+            document.querySelector('#curADnote').disabled = false
+                document.querySelector('#warnNoNote').hidden = true;
+                //填值
+            document.querySelector('#curADdate').innerHTML = currentApplyLogData.applyDatetime;
+            document.querySelector('#curADrealname').innerHTML = currentApplyLogData.realName;
+            document.querySelector('#curADteachername').innerHTML = currentApplyLogData.teacherName;
+            document.querySelector('#curADteachcontactInfo').innerHTML = currentApplyLogData.contactInfo;
+
+            document.querySelector('#curADtpdfLink').href = currentApplyLogData.pdfLink;
+            document.querySelector('#curADteacherPlanLink').href = currentApplyLogData.teacherPlanLink;
+            document.querySelector('#curADintroduction').innerHTML = currentApplyLogData.introduction;
+            document.querySelector('#curADreason').innerHTML = currentApplyLogData.reason;
+            document.querySelector('#curADreviewDatetime').innerHTML = currentApplyLogData.reviewDatetime ? currentApplyLogData.reviewDatetime: "申請紀錄初次提交";
+            document.querySelector('#curADnote').value = currentApplyLogData.note;
+            document.querySelector('#curADprogressStatus').value = currentApplyLogData.progressStatus
+            if (document.querySelector('#curADprogressStatus').value === "待審核"){
+                document.querySelector('#reviewBtn').hidden = true
+            }
+            finalReviewCheck()
+        }
+        document.querySelector('#curADprogressStatus').addEventListener('change', checkNote);
+        function checkNote() {
+            document.querySelector('#reviewBtn').hidden = false
+            document.querySelector('#warnNoNote').classList.remove('text-danger')
+            if ("請補件請修正內容審核未通過".includes(document.querySelector('#curADprogressStatus').value)) {
+                document.querySelector('#warnNoNote').hidden = false;
+            } else if (document.querySelector('#curADprogressStatus').value==="待審核") {
+                document.querySelector('#reviewBtn').hidden = true
+            }
+            else{
+                document.querySelector('#warnNoNote').hidden = true;
+            }
+        }
+
+
+        function submitReview() {
+            const curADprogressStatus = document.querySelector('#curADprogressStatus').value
+            if ("請補件請修正內容".includes(curADprogressStatus)) {
+                if (document.querySelector('#curADnote').value.trim() === "") {
+                    document.querySelector('#warnNoNote').classList.add('text-danger')
+                    return
+                }
+                //送出請補件、請修正內容
+                Swal.fire({
+                    title: `送出「${curADprogressStatus}」`,
+                    text: `說明：${document.querySelector('#curADnote').value}`,
+                    icon: "info",
+                    showCancelButton: true,
+                    confirmButtonColor: "#30C2EC",
+                    cancelButtonColor: "#d33",
+                    confirmButtonText: "確定 ",
+                    cancelButtonText: "取消"
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        alert("送出")
+                        updateReview()
+                        setDate()
+                    }
+                })
+            } else if (curADprogressStatus === "審核通過") {
+                Swal.fire({
+                    title: "送出「審核通過」",
+                    text: `※將使用目前資訊開通會員老師資格`,
+                    icon: "info",
+                    showCancelButton: true,
+                    confirmButtonColor: "#30C2EC",
+                    cancelButtonColor: "#d33",
+                    confirmButtonText: "確定 (不可變更) ",
+                    cancelButtonText: "取消"
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        alert("送出")
+                        setDate()
+                        if (updateReview() == true) {
+                            finalReviewCheck()
+                        }
+                    }
+                })
+            } else if (curADprogressStatus === "審核未通過") {
+                if (document.querySelector('#curADnote').value.trim() === "") {
+                    document.querySelector('#warnNoNote').classList.add('text-danger')
+                    return
+                }
+                Swal.fire({
+                    title: "送出「審核未通過」",
+                    text: `說明：${document.querySelector('#curADnote').value}`,
+                    icon: "info",
+                    showCancelButton: true,
+                    confirmButtonColor: "#30C2EC",
+                    cancelButtonColor: "#d33",
+                    confirmButtonText: "確定 (不可變更) ",
+                    cancelButtonText: "取消"
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                       alert("送出")
+                        setDate()
+                        if (updateReview()==true) {
+                            finalReviewCheck()
+                        }
+                    }
+                })
+            }
+        }
+
+        function finalReviewCheck(){
+            if ("審核通過審核未通過".includes(document.querySelector('#curADprogressStatus').value)) {
+                document.querySelector('#reviewBtn').hidden = true
+                document.querySelector('#curADprogressStatus').disabled = true
+                document.querySelector('#curADnote').disabled = true
+            }
+        }
+        function setDate() {
+            toSubmitDate = Date.now()
+            document.querySelector('#curADreviewDatetime').innerHTML = moment(toSubmitDate).format('YYYY/MM/DD HH:mm')
+            toSubmitDate = toSubmitDate.toISOString()
+        }
+        async function updateReview(){
+            try {
+                const curADprogressStatus = document.querySelector('#curADprogressStatus').value;
+                const curADnote = document.querySelector('#curADnote').value;
+
+                const response = await fetch(`@Url.Content("~/AdminTeacher/ApplyReview")?ApplyLogId=${curApplyLogId}&progerss=${curADprogressStatus}&note=${curADnote}&updatetime=${toSubmitDate}`, {
+                    method: "POST",
+                });
+                if (!response.ok) { throw new Error(response.statusText); }
+                Swal.fire({
+                    position: "center",
+                    icon: "info",
+                    title:"成功送出審核",
+                    showConfirmButton: false,
+                    timer: 1500
+                });
+                return true
+            } catch (error) {
+                callSwalError(`${error}`);
+                return false;
+            }
+        }
+
+    </script>
+    <script>
+        //SweetAlert失敗訊息
+        function callSwalError(text) {
+            Swal.fire({
+                position: "center",
+                icon: "error",
+                title: text,
+                showConfirmButton: false,
+                timer: 1500
+            })
+        }
+    </script>
 }
