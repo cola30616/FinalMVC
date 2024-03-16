@@ -140,13 +140,17 @@
                                             <div class="d-flex gap-2 mb-2">
                                         <span class="fw-bold">電子信箱：</span>
                                                 <span id="memEmail" >example@gmail.com</span>
-                                                <span></span>
                                                 <span id="memEmailVertify" class="text-success" >已驗證</span>
                                         </div>
                                         <div class="mb-2">
                                         <label  class="fw-bold">連結帳號：  </label>
                                     <span id ="memConnectAccount">Google、Line</span>
                                         </div>
+                                <div class="d-flex gap-2 align-items-center mb-2">
+                                    <span class="fw-bold">帳號狀態：</span>
+                                    <span id="memStatus" class="text-success">正常</span>
+                                    <button id="statusBtn" onclick="changeStatus()" class="btn btn-danger btn-sm">停權</button>
+                                </div>
                                 </div>
 
                         </div>
@@ -475,11 +479,14 @@ https://cdn.jsdelivr.net/npm/moment@2.30.1/moment.min.js
             document.getElementById('memRegDate').innerHTML = currentMemberData.regDate
             document.getElementById('memEmail').innerHTML = currentMemberData.email
             document.getElementById('memEmailVertify').innerHTML = currentMemberData.emailVerification
+            document.getElementById('memStatus').innerHTML = currentMemberData.status
             if (currentMemberData.emailVerification === "已驗證") {
                 document.getElementById('memEmailVertify').classList.replace("text-danger", "text-success")
             }else{
                 document.getElementById('memEmailVertify').classList.replace("text-success", "text-danger")
             }
+            setStatusBtn()
+
 
             document.getElementById('memConnectAccount').innerHTML = currentMemberData.note
             document.getElementById('memRealName').value = currentMemberData.realName
@@ -557,6 +564,64 @@ https://cdn.jsdelivr.net/npm/moment@2.30.1/moment.min.js
                     }
                 }
             })
+        }
+        //停權按鈕
+        async function changeStatus() {
+            let showtext = "";
+            if (currentMemberData.status === "正常") {
+                showtext = '（會員將無法登入）'
+            }
+            let action = document.getElementById('statusBtn').innerHTML
+            Swal.fire({
+                title: `確認${action}會員編號${currentMemberId}的帳號？`,
+                text: showtext,
+                icon: "info",
+                showCancelButton: true,
+                confirmButtonColor: "#30C2EC",
+                cancelButtonColor: "#d33",
+                confirmButtonText: "確定",
+                cancelButtonText: "取消"
+            }).then(async (result) => {
+                if ( await changePropertyValue("status", action)) {
+                    if (action === "停權") {currentMemberData.status="停權中" }
+                    if (action === "恢復") { currentMemberData.status = "正常" }
+                    setStatusBtn()
+                    dataTable.ajax.reload();
+                }
+            })
+        }
+        function setStatusBtn(){
+            if (currentMemberData.status === "正常") {
+                document.getElementById('memStatus').innerHTML = currentMemberData.status
+                document.getElementById('memStatus').classList.replace("text-danger", "text-success")
+                document.getElementById('statusBtn').classList.replace("btn-success", "btn-danger")
+                document.getElementById('statusBtn').innerHTML = "停權";
+            } else {
+                document.getElementById('memStatus').innerHTML = currentMemberData.status
+                document.getElementById('memStatus').classList.replace("text-success", "text-danger")
+                document.getElementById('statusBtn').classList.replace("btn-danger", "btn-success")
+                document.getElementById('statusBtn').innerHTML = "恢復";
+            }
+        }
+
+        async function changePropertyValue(property, value) {
+            try {
+                const response = await fetch(`@Url.Content("~/AdminMember/ChangeValue")?id=${currentMemberId}&property=${property}&changeTo=${value}`, {
+                    method: "POST",
+                });
+                if (!response.ok) { let errMsg = await response.text(); callSwalError(errMsg); return false}
+                Swal.fire({
+                    position: "center",
+                    icon: "info",
+                    title: "成功變更",
+                    showConfirmButton: false,
+                    timer: 1500
+                });
+                return true
+            } catch (error) {
+                callSwalError(`${error}`);
+                return false
+            }
         }
 
         //SweetAlert失敗訊息

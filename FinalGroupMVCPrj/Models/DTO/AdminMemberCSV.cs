@@ -16,6 +16,8 @@ namespace FinalGroupMVCPrj.Models.DTO
         public string? Email { get; set; } = "";
         [Name("信箱驗證")]
         public string? EmailVerification { get; set; } = "";
+        [Name("帳號狀態")]
+        public string?Status{ get; set; } = "";
         [Name("接收優惠通知")]
         public string? GetCampInfo { get; set; } = "";
         [Name("電話")]

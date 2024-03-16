@@ -9,6 +9,7 @@ using System.Globalization;
 using System.Text;
 using CsvHelper;
 using System.ComponentModel.DataAnnotations;
+using Azure;
 
 namespace FinalGroupMVCPrj.Controllers
 {
@@ -84,6 +85,7 @@ namespace FinalGroupMVCPrj.Controllers
                     Job = dbMember.FJob,
                     Education = dbMember.FEducation,
                     Note = string.IsNullOrEmpty(dbMember.FNote)?"未連結任何帳號":"LINE" ,
+                    Status = dbMember.FStatus?"正常":"停權中",
                     Cities =
                     dbMember.TMemberCitiesLists.Join(
                         _context.TCities, m => m.FCityId, c => c.FCityId,
@@ -158,6 +160,7 @@ namespace FinalGroupMVCPrj.Controllers
                      Email = m.FEmail,
                      EmailVerification = m.FEmailVerification ? "已驗證" : "未驗證",
                      Phone = m.FPhone,
+                     Status = m.FStatus ? "正常" : "停權中",
                      GetCampInfo = m.FGetCampaignInfo ? "是" : "否",
                      Birth = m.FBirthDate == null ? "" : ((DateTime)m.FBirthDate).ToString("yyyy-MM-dd"),
                      Gender = m.FGender == true ? "男" : (m.FGender == false ? "女" : "其他／不便透露"),
@@ -195,6 +198,32 @@ namespace FinalGroupMVCPrj.Controllers
                 Console.WriteLine($"Error generating CSV file: {ex.Message}");
                 // 返回适当的错误信息给用户
                 return StatusCode(StatusCodes.Status500InternalServerError, "CSV下載失敗，請稍後再試");
+            }
+        }
+        // POST: AdminMember/ChangeValue/1
+        //動作簡述：更改會員值
+        [HttpPost]
+        public async Task<IActionResult> ChangeValue(int id, string property, string changeTo)
+        {
+            try
+            {
+                if (id == 0 || string.IsNullOrEmpty(property) || string.IsNullOrEmpty(changeTo))
+                {
+                    return BadRequest("沒有參數或系統異常");
+                }
+                TMember? dbMember = await _context.TMembers.FirstOrDefaultAsync(m => m.FMemberId == id);
+                if (dbMember == null) { return BadRequest("會員不存在或系統異常"); }
+                if (property == "status")
+                {
+                    if (changeTo == "停權") { dbMember.FStatus = false; }
+                    else if (changeTo == "恢復") { dbMember.FStatus = true; }
+                }
+                _context.TMembers.Update(dbMember);
+                await _context.SaveChangesAsync();
+                return Ok();
+            }catch (Exception ex)
+            {
+                return StatusCode(500, "系統異常：" + ex);
             }
         }
     }

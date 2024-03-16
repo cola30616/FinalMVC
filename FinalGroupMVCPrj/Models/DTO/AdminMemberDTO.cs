@@ -18,6 +18,7 @@ namespace FinalGroupMVCPrj.Models.DTO
         public string? Job { get; set; } = "";
         public string? Education { get; set; } = "";
         public string? Note { get; set; } = "";
+        public string? Status{ get; set; } = "";
         public IEnumerable<string>? Cities { get; set; }
         public IEnumerable<string>? WishFields { get; set; }
     }

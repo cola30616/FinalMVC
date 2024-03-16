@@ -110,6 +110,9 @@ namespace FinalGroupMVCPrj.Controllers
             else if ((bool)!dbMember.FEmailVerification)
             {
                 return BadRequest("信箱未驗證");
+            } else if (dbMember.FStatus ==false)
+            {
+                return BadRequest("帳號停權中，詳情請洽客服");
             }
             else
             {
@@ -124,6 +127,7 @@ namespace FinalGroupMVCPrj.Controllers
                 }
                 var claimsIdentity = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);
                 HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, new ClaimsPrincipal(claimsIdentity));
+                TempData["login"] = "登入成功";
                 return Ok();
             }
         }
@@ -180,7 +184,7 @@ namespace FinalGroupMVCPrj.Controllers
             string message = "";
             try
             {
-            if (!ModelState.IsValid) { return BadRequest(new { Message = "操作失敗", Data = data }); }
+            if (data==null) { return BadRequest(new { Message = "操作失敗", Data = data }); }
                 var checkExist = _context.TTeacherApplyLogs.FirstOrDefault(r=>r.FMemberId==data.FMemberId);
             if (checkExist ==null)
             {
@@ -191,7 +195,24 @@ namespace FinalGroupMVCPrj.Controllers
                 message = "新增成功";
             }
             else {
-                _context.Update(data);
+                    if (data.FProgressStatus != checkExist.FProgressStatus) { return BadRequest("審核狀態不相符，不當操作"); }
+                    checkExist.FProgressStatus = "待審核";
+                    checkExist.FReviewDatetime = DateTime.Now;
+                    if ("請補件請修正內容".Contains(data.FProgressStatus))
+                    {
+                        checkExist.FPdfLink = data.FPdfLink;
+                        checkExist.FTeacherPlanLink = data.FTeacherPlanLink;
+                        checkExist.FNote = "已補件：" + data.FNote;
+                    }
+                    if(data.FProgressStatus == "請修正內容")
+                    {
+                        checkExist.FRealName = data.FRealName;
+                        checkExist.FTeacherName = data.FTeacherName;
+                        checkExist.FIntroduction = data.FIntroduction;
+                        checkExist.FReason = data.FReason;
+                        checkExist.FNote = "已提交修正內容：" + data.FNote;
+                    }
+                    _context.Update(checkExist);
                 _context.SaveChanges();
                 message = "更新成功";
             }
@@ -202,7 +223,7 @@ namespace FinalGroupMVCPrj.Controllers
             }
         }
         // GET: Home/TApplyRecord?memberId=
-        //動作簡述：回傳設定會員資訊的頁面
+        //動作簡述：回傳設定會員申請老師資料
         [HttpGet]
         public IActionResult TApplyRecord(int memberId)
         {
@@ -308,8 +329,11 @@ namespace FinalGroupMVCPrj.Controllers
                         {
                             TempData["Error"] = "此Line帳號已有其他帳號綁定！";
                             return RedirectToAction("Setting", "Member");
-                        }
-                            var claims = new List<Claim>{
+                        } else if (dbMember.FStatus == false)
+                    {
+                        return BadRequest("帳號停權中，詳情請洽客服");
+                    }
+                    var claims = new List<Claim>{
                   new Claim("MemberId", dbMember.FMemberId.ToString()),
                 new Claim(ClaimTypes.Name, dbMember.FShowName),
                 new Claim(ClaimTypes.Email, dbMember.FEmail)
@@ -320,6 +344,7 @@ namespace FinalGroupMVCPrj.Controllers
                         }
                         var claimsIdentity = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);
                         HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, new ClaimsPrincipal(claimsIdentity));
+                        TempData["login"] = "登入成功";
                         return RedirectToAction("Index");
                     }
                     else

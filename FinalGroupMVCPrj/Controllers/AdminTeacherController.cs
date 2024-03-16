@@ -67,6 +67,7 @@ namespace FinalGroupMVCPrj.Controllers
                     Introduction = dbApplyLog.FIntroduction,
                     Reason = dbApplyLog.FReason,
                     PdfLink = dbApplyLog.FPdfLink,
+                    TeacherPlanLink = dbApplyLog.FTeacherPlanLink,
                     ProgressStatus = dbApplyLog.FProgressStatus,
                     ReviewDatetime = dbApplyLog.FReviewDatetime?.ToString("yyyy/MM/dd HH:mm"),
                     FReviewResult = dbApplyLog.FReviewResult,
@@ -99,8 +100,27 @@ namespace FinalGroupMVCPrj.Controllers
             dbApplyLog.FNote = note;
             dbApplyLog.FReviewDatetime = updateTime;
             _context.TTeacherApplyLogs.Update(dbApplyLog);
-            _context.SaveChanges();
-            return Ok();
+
+                if(dbApplyLog.FProgressStatus == "審核通過")
+                {
+                    var dbTeacher = _context.TTeachers.SingleOrDefault(t=>t.FMemberId == dbApplyLog.FMemberId);
+                    if (dbTeacher != null) { return BadRequest("不當操作，該會員已有老師資格"); }
+                    dbTeacher = new TTeacher
+                    {
+                        FMemberId = dbApplyLog.FMemberId,
+                        FTeacherName = dbApplyLog.FTeacherName,
+                        FContactInfo = dbApplyLog.FContactInfo,
+                        FJoinDatetime = DateTime.Now,
+                        FIntroduction = dbApplyLog.FIntroduction,
+                    };
+                    _context.TTeachers.Add(dbTeacher);
+                    var dbMember = _context.TMembers.SingleOrDefault(m =>m.FMemberId == dbApplyLog.FMemberId);
+                    if (dbMember == null) { return StatusCode(500, "系統異常"); }
+                    dbMember.FQualifiedTeacher = true;
+                    _context.TMembers.Update(dbMember);
+                }
+                _context.SaveChanges();
+                return Ok();
             }catch (Exception ex)
             {
                 return StatusCode(500, "系統異常："+ex);

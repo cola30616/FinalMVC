@@ -336,7 +336,7 @@ namespace FinalGroupMVCPrj.Controllers
     <body>
         <h2>請點擊此按鈕驗證您的信箱：</h2>
         <a href='{emailVetifyURL}' class='btn btn-primary'>驗證信箱</a>
-<p>*此連結將在一分鐘後失效</p>
+<p>*此連結將在30秒後失效</p>
     </body>
     </html>
 ",
@@ -366,7 +366,7 @@ namespace FinalGroupMVCPrj.Controllers
      new Claim("memberId", memberId.ToString())
 };
 
-            var expirationTime = DateTime.UtcNow.AddMinutes(1);
+            var expirationTime = DateTime.UtcNow.AddSeconds(30);
             var creds = new SigningCredentials(new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_configuration["JWT:KEY"])), SecurityAlgorithms.HmacSha256);
             var jwt = new JwtSecurityToken(
                 claims: claims,
