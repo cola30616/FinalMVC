@@ -314,12 +314,15 @@ https://cdn.jsdelivr.net/npm/moment@2.30.1/moment.min.js
             document.querySelector('#reviewBtn').hidden = false
             document.querySelector('#warnNoNote').classList.remove('text-danger')
             if ("請補件請修正內容審核未通過".includes(document.querySelector('#curADprogressStatus').value)) {
+                document.querySelector('#curADnote').disabled = false
                 document.querySelector('#warnNoNote').hidden = false;
             } else if (document.querySelector('#curADprogressStatus').value==="待審核") {
                 document.querySelector('#reviewBtn').hidden = true
                 document.querySelector('#warnNoNote').hidden = true;
             }
             else{
+                document.querySelector('#curADnote').disabled = true
+                document.querySelector('#curADnote').value ='';
                 document.querySelector('#warnNoNote').hidden = true;
             }
         }

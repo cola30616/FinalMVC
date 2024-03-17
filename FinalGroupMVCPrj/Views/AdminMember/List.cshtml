@@ -582,6 +582,7 @@ https://cdn.jsdelivr.net/npm/moment@2.30.1/moment.min.js
                 confirmButtonText: "確定",
                 cancelButtonText: "取消"
             }).then(async (result) => {
+                if (!result.isConfirmed) {return}
                 if ( await changePropertyValue("status", action)) {
                     if (action === "停權") {currentMemberData.status="停權中" }
                     if (action === "恢復") { currentMemberData.status = "正常" }
