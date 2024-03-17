@@ -246,7 +246,7 @@ https://cdn.jsdelivr.net/npm/moment@2.30.1/moment.min.js
                 language: {
                     url: "https://cdn.datatables.net/plug-ins/1.13.7/i18n/zh-HANT.json"
                 },
-                order: [[1, 'dsc']]
+                order: [[0, 'dsc']]
 
 
             });
@@ -366,7 +366,7 @@ https://cdn.jsdelivr.net/npm/moment@2.30.1/moment.min.js
                 }).then((result) => {
                     if (result.isConfirmed) {
                         setDate()
-                        document.querySelector('#curADnote').value = "請前往老師後台確認與編輯老師資訊";
+                        document.querySelector('#curADnote').value = "請至老師後台確認與編輯老師資訊";
                         updateReview()
                     }
                 })
