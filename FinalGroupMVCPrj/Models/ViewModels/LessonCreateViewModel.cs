@@ -89,7 +89,7 @@ namespace FinalGroupMVCPrj.Models.ViewModels
         public DateTime? FRegDeadline { get; set; }
 
         [Display(Name = "狀態")]
-        public bool? FStatus { get; set; }
+        public string? FStatus { get; set; }
 
         public string? FStatusNote { get; set; }
       

@@ -33,6 +33,7 @@
                 <div class=" bg-info-light text-center rounded-2 mb-2">基本資料</div>
                 @* 隱藏屬性 *@
                 <input type="hidden" id="courseType" value="@ViewBag.courseType" />
+                <input type="hidden" id="getcourseType" name="getcourseType" value="@ViewBag.courseType">
 
                 @if (@ViewBag.courseType=="new")
                 {
@@ -58,31 +59,20 @@
                 {
                     <div class="row mb-3">
                         <div class="form-floating col-sm-6">
-                            <input type="text" class="form-control"  placeholder="" asp-for="FFiled" disabled>
+                            <input type="text" class="form-control" placeholder="" asp-for="FFiled" readonly>
                             <label for="FFiled">領域</label>
                         </div>
                         <div class="form-floating col-sm-6">
-                            <input type="text" class="form-control"  placeholder="" asp-for="FSubject" disabled>
+                            <input type="text" class="form-control" placeholder="" asp-for="FSubject" readonly>
                             <label for="FSubject">科目</label>
                         </div>
                     </div>
                     <div class="form-floating mb-3">
-                        <input type="text" class="form-control" data-custom="fname" placeholder="" asp-for="FName" disabled>                        
+                        <input type="text" class="form-control"  placeholder="" asp-for="FName"  readonly>                        
                         <label for="FName">課名</label>
                     </div>
                 }
 
-              @*   <div class="row">
-                    <div class="col-sm-6">
-                        <div class="input-group mb-3">
-                            <input type="text" class="form-control" placeholder="代號"  placeholder="" asp-for="FCode" autocomplete="off">
-                            <span asp-validation-for="FCode" class="text-danger"></span>
-                        </div>
-                    </div>
-                    <div class="col-sm-6">
-                        <button type="submit" class="btn btn-primary align-self-center">自動填入先前的資訊</button>
-                    </div>
-                </div> *@
 
                 <input type="text" class="form-control" asp-for="FCode" hidden> 
 
@@ -124,24 +114,11 @@
                                 <input class="form-control" type="file" asp-for="FPhoto" accept="image/*">
                             </div>
                             <div class="mb-4">
-                                <button type="submit" class="btn btn-primary">裁切圖片</button>
+                                <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#cut">裁切圖片</button>
                             </div>
                         </div>
                         @* 預覽圖 *@
-                        @if (Model.FPhoto != null)
-                        {
-                            <div class="col-sm-6 d-flex rounded border border-dark border-2 pic">
-                                <img id="imgPreview" class="lazyload" style="border-radius:6px;" data-src="@Url.Content("~/TeacherAdmin/showPicture?id=")?id=@Model.FLessonCourseId" alt="course" title="@Model.FName">
-                            </div>
-
-                        }
-                        else
-                        {
-                            <div class="col-sm-6 d-flex rounded border border-dark border-2 pic">
-                                <img src="~/images/defaultimage.png" class="rounded" alt="..." title="放大檢視" style="width:145px;height:90px" id="imgPreview">
-                            </div>
-                        }
-
+                        <partial name="_LessonshowPicturePartial" />
                     </div>
                 </div>
 
@@ -188,7 +165,7 @@
                     <div class="col-sm-6">
                         <label for="inputTime1" class="col-form-label">開始時間</label>
                         <div class="input-group">
-                            <input type="time" class="form-control" id="FStartTime" asp-for="FStartTime" step="1800">
+                            <input type="time" class="form-control" id="FStartTime" asp-for="FStartTime">
                             <span asp-validation-for="FStartTime" class="text-danger"></span>
                         </div>
 
@@ -262,18 +239,13 @@
     <div class="row r">
         <div class="col-1 ">
         </div>
-        @*     <!-- 進度條 -->
-        <div class="col-7 ">
-        <div class="progress">
-        <div class="progress-bar progress-bar-striped bg-info" role="progressbar" style="width: 25%" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100">25%</div>
-        </div>
-        </div> *@
+
 
         <!-- 按鈕 -->
         <div class="col-12 d-flex justify-content-end">
             <button type="button" class="btn btn-light me-2 text-light" id="demo1">demo1</button>
-            <button type="submit" class="btn btn-primary me-2" name ="status" value="TempSave" id="makeSure">暫存</button>
-            <button type="submit" class="btn btn-primary me-2" name="status" value="Create" id="makeSure">確定</button>
+            <button type="submit" class="btn btn-primary me-2" name="status" value="TempSave" onclick="setCourseType('@ViewBag.courseType')">暫存</button>
+            <button type="submit" class="btn btn-primary me-2" name="status" value="Create" onclick="setCourseType('@ViewBag.courseType')">確定</button>
             <a class="btn btn-secondary" asp-action="LessonList" asp-controller="TeacherAdmin">取消</a>
             <div class="col-1"></div>
         </div>
@@ -281,7 +253,34 @@
 
 
     </div>
+
+
+    <!--彈跳視窗-->
+    <!-- Modal -->
+    <div class="modal fade" id="cut" tabindex="-1" aria-labelledby="cutLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5" id="cutLabel">裁切圖片</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <figure style="border: thin #c0c0c0 solid;border-radius: 8px;  display: flex; flex-flow: column; padding: 8px;margin: auto; background-color: white;width:420px;height:280px;">
+                        <img class=" ls-is-cached lazyloaded" style="border-radius:6px;" src="@Url.Action("showPicture", "Lesson", new { id = Model.FLessonCourseId })" alt="course" id="cutPhoto" />
+                    </figure>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary">Save changes</button>
+                </div>
+
+            </div>
+        </div>
+    </div>
 </form>
+
+
+
 
 @section Scripts {
     @{
@@ -292,6 +291,7 @@
     <script src="~/js/tinascript/previewimage.js" asp-append-version="true"></script>
     <script src="https://cdn.tiny.cloud/1/forirr314cvct8ywt434kbf87vah6743olso1oyjfnhh3vhi/tinymce/6/tinymce.min.js" referrerpolicy="origin"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/croppie/2.6.5/croppie.min.js" referrerpolicy="origin"></script>
+
     <!--帶出老師可開的領域-->
     <script>
         const filed = document.querySelector('#FFiled');
@@ -317,7 +317,6 @@
 
         const loadSubject = async () => {
             const filedid = filed.options[filed.selectedIndex].value;
-
             const url = `@Url.Content("~/TeacherAdmin/TeacherAllowSubject")?filedId=${filedid}`;
             const response = await fetch(url);
             const data = await response.json();
@@ -383,11 +382,17 @@
         });
 
     </script>
-  @*   <script>
-        $("#FPhoto").on("change", function () {
-            previewImage(this, $('#FPhoto').prev());
-        });
-    </script> *@
+    <!--課程型態-->
+    <script>
+        function setCourseType(courseTypeValue) {
+            document.getElementById('getcourseType').value = courseTypeValue;
+            console.log(getcourseType);
+        }
+        window.onload = function () {
+            setCourseType('@ViewBag.courseType');
+           
+        };
+    </script>
 
   <!--Demo Button-->
     <script>
@@ -430,6 +435,8 @@
             subject.selectedIndex='1';
         });
     </script>
+
+   
     <!--用錯誤訊息攔住阻止提交 -->
     <script>
         $(document).ready(function () {
@@ -481,5 +488,29 @@
         
     </script>
 
+    <!--Croppie-->
+    <script>
+        const cutPhoto = $('#cutPhoto').croppie({
+            enableExif: true,
+            viewport: {
+                width: 300,
+                height: 200,
+                type: 'square'
+            },
+            boundary: {
+                width: 400,
+                height: 300
+            }
+        });
 
+        cutPhoto.croppie('bind', {
+            url: 'demo/cat.jpg',
+            points: [77, 469, 280, 739]
+        });
+
+        cutPhoto.croppie('result', 'html').then(function (html) {
+            // html is div (overflow hidden)
+            // with img positioned inside.
+        });
+    </script>
 } 

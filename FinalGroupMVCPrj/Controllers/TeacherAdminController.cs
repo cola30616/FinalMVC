@@ -11,6 +11,7 @@ using System.Security.Cryptography.Pkcs;
 using static NuGet.Packaging.PackagingConstants;
 using System.Text;
 using static Org.BouncyCastle.Crypto.Engines.SM2Engine;
+using Microsoft.CodeAnalysis.FlowAnalysis;
 
 namespace FinalGroupMVCPrj.Controllers
 {
@@ -66,51 +67,61 @@ namespace FinalGroupMVCPrj.Controllers
             //歷史開課
             if (code != null)
             {
-                LessonCreateViewModel lesson  =new LessonCreateViewModel();
-                var course = _context.TLessonCourses.Where(x=>x.FCode==code).FirstOrDefault();
-                if(course != null) {
-                lesson.FLessonCourseId= course.FLessonCourseId;
-                lesson.FSubjectId = course.FSubjectId;
-                lesson.FSubject=  _context.TCourseSubjects.Where(x=>x.FSubjectId == lesson.FSubjectId).Select(x=>x.FSubjectName).FirstOrDefault();
-                lesson.FFiled = (from s in _context.TCourseSubjects
+                LessonCreateViewModel lesson = new LessonCreateViewModel();
+                var course = _context.TLessonCourses.Where(x => x.FCode == code).FirstOrDefault();
+                if (course != null)
+                {
+                    lesson.FLessonCourseId = course.FLessonCourseId;
+                    lesson.FSubjectId = course.FSubjectId;
+                    lesson.FSubject = _context.TCourseSubjects.Where(x => x.FSubjectId == lesson.FSubjectId).Select(x => x.FSubjectName).FirstOrDefault();
+                    lesson.FFiled = (from s in _context.TCourseSubjects
                                      join f in _context.TCourseFields on s.FFieldId equals f.FFieldId
-                                     where s.FSubjectId==course.FSubjectId
-                                     select f.FFieldName).Distinct().FirstOrDefault(); 
-                lesson.FName = course.FName;
-                lesson.FCode = course.FCode;
-                lesson.FTeacherId = GetCurrentTeacherId();
+                                     where s.FSubjectId == course.FSubjectId
+                                     select f.FFieldName).Distinct().FirstOrDefault();
+                    lesson.FName = course.FName;
+                    lesson.FCode = course.FCode;
+                    lesson.FTeacherId = GetCurrentTeacherId();
 
                     //lesson.FPhoto = course.FPhoto==null?null:ConvertByteArrayToIFormFile(course.FPhoto,course.FName);
                     ViewBag.courseType = "old";
 
-                    return View("LCreate", lesson); 
+                    return View("LCreate", lesson);
                 }
             }
-         
+
             ViewBag.courseType = "new";
             //直接開課
-            return View("LCreate",new LessonCreateViewModel());
+            return View("LCreate", new LessonCreateViewModel());
         }
         // POST: TeacherAdmin/LessonCreate
         [RequestFormLimits(MultipartBodyLengthLimit = 10240000)]
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> LessonCreate(LessonCreateViewModel lesson, string status)
+        public async Task<IActionResult> LessonCreate(LessonCreateViewModel lesson, string status, string getcourseType)
         {
             int teacherid = GetCurrentTeacherId();
             string code = "";
             try
             {
                 TLessonCourse course = new TLessonCourse();
-                code = loadCode(Convert.ToInt32(lesson.FFiled), Convert.ToInt32(lesson.FSubject));
+                if (getcourseType == "new")
+                {
+                    course.FName = lesson.FName;
+                    course.FSubjectId = lesson.FSubjectId;
+                    course.FSubjectId = Convert.ToInt32(lesson.FSubject);
+                }
+                else if (getcourseType == "old")
+                {
+                    course.FSubjectId = _context.TCourseSubjects.Where(x => x.FSubjectName == lesson.FSubject).Select(x => x.FSubjectId).FirstOrDefault();
+                    course.FName = lesson.FName;
+                    code = loadCode(Convert.ToInt32(lesson.FFiled), Convert.ToInt32(course.FSubjectId));
+                }
+
                 course.FVenueName = lesson.FVenueName;
                 course.FTeacherId = teacherid;
-                course.FSubjectId = Convert.ToInt32(lesson.FSubject);
-                course.FName = lesson.FName;
                 course.FEditorDes = lesson.FEditorDes;
-                //history open
-                var count = _context.TLessonCourses.Where(x => x.FSubjectId == Convert.ToInt32(lesson.FSubject)).Count();
-                course.FCode = lesson.FCode!=null? lesson.FCode : $"{code}{(count + 1):D3}";
+                var count = _context.TLessonCourses.Where(x => x.FSubjectId == Convert.ToInt32(course.FSubject)).Count();
+                course.FCode = lesson.FCode != null ? lesson.FCode : $"{code}{(count + 1):D3}";
                 course.FDescription = lesson.FDescription;
                 course.FRequirement = lesson.FRequirement;
                 course.FPrice = lesson.FPrice;
@@ -126,8 +137,8 @@ namespace FinalGroupMVCPrj.Controllers
                 course.FAddressDetail = lesson.FAddressDetail;
                 course.FVenueType = lesson.FVenueType;
                 //會議室暫定用固定連結
-                course.FOnlineLink = lesson.FVenueType == false ? "https://meet.google.com/tek-pkav-obh" : null;                
-             
+                course.FOnlineLink = lesson.FVenueType == false ? "https://meet.google.com/tek-pkav-obh" : null;
+
                 course.FStatus = checkStatus(status);
                 // course.FPhoto = lesson.FPhoto;
                 if (lesson.FPhoto != null)
@@ -157,70 +168,109 @@ namespace FinalGroupMVCPrj.Controllers
                 return NotFound();
             }
 
-            var lesson = await _context.TLessonCourses.FindAsync(id);
-            if (lesson == null)
+            var course = await _context.TLessonCourses.FindAsync(id);
+            LessonCreateViewModel lesson = new LessonCreateViewModel();
+            if (course == null)
             {
                 return NotFound();
             }
-            return View("LEdit",lesson);
+            if (course != null)
+            {
+                lesson.FLessonCourseId = course.FLessonCourseId;
+                lesson.FSubjectId = course.FSubjectId;
+                lesson.FSubject = _context.TCourseSubjects.Where(x => x.FSubjectId == lesson.FSubjectId).Select(x => x.FSubjectName).FirstOrDefault();
+                lesson.FFiled = (from s in _context.TCourseSubjects
+                                 join f in _context.TCourseFields on s.FFieldId equals f.FFieldId
+                                 where s.FSubjectId == course.FSubjectId
+                                 select f.FFieldName).Distinct().FirstOrDefault();
+                lesson.FName = course.FName;
+                lesson.FCode = course.FCode;
+                lesson.FTeacherId = GetCurrentTeacherId();
+                lesson.FRequirement = course.FRequirement;
+                lesson.FRegDeadline = course.FRegDeadline;
+                lesson.FEditorDes = course.FEditorDes;
+                lesson.FHomeworkDescription = course.FHomeworkDescription;
+                lesson.FPrice = course.FPrice;
+                lesson.FMinPeople = course.FMinPeople;
+                lesson.FMaxPeople = course.FMaxPeople;
+                lesson.FStartTime = course.FStartTime;
+                lesson.FEndTime = course.FEndTime;
+                lesson.FVenueType = course.FVenueType;
+                lesson.FVenueName = course.FVenueName;
+                lesson.FDistrictId = course.FDistrictId;
+                lesson.FAddressDetail = course.FAddressDetail;
+                lesson.FLessonDate = course.FLessonDate;
+                lesson.FStatus = course.FStatus;
+                lesson.FStatusNote = course.FStatusNote;
+                lesson.FOnlineLink = course.FOnlineLink;
+                lesson.FPhoto = course.FPhoto == null ? null : ConvertByteArrayToIFormFile(course.FPhoto, course.FName);
+
+            }
+            return View("LEdit", lesson);
 
         }
-        // GET: TeacherAdmin/LessonEdit/10000
+        // POST: TeacherAdmin/LessonEdit/10000
         [RequestFormLimits(MultipartBodyLengthLimit = 10240000)]
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> LessonEdit(int? id, LessonCreateViewModel lesson)
+        public async Task<IActionResult> LessonEdit(int? id, LessonCreateViewModel lesson,string status)
         {
-            if (id != lesson.FLessonCourseId)
+            try
             {
-                return NotFound();
+                if (id != lesson.FLessonCourseId)
+                {
+                    return NotFound();
+                }
+                var course = await _context.TLessonCourses.FindAsync(id);
+                if (course != null)
+                {
+                    course.FLessonCourseId = lesson.FLessonCourseId;
+                    course.FVenueName = lesson.FVenueName;
+                    course.FTeacherId = GetCurrentTeacherId();
+                    //course.FSubjectId = Convert.ToInt32(lesson.FSubject);
+                    course.FSubjectId = _context.TCourseSubjects.Where(x => x.FSubjectName == lesson.FSubject).Select(x => x.FSubjectId).FirstOrDefault();
+                    course.FName = lesson.FName;
+                    course.FDescription = lesson.FDescription;
+                    course.FRequirement = lesson.FRequirement;
+                    course.FPrice = lesson.FPrice;
+                    course.FHomeworkDescription = lesson.FHomeworkDescription;
+                    course.FMaxPeople = lesson.FMaxPeople;
+                    course.FMinPeople = lesson.FMinPeople;
+                    course.FLessonDate = lesson.FLessonDate;
+                    course.FRegDeadline = lesson.FRegDeadline;
+                    course.FStartTime = lesson.FStartTime;
+                    course.FEndTime = lesson.FEndTime;
+                    course.FVenueName = lesson.FVenueName;
+                    course.FDistrictId = lesson.FDistrictId;
+                    course.FAddressDetail = lesson.FAddressDetail;
+                    course.FVenueType = lesson.FVenueType;
+                    if (lesson.FVenueType == false)
+                    {
+                        course.FOnlineLink = "https://meet.google.com/tek-pkav-obh";
+                    }
+
+                   
+                    if (lesson.FPhoto != null)
+                    {
+                        course.FPhoto = await ReadUploadImage(lesson.FPhoto);
+                    }
+                    if (!string.IsNullOrEmpty(status))
+                    {
+                        course.FStatus = "課程取消";
+                        course.FStatusNote = lesson.FStatusNote;
+                    }
+                    _context.Update(course);
+                    await _context.SaveChangesAsync();
+                    TempData["Success"] = "成功儲存變更";
+
+                }
             }
-            var course = await _context.TLessonCourses.FindAsync(id);
-            if (course != null)
+            catch (Exception ex)
             {
-                course.FLessonCourseId = lesson.FLessonCourseId;
-                course.FVenueName = lesson.FVenueName;
-                course.FTeacherId = GetCurrentTeacherId();
-                course.FSubjectId = Convert.ToInt32(lesson.FSubject);
-                course.FName = lesson.FName;
-                var count = _context.TLessonCourses.Where(x => x.FSubjectId == Convert.ToInt32(lesson.FSubject)).Count();
-                course.FDescription = lesson.FDescription;
-                course.FRequirement = lesson.FRequirement;
-                course.FPrice = lesson.FPrice;
-                course.FHomeworkDescription = lesson.FHomeworkDescription;
-                course.FMaxPeople = lesson.FMaxPeople;
-                course.FMinPeople = lesson.FMinPeople;
-                course.FLessonDate = lesson.FLessonDate;
-                course.FRegDeadline = lesson.FRegDeadline;
-                course.FStartTime = lesson.FStartTime;
-                course.FEndTime = lesson.FEndTime;
-                course.FVenueName = lesson.FVenueName;
-                course.FDistrictId = lesson.FDistrictId;
-                course.FAddressDetail = lesson.FAddressDetail;
-                if (lesson.FVenueName != null || lesson.FDistrictId != null || lesson.FAddressDetail != null)
-                {
-                    course.FVenueType = true;
-                }
-                else
-                {
-                    course.FOnlineLink = "https://meet.google.com/tek-pkav-obh";
-                    course.FVenueType = false;
-                }
-
-                //if (lesson.FPhoto != null)
-                //{
-                //    await ReadUploadImage(lesson.FPhoto);
-                //}
-
-                //if (course.FPhoto != null)
-                //{
-                //    await ReadUploadImage(course);
-                //}
-                //await ReadUploadImage(course);
-                _context.Update(course);
-                await _context.SaveChangesAsync();
+                TempData["Error"] = "儲存變更失敗";
+                return View("LEdit");
             }
-            return View("LEdit");
+            return RedirectToAction(nameof(LessonList));
 
         }
         public IFormFile ConvertByteArrayToIFormFile(byte[] fileBytes, string fileName)
@@ -241,21 +291,24 @@ namespace FinalGroupMVCPrj.Controllers
         }
         public string checkStatus(string status)
         {
-         string detail = "";
+            string detail = "";
 
-        switch (status)
-        {
-            case "TempSave":
-                detail = "未開放";
-                break;
-            case "Create":
-                detail = "開放報名";
-                break;
-            default:
-                detail = "未知狀態";
-                break;
-        }
-             //1.課程取消
+            switch (status)
+            {
+                case "TempSave":
+                    detail = "未開放";
+                    break;
+                case "Create":
+                    detail = "開放報名";
+                    break;
+                case "cancel":
+                    detail = "課程取消";
+                    break;
+                default:
+                    detail = "未知狀態";
+                    break;
+            }
+            //1.課程取消
             // 2.未開放
             // 3.開放報名
             // 4.報名截止
@@ -327,7 +380,7 @@ namespace FinalGroupMVCPrj.Controllers
         }
         private async Task<byte[]> ReadUploadImage(IFormFile photo)
         {
-            if(photo != null && photo.Length > 0)
+            if (photo != null && photo.Length > 0)
             {
                 using (var memoryStream = new MemoryStream())
                 {
@@ -339,7 +392,7 @@ namespace FinalGroupMVCPrj.Controllers
             }
             else
             {
-              return  null;
+                return null;
             }
             //if (Request.Form.Files["FPhoto"] != null)
             //{
@@ -379,9 +432,9 @@ namespace FinalGroupMVCPrj.Controllers
         }
 
         [HttpGet]
-        public IActionResult TeacherOpenedSubject(int filedId=1)
+        public IActionResult TeacherOpenedSubject(int filedId = 1)
         {
-            int teacherId = GetCurrentTeacherId(); 
+            int teacherId = GetCurrentTeacherId();
 
             var openedSubjects = (
                 from s in _context.TCourseSubjects

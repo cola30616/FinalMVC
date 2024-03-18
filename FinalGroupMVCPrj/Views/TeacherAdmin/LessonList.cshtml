@@ -279,7 +279,8 @@
                 cancelButtonText: "取消"
             }).then((result) => {
                 if (result.isConfirmed) {
-
+                    //Why跳到畫面而不是直接到controller中?
+                    window.location.href = `${location.origin}/TeacherAdmin/LessonEdit?id=10011&status=cancel`;
                 }
             });
         }
