@@ -300,4 +300,22 @@
         </div>
     </div>
 </div>
+<script>
+    async function getData() {
+        ket htmlStr = ""
+        let res = await http({ 
+            method:'get',
+            url:'https://localhost:7031/Portfolio/List'});
+
+        //res.data.forEach()
+        console.log(res)
+
+        //把傳回值改成json格式
+        let json = await res.json()
+        console.log(json)
+    }
+
+    //調用函數，注意先後順序
+    getData()
+</script>
 <!-- blog-details-area end -->
