@@ -428,5 +428,141 @@ namespace FinalGroupMVCPrj.Controllers
             }
             //return Content(jwtToken.ValidTo.ToString() + "   " + DateTime.UtcNow.ToString());
         }
-    }
+        //植入假資料用
+        [AllowAnonymous]
+        [HttpGet]
+        public IActionResult courseFakeData(int id)
+        {
+            var course = _context.TLessonCourses.Include(l=>l.FTeacher).FirstOrDefault(l => l.FLessonCourseId == id);
+            if(course == null) { return Content("沒有這堂課"); }
+            var teacherMemberId = course.FTeacher.FMemberId;
+            var MemberIdList = _context.TMembers.Select(m=>m.FMemberId).ToList();
+            MemberIdList.Remove(teacherMemberId);
+            int orderNumber = new Random().Next((int)course.FMinPeople, ((int)course.FMaxPeople + 1));
+            for(int i = 0; i < orderNumber; i++)
+            {
+                TOrder order = new TOrder
+                {
+                    FMemberId = MemberIdList[(new Random().Next(0, MemberIdList.Count))],
+                    FOrderDate = ((DateTime)course.FRegDeadline).AddDays(-1),
+                    FPaymentMethod = "CreditCard",
+                };
+                _context.TOrders.Add(order);
+                _context.SaveChanges();
+                TOrder o = _context.TOrders.OrderBy(o=>o.FOrderId).Last();
+                TOrderDetail orderdetail = new TOrderDetail
+                {
+                    FOrderId = o.FOrderId,
+                    FLessonCourseId = id,
+                    FDiscount = 0,
+                    FLessonPrice = (decimal)course.FPrice,
+                    FModificationDescription = null,
+                    FOrderValid = true
+                };
+                _context.TOrderDetails.Add(orderdetail);
+                _context.SaveChanges();
+                TOrderDetail od = _context.TOrderDetails.OrderBy(o => o.FOrderDetailId).Last();
+                TLessonEvaluation lessonEvaluation = new TLessonEvaluation
+                {
+                    FMemberId = o.FMemberId,
+                    FComment = " ",
+                    FCommentDate = ((DateTime)course.FLessonDate).AddDays(1),
+                    FDisplayStatus = true,
+                    FOrderDetailId = od.FOrderDetailId,
+                    FScore = new Random().Next(3,6)
+                };
+                _context.TLessonEvaluations.Add(lessonEvaluation);
+                _context.SaveChanges();
+                MemberIdList.Remove(o.FMemberId);
+            }
+            return Content("假資料成功");
+        }
+        //重開課程用
+        [AllowAnonymous]
+        [HttpGet]
+        public IActionResult ReOcourse()
+        {
+            var historycourses = _context.TLessonCourses.ToList();
+            foreach (var c in historycourses)
+            {
+                var reC = new TLessonCourse {
+                    FName = c.FName,
+                    FSubjectId = c.FSubjectId,
+                    FCode = c.FCode,
+                    FTeacherId = c.FTeacherId,
+                    FDescription = c.FDescription,
+                    FRequirement = c.FRequirement,
+                    FPrice = c.FPrice,
+                    FHomeworkDescription = c.FHomeworkDescription,
+                    FMaxPeople = c.FMaxPeople,
+                    FMinPeople = c.FMinPeople,
+                    FLessonDate = GetRandomDate(new DateTime(2024, 3, 30), new DateTime(2024, 4, 12)),
+                    FStartTime = c.FStartTime,
+                    FEndTime = c.FEndTime,
+                    FVenueType = c.FVenueType,
+                    FVenueName = c.FVenueName,
+                    FOnlineLink = c.FOnlineLink,
+                    FAddressDetail = c.FAddressDetail,
+                    FDistrictId = c.FDistrictId,
+                    FStatus = "開放報名"
+                };
+                reC.FRegDeadline = ((DateTime)reC.FLessonDate).AddDays(-1);
+                _context.TLessonCourses.Add(reC);
+            }
+            _context.SaveChanges();
+            return Content("複製舊課成功");
+        }
+        //重開課程報名用
+        [AllowAnonymous]
+        [HttpGet]
+        public IActionResult REGC()
+        {
+            var ReOcourse = _context.TLessonCourses.Include(l=>l.FTeacher).Where(l => l.FStatus == "開放報名").ToList();
+            foreach (var course in ReOcourse)
+            {
+                var teacherMemberId = course.FTeacher.FMemberId;
+                var MemberIdList = _context.TMembers.Select(m => m.FMemberId).ToList();
+                MemberIdList.Remove(teacherMemberId);
+                int orderNumber = new Random().Next(2, ((int)course.FMinPeople + 2));
+                for (int i = 0; i < orderNumber; i++)
+                {
+                    TOrder order = new TOrder
+                    {
+                        FMemberId = MemberIdList[(new Random().Next(0, MemberIdList.Count))],
+                        FOrderDate = GetRandomDate(new DateTime(2024, 3, 18), new DateTime(2024, 3, 28)),
+                        FPaymentMethod = "CreditCard",
+                    };
+                    _context.TOrders.Add(order);
+                    _context.SaveChanges();
+                    TOrder o = _context.TOrders.OrderBy(o => o.FOrderId).Last();
+                    TOrderDetail orderdetail = new TOrderDetail
+                    {
+                        FOrderId = o.FOrderId,
+                        FLessonCourseId =course.FLessonCourseId,
+                        FDiscount = 0,
+                        FLessonPrice = (decimal)course.FPrice,
+                        FModificationDescription = null,
+                        FOrderValid = true
+                    };
+                    _context.TOrderDetails.Add(orderdetail);
+                    _context.SaveChanges();
+                    MemberIdList.Remove(o.FMemberId);
+                }
+            }
+            return Content("假資料報名成功");
+        }
+
+
+                [AllowAnonymous]
+            static DateTime GetRandomDate(DateTime startDate, DateTime endDate)
+            {
+                Random random = new Random();
+                int range = (endDate - startDate).Days; // 計算日期範圍
+
+                // 生成隨機日期
+                DateTime randomDate = startDate.AddDays(random.Next(range));
+
+                return randomDate;
+            }
+        }
 }
