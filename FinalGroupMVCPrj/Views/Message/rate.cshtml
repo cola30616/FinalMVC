@@ -3,222 +3,291 @@
     ViewData["Title"] = "rate";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
+@section Styles {
+    <style>
 
+        .btn:hover .bi-bookmark, .btn:hover .btn-text {
+            color: white; /* Change text color to white on hover */
+        }
 
+        .bi-bookmark {
+            fill: #30C2EC; /* Set default color for the SVG icon */
+            transition: fill 0.3s; /* Add transition for smooth color change */
+        }
 
-<!-- Button trigger modal -->
+        .btn:hover .bi-bookmark {
+            fill: white; /* Change color to white on hover */
+        }
 
+    </style>
+}
 
-<!-- Modal -->
-<div class="modal fade" id="evalModal" tabindex="-1" aria-labelledby="evalModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered modal-xl" style="width:550px;">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="evalModalLabel">評價</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+<div class="course-details-area pb-60">
+    <!-- Course title -->
+    <div class="course-banner bg-img bg-cover pb-5 bg-light">
+        <div class="container">
+            <div class="row">
+                @* 封面照 *@
+                <div class="col-lg-4">
+                    <figure class="course-img" style="border: thin #c0c0c0 solid;border-radius: 8px;  display: flex; flex-flow: column; padding: 8px;margin: auto; background-color: white;">
+                        <img class="lazyload" style="border-radius:6px;" src="/images/placeholder.png" data-src="/images/course/pro-13.jpg" alt="course" title="Image">
+                    </figure>
+                </div>
+                @* 基本資料 *@
+                <div class="col-lg-8">
+                    <div class="banner-content" data-aos="fade-up">
+                        <nav aria-label="breadcrumb">
+                            <ol class="breadcrumb">
+                                <li class="breadcrumb-item active" aria-current="page"><a href="#"><img src="/images/dog.png" style="height: 40px;height: 40px;" class="border border-primary rounded-circle  "></a> 彼得遊世界</li>
+                            </ol>
+                        </nav>
+                        <h3 class="title mb-15 mt-10">
+                            多益商用英文進階
+                        </h3>
+                        <div class="mb-3">
+                            @* class=" center  badge-sm rounded bg-primary text-bg-primary" *@
+                            <span class=" center  badge-sm rounded bg-primary text-bg-primary "> 領域 </span>&nbsp;
+                            <span class=" center  badge-sm rounded bg-primary text-bg-primary"> 科目</span>&nbsp;
+                            <span class=" center  badge-lg rounded" style="background-color: #ace6f7;"> 線上</span>
+                        </div>
+                        <ul class="list-group list-group-horizontal align-items-center">
+                            <!-- <li class="d-inline-block">
+                                <div class="ratings size-md gap-2">
+                                    <span class="badge bg-success size-md">Bestseller</span>
+                                    <div class="rate bg-img" data-bg-image="/images/rate-star-md.png">
+                                        <div class="rating-icon bg-img" data-bg-image="/images/rate-star-md.png"></div>
+                                    </div>
+                                    <span class="ratings-total">(5.0)</span>
+                                </div>
+                            </li> -->
+                            <li class="d-inline-block icon-start font-sm">
+                                <i class="fa-regular fa-user"></i>已報名 15人
+                            </li>
+                            <li class="d-inline-block icon-start font-sm">
+                                @* <i class="fa-solid fa-dollar-sign"></i> 988 *@
+                                <i class="fas fa-usd-circle"></i> 988
+                            </li>
+                        </ul>
+                        <hr>
+                        <div class="ratings size-md gap-2 text-end">
+
+                            @* <a href="checkout.html" class="btn btn-lg btn-outline radius-sm w-30 br-10" title="點擊收藏" target="_self"><i class="fa-regular fa-bookmark fa-xl" style="color: #30c2ec;"></i> 收藏</a> *@
+                            <a href="checkout.html" class="btn btn-lg btn-outline radius-sm w-30 br-10" title="點擊收藏" target="_self">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-bookmark" viewBox="0 0 16 16">
+                                    <path d="M2 2a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v13.5a.5.5 0 0 1-.777.416L8 13.101l-5.223 2.815A.5.5 0 0 1 2 15.5zm2-1a1 1 0 0 0-1 1v12.566l4.723-2.482a.5.5 0 0 1 .554 0L13 14.566V2a1 1 0 0 0-1-1z" />
+                                </svg> 收藏
+                            </a>
+                            <a href="checkout.html" class="btn btn-lg btn-outline radius-sm w-30 br-10" title="Buy Now" target="_self">Buy Now</a>
+                        </div>
+
+                    </div>
+                </div>
             </div>
-            <div class="modal-body" style="display: flex; justify-content: center;">
-                <div class="rating" data-vote="0">
-
-                    <div class="star hidden" style="display: none;">
-                        <span class="full" data-value="0"></span>
-                    </div>
-
-                    <div class="star">
-
-                        <span class="full" data-value="1"></span>
-                        <span class="selected"></span>
-
-                    </div>
-
-                    <div class="star">
-
-                        <span class="full" data-value="2"></span>
-                        <span class="selected"></span>
-
-                    </div>
-
-                    <div class="star">
-
-                        <span class="full" data-value="3"></span>
-
-                        <span class="selected"></span>
-
-                    </div>
-
-                    <div class="star">
-
-                        <span class="full" data-value="4"></span>
-
-                        <span class="selected"></span>
-
-                    </div>
-
-                    <div class="star">
-
-                        <span class="full" data-value="5"></span>
-
-                        <span class="selected"></span>
-
-                    </div>
-
-                    <div class="score">
-                        <span class="score-rating js-score">0</span>
-                        <span>/</span>
-                        <span class="total">5</span>
-                    </div>
-                </div>
-
-            </div>
-            <form>
-                <div class="mb-3">
-                    <label for="evalContent" class="form-label" style="display:flex;justify-content:center;">評價內容</label>
-                    <textarea class="form-control" style=" width:400px; height:auto; margin-left:auto;margin-right:auto;" id="evalContent" rows="6"></textarea>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                    <button type="submit" class="btn btn-primary">Save changes</button>
-                </div>
-            </form>
-
         </div>
     </div>
-</div>
-<button type="button" class="btn btn-primary evalbtn1" data-bs-toggle="modal" data-bs-target="#evalModal">
-    評價課程
-</button>
-<button class="nav-link hover-effect btn-md rounded-pill evalbtn2" data-bs-toggle="modal" data-bs-target="#evalModal" type="button">評價</button>
-<div class="average">
-    <span class="text">Your average score is</span><div class=" score-average js-average"></div>
-</div>
+    <!-- course-description -->
+    <div class="container">
+        <div class="row gx-xl-12">
+            <div class="col-lg-12" data-aos="fade-up">
+                <!-- course-details-tab -->
+                <div class="course-details-tab pt-5">
+
+
+                    <!-- Modal -->
+                    <div class="modal fade" id="evalModal" tabindex="-1" aria-labelledby="evalModalLabel" aria-hidden="true">
+                        <div class="modal-dialog modal-dialog-centered modal-xl" style="width:550px;">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title" id="evalModalLabel">評價</h5>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                </div>
+                                <div class="modal-body" style="display: flex; justify-content: center;">
+                                    <div class="rating" data-vote="0">
+
+                                        <div class="star hidden" style="display: none;">
+                                            <span class="full" data-value="0"></span>
+                                        </div>
+
+                                        <div class="star">
+
+                                            <span class="full" data-value="1"></span>
+                                            <span class="selected"></span>
+
+                                        </div>
+
+                                        <div class="star">
+
+                                            <span class="full" data-value="2"></span>
+                                            <span class="selected"></span>
+
+                                        </div>
+
+                                        <div class="star">
+
+                                            <span class="full" data-value="3"></span>
+
+                                            <span class="selected"></span>
+
+                                        </div>
+
+                                        <div class="star">
+
+                                            <span class="full" data-value="4"></span>
+
+                                            <span class="selected"></span>
+
+                                        </div>
+
+                                        <div class="star">
+
+                                            <span class="full" data-value="5"></span>
+
+                                            <span class="selected"></span>
+
+                                        </div>
+
+                                        <div class="score">
+                                            <span class="score-rating js-score">0</span>
+                                            <span>/</span>
+                                            <span class="total">5</span>
+                                        </div>
+                                    </div>
+
+                                </div>
+                                <form>
+                                    <div class="mb-3">
+                                        <label for="evalContent" class="form-label" style="display:flex;justify-content:center;">評價內容</label>
+                                        <textarea class="form-control" style=" width:400px; height:auto; margin-left:auto;margin-right:auto;" id="evalContent" rows="6"></textarea>
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">取消</button>
+                                        <button type="submit" class="btn btn-primary">評價</button>
+                                    </div>
+                                </form>
+
+                            </div>
+                        </div>
+                    </div>
+                    <button type="button" class="btn btn-primary rounded-pill evalbtn1" data-bs-toggle="modal" data-bs-target="#evalModal">
+                        評價課程
+                    </button>
+                    <div class="average">
+                        <span class="text">Your average score is</span><div class=" score-average js-average"></div>
+                    </div>
 
 
 
 
-<script src="https://code.jquery.com/jquery-3.7.1.min.js"
-        integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo="
-        crossorigin="anonymous"></script>
-@section style {
-    <!-- Bootstrap CSS -->
-    <link rel="stylesheet" href="~/css/vendors/bootstrap.min.css">
-    <link rel="stylesheet" href="~/css/chat/vstyle.css" />
-}
-<script>
-    var myModal = document.getElementById('myModal')
-    var myInput = document.getElementById('myInput')
+                    <script src="https://code.jquery.com/jquery-3.7.1.min.js"
+                            integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo="
+                            crossorigin="anonymous"></script>
+                    @section Style {
+                        <!-- Bootstrap CSS -->
 
-    myModal.addEventListener('shown.bs.modal', function () {
-        myInput.focus()
-    })
-</script>
+                        <link rel="stylesheet" href="~/css/chat/vstyle.css" />
+                    }
+                    <script>
+                        var myModal = document.getElementById('myModal')
+                        var myInput = document.getElementById('myInput')
 
-<script>
-    var starClicked = false;
+                        myModal.addEventListener('shown.bs.modal', function () {
+                            myInput.focus()
+                        })
+                    </script>
 
-    $(function () {
+                    <script>
+                        var starClicked = false;
 
-        $('.star').click(function () {
+                        $(function () {
 
-            $(this).children('.selected').addClass('is-animated');
-            $(this).children('.selected').addClass('pulse');
+                            $('.star').click(function () {
 
-            var target = this;
+                                $(this).children('.selected').addClass('is-animated');
+                                $(this).children('.selected').addClass('pulse');
 
-            setTimeout(function () {
-                $(target).children('.selected').removeClass('is-animated');
-                $(target).children('.selected').removeClass('pulse');
-            }, 1000);
+                                var target = this;
 
-            starClicked = true;
-        })
+                                setTimeout(function () {
+                                    $(target).children('.selected').removeClass('is-animated');
+                                    $(target).children('.selected').removeClass('pulse');
+                                }, 1000);
 
-        $('.half').click(function () {
-            if (starClicked == true) {
-                setHalfStarState(this)
-            }
-            $(this).closest('.rating').find('.js-score').text($(this).data('value'));
+                                starClicked = true;
+                            })
 
-            $(this).closest('.rating').data('vote', $(this).data('value'));
-            calculateAverage()
-            console.log(parseInt($(this).data('value')));
+                            $('.half').click(function () {
+                                if (starClicked == true) {
+                                    setHalfStarState(this)
+                                }
+                                $(this).closest('.rating').find('.js-score').text($(this).data('value'));
 
-        })
+                                $(this).closest('.rating').data('vote', $(this).data('value'));
+                                calculateAverage()
+                                console.log(parseInt($(this).data('value')));
 
-        $('.full').click(function () {
-            if (starClicked == true) {
-                setFullStarState(this)
-            }
-            $(this).closest('.rating').find('.js-score').text($(this).data('value'));
+                            })
 
-            $(this).find('js-average').text(parseInt($(this).data('value')));
+                            $('.full').click(function () {
+                                if (starClicked == true) {
+                                    setFullStarState(this)
+                                }
+                                $(this).closest('.rating').find('.js-score').text($(this).data('value'));
 
-            $(this).closest('.rating').data('vote', $(this).data('value'));
-            calculateAverage()
+                                $(this).find('js-average').text(parseInt($(this).data('value')));
 
-            console.log(parseInt($(this).data('value')));
-        })
+                                $(this).closest('.rating').data('vote', $(this).data('value'));
+                                calculateAverage()
 
-        $('.half').hover(function () {
-            if (starClicked == false) {
-                setHalfStarState(this)
-            }
+                                console.log(parseInt($(this).data('value')));
+                            })
 
-        })
+                            $('.half').hover(function () {
+                                if (starClicked == false) {
+                                    setHalfStarState(this)
+                                }
 
-        $('.full').hover(function () {
-            if (starClicked == false) {
-                setFullStarState(this)
-            }
-        })
+                            })
 
-    })
+                            $('.full').hover(function () {
+                                if (starClicked == false) {
+                                    setFullStarState(this)
+                                }
+                            })
 
-    function updateStarState(target) {
-        $(target).parent().prevAll().addClass('animate');
-        $(target).parent().prevAll().children().addClass('star-colour');
+                        })
 
-        $(target).parent().nextAll().removeClass('animate');
-        $(target).parent().nextAll().children().removeClass('star-colour');
-    }
+                        function updateStarState(target) {
+                            $(target).parent().prevAll().addClass('animate');
+                            $(target).parent().prevAll().children().addClass('star-colour');
 
-    function setHalfStarState(target) {
-        $(target).addClass('star-colour');
-        $(target).siblings('.full').removeClass('star-colour');
-        updateStarState(target)
-    }
+                            $(target).parent().nextAll().removeClass('animate');
+                            $(target).parent().nextAll().children().removeClass('star-colour');
+                        }
 
-    function setFullStarState(target) {
-        $(target).addClass('star-colour');
-        $(target).parent().addClass('animate');
-        $(target).siblings('.half').addClass('star-colour');
+                        function setHalfStarState(target) {
+                            $(target).addClass('star-colour');
+                            $(target).siblings('.full').removeClass('star-colour');
+                            updateStarState(target)
+                        }
 
-        updateStarState(target)
-    }
+                        function setFullStarState(target) {
+                            $(target).addClass('star-colour');
+                            $(target).parent().addClass('animate');
+                            $(target).siblings('.half').addClass('star-colour');
 
-    function calculateAverage() {
-        var average = 0
+                            updateStarState(target)
+                        }
 
-        $('.rating').each(function () {
-            average += $(this).data('vote')
-        })
+                        function calculateAverage() {
+                            var average = 0
 
-        $('.js-average').text((average / $('.rating').length).toFixed(1))
-    }
-</script>
+                            $('.rating').each(function () {
+                                average += $(this).data('vote')
+                            })
 
-@section Scripts{
-@*     <!-- Jquery JS -->
-    <script src="~/js/vendors/jquery.min.js"></script>
-    <!-- Bootstrap JS -->
-    <script src="~/js/vendors/bootstrap.min.js"></script> *@
-    <script>
-        // 找到按鈕元素
-        var button = document.querySelector('.evalbtn1');
-
-        // 使用click()方法觸發按鈕點擊事件
-        button.click();
-    </script>
-}
+                            $('.js-average').text((average / $('.rating').length).toFixed(1))
+                        }
+                    </script>
 
 
 

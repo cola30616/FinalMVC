@@ -1,0 +1,9 @@
+﻿@model LessonEvaluationsViewModel
+@if(Model.FMemberProfilePic != null)
+{
+    <img FMemberId="@Model.FMemberId" data-modal-target="image-modal" data-modal-toggle="image-modal" src="@Url.Action("GetPicture", "Forum", new { FMemberId=Model.FMemberId})" title="@Model.FName" style="width:100px;height:80px" class="cursor-pointer  rounded-b" />
+}
+else
+{
+    <img FSubjectId="@Model.FMemberId" data-modal-target="image-modal" data-modal-toggle="image-modal" src="@Url.Content("~/images/Forum/no_image.png")" title="尚無內容" style="width:100px;height:80px " class="cursor-pointer  rounded-b" />
+}

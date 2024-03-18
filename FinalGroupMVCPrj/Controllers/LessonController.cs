@@ -1,8 +1,13 @@
 ﻿using FinalGroupMVCPrj.Models;
-using FinalGroupMVCPrj.Models.ViewModel;
+using FinalGroupMVCPrj.Models.DTO;
+using FinalGroupMVCPrj.Models.ViewModels;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
+using System.Linq;
+using System.Drawing.Printing;
+
 
 namespace FinalGroupMVCPrj.Controllers
 {
@@ -20,6 +25,18 @@ namespace FinalGroupMVCPrj.Controllers
         public async Task<IActionResult> Index()
         {
             var fields = await _context.TCourseFields.Select(u => u.FFieldName).ToListAsync();
+            // 取得課程領域科目資訊
+            var fieldWithSubjects = _context.TCourseSubjects
+             .GroupBy(subject => subject.FFieldId) // 根據 FieldId 對 Subject 進行分組
+             .Select(group => new CourseSubjectData
+             {
+                 FieldId = group.Key, // 取得分組的 FieldId
+                 FieldName = _context.TCourseFields.FirstOrDefault(field => field.FFieldId == group.Key) != null ?
+                            _context.TCourseFields.First(field => field.FFieldId == group.Key).FFieldName :
+                            null, // 如果結果不為 null，則取得相應的 FieldName，否則設為 null
+                 SubjectNames = group.Select(subject => subject.FSubjectName).ToList() // 取得每個分組的 SubjectName
+             })
+             .ToList();
             var courseList = await _context.TLessonCourses
             .Include(course => course.FTeacher) // 加載 Teacher 導航屬性
             .Select(course => new LessonCourseVM
@@ -42,27 +59,183 @@ namespace FinalGroupMVCPrj.Controllers
                 fields = fields,
                 fieldName = course.FSubject.FField.FFieldName,
                 fieldNumber = course.FSubject.FFieldId,
+                fieldWithSubjects = fieldWithSubjects
             })
             .ToListAsync();
             return View(courseList);
         }
 
+        #region 
+        //API Calls
+
         // Get: {baseUrl}/Lesson/Search?={searchText}
+        // 搜尋功能API
         [HttpGet]
         public async Task<IActionResult> Search(string searchText)
-        {           
+        {
             var searchResults = await _context.TLessonCourses
-                                          .Where(c => c.FName.Contains(searchText))
+                                          .Where(c => c.FName.Contains(searchText) || c.FTeacher.FTeacherName.Contains(searchText))
+                                          .Select(data => new
+                                          {
+                                              name = data.FName,
+                                              id = data.FTeacherId,
+                                              teacherId = data.FTeacher.FTeacherId,
+                                              teacherName = data.FTeacher.FTeacherName,
+                                          })
                                           .ToListAsync();
             return Json(searchResults);
         }
 
+       
+        // GET: {baseUrl}/Lesson/CourseList
+        //課程篩選用API
+        [HttpGet]
+        public async Task<IActionResult> CourseList(CourseListDTO courseListDTO)
+        {
+            int pageSize = courseListDTO.PageSize ?? 9;
+            int skip = (courseListDTO.Page - 1) * pageSize;
+            
+            // 全部資料
+            var query = _context.TLessonCourses.AsQueryable();
+            // 關鍵字查詢
+            if (!string.IsNullOrEmpty(courseListDTO.Keyword))
+            {
+                query = query.Where(course =>
+                    course.FName.Contains(courseListDTO.Keyword) ||                   
+                    course.FTeacher.FTeacherName.Contains(courseListDTO.Keyword) ||
+                    course.FSubject.FSubjectName.Contains(courseListDTO.Keyword) ||
+                    course.FSubject.FField.FFieldName.Contains(courseListDTO.Keyword)
+                );
+            }
+
+            if (courseListDTO.FieldId.HasValue)
+            {
+                query = query.Where(course => course.FSubject.FFieldId == courseListDTO.FieldId);
+            }
+
+            if (!string.IsNullOrEmpty(courseListDTO.subjectName))
+            {
+                query = query.Where(course => course.FSubject.FSubjectName == courseListDTO.subjectName);
+            }
+
+            if (courseListDTO.MinPrice.HasValue)
+            {
+                query = query.Where(course => course.FPrice >= courseListDTO.MinPrice);
+            }
+
+            if (courseListDTO.MaxPrice.HasValue)
+            {
+                query = query.Where(course => course.FPrice <= courseListDTO.MaxPrice);
+            }
+
+            //if (courseListDTO.MinRating.HasValue)
+            //{
+            //    query = query.Where(course => course.FSC >= courseListDTO.MinRating);
+            //}
+
+            //if (courseListDTO.MaxRating.HasValue)
+            //{
+            //    query = query.Where(course => course.FRating <= courseListDTO.MaxRating);
+            //}
+
+            if (!string.IsNullOrEmpty(courseListDTO.SortBy))
+            {
+                switch (courseListDTO.SortType)
+                {                  
+                    case "newest":
+                        query = query.OrderByDescending(course => course.FLessonDate);
+                        break;
+                    //case "popular":
+                    //    // 在這裡根據你的定義添加最熱門課程的排序邏輯
+                    //    break;
+                    case "enrollment":
+                        query = query.OrderByDescending(course => course.FMaxPeople);
+                        break;
+                    //case "rating":
+                    //    query = query.OrderByDescending(course => course.FRating);
+                    //    break;
+                }
+            }
+            // 目前課程總數量
+            int totalCount = await query.CountAsync();
+
+            var courseList = await query
+                .Skip(skip)
+                .Take(pageSize)
+                .Select(course => new LessonCourseVM
+                {
+                    lessonCourse = course,
+                    teacherName = course.FTeacher.FTeacherName,
+                    subjectName = course.FSubject.FSubjectName,
+                    imageData = course.FPhoto,
+                    fieldName = course.FSubject.FField.FFieldName,
+                    fieldNumber = course.FSubject.FFieldId
+                })
+                .ToListAsync();
+
+            var response = new
+            {
+                totalCount,
+                totalPages = (int)Math.Ceiling((double)totalCount / pageSize),
+                currentPage = courseListDTO.Page,
+                pageSize,
+                courses = courseList,
+                
+            };
+
+            return Json(response);
+        }
+        #endregion
+
 
         //■ ==========================     翊妏 作業區      ==========================■
         [HttpGet]
-        public IActionResult Details()
+        public async Task<IActionResult> Details(int? id)
         {
-            return View("LDetails");
+            
+            var detail = await _context.TLessonCourses
+            .Include(order => order.TOrderDetails)
+                .ThenInclude(evaluation => evaluation.TLessonEvaluations)
+            .Where(eval => eval.FLessonCourseId == id)
+            .Select(querystring => new LessonDetailViewModel
+            {
+                //主頁部分
+                FTeacher = querystring.FTeacher,
+                FName = querystring.FName,                
+                FFiled = _context.TCourseFields.Where(x=>x.FFieldId==querystring.FSubject.FFieldId).Select(x=>x.FFieldName).FirstOrDefault(),
+                FSubject = querystring.FSubject,
+                FVenueType = querystring.FVenueType,
+                FRegPeople = _context.TOrderDetails.Where(x => x.FLessonCourseId == id).Count(),
+                FPrice = querystring.FPrice,
+                FTime = ((querystring.FEndTime.Value.TotalHours - querystring.FStartTime.Value.TotalHours)).ToString(),
+                FMaxPeople = querystring.FMaxPeople,
+                FMinPeople = querystring.FMinPeople,
+                FVenueName = querystring.FVenueName,
+                FCity = _context.TCities.Where(c => c.TCityDistricts.Any(d => d.FDistrictId == querystring.FDistrictId)).Select(x => x.FCityName).FirstOrDefault(),
+                FDistrict = _context.TCityDistricts.Where(x => x.FDistrictId == querystring.FDistrictId).Select(x => x.FDistrictName).FirstOrDefault(),
+                FAddressDetail = querystring.FAddressDetail,                
+                FOnlineLink = querystring.FOnlineLink,
+                FLessonDate = querystring.FLessonDate,
+                FStartTime = querystring.FStartTime,
+                FEndTime = querystring.FEndTime,
+                FRegDeadline = querystring.FRegDeadline,
+                FDescription = querystring.FDescription,
+                FEditorDes = querystring.FEditorDes,
+                FRequirement = querystring.FRequirement,
+
+                //// 評價部分
+                FLessonCourseId = querystring.FLessonCourseId,
+            }).ToListAsync();
+
+            return View("LDetails", detail[0]);
+        }
+
+        [HttpGet]
+        public async Task<FileResult> showPicture(int id)
+        {
+            TLessonCourse? c = await _context.TLessonCourses.FindAsync(id);
+            byte[]? Content = c?.FPhoto;
+            return File(Content, "image/jpeg");
         }
     }
 
@@ -78,11 +251,10 @@ namespace FinalGroupMVCPrj.Controllers
 
 
         // 這邊使用viewComponent
-        public async Task<IViewComponentResult> InvokeAsync(int page = 1, int pageSize = 10)
+        public async Task<IViewComponentResult> InvokeAsync()
         {
             var fields = await _context.TCourseFields.Select(u => u.FFieldName).ToListAsync();
-            var courseList = await _context.TLessonCourses
-                .Include(course => course.FTeacher)
+            var courseList = await _context.TLessonCourses               
                 .Select(course => new LessonCourseVM
                 {
                     lessonCourse = course,
@@ -99,9 +271,7 @@ namespace FinalGroupMVCPrj.Controllers
                     fields = fields,
                     fieldName = course.FSubject.FField.FFieldName,
                     fieldNumber = course.FSubject.FFieldId,
-                })
-                .Skip((page - 1) * pageSize)
-                .Take(pageSize)
+                })               
                 .ToListAsync();
 
             return View(courseList);

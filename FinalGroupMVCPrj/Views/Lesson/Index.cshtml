@@ -1,6 +1,6 @@
 ﻿ @model IEnumerable<LessonCourseVM>
 <!-- Breadcrumb start -->
-<div class="breadcrumb-area bg-img bg-cover" data-bg-image="assets/images/breadcrumb-bg.jpg">
+<div class="breadcrumb-area bg-img bg-cover" data-bg-image="/images/OwenAdd/breadcrumb-bg.jpg">
     <div class="container">
         <div class="content text-center">
             <h2>課程清單</h2>
@@ -23,7 +23,7 @@
                 <div class="pb-40 d-none d-lg-block"></div>
                 <div class="widget-offcanvas offcanvas-lg offcanvas-start" tabindex="-1" id="widgetOffcanvas" aria-labelledby="widgetOffcanvas">
                     <div class="offcanvas-header px-20">
-                        <h4 class="offcanvas-title">Filter</h4>
+                        <h4 class="offcanvas-title">篩選</h4>
                         <button type="button" class="btn-close" data-bs-dismiss="offcanvas" data-bs-target="#widgetOffcanvas" aria-label="Close"></button>
                     </div>
                     <div class="offcanvas-body p-0">
@@ -31,76 +31,41 @@
                             <div class="widget widget-categories py-20">
                                 <h5 class="title">
                                     <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#categories">
-                                        Categories
+                                        領域/科目
                                     </button>
                                 </h5>
                                 <div id="categories" class="collapse show">
                                     <div class="accordion-body mt-20 scroll-y">
-                                        <ul class="list-group">
-                                            <!-- Add class .list-dropdown for dropdown-menu -->
-                                            <li class="list-item">
-                                                <a class="category-toggle" href="courses.html" title="link" target="_self">All<span class="qty">(99)</span></a>
-                                            </li>
-                                            <li class="list-item list-dropdown">
-                                                <a class="category-toggle" href="#development">Development<span class="qty">(88)</span></a>
-                                                <ul class="menu-collapse">
-                                                    <li><a class="icon-start" href="courses.html" title="link" target="_self"><i class="fal fa-angle-right"></i>Web<span class="qty">(14)</span></a></li>
-                                                    <li><a class="icon-start" href="courses.html" title="link" target="_self"><i class="fal fa-angle-right"></i>Software<span class="qty">(51)</span></a></li>
-                                                    <li><a class="icon-start" href="courses.html" title="link" target="_self"><i class="fal fa-angle-right"></i>Career<span class="qty">(16)</span></a></li>
-                                                </ul>
-                                            </li>
-                                            <li class="list-item">
-                                                <a href="courses.html" title="link" target="_self" class="category-toggle">Marketing<span class="qty">(02)</span></a>
-                                            </li>
-                                            <li class="list-item">
-                                                <a href="courses.html" title="link" target="_self" class="category-toggle">Photography<span class="qty">(22)</span></a>
-                                            </li>
-                                            <li class="list-item">
-                                                <a href="courses.html" title="link" target="_self" class="category-toggle">IT & Software<span class="qty">(32)</span></a>
-                                            </li>
-                                            <li class="list-item">
-                                                <a href="courses.html" title="link" target="_self" class="category-toggle">Music & Media<span class="qty">(15)</span></a>
-                                            </li>
-                                            <li class="list-item">
-                                                <a href="courses.html" title="link" target="_self" class="category-toggle">Life Science<span class="qty">(85)</span></a>
-                                            </li>
+                                        <ul id="fieldsSubjects" class="list-group">
+                                            <!-- Add class .list-dropdown for dropdown-menu --> 
+                                            @foreach(var course in Model.Take(1))
+                                            {
+                                                @foreach(var detail in course.fieldWithSubjects)
+                                                {
+                                                    <li class="list-item list-dropdown">
+                                                        <a class="category-toggle" href="#@(detail.FieldId)">@(detail.FieldName)</a>
+                                                        <ul class="menu-collapse">
+                                                            @if(detail.SubjectNames is not null)
+                                                            {
+                                                                 @foreach(var subject in detail.SubjectNames)
+                                                            {
+                                                                    <li><button class="icon-start" title="link" target="_self" onclick="handleSubjects({ fieldId: @(detail.FieldId), subjectName: '@(subject)' })"><i class="fal fa-angle-right"></i>@subject</button></li>
+                                                            }    
+                                                            }
+                                                                                                                                                                            
+                                                        </ul>
+                                                    </li>
+                                                }                                               
+                                            }                                           
                                         </ul>
                                     </div>
                                 </div>
                             </div>
-                            <div class="widget widget-type py-20">
-                                <h5 class="title">
-                                    <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#topic" aria-expanded="true" aria-controls="topic">
-                                        Topic
-                                    </button>
-                                </h5>
-                                <div id="topic" class="collapse show">
-                                    <div class="accordion-body mt-20 scroll-y">
-                                        <ul class="list-group custom-checkbox">
-                                            <li>
-                                                <input class="input-checkbox" type="checkbox" name="checkbox" id="checkbox1" value="">
-                                                <label class="form-check-label" for="checkbox1"><span>Python</span><span class="qty">(67)</span></label>
-                                            </li>
-                                            <li>
-                                                <input class="input-checkbox" type="checkbox" name="checkbox" id="checkbox2" value="">
-                                                <label class="form-check-label" for="checkbox2"><span>JavaScript</span><span class="qty">(32)</span></label>
-                                            </li>
-                                            <li>
-                                                <input class="input-checkbox" type="checkbox" name="checkbox" id="checkbox3" value="">
-                                                <label class="form-check-label" for="checkbox3"><span>Machine Learning</span><span class="qty">(13)</span></label>
-                                            </li>
-                                            <li>
-                                                <input class="input-checkbox" type="checkbox" name="checkbox" id="checkbox4" value="">
-                                                <label class="form-check-label" for="checkbox4"><span>Wordpress</span><span class="qty">(64)</span></label>
-                                            </li>
-                                        </ul>
-                                    </div>
-                                </div>
-                            </div>
+                           
                             <div class="widget widget-price py-20">
                                 <h5 class="title">
                                     <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#price" aria-expanded="true" aria-controls="price">
-                                        Price
+                                      價格
                                     </button>
                                 </h5>
                                 <div id="price" class="collapse show">
@@ -108,14 +73,14 @@
                                         <div class="row gx-sm-3">
                                             <div class="col-md-6">
                                                 <div class="form-group mb-20">
-                                                    <label class="mb-1">Minimum</label>
-                                                    <input class="form-control size-md" type="number" name="min" id="min">
+                                                    <label class="mb-1">最低</label>
+                                                    <input class="form-control size-md" type="number" name="min" id="min" onInput="handlePriceInput()">
                                                 </div>
                                             </div>
                                             <div class="col-md-6">
                                                 <div class="form-group mb-20">
-                                                    <label class="mb-1">Maximum</label>
-                                                    <input class="form-control size-md" type="number" name="max" id="max">
+                                                    <label class="mb-1">最高</label>
+                                                    <input class="form-control size-md" type="number" name="max" id="max" onInput="handlePriceInput()">
                                                 </div>
                                             </div>
                                         </div>
@@ -123,7 +88,7 @@
                                             <div class="price-slider" data-range-slider='filterPriceSlider'></div>
                                             <div class="price-value">
                                                 <span>
-                                                    Price:
+                                                    價格
                                                     <span class="filter-price-range" data-range-value='filterPriceSliderValue'></span>
                                                 </span>
                                             </div>
@@ -134,7 +99,7 @@
                             <div class="widget widget-ratings py-20">
                                 <h5 class="title">
                                     <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#sort" aria-expanded="true" aria-controls="sort">
-                                        Ratings
+                                        評價
                                     </button>
                                 </h5>
                                 <div id="sort" class="collapse show">
@@ -220,7 +185,7 @@
                 <div class="sort-area" data-aos="fade-up">
                     <div class="row align-items-center">
                         <div class="col-lg-6">
-                            <h5 class="mb-20">目前有 <span class="color-primary">@Model.Count()</span> 堂課</h5>
+                            <h5 class="mb-20">目前有 <span class="color-primary" id="totalClasses"></span> 堂課</h5>
                         </div>
                         <div class="col-6 d-lg-none">
                             <button class="btn btn-sm btn-outline icon-end radius-sm mb-20" type="button" data-bs-toggle="offcanvas" data-bs-target="#widgetOffcanvas" aria-controls="widgetOffcanvas">
@@ -232,10 +197,11 @@
                                 <li class="item">
                                     <div class="sort-item d-flex align-items-center">
                                         <label class="me-2 font-sm">篩選依據</label>
-                                        <select name="type" class="niceselect right">
-                                            <option value="high">Trending</option>
-                                            <option value="low">最新</option>
-                                            <option value="New">最熱門</option>                                     
+                                        <select name="type" class="niceselect right" onchange="handleSorting(this.value)">
+                                            <option value="enrollment" >上課人數</option>
+                                            <option value="rate">評價</option>
+                                            <option value="newest">最新</option>
+                                            <option value="Hot">最熱門</option>                                     
                                         </select>
                                     </div>
                                 </li>
@@ -244,22 +210,11 @@
                     </div>
                 </div>
                 <!--課程和分頁的code-->
-                @await Component.InvokeAsync("CourseItemView", new { page = 1, pageSize = 10 })
+                <div id="createCourseHtml" class="row" data-aos="fade-up">                  
+
+                </div>
                 <nav class="pagination-nav mt-15 mb-25" data-aos="fade-up">
-                    <ul class="pagination justify-content-center">
-                        <li class="page-item">
-                            <a class="page-link" href="courses.html" aria-label="Previous">
-                                <i class="far fa-angle-left"></i>
-                            </a>
-                        </li>
-                        <li class="page-item active"><a class="page-link" href="courses.html">1</a></li>
-                        <li class="page-item"><a class="page-link" href="courses.html">2</a></li>
-                        <li class="page-item"><a class="page-link" href="courses.html">3</a></li>
-                        <li class="page-item">
-                            <a class="page-link" href="courses.html" aria-label="Next">
-                                <i class="far fa-angle-right"></i>
-                            </a>
-                        </li>
+                    <ul id="course-total-page" class="pagination justify-content-center">                       
                     </ul>
                 </nav>
             </div>
@@ -267,3 +222,7 @@
     </div>
 </div>
 <!-- Course-area end -->
+@section Scripts {
+    <!--篩選功能-->
+    <script src="~/js/FilterCourseList.js" asp-append-version="true"></script>
+}

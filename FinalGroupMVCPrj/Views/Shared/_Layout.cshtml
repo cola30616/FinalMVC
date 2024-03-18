@@ -49,6 +49,7 @@
     <link href="~/css/site.css" rel="stylesheet" />
     <!--調整前台右上角下拉選單和後台樣式相近-->
     <link href="~/css/adjustdropdown.css" rel="stylesheet" />
+    <link rel="stylesheet" href="//cdn.datatables.net/2.0.1/css/dataTables.dataTables.min.css" />
     @RenderSection("Styles", required: false)
 
     @await RenderSectionAsync("Style", required: false)
@@ -88,7 +89,7 @@
         </div>
 
         <div class="main-navbar">         
-            <div class="header-bottom ">
+            <div class="header-bottom bg-white">
                 <div class="container">
                     <nav class="navbar navbar-expand-lg p-3">
                         <!-- Logo -->
@@ -98,28 +99,24 @@
                         <!-- Navigation items -->
                         <div class="collapse navbar-collapse">
                             <ul id="mainMenu" class="navbar-nav mobile-item mx-auto">
-                                <li class="nav-item p-3 ">
-                                    <div class="input-group" style="position: relative;">
-                                        <input type="text" id="searchInput" class="form-control"  style="width: 491px" >
-                                        <button class="btn btn-light" type="button" style="position: absolute; top: 5px; right: 0;background-color: transparent;border-color: transparent;box-shadow: none">
+                                <li class="nav-item p-1 position-relative" style="display: block;margin: 0;padding: 0">
+                                    <div class="input-group">
+                                        <input type="text" class="form-control" id="searchInput" style="width: 491px" oninput="search(this.value)">
+                                        <button class="btn btn-light" type="button" style="position: absolute; top: 5px; right: 0; background-color: transparent; border-color: transparent; box-shadow: none;">
                                             <img src="~/images/search-alt-2-svgrepo-com.svg" style="height: 30px; width: 30px;" />
-                                        </button>                                    
+                                        </button>
                                     </div>
-                                    <div id="searchResults"></div>
+                                    <div id="searchResults" class="list-group position-absolute" style="top: calc(100% - 1px); z-index: 100; width: 491px;">                                       
+                                    </div>
                                 </li>
                                 <li class="nav-item d-flex align-items-center justify-content-center">
                                     <a asp-controller="Teacher" asp-action="List" class="">  <i class="fa-solid fa-user-tie color-primary"></i>老師推薦 <i class="fal fa-plus "></i></a>
-@*                                     <ul class="menu-dropdown">
-                                        <li class="nav-item">
-                                            <a class="nav-link" href="mentors.html">老師課程</a>
-                                        </li>
-                                        <li class="nav-item">
-                                            <a class="nav-link" href="mentor-details.html">老師介紹</a>
-                                        </li>
-                                    </ul> *@
-                                </li>                                                           
+                                </li>
                             </ul>
                         </div>
+
+
+
                         <div class="more-option  ">
                             @* <div class="item">
                             <div class="language">
@@ -130,11 +127,11 @@
                             </select>
                             </div>
                             </div> *@
-                     @*        <div class="item">
-                                <a asp-controller="Teacher" asp-action="List" target="_self">
-                                    <i class="fa-solid fa-user-tie color-primary"></i>
-                                    <span>認識我們的老師</span>
-                                </a>
+                            @*        <div class="item">
+                            <a asp-controller="Teacher" asp-action="List" target="_self">
+                            <i class="fa-solid fa-user-tie color-primary"></i>
+                            <span>認識我們的老師</span>
+                            </a>
                             </div> *@
                             <div id="toLogin" style="display:block" class="item">
                                 <a asp-controller="Home" asp-action="Login" class="btn-icon-text" target="_self" aria-label="User" title="User">
@@ -142,11 +139,11 @@
                                     <span id="testspan">登入／註冊</span>
                                 </a>
                             </div>
-                            <div id="isLogin"style="display:none" class="item">
+                            <div id="isLogin" style="display:none" class="item">
                                 <div class="nav-item dropdown ">
 
                                     <a class="nav-link nav-profile d-flex align-items-center p-0" href="#" data-bs-toggle="dropdown">
-                                        <img id="memberPic" src="~/images/owenadd/membernophoto.jpg" alt="Profile" class="rounded-circle" style="width: 36px; height:36px">
+                                        <img  src="~/images/owenadd/membernophoto.jpg" alt="Profile" class="memberPic rounded-circle" style="width: 36px; height:36px">
                                         <span id="navShowName" class="d-none d-md-block dropdown-toggle ps-2">K. Anderson</span>
                                     </a><!-- End Profile Iamge Icon -->
                                     <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow profile mt-2">
@@ -163,22 +160,22 @@
                                                 <i class="fa-solid fa-chalkboard-user"></i>
                                                 <span>切換至老師後台</span>
                                             </a>
-                                        </li >
-                                        <li class="toggleTAdmin" style="display:none" >
+                                        </li>
+                                        <li class="toggleTAdmin" style="display:none">
                                             <hr class="dropdown-divider">
                                         </li>
 
                                         <li>
                                             <a asp-controller="Member" asp-action="Setting" class="dropdown-item d-flex align-items-center">
                                                 <i class="fa-solid fa-gear"></i>
-                                              <span>帳號設定</span>
+                                                <span>帳號設定</span>
                                             </a>
                                         </li>
 
                                         <li>
                                             <a asp-controller="Member" asp-action="Fav" class="dropdown-item d-flex align-items-center">
                                                 <i class="fa-solid fa-bookmark"></i>
-                                             <span>我的收藏</span>
+                                                <span>我的收藏</span>
                                             </a>
                                         </li>
 
@@ -199,7 +196,7 @@
                                         </li>
 
                                         <li>
-                                            <a asp-controller="Home" asp-action="Logout" class="dropdown-item d-flex align-items-center" >
+                                            <a asp-controller="Home" asp-action="Logout" class="dropdown-item d-flex align-items-center">
                                                 <i class="fa-solid fa-right-from-bracket"></i>
                                                 <span>登出</span>
                                             </a>
@@ -261,12 +258,12 @@
                             </ul>
                         </div>
                     </div>
-                   
+
                     <div class="col-lg-2 col-sm-4">
                         <div class="footer-widget" data-aos="fade-up" data-aos-delay="200">
                             <h5>幫助</h5>
                             <ul class="footer-links">
-                                
+
                                 <li>
                                     <a href="error-404.html" target="_self" title="link">如何使用我們的服務</a>
                                 </li>
@@ -321,7 +318,11 @@
     </footer>
     <!-- Footer-area end-->
     
-    <!-- Lazysizes -->
+    @await RenderSectionAsync("Scripts", required: false)
+
+    <!--首頁搜尋bar-->
+    <script src="~/js/search.js" asp-append-version="true"></script>
+    <!-- Lazysizes --> 
     <script src="~/js/vendors/lazysizes.min.js"></script>
     <!-- Jquery JS -->
     <script src="~/js/vendors/jquery.min.js"></script>
@@ -342,15 +343,20 @@
     <!-- Mouse Hover JS -->
     <script src="~/js/vendors/mouse-hover-move.js"></script>
     <!-- Main script JS -->
-    <script src="~/js/script.js"></script>
+    <script src="~/js/script.js" asp-append-version="true"></script>
+    <!--搜尋功能-->
+    
+
     <!--根據登入狀態改變前台網頁-->
     <script src="~/js/loginstatus.js"></script>
-    <!--搜尋功能-->
-    <script src="~/js/Search.js"></script>
     
+    
+
+
     <!--Sweet alert-->
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-    @await RenderSectionAsync("Scripts", required: false)
-   
+    
+
 </body>
+<script src="//cdn.datatables.net/2.0.1/js/dataTables.min.js" asp-append-version="true"></script>
 </html>

@@ -41,6 +41,8 @@ public partial class TMember
 
     public bool FStatus { get; set; }
 
+    public virtual ICollection<TChatMessageTeacher> TChatMessageTeachers { get; set; } = new List<TChatMessageTeacher>();
+
     public virtual ICollection<TChatRoomTeacher> TChatRoomTeachers { get; set; } = new List<TChatRoomTeacher>();
 
     public virtual ICollection<TLessonEvaluation> TLessonEvaluations { get; set; } = new List<TLessonEvaluation>();

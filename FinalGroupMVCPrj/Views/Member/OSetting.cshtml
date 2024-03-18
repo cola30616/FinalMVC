@@ -1,18 +1,25 @@
-﻿@model TMember
+﻿@model MemberDetailViewModel
 
 @{
     ViewData["Title"] = "Setting";
 }
-@section Styles{
+@section Styles {
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-select@1.13.14/dist/css/bootstrap-select.min.css">
     <link href="~/css/owenadd/light_prefixed.css" rel="stylesheet" asp-append-version="true" />
+    <style>
+        input[type="date"]::-webkit-calendar-picker-indicator {
+            position: relative;
+            left: -200px; /* 負數代表向左偏移，可以根據需求調整 */
+            transform: scale(1.5);
+        }
+    </style>
 }
+<partial name="_SweetAlertPartial" />
 <!-- Breadcrumb start -->
-<div class="breadcrumb-area bg-img bg-cover" data-bg-image="/images/owenadd/breadcrumb-bg.jpg" >
+<div class="breadcrumb-area bg-img bg-cover" data-bg-image="/images/owenadd/breadcrumb-bg.jpg">
     <div class="container">
         <div class="content text-center">
             <h2>帳號設定</h2>
-            <a href="http://localhost:4200/">4200</a>
         </div>
     </div>
 </div>
@@ -25,11 +32,14 @@
             <div class=" form-block border radius-md mb-30 d-flex flex-column gap-4 px-4 py-4" data-aos="fade-up" style="width:50%;height:50%">
                 <div class="course d-flex flex-column align-items-center ">
                     <div class="position-relative">
-                        <img class="lazyload rounded-pill border border-2" src="/images/owenadd/membernophoto.jpg" data-src="/images/owenadd/membernophoto.jpg" alt="course" style="width:200px;height:200px">
-                        <button type="submit" class="btn border border-2 position-absolute translate-middle d-flex justify-content-center align-items-center" style="top: 85%; left: 85%; width: 50px; height: 50px; border-radius: 50%; background-color: white; color: lightgray">
+                        <img class="memberPic rounded-pill border border-2" src="/images/owenadd/membernophoto.jpg" alt="course" style="width:200px;height:200px">
+                        <label for="inputMemPic" id="changeMemPic" class="btn border border-2 position-absolute translate-middle d-flex justify-content-center align-items-center" style="top: 85%; left: 85%; width: 50px; height: 50px; border-radius: 50%; background-color: white; color: lightgray">
                             <i class="fa-regular fa-pen-to-square fa-xl"></i>
-                        </button>
+                        </label>
+                        <input type="file" accept=".jpg, .jpeg, .png" id="inputMemPic" hidden />
+                        
                     </div>
+                    <span id="invalidPhotoWarn" class="text-danger"></span>
                 </div>
                 <div class="course">
                     <div class="d-flex flex-column gap-2">
@@ -37,7 +47,7 @@
                             <div class="form-group mb-30">
                                 <label>電子信箱  </label>
                                 <div class="d-flex gap-2 align-items-center justify-content-between">
-                                        <input disabled id="firstName" type="text" class="form-control" name="firstName" value="example@gmail.com" style="width:80%">
+                                    <input disabled id="email" type="text" class="form-control" name="firstName" value="@Model.Member.FEmail" style="width:80%">
                                     <button class="btn btn-lg  btn-primary radius-sm " type="button" aria-label="button" style=" white-space: nowrap">變更</button>
                                 </div>
                             </div>
@@ -48,7 +58,7 @@
                                     <button class="btn btn-lg  btn-primary radius-sm text-center " type="button" aria-label="button" style=" ">開始變更</button>
                                 </div>
                             </div>
-                       
+
                         </div>
                         <div class="">
                             <div class="form-group mb-30">
@@ -59,15 +69,24 @@
                                             <img class="rounded-pill" src="/images/owenadd/line_logo.png" alt="LINE登入" border="0" />
                                         </button>
                                         <div class="text-center">
-                                            <button class="btn  btn-primary radius-sm " type="button" aria-label="button">連結</button>
+                                            @if(String.IsNullOrEmpty(Model.Member.FNote))
+                                            {
+                                                <a href="javascript:openPopupWindow()" class="btn  btn-primary radius-sm " aria-label="button">連結</a>
+                                            }
+                                            else
+                                            {
+                                                <a id="cancelLineBtn" href="javascript:cancelLineLogin()" class="btn  btn-primary radius-sm " aria-label="button">取消連結</a>
+                                                <a id="linkLineBtn"  href="javascript:openPopupWindow()" class="btn  btn-primary radius-sm " style="display:none" aria-label="button">連結</a>
+                                            }
+                                          
                                         </div>
                                         <button type="submit" style="  width: 60px; height: 60px;">
                                             <img class="rounded-pill border border-secondary" src="/images/owenadd/Google_logo.png" alt="Google登入" border="0" />
                                         </button>
                                         <div class="text-center">
-                                            <button class="btn  btn-primary radius-sm " type="button" aria-label="button">取消連結</button>
+                                            <button class="btn  btn-primary radius-sm " type="button" aria-label="button">連結</button>
                                         </div>
-                                    </div >
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -76,8 +95,8 @@
             </div>
             <!--第二區-->
             <div class=" form-block border radius-md px-5 py-5" data-aos="fade-up">
-                
-                <form>
+
+                <form asp-controller="Member" asp-action="SettingSave" method="post">
                     <h4 class="mb-20 color-primary">基本資訊</h4>
                     <div class="row gx-xl-5">
                         <div class="col-lg-12">
@@ -86,148 +105,292 @@
                                     <div class="col-lg-6">
                                         <div class="form-group mb-30">
                                             <label for="firstName">真實姓名 </label>
-                                            <input disabled id="firstName" type="text" class="form-control" name="firstName" value="王小明">
+@*                                             <input asp-for="@Model.Member.FRealName" class="form-control"> *@
+                                            <div title="*變更真實姓名需洽客服" class="pt-3" >@Model.Member.FRealName</div>
                                         </div>
                                     </div>
                                     <div class="col-lg-6">
                                         <div class="form-group mb-30">
-                                            <label for="lastName">顯示名稱 </label>
-                                            <input id="lastName" type="text" class="form-control" name="lastName" placeholder="請避免使用不雅或爭議名稱" required="">
+                                            @if (Model.Member.FBirthDate == null)
+                                            {
+                                                <label id="birthdateLbl" asp-for="@Model.Member.FBirthDate">
+                                                    生日<span class=""style="font-size:12px"> *儲存後欲變更需洽客服</span>
+                                                </label>
+                                                <input asp-for="@Model.Member.FBirthDate" type="date" class="form-control" >
+                                                <div id="afetrSaveBirth" title="*變更生日需洽客服" class="pt-3" style="display:none"></div>
+                                            }
+                                            else
+                                            {
+                                                <label asp-for="@Model.Member.FBirthDate">
+                                                    生日
+                                                </label>
+                                                <div title="*變更生日需洽客服" class="pt-3" >@(((DateTime)Model.Member.FBirthDate).ToString("yyyy/MM/dd"))</div>
+                                            }
+
+                                        </div>
+                                    </div>
+                         
+                                    <div class="col-lg-6">
+                                        <div class="form-group mb-30">
+                                            <label asp-for="@Model.Member.FPhone">電話</label>
+                                            <input asp-for="@Model.Member.FPhone" class="form-control">
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-6">
+                                        <div class="form-group mb-30">
+                                            <label asp-for="@Model.Member.FShowName">顯示名稱 </label>
+                                            <input asp-for="@Model.Member.FShowName" type="text" class="form-control" placeholder="請避免使用不雅或爭議名稱">
                                         </div>
                                     </div>
                                     <div class="col-lg-6">
                                         <div class="form-group mb-30">
                                             <label for="country">性別 </label>
-                                            <select class="niceselect form-control" id="country">
-                                                <option value=null>其他</option>
-                                                <option value=false>女</option>
-                                                <option value=true>男</option>
-                                            </select>
-                                        </div>
-                                    </div>
-                                    <div class="col-lg-6">
-                                        <div class="form-group mb-30">
-                                            <label for="email">生日 </label>
-                                            <input id="email" type="date" class="form-control" name="email" placeholder="Email Address" required="">
-                                        </div>
-                                    </div>
-                                    <div class="col-lg-6">
-                                        <div class="form-group mb-30">
-                                            <label for="company_name">電話</label>
-                                            <input id="company_name" type="text" class="form-control" name="company_name" placeholder="Company Name">
+                                            <select asp-for="@Model.Member.FGender" class="gender form-select p-3" asp-items="ViewBag.GenderSelectList"></select>
                                         </div>
                                     </div>
 
 
 
-                    </div>
-   <h4 class="mb-20 color-primary">其他資訊</h4>
+
+                                </div>
+                                <h4 class="mb-20 color-primary">其他資訊</h4>
                                 <div class=" custom-checkbox mb-10 font-sm">
-                                    <input class="input-checkbox" type="checkbox" name="checkbox" id="checkbox3" checked>
+                                    <input asp-for="@Model.Member.FGetCampaignInfo" class="input-checkbox" type="checkbox"  >
                                     <label class="form-check-label" for="checkbox3"><span> 我想收到優惠活動通知</span></label>
                                 </div>
-                    <div class="row gx-xl-5">
+                                <div class="row gx-xl-5">
                                     <div class="col-lg-6">
                                         <div class="form-group mb-30">
-                                            <label for="country">職業類別 </label>
-                                            <select class="niceselect form-control" id="country">
-                                                <option selected value=null>未提供</option>
-                                                <option value="自由業">自由業</option>
-                                                <option value="學生">學生</option>
-                                                <option value="經營／人資">經營／人資</option>
-                                                <option value="行政／總務／法務">行政／總務／法務</option>
-                                                <option value="財會／金融專業">財會／金融專業</option>
-                                                <option value="行銷／企劃／專案管理">行銷／企劃／專案管理</option>
-                                                <option value="客服／門市／業務／貿易">客服／門市／業務／貿易</option>
-                                                <option value="餐飲／旅遊／美容美髮">餐飲／旅遊／美容美髮</option>
-                                                <option value="資訊軟體">資訊軟體</option>
-                                                <option value="操作／技術／維修">操作／技術／維修</option>
-                                                <option value="資材／物流／運輸">資材／物流／運輸</option>
-                                                <option value="營建／製圖">營建／製圖</option>
-                                                <option value="傳播藝術／設計">傳播藝術／設計</option>
-                                                <option value="文字／傳媒工作">文字／傳媒工作</option>
-                                                <option value="醫療／保健服務">醫療／保健服務</option>
-                                                <option value="學術／教育／輔導">學術／教育／輔導</option>
-                                                <option value="體育／休閒活動">體育／休閒活動</option>
-                                                <option value="研發相關">研發相關</option>
-                                                <option value="生產製造／品管／環衛">生產製造／品管／環衛</option>
-                                                <option value="軍警消／保全">軍警消／保全</option>
-                                                <option value="農林漁牧">農林漁牧</option>
-                                                <option value="家事服務／清潔">家事服務／清潔</option>
-                                                <option value="其他新興產業">其他新興產業</option>
-
-                                            </select>
+                                            <label>職業類別 </label>
+                                            <select asp-for="@Model.Member.FJob" class="job form-select p-3" asp-items="ViewBag.JobSelectList"></select>
                                         </div>
                                     </div>
                                     <div class="col-lg-6">
                                         <div class="form-group mb-30">
-                                            <label for="country">最高學歷 </label>
-                                            <select class="niceselect form-control" id="country">
-                                                <option value="未提供">未提供</option>
-                                                <option value="博士">博士</option>
-                                                <option value="碩士">碩士</option>
-                                                <option value="大學">大學</option>
-                                                <option value="專科">專科</option>
-                                                <option value="專科">專科</option>0
-                                                <option value="國中">國中</option>
-                                                <option value="國小">國小</option>
-                                                <option value="國小以下">國小以下</option>
-                                            </select>
+                                            <label>最高學歷 </label>
+                                            <select asp-for="@Model.Member.FEducation" class="education form-select p-3" asp-items="ViewBag.EduSelectList"></select>
                                         </div>
-                                    </div> 
-                                    <div class ="col-lg-6">
+                                    </div>
+                                    <div class="col-lg-6">
                                         <div class="col-lg-6">
                                             <div class="form-group mb-30">
                                                 <label title="至多可選三個">想學習的領域</label>
                                                 <br />
-                                                <select class="liveCityLcSelect " name="multiple" data-placeholder="至多可選三個" multiple>
-                                                    <option value="lorem">台北市</option>
-                                                    <option value="ipsum">Ipsum</option>
-                                                    <option value="dolor">Dolor</option>
-                                                </select>
+                                                <select asp-items="ViewBag.FieldSelectList" class="wishFieldLcSelect" name="multiple" data-placeholder="至多可選三個" multiple>
+                                                    </select>
                                             </div>
                                         </div>
                                         <div class="col-lg-6">
                                             <div class="form-group mb-30">
-                                                <label title="至多可選三個" >生活縣市</label>
+                                                <label title="至多可選三個">生活縣市</label>
                                                 <br />
-                                                <select class="wishField " name="multiple" data-placeholder="至多可選三個" multiple>
-                                                    <option value=1>台北市</option>
-                                                    <option value=2>新北市</option>
-                                                    <option value=3>基隆市</option>
-                                                    <option value=4>桃園市</option>
-                                                    <option value=5>新竹縣</option>
-                                                    <option selected value=6>新竹市</option>
-                                                    <option value=7>苗栗縣</option>
-                                                    <option value=8>台中市</option>
-                                                    <option value=9>彰化縣</option>
-                                                    <option value=10>南投市</option>
-                                                    <option value=11>嘉義縣</option>
-                                                    <option selected value=12>嘉義市</option>
+                                                <select asp-items="ViewBag.CitySelectList" class="liveCityLcSelect " name="multiple" data-placeholder="至多可選三個" multiple>
                                                 </select>
+                                             
                                             </div>
                                         </div>
+                                        
                                     </div>
-                                    <div class="d-flex justify-content-end"> <button class="btn btn-lg  btn-primary radius-sm " type="button" aria-label="button" style=" white-space: nowrap">儲存</button></div>
+                                    <div class="d-flex justify-content-end"> <a href="javascript:saveMemberData()" class="btn btn-lg  btn-primary radius-sm " aria-label="button" style=" white-space: nowrap">儲存</a></div>
                                 </div>
                             </div>
-                
+
                         </div>
                     </div>
                 </form>
             </div>
         </div>
 
-       
+
     </div>
 </div>
 <!-- Checkout-area end -->
-@section Scripts{
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.bundle.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap-select@1.13.14/dist/js/bootstrap-select.min.js"></script>
-    <script src="~/js/owenscript/lc_select.js" asp-append-version="true"></script>    
+@section Scripts {
+    <script src="~/js/owenscript/lc_select.js" asp-append-version="true">//多選select的插件</script>
     <script src="~/js/owenscript/bundle.min.js"></script>
-    <script src="~/js/owenscript/membersetting.js"></script>
+    <script src="~/js/owenscript/membersetting.js" asp-append-version="true"></script>
+    <script type="text/javascript">
+        let LineLoginUrl = "@Url.Action("GetLineLoginUrl", "Home")";
+    </script>
+    <script type="text/javascript">
+        function openPopupWindow() {
+            $("#result").html("");//清空顯示結果
+            //另開popup window前，每次都取得新的LineLoginUrl(每次Url的state參數都不一樣)
+            $.ajax({
+                url: LineLoginUrl,
+                method: "get",
+                success: function (url) {
+                    location.href = url;
+                }, error: function (xhr) {
+                    console.log(xhr);
+                }
+            });
+        }
+        function cancelLineLogin() {
+            Swal.fire({
+                title: "確認取消連結Line帳號?",
+                text: `(取消後不可回復)`,
+                icon: "info",
+                showCancelButton: true,
+                confirmButtonColor: "#30C2EC",
+                cancelButtonColor: "#d33",
+                confirmButtonText: "確定",
+                cancelButtonText: "取消"
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    fetchData();
+                }
+            })
+        }
+        async function fetchData() {
+            const memberId = @Model.Member.FMemberId;
+            try {
+                //fetch呼叫
+                const response = await fetch(`@Url.Content("~/Home/LineLinkCancel")?id=${memberId}`, {
+                    method: 'POST',
+                });
+                //攔截錯誤狀態代號
+                if (response.ok) {
+                    Swal.fire({
+                        position: "center",
+                        icon: "success",
+                        title: "取消連結Line帳戶成功",
+                        showConfirmButton: false,
+                        timer: 1500
+                    });
+                    document.getElementById("cancelLineBtn").style.display = "none";
+                    document.getElementById("linkLineBtn").style.display = "block";
+                }
+            } catch (error) {
+                Swal.fire({
+                    position: "center",
+                    icon: "error",
+                    title: error,
+                    showConfirmButton: false,
+                    timer: 1500
+                });
+            }
+        }
+    </script>
+    <script src="
+https://cdn.jsdelivr.net/npm/moment@2.30.1/moment.min.js
+    ">//格式化日期的插件</script>
+        <script >
+            //儲存基本資訊和其他資訊
+        const memberDetailVm = {
+            Member: {
+                FMemberId: @Model.Member.FMemberId,
+                FShowName: "",
+                FBirthDate: null,
+                FPhone: "",
+                FGender: null,
+                FJob: null,
+                FEducation:null
+            },
+            Cities: [],
+            WishFields: []
+        };
+        function saveMemberData(){
+            Swal.fire({
+                title: "確認儲存帳號資訊?",
+                text: ``,
+                icon: "info",
+                showCancelButton: true,
+                confirmButtonColor: "#30C2EC",
+                cancelButtonColor: "#d33",
+                confirmButtonText: "確定",
+                cancelButtonText: "取消"
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    fetchMemberData();
+                }
+            })
+        }
+        async function fetchMemberData() {
 
+            //基本資訊填值
+            //生日
+            const birthdate = document.getElementById('Member_FBirthDate');
+            if (birthdate !== null) {
+                if (birthdate.value !== '') {
+                    memberDetailVm.Member.FBirthDate = birthdate.value;
+                }
+            }
+            //顯示名稱
+            const showName = document.getElementById('Member_FShowName');
+            memberDetailVm.Member.FShowName = showName.value;
+            //電話
+            const phone = document.getElementById('Member_FPhone');
+            memberDetailVm.Member.FPhone = phone.value;
+            //性別
+            const gender = document.getElementById('Member_FGender');
+            for (const option of gender.selectedOptions) {
+                let val = null
+              if(option.value !==null){
+                  if(option.value ==="false"){
+                      val = false;
+                    } else if (option.value === "true") {
+                      val = true;
+                  }
+              }
+                memberDetailVm.Member.FGender = val;
+            }
+            //其他資訊填值
+            //職業類別
+            const job = document.getElementById('Member_FJob');
+            for (const option of job.selectedOptions) {
+                memberDetailVm.Member.FJob = option.value
+            }
+            //最高學歷
+            const education = document.getElementById('Member_FEducation');
+            for (const option of education.selectedOptions) {
+                memberDetailVm.Member.FEducation = option.value
+            }
+            //生活縣市
+            const citySelectedOptions = document.querySelector('.liveCityLcSelect').selectedOptions;
+            for (const option of citySelectedOptions) {
+                memberDetailVm.Cities.push(option.value);
+            }
+            //想學習的領域
+            const wishFieldSelectedOptions = document.querySelector('.wishFieldLcSelect').selectedOptions;
+            for (const option of wishFieldSelectedOptions) {
+                memberDetailVm.WishFields.push(option.value);
+            }
+
+            try {
+                //fetch呼叫
+                const response = await fetch(`@Url.Content("~/Member/SettingSave")`, {
+                    "method": "POST",
+                    "body": JSON.stringify(memberDetailVm),
+                    "headers": { "Content-Type": "application/json" }
+                });
+                if (response.ok) {
+                    Swal.fire({
+                        position: "center",
+                        icon: "success",
+                        title: "資料儲存成功",
+                        showConfirmButton: false,
+                        timer: 1500
+                    });
+                    const afetrSaveBirth = document.getElementById('afetrSaveBirth');
+                    if (birthdate !== null&&birthdate.value!=="") {
+                        birthdate.style.display ='none'
+                        afetrSaveBirth.style.display = 'block';
+                        afetrSaveBirth .innerHTML= moment(birthdate.value).format('YYYY/MM/DD');
+                        document.getElementById('birthdateLbl').innerHTML = "生日";
+                    }
+                    navShowName.innerHTML = showName.value;
+                    userShowName.innerHTML = showName.value;
+                    };
+            } catch (error) {
+                Swal.fire({
+                    position: "center",
+                    icon: "error",
+                    title: error,
+                    showConfirmButton: false,
+                    timer: 1500
+                });
+            }
+        }
+    </script>
 }

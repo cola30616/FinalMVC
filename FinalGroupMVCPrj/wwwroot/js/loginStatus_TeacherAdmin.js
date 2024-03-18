@@ -6,7 +6,7 @@
     const teacherPic = document.getElementById('teacherPic');
     const navTeacherName = document.getElementById('navTeacherName');
     const teacherName = document.getElementById('teacherName');
-
+    
     const adjustLayout = async () => {
         try {
             const response = await fetch('https://localhost:7031/UserInfo/APICurrentTeacherId', {

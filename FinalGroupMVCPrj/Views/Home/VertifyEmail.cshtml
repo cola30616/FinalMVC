@@ -1,0 +1,125 @@
+﻿@model TMember
+@{
+    ViewData["Title"] = "Login";
+}
+<partial name="_SweetAlertPartial" />
+<!-- Breadcrumb start -->
+<div class="breadcrumb-area bg-img bg-cover" data-bg-image="/images/owenadd/來學樂登入banner.png">
+        <div class="container">
+            <div class="content text-center">
+               @*  <h2>登入</h2> *@
+            </div>
+        </div>
+    </div>
+    <!-- Breadcrumb end -->
+
+    <!-- Authentication Start -->
+    <div class="authentication-area ">
+        <div class="container">
+            <div class="row">
+                <div class="col-12">
+                <div class="main-form">
+                    <div class="loginTogle mt-50 mb-15" style="display:block">
+                        <div id="result"></div>
+                        <div class=" d-flex justify-content-between flex-wrap gap-2 " >
+                            <div class="  d-flex align-items-center ">
+                                <h3 class="title" data-splitting="" data-aos="">驗證信箱</h3>
+                            </div>
+                        </div>
+                        <div class=" d-flex flex-wrap gap-2 mt-2">
+                            <div class="link font-sm d-flex align-items-center  text-dark">
+                                <p>已重新發送驗證信到您的信箱：</p>
+                            </div>
+                        </div>
+                    </div>
+                    <p id="toResendEmail" class="mb-4" style="font-size:20px">@ViewBag.ToVertifyEmail</p>
+                    <button disabled typeof="button" id="resentBtn" class="btn btn-lg btn-primary rounded-pill w-100"  aria-label="Login">重新發送</button>
+             
+               
+                    </div>
+         
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Authentication End -->
+
+    @section Scripts{
+    <script>
+        // 取得按鈕
+        const resentBtn = document.getElementById('resentBtn');
+
+        // 一開始載入的狀態
+        let isButtonDisabled = true;
+        let countdownSeconds = 60;
+
+        // 更新按鈕狀態和計時器顯示
+        function updateButtonAndCountdown() {
+            //同步按鈕狀態
+            resentBtn.disabled = isButtonDisabled;
+            resentBtn.textContent = isButtonDisabled ? `等待 ${countdownSeconds} 秒後重新發送` : '重新發送';
+        }
+
+        // 開始倒數計時
+        async function startCountdown() {
+
+            await fetchResendEmail();
+            //把按鈕禁用
+            isButtonDisabled = true;
+            updateButtonAndCountdown();
+
+            //設定 setInterval - 循環執行(每1000毫秒 =1秒)
+            const intervalId = setInterval(() => {
+                //每秒計時器減一秒
+                countdownSeconds--;
+                //如果計時器歸零，解除禁用 啟用按鈕
+                if (countdownSeconds <= 0) {
+                    isButtonDisabled = false;
+                    //重設計時器和中止循環執行
+                    countdownSeconds = 60;
+                    clearInterval(intervalId);
+                }
+                //每秒更新按鈕狀態
+                updateButtonAndCountdown();
+            }, 1000);
+        }
+
+        // 點擊按鈕
+        resentBtn.addEventListener('click', () => {
+            //確認按鈕如果是起用狀態後開始倒數計時 執行循環
+            if (!isButtonDisabled) {
+                startCountdown();
+            }
+        });
+
+        // 一開始載入執行循環
+        startCountdown();
+
+
+        //寄出驗證信的函式
+        async function fetchResendEmail() {
+            const email = document.getElementById("toResendEmail").innerText
+            resentBtn.disabled = true;
+            isButtonDisabled = true;
+            resentBtn.textContent = "寄送信件中...";
+                    const response = await fetch(`@Url.Content("~/Member/SendVetifyEmail")?email=${email}`, {
+                method: 'POST'
+            })
+            if (!response.ok) {
+                const errMsg = await response.text();
+                Swal.fire({
+                    position: "center",
+                    icon: "error",
+                    title: `${errMsg}`,
+                    showConfirmButton: false,
+                    timer: 1500
+                }).then(() => {
+                    if (errMsg === "此信箱已驗證，請前往登入") {
+                        location.href = `@Url.Content("~/Home/Login")`;
+                    }
+                })
+            }
+        }
+    </script>
+
+    }

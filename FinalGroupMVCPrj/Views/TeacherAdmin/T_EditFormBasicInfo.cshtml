@@ -4,46 +4,47 @@
 
 
 
-<form asp-controller="TeacherAdmin" asp-action="Edit">
+<form asp-controller="TeacherAdmin" asp-action="TEdittrbasicprofile" method="post">
     <div class="row mb-3">
         <!-- 標題2 老師名稱 -->
-        <label asp-for="FTeacherName" for="fullName" class="col-md-4 col-lg-3 col-form-label">@Html.DisplayNameFor(t => t.FTeacherName)</label>
+        <label  class="col-md-4 col-lg-3 col-form-label">@Html.DisplayNameFor(t => t.FTeacherName)</label>
         <div class="col-md-8 col-lg-9">
             <!-- 內容2 老師名稱 -->
-            <input asp-for="FTeacherName" type="text" class="form-control" id="fullName">
+            <input asp-for="FTeacherName" class="form-control" >
+            <span asp-validation-for="FTeacherName" class="text-danger"></span>
         </div>
     </div>
 
     <div class="row mb-3">
         <!-- 標題3 自我介紹 -->
-        <label asp-for="FIntroduction" for="about" class="col-md-4 col-lg-3 col-form-label">@Html.DisplayNameFor(t => t.FIntroduction)</label>
+        <label  class="col-md-4 col-lg-3 col-form-label">@Html.DisplayNameFor(t => t.FIntroduction)</label>
         <div class="col-md-8 col-lg-9">
             <!-- 內容3 自我介紹 -->
-            <textarea asp-for="FIntroduction" class="form-control" id="about" style="height: 100px">Sunt est soluta temporibus accusantium neque nam maiores cumque temporibus. Tempora libero non est unde veniam est qui dolor. Ut sunt iure rerum quae quisquam autem eveniet perspiciatis odit. Fuga sequi sed ea saepe at unde.</textarea>
+            <textarea asp-for="FIntroduction" class="form-control" style="height: 100px"></textarea>
         </div>
     </div>
 
     <div class="row mb-3">
         <!-- 標題4 聯絡方式 -->
-        <label asp-for="FContactInfo" for="about" class="col-md-4 col-lg-3 col-form-label">@Html.DisplayNameFor(t => t.FContactInfo)</label>
+        <label  class="col-md-4 col-lg-3 col-form-label">@Html.DisplayNameFor(t => t.FContactInfo)</label>
         <div class="col-md-8 col-lg-9">
             <!-- 內容4 聯絡方式 -->
-            <textarea asp-for="FContactInfo" class="form-control" id="about" style="height: 100px">Sunt est soluta temporibus accusantium neque nam maiores cumque temporibus. Tempora libero non est unde veniam est qui dolor. Ut sunt iure rerum quae quisquam autem eveniet perspiciatis odit. Fuga sequi sed ea saepe at unde.</textarea>
+            <textarea asp-for="FContactInfo" class="form-control" style="height: 100px"></textarea>
         </div>
     </div>
 
     <div class="row mb-3">
         <!-- 標題5 備註 -->
-        <label asp-for="FNote" for="about" class="col-md-4 col-lg-3 col-form-label">@Html.DisplayNameFor(t => t.FNote)</label>
+        <label  class="col-md-4 col-lg-3 col-form-label">@Html.DisplayNameFor(t => t.FNote)</label>
         <div class="col-md-8 col-lg-9">
             <!-- 內容5 備註 -->
-            <textarea asp-for="FNote" class="form-control" id="about" style="height: 100px">Sunt est soluta temporibus accusantium neque nam maiores cumque temporibus. Tempora libero non est unde veniam est qui dolor. Ut sunt iure rerum quae quisquam autem eveniet perspiciatis odit. Fuga sequi sed ea saepe at unde.</textarea>
+            <input asp-for="FNote" class="form-control" >
         </div>
     </div>
 
     <div class="text-center">
         <!-- 提交 -->
-        <input type="submit" class="btn btn-primary" value="Save Changes">
+        <input type="submit" class="btn btn-primary" value="確定">
     </div>
 </form>
 <!-- End Profile Edit Form -->

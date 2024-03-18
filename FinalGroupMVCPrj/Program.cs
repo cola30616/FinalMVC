@@ -1,16 +1,20 @@
+using FinalGroupMVCPrj;
 using FinalGroupMVCPrj.Data;
 using FinalGroupMVCPrj.Models;
+using FinalGroupMVCPrj.Services;
+using MailKit;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.CookiePolicy;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc.Authorization;
 using Microsoft.EntityFrameworkCore;
 
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 var connectionString = builder.Configuration.GetConnectionString("DefaultConnection") ?? throw new InvalidOperationException("Connection string 'DefaultConnection' not found.");
-//CORS³]©w
+//CORSï¿½]ï¿½w
 builder.Services.AddCors(options =>
 { options.AddPolicy("AllowAll", builder => builder.AllowAnyOrigin().AllowAnyHeader().AllowAnyMethod()); }
 );
@@ -31,14 +35,20 @@ builder.Services.AddControllersWithViews();
 builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
     .AddCookie(option =>
     {
-        //¥¼µn¤J®É·|¦Û°Ê¾É¨ì³o­Óºô§}
+        //ï¿½ï¿½ï¿½nï¿½Jï¿½É·|ï¿½Û°Ê¾É¨ï¿½oï¿½Óºï¿½}
         option.LoginPath = new PathString("/Home/Login");
-        //µn¤J¦ý¨S¦³Åv­­·|¾É¨ì³o­Óºô§}
+        //ï¿½nï¿½Jï¿½ï¿½ï¿½Sï¿½ï¿½ï¿½vï¿½ï¿½ï¿½|ï¿½É¨ï¿½oï¿½Óºï¿½}
         option.AccessDeniedPath = new PathString("/Home/AccessDenied");
     });
 
-//¥þ³¡ªº±±¨î¾¹¹w³]­n¦³µn¤Jª¬ºA¡A°£«D[AllowAnonymous]
+//ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½î¾¹ï¿½wï¿½]ï¿½nï¿½ï¿½ï¿½nï¿½Jï¿½ï¿½ï¿½Aï¿½Aï¿½ï¿½ï¿½D[AllowAnonymous]
 builder.Services.AddMvc(options => options.Filters.Add(new AuthorizeFilter()));
+
+builder.Services.AddSignalR();
+
+
+builder.Services.Configure<MailSetting>(builder.Configuration.GetSection("MailSettings"));
+builder.Services.AddTransient<FinalGroupMVCPrj.Services.IMailService, FinalGroupMVCPrj.Services.MailService>();
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
@@ -66,5 +76,6 @@ app.MapControllerRoute(
     name: "default",
     pattern: "{controller=Home}/{action=Index}/{id?}");
 app.MapRazorPages();
+
 
 app.Run();
