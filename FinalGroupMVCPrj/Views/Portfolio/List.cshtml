@@ -1,6 +1,7 @@
 ﻿@using FinalGroupMVCPrj.Models.DTO
 @model IEnumerable<PortfolioListDTO>
 
+
 <!-- Breadcrumb start -->
 <div class="breadcrumb-area bg-img bg-cover" data-bg-image="/images/breadcrumb-bg.jpg">
     <div class="container">
@@ -31,9 +32,9 @@
                         </div>
                         <div class="content">
                             <ul class="info-list">
-                                <li><i class="fal fa-user"></i>Oppido</li>
-                                <li><i class="fal fa-calendar"></i>18 JULY 2023</li>
-                                <li><i class="fal fa-tag"></i>App Development</li>
+                                <li><i class="fal fa-user"></i>@Html.DisplayFor(m => m.FirstOrDefault().FShowName) </li>
+                                <li><i class="fal fa-calendar"></i>@Html.DisplayFor(m => m.FirstOrDefault().FLastModifyTime)</li>
+                                <li><i class="fal fa-tag"></i>@Html.DisplayFor(m => m.FirstOrDefault().FSubjectName)</li>
                             </ul>
                             
                                 <h4 class="title">                                    
@@ -46,7 +47,7 @@
                             <blockquote class="blockquote mb-30">
                                 <i class="fas fa-quote-left"></i>
                                 <p>
-                                    這款令人垂涎的馬卡龍甜點呈現出一種令人難以置信的視覺和味覺享受。首先，這款馬卡龍以柔軟的外皮包覆，外觀如彩虹般繽紛，各種色彩交織出一幅美不勝收的畫面。
+                                    @Html.DisplayFor(m => m.FirstOrDefault().FLessonCourseDescrpition)
                                 </p>
                             </blockquote>
                             <p class="m-0">
@@ -238,25 +239,25 @@
                         </h5>
                         <div id="blogCategory" class="collapse show">
                             <div class="accordion-body mt-20 scroll-y">
-                                <ul class="list-unstyled m-0">
+                                <ul class="list-unstyled m-0">                                  
                                     <li class="d-flex align-items-center justify-content-between">
-                                        <a href="blogs.html" target="_self" title="blogs"><i class="fal fa-folder"></i>Technology</a>
+                                        <a href="blogs.html" target="_self" title="blogs"><i class="fal fa-folder"></i>烹飪</a>
                                         <span class="tqy">(11)</span>
-                                    </li>
+                                        </li>
                                     <li class="d-flex align-items-center justify-content-between">
-                                        <a href="blogs.html" target="_self" title="blogs"><i class="fal fa-folder"></i>Business</a>
+                                        <a href="blogs.html" target="_self" title="blogs"><i class="fal fa-folder"></i>軟體工程</a>
                                         <span class="tqy">(02)</span>
                                     </li>
                                     <li class="d-flex align-items-center justify-content-between">
-                                        <a href="blogs.html" target="_self" title="blogs"><i class="fal fa-folder"></i>Android</a>
+                                        <a href="blogs.html" target="_self" title="blogs"><i class="fal fa-folder"></i>語言</a>
                                         <span class="tqy">(45)</span>
                                     </li>
                                     <li class="d-flex align-items-center justify-content-between">
-                                        <a href="blogs.html" target="_self" title="blogs"><i class="fal fa-folder"></i>iOS</a>
+                                        <a href="blogs.html" target="_self" title="blogs"><i class="fal fa-folder"></i>投資理財</a>
                                         <span class="tqy">(26)</span>
                                     </li>
                                     <li class="d-flex align-items-center justify-content-between">
-                                        <a href="blogs.html" target="_self" title="blogs"><i class="fal fa-folder"></i>Watch</a>
+                                        <a href="blogs.html" target="_self" title="blogs"><i class="fal fa-folder"></i>休閒運動</a>
                                         <span class="tqy">(45)</span>
                                     </li>
                                 </ul>
@@ -272,14 +273,22 @@
                         <div id="blogTags" class="collapse show">
                             <div class="accordion-body mt-20 scroll-y">
                                 <div class="tags-group d-flex flex-wrap gap-2">
-                                    <a href="blogs.html" class="px-3 py-2 bg-light radius-sm font-xsm" title="Link" target="_self">Design</a>
-                                    <a href="blogs.html" class="px-3 py-2 bg-light radius-sm font-xsm" title="Link" target="_self">SEO</a>
-                                    <a href="blogs.html" class="px-3 py-2 bg-light radius-sm font-xsm" title="Link" target="_self">Figma</a>
-                                    <a href="blogs.html" class="px-3 py-2 bg-light radius-sm font-xsm" title="Link" target="_self">Android</a>
-                                    <a href="blogs.html" class="px-3 py-2 bg-light radius-sm font-xsm" title="Link" target="_self">Marketing</a>
-                                    <a href="blogs.html" class="px-3 py-2 bg-light radius-sm font-xsm" title="Link" target="_self">Software</a>
-                                    <a href="blogs.html" class="px-3 py-2 bg-light radius-sm font-xsm" title="Link" target="_self">Office</a>
-                                    <a href="blogs.html" class="px-3 py-2 bg-light radius-sm font-xsm" title="Link" target="_self">Affiliate</a>
+                                    <a href="blogs.html" class="px-3 py-2 bg-light radius-sm font-xsm" title="Link" target="_self">日式料理</a>
+                                    <a href="blogs.html" class="px-3 py-2 bg-light radius-sm font-xsm" title="Link" target="_self">法式料理</a>
+                                    <a href="blogs.html" class="px-3 py-2 bg-light radius-sm font-xsm" title="Link" target="_self">中式料理</a>
+                                    <a href="blogs.html" class="px-3 py-2 bg-light radius-sm font-xsm" title="Link" target="_self">SQL</a>
+                                    <a href="blogs.html" class="px-3 py-2 bg-light radius-sm font-xsm" title="Link" target="_self">C#</a>
+                                    <a href="blogs.html" class="px-3 py-2 bg-light radius-sm font-xsm" title="Link" target="_self">Python</a>
+                                    <a href="blogs.html" class="px-3 py-2 bg-light radius-sm font-xsm" title="Link" target="_self">法文</a>
+                                    <a href="blogs.html" class="px-3 py-2 bg-light radius-sm font-xsm" title="Link" target="_self">韓文</a>
+                                    <a href="blogs.html" class="px-3 py-2 bg-light radius-sm font-xsm" title="Link" target="_self">西班牙文</a>
+                                    <a href="blogs.html" class="px-3 py-2 bg-light radius-sm font-xsm" title="Link" target="_self">英文</a>
+                                    <a href="blogs.html" class="px-3 py-2 bg-light radius-sm font-xsm" title="Link" target="_self">日文</a>
+                                    <a href="blogs.html" class="px-3 py-2 bg-light radius-sm font-xsm" title="Link" target="_self">ETF</a>
+                                    <a href="blogs.html" class="px-3 py-2 bg-light radius-sm font-xsm" title="Link" target="_self">美股</a>
+                                    <a href="blogs.html" class="px-3 py-2 bg-light radius-sm font-xsm" title="Link" target="_self">瑜珈</a>
+                                    <a href="blogs.html" class="px-3 py-2 bg-light radius-sm font-xsm" title="Link" target="_self">籃球</a>
+                                    <a href="blogs.html" class="px-3 py-2 bg-light radius-sm font-xsm" title="Link" target="_self">羽球</a>
                                 </div>
                             </div>
                         </div>

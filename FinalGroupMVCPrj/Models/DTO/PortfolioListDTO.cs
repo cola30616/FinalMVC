@@ -2,23 +2,25 @@
 {
     public class PortfolioListDTO
     {
-        public int FCourseworkId { get; set; }
+        public int FCourseworkId { get; set; } = 0;
 
-        public int FOrderDetailId { get; set; }
+        public string FName { get; set; } = "";
+        public string FShowName { get; set; } = "";
+        public string FSubjectName { get; set; } = "";
+        public string FDescrpition { get; set; } = "";
+        public string FLessonCourseDescrpition { get; set; } = "";
+        public string FFieldName { get; set; } = "";
+        public DateTime FLastModifyTime { get; set; }= DateTime.Now;
 
-        public string FName { get; set; }
-        public string FDescrpition { get; set; }
+        public int? FMemberId { get; set; }= 0;
 
-        public DateTime FLastModifyTime { get; set; }
+        public string FShareAudience { get; set; } = "";
 
-        public int? FMemberId { get; set; }
+        public string FComment { get; set; } = "";
+        public string FLessonName { get; set; } = "";
 
-        public string FShareAudience { get; set; }
+        public DateTime? FCommentTime { get; set; }=DateTime.Now;
 
-        public string FComment { get; set; }
-
-        public DateTime? FCommentTime { get; set; }
-
-        public virtual TOrderDetail FOrderDetail { get; set; }
+        public virtual TOrderDetail FOrderDetail { get; set; } = null;
     }
 }
