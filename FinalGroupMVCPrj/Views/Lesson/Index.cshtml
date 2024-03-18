@@ -52,7 +52,10 @@
                                                             {
                                                                  @foreach(var subject in detail.SubjectNames)
                                                             {
-                                                                    <li><button class="icon-start" title="link" target="_self" onclick="handleSubjects({ fieldId: @(detail.FieldId), subjectName: '@(subject)' })"><i class="fal fa-angle-right"></i>@subject</button></li>
+                                                                    <li><button class="icon-start" title="link" target="_self"
+                                                                                onclick="handleSubjects({ fieldId: @(detail.FieldId), subjectName: '@(subject)', page: 1, pageSize: 6})">
+                                                                        <i class="fal fa-angle-right"></i>@subject
+                                                                    </button></li>
                                                             }    
                                                             }
                                                                                                                                                                             
@@ -99,7 +102,7 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="widget widget-ratings py-20">
+                            @* <div class="widget widget-ratings py-20">
                                 <h5 class="title">
                                     <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#sort" aria-expanded="true" aria-controls="sort">
                                         評價
@@ -176,7 +179,7 @@
                                         </ul>
                                     </div>
                                 </div>
-                            </div>
+                            </div> *@
                            
                         </aside>
                     </div>

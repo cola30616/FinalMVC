@@ -82,6 +82,7 @@ namespace FinalGroupMVCPrj.Controllers
                                               teacherId = data.FTeacher.FTeacherId,
                                               teacherName = data.FTeacher.FTeacherName,
                                           })
+                                          .Distinct() 
                                           .ToListAsync();
             return Json(searchResults);
         }
@@ -97,6 +98,7 @@ namespace FinalGroupMVCPrj.Controllers
             
             // 全部資料
             var query = _context.TLessonCourses.AsQueryable();
+
             // 關鍵字查詢
             if (!string.IsNullOrEmpty(courseListDTO.Keyword))
             {
@@ -130,7 +132,7 @@ namespace FinalGroupMVCPrj.Controllers
             // 評價
             //if (courseListDTO.MinRating.HasValue)
             //{
-            //    query = query.Where(course => course.FSC >= courseListDTO.MinRating);
+            //    query = query.Where(course => course.TOrderDetails.Where(s => s.TLessonEvaluations.SelectMany(u => u.FScore)) >= courseListDTO.MinRating);
             //}
 
             //if (courseListDTO.MaxRating.HasValue)

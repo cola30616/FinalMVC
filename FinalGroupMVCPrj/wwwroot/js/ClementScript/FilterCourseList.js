@@ -16,21 +16,14 @@ const FilterSortData = {
 const handleSubjects = (filterData) => {
     FilterSortData.fieldId = filterData.fieldId;
     FilterSortData.subjectName = filterData.subjectName;
+    FilterSortData.page = filterData.page;
+    FilterSortData.pageSize = filterData.page
     loadCourses(FilterSortData);
 }
-const handleAllCourses = () => {
-    const originalData = {
-        page: 1,
-        pageSize: 6,
-        keyword: '',
-        fieldId: undefined,
-        subjectName: undefined,
-        minPrice: 100,
-        maxPrice: 2000,
-        sortBy: 'desc',
-        sortType: 'enrollment'
-    };
-    loadCourses(originalData);
+const handleAllCourses = (e) => {  
+    FilterSortData.fieldId = undefined;
+    FilterSortData.subjectName = undefined; 
+    loadCourses(FilterSortData);
 }
 const handlePriceInput = () => {
     // 獲取最低價格和最高價格
