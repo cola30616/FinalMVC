@@ -10,8 +10,8 @@ function loadDataTable() {
         "columns": [
             { data: 'fOrderId', "width": "5%", className: 'text-center' },
             { data: 'fRealName', "width": "5%", className: 'text-center' },
-            { data: 'fPhone', "width": "7%", className: 'text-center' },
-            { data: 'fEmail', "width": "7%", className: 'text-center' },
+            { data: 'fPhone', "width": "6%", className: 'text-center' },
+            { data: 'fEmail', "width": "6%", className: 'text-center' },
             {
                 data: 'fOrderDate',
                 "width": "7%",
@@ -20,7 +20,7 @@ function loadDataTable() {
                     return data.substring(0, 10).replace(/-/g, '/');
                 }
             },
-            { data: 'fName', "width": "7%", className: 'text-center' },
+            { data: 'fName', "width": "10%", className: 'text-center' },
             { data: 'fLessonPrice', "width": "5%", className: 'text-center' },
             {
                 data: 'fOrderValid',
