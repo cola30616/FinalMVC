@@ -68,6 +68,8 @@ namespace FinalGroupMVCPrj.Models.ViewModels
         public virtual TCourseSubject FSubject { get; set; }
 
         public virtual TTeacher FTeacher { get; set; }
+
+
       
 
         ////評價的部分

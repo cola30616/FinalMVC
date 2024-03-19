@@ -225,6 +225,7 @@ namespace FinalGroupMVCPrj.Controllers
                 FDescription = querystring.FDescription,
                 FEditorDes = querystring.FEditorDes,
                 FRequirement = querystring.FRequirement,
+                FTeacherId = querystring.FTeacherId,
 
                 //// 評價部分
                 FLessonCourseId = querystring.FLessonCourseId,
@@ -254,16 +255,10 @@ namespace FinalGroupMVCPrj.Controllers
 
 
         // 這邊使用viewComponent
-        public async Task<IViewComponentResult> InvokeAsync()
+        public async Task<IViewComponentResult> InvokeAsync(int? id)
         {
             var fields = await _context.TCourseFields.Select(u => u.FFieldName).ToListAsync();
-            var idText = HttpContext.User.Claims.Where(u => u.Type == "MemberId").FirstOrDefault();
-            int id = 0;
-            if (idText != null)
-            {
-                id =  Convert.ToInt32(idText.Value);
-            }
-            
+                      
             var courseList = await _context.TLessonCourses
                 .Where(u => u.FTeacherId == id)
                 .Select(course => new LessonCourseVM
