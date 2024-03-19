@@ -108,7 +108,7 @@ const createCourseHtml = data => {
     <div class="course-default border radius-md mb-25">
         <figure class="course-img">
             <a href="/Lesson/Details/${item.lessonCourse.fLessonCourseId}" title="" target="_self" class="lazy-container ratio ratio-2-3">
-                <img src="data:image/gif;base64,${item.imageData} alt="Image"">                    
+                <img src="data:image/gif;base64,${item.imageData}" alt="Image">                    
             </a>
             <div class="hover-show">
                 <a href="/Lesson/Details/${item.lessonCourse.fLessonCourseId}" class="btn btn-md btn-primary rounded-pill" title="Enroll Now" target="_self">立即預約</a>

@@ -1,5 +1,7 @@
 using FinalGroupMVCPrj;
+using FinalGroupMVCPrj.APIServices;
 using FinalGroupMVCPrj.Data;
+using FinalGroupMVCPrj.Interface;
 using FinalGroupMVCPrj.Models;
 using FinalGroupMVCPrj.Services;
 using MailKit;
@@ -8,12 +10,16 @@ using Microsoft.AspNetCore.CookiePolicy;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc.Authorization;
 using Microsoft.EntityFrameworkCore;
+using System.Configuration;
 
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 var connectionString = builder.Configuration.GetConnectionString("DefaultConnection") ?? throw new InvalidOperationException("Connection string 'DefaultConnection' not found.");
+// 註冊影片上傳service
+builder.Services.AddScoped<IVideoUploadService, VideoUploadServices>();
+
 //CORS�]�w
 builder.Services.AddCors(options =>
 { options.AddPolicy("AllowAll", builder => builder.AllowAnyOrigin().AllowAnyHeader().AllowAnyMethod()); }
@@ -49,8 +55,15 @@ builder.Services.AddSignalR();
 
 builder.Services.Configure<MailSetting>(builder.Configuration.GetSection("MailSettings"));
 builder.Services.AddTransient<FinalGroupMVCPrj.Services.IMailService, FinalGroupMVCPrj.Services.MailService>();
-var app = builder.Build();
+// Swagger
+builder.Services.AddControllers();
 
+builder.Services.AddEndpointsApiExplorer();
+builder.Services.AddSwaggerGen();
+var app = builder.Build();
+// Swagger
+app.UseSwagger();
+app.UseSwaggerUI();
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
