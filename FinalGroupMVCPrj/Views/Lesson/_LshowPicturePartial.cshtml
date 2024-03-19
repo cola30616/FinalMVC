@@ -5,8 +5,8 @@
     //<img src="@Url.Action("showPicture","Lesson",new {id=Model.FLessonCourseId})" title="@Model.FName" style="width:320px;height:240px" />
     <div class="col-lg-4">
         <figure class="course-img" style="border: thin #c0c0c0 solid;border-radius: 8px;  display: flex; flex-flow: column; padding: 8px;margin: auto; background-color: white;width:420px;height:280px">
-            <img class=" ls-is-cached lazyloaded" style="border-radius:6px;" data-src="@Url.Action("showPicture", "Lesson", new { id = Model.FLessonCourseId })" alt="course" title="@Model.FName" />
-        </figure>
+            <img class=" ls-is-cached lazyloaded" style="border-radius:6px;" src="@Url.Action("showPicture", "Lesson", new { id = Model.FLessonCourseId })" alt="course" title="@Model.FName" />
+        </figure> 
     </div>
 }
 else

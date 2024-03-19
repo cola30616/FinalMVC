@@ -12,6 +12,8 @@ using static NuGet.Packaging.PackagingConstants;
 using System.Text;
 using static Org.BouncyCastle.Crypto.Engines.SM2Engine;
 using Microsoft.CodeAnalysis.FlowAnalysis;
+using Newtonsoft.Json.Linq;
+using System.Drawing;
 
 namespace FinalGroupMVCPrj.Controllers
 {
@@ -109,12 +111,13 @@ namespace FinalGroupMVCPrj.Controllers
                     course.FName = lesson.FName;
                     course.FSubjectId = lesson.FSubjectId;
                     course.FSubjectId = Convert.ToInt32(lesson.FSubject);
+                    code = loadCode(Convert.ToInt32(lesson.FFiled), course.FSubjectId);
                 }
                 else if (getcourseType == "old")
                 {
                     course.FSubjectId = _context.TCourseSubjects.Where(x => x.FSubjectName == lesson.FSubject).Select(x => x.FSubjectId).FirstOrDefault();
                     course.FName = lesson.FName;
-                    code = loadCode(Convert.ToInt32(lesson.FFiled), Convert.ToInt32(course.FSubjectId));
+
                 }
 
                 course.FVenueName = lesson.FVenueName;
@@ -213,7 +216,7 @@ namespace FinalGroupMVCPrj.Controllers
         [RequestFormLimits(MultipartBodyLengthLimit = 10240000)]
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> LessonEdit(int? id, LessonCreateViewModel lesson,string status)
+        public async Task<IActionResult> LessonEdit(int? id, LessonCreateViewModel lesson)
         {
             try
             {
@@ -249,16 +252,12 @@ namespace FinalGroupMVCPrj.Controllers
                         course.FOnlineLink = "https://meet.google.com/tek-pkav-obh";
                     }
 
-                   
+
                     if (lesson.FPhoto != null)
                     {
                         course.FPhoto = await ReadUploadImage(lesson.FPhoto);
                     }
-                    if (!string.IsNullOrEmpty(status))
-                    {
-                        course.FStatus = "課程取消";
-                        course.FStatusNote = lesson.FStatusNote;
-                    }
+
                     _context.Update(course);
                     await _context.SaveChangesAsync();
                     TempData["Success"] = "成功儲存變更";
@@ -273,6 +272,37 @@ namespace FinalGroupMVCPrj.Controllers
             return RedirectToAction(nameof(LessonList));
 
         }
+        [HttpPost]  
+        public async Task<IActionResult> LessonCancel(int? id, [FromBody] CancelLessonData cancelData)
+        {
+            if (id == null || cancelData.Reason == null)
+            {
+                return BadRequest(); // 如果 id 或 data 为 null，则返回 400 错误
+            }
+            var course = await _context.TLessonCourses.FindAsync(id );
+            if (course == null)
+            {
+                return NotFound(); // 如果未找到课程，则返回 404 错误
+            }
+            try
+            {
+                // 更新课程状态和状态说明
+                course.FStatus = "課程取消";
+                course.FStatusNote = cancelData.Reason.ToString();
+
+                _context.Update(course);
+                await _context.SaveChangesAsync();
+                //sweetalert有要重新整理才會出現
+                TempData["Success"] = "成功儲存變更";
+                return Ok(course); // 返回 200 状态码表示操作成功
+            }
+            catch (Exception ex)
+            {
+                // 处理异常情况，比如数据库更新失败
+                return StatusCode(500, $"An error occurred: {ex.Message}");
+            }
+        }
+
         public IFormFile ConvertByteArrayToIFormFile(byte[] fileBytes, string fileName)
         {
             // 创建一个内存流，并将 byte[] 写入其中

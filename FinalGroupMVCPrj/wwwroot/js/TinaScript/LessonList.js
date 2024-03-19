@@ -29,11 +29,12 @@ function loadDataTable() {
             { data: 'venueType', "width": "5%", className: 'text-center' },
             {
                 // 這段是新增及刪除按鈕 ， 刪除用到onclick 事件，觸發下方的Delete
-                data: 'lessonid',
-                "render": function (data) {
+                data: null,
+                "render": function (data, type, row) {
+                    var disableButton = row.status === "課程取消" ? 'disabled' : '';
                     return `<div class="d-flex justify-content-between" role="">
-    <a href="/TeacherAdmin/LessonEdit/${data}" class="btn btn-primary mx-2 flex-grow-1" lessonid=${data} ><i class="fa-solid fa-ellipsis-vertical"></i> 檢視</a>
-    <button onclick="calloffCourse(${data})" lessonid=${data} id="calloff" class="btn btn-primary mx-2 flex-grow-1"  data-bs-toggle="tooltip" data-bs-placement="bottom" title="取消"><i class="fa-regular fa-rectangle-xmark"></i></button>
+    <a href="/TeacherAdmin/LessonEdit/${row.lessonid}" class="btn btn-primary mx-2 flex-grow-1" lessonid=${row.lessonid} ><i class="fa-solid fa-ellipsis-vertical"></i> 檢視</a>
+    <button onclick="calloffCourse(${row.lessonid})" lessonid=${row.lessonid} id="calloff" ${disableButton} class="btn btn-primary mx-2 flex-grow-1"  data-bs-toggle="tooltip" data-bs-placement="bottom" title="取消"><i class="fa-regular fa-rectangle-xmark"></i></button>
 </div>`
                 },
                 "width": "10%"
@@ -42,7 +43,7 @@ function loadDataTable() {
         language: {
             url: "https://cdn.datatables.net/plug-ins/1.13.7/i18n/zh-HANT.json"
         }
-        //,
-        //order: [[0, 'dsc']]
+        ,
+        order: [[4, 'dsc']]
     });
 }

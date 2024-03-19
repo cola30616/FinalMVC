@@ -2,8 +2,8 @@
 
 @if (Model.FPhoto != null)
 {
-    <div class="col-sm-6 d-flex rounded border border-dark border-2 pic">
-        <img id="imgPreview" class="lazyload" style="border-radius:6px;" src="@Url.Content("~/TeacherAdmin/showPicture?id=")@Model.FLessonCourseId" alt="course" title="@Model.FName">
+    <div class="col-sm-6 d-flex rounded border border-dark border-1 pic">
+        <img id="imgPreview" class="lazyload" style="width:148px;height:92px;margin;border-radius:6px;" src="@Url.Content("~/TeacherAdmin/showPicture?id=")@Model.FLessonCourseId" alt="course" title="@Model.FName">
     </div>
 
 }

@@ -17,7 +17,7 @@
 <h1>老師後台課程清單</h1>
 @* asp-controller="TeacherAdmin" asp-action="LessonCreate" *@
 <!--改成-->
-<button  onclick="loadHistoryCourse()" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#open"  data-bs-placement="right" title="點擊新增課程"><i class="fa-regular fa-square-plus"></i> 開課</button>
+<button onclick="loadHistoryCourse()" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#open" data-bs-placement="right" title="點擊新增課程"><i class="fa-regular fa-square-plus"></i> 開課</button>
 
 <div class="row">
     <div class="col-sm-10">
@@ -43,14 +43,15 @@
         <div class="col-sm-10">
             <select class="form-select" aria-label="Default select example">
                 <option selected>狀態</option>
-                <option value="1">One</option>
-                <option value="2">Two</option>
-                <option value="3">Three</option>
+                <option value="1">課程取消</option>
+                <option value="2">尚未開放</option>
+                <option value="3">開放報名</option>
+                <option value="4">報名截止</option>
+                <option value="5">課程結束</option>
             </select>
         </div>
     </div>
 </div>
-
 
 
 
@@ -119,24 +120,24 @@
 <!-- End Table with stripped rows -->
 @section Scripts {
     <script src="~/js/tinascript/lessonlist.js" asp-append-version="true"></script>
-    
+
     <script>
         $(document).ready(function () {
-            const goToOpen =document.querySelector('#goToOpen');
+            const goToOpen = document.querySelector('#goToOpen');
             loadHistoryCourse();
         })
-        const  opendCourse = document.querySelector('#opendCourse');
-        async function  loadHistoryCourse(){
+        const opendCourse = document.querySelector('#opendCourse');
+        async function loadHistoryCourse() {
             const url = `@Url.Content("~/TeacherAdmin/historycourse")`;
             const response = await fetch(url);
             const data = await response.json();
-             const options = data.map((item) => {
+            const options = data.map((item) => {
                 return `<option value=${item.fCode}>${item.fCode}-${item.fName}</option>`;
             })
-                opendCourse.innerHTML = options.join('');
+            opendCourse.innerHTML = options.join('');
         };
 
-        function goOpen () {
+        function goOpen() {
             const nameValue = goToOpen.getAttribute('name');
             const codeValue = goToOpen.getAttribute('value');
 
@@ -147,17 +148,17 @@
                 window.location.href = url;
             }
         };
-    //     goToOpen.addEventListener('click', function () {
-    //     const nameValue = this.getAttribute('name');
-    //     const codeValue = this.getAttribute('value');
-        
-    //    this.value=opendCourse.options[opendCourse.selectedIndex].value;
-    //     if (codeValue) {
-    //         const url = '/TeacherAdmin/LessonCreate?' + encodeURIComponent(nameValue) + '=' + encodeURIComponent(codeValue);
-            
-    //         window.location.href = url;
-    //     }
-    // });
+        //     goToOpen.addEventListener('click', function () {
+        //     const nameValue = this.getAttribute('name');
+        //     const codeValue = this.getAttribute('value');
+
+        //    this.value=opendCourse.options[opendCourse.selectedIndex].value;
+        //     if (codeValue) {
+        //         const url = '/TeacherAdmin/LessonCreate?' + encodeURIComponent(nameValue) + '=' + encodeURIComponent(codeValue);
+
+        //         window.location.href = url;
+        //     }
+        // });
     </script>
 
     <!--SweetAlert Version Open-->
@@ -264,6 +265,7 @@
     <script>
         const calloff = document.getElementById('calloff');
         // console.log(calloff);
+        // const formData = new FormData(document.querySelector('#EditLesson'));
 
         function calloffCourse(lessonid) {
             Swal.fire({
@@ -279,8 +281,29 @@
                 cancelButtonText: "取消"
             }).then((result) => {
                 if (result.isConfirmed) {
-                    //Why跳到畫面而不是直接到controller中?
-                    window.location.href = `${location.origin}/TeacherAdmin/LessonEdit?id=10011&status=cancel`;
+                    // console.log(formData);
+                    // 使用fetch API發送POST請求                    
+                    const url = `${location.origin}/TeacherAdmin/LessonCancel/${lessonid}`                  
+                   
+                    fetch(url, {
+                        method: "POST",
+                        headers: {
+                            "Content-Type": "application/json",
+                        },
+                        mode: 'cors',
+                        credentials: 'same-origin',
+                        body: JSON.stringify({ reason: result.value }),
+                    }).then((response) => {
+                        // 处理响应
+                        if (response.ok) {
+                            swal("成功", "課程已成功取消", "success");
+                        } else {
+                            swal("錯誤", "無法取消課程", "error");
+                        }
+                    }).catch((error) => {
+                        // 处理错误
+                        swal("錯誤", "無法取消課程", "error");
+                    });
                 }
             });
         }

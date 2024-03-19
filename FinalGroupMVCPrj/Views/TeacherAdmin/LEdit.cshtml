@@ -10,25 +10,29 @@
             width: 148px;
             height: 92px;
             overflow: hidden;
+            position: relative; /* 添加相对定位，用于图像的绝对定位 */
         }
 
             .pic img {
-                transform: scale(1,1);
-                transition: all 1s ease-out;
+                width: 100%; /* 使图像填充其包含块 */
+                height: auto; /* 保持图像宽高比 */
+                position: absolute; /* 绝对定位，相对于 .pic 容器 */
+                top: 0; /* 图像距离容器顶部的位置 */
+                left: 0; /* 图像距离容器左侧的位置 */
+                transition: transform 1s ease-out; /* 将过渡效果应用于 transform 属性 */
             }
 
-                .pic img:hover {
-                    transform: scale(1.2,1.2);
-                    transform-origin: center center;
-                }
+            .pic:hover img {
+                transform: scale(1.2); /* 在悬停时进行缩放 */
+            }
     </style>
 }
-<h1 class="d-inline display-6 me-3">檢視課程</h1>
-<button type="submit" class="btn btn-outline-info text-center align-self-center me-3">修改</button>
+<h1 class="d-inline display-6 me-3">檢視/修改課程</h1>
+@* <button type="submit" class="btn btn-outline-info text-center align-self-center me-3">修改</button> *@
 <span class="badge-lg rounded bg-warning text-dark text-center align-self-center ">@Html.DisplayFor(x=>x.FStatus)</span> 
 
 <hr />
-<form asp-action="LessonEdit" id="OpenLesson" asp-controller="TeacherAdmin" method="post" enctype="multipart/form-data">
+<form asp-action="LessonEdit" id="EditLesson" asp-controller="TeacherAdmin" method="post" enctype="multipart/form-data">
 <div class="container col-12">
     <div class="row">
         <div class="col-6">
@@ -229,7 +233,7 @@
         <div class="col-12 d-flex justify-content-end">
             <button type="button" class="btn btn-light me-2 text-light" id="demo1">demo1</button>
 
-            <button type="submit" class="btn btn-primary me-2" name="status" value="Create" onclick="setCourseType('@ViewBag.courseType')">儲存變更</button>
+            <button type="submit" class="btn btn-primary me-2" name="status" value="Update" onclick="setCourseType('@ViewBag.courseType')">儲存變更</button>
             <a class="btn btn-secondary" asp-action="LessonList" asp-controller="TeacherAdmin">取消</a>
             <div class="col-1"></div>
         </div>
@@ -265,6 +269,9 @@
 </form>
 @section Scripts {
     <script src="~/js/tinascript/changevenuetype.js" asp-append-version="true"></script>
+    <script src="~/js/tinascript/previewimage.js" asp-append-version="true"></script>
+    <script src="https://cdn.tiny.cloud/1/forirr314cvct8ywt434kbf87vah6743olso1oyjfnhh3vhi/tinymce/6/tinymce.min.js" referrerpolicy="origin"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/croppie/2.6.5/croppie.min.js" referrerpolicy="origin"></script>
     <!--Image-->
     <script>
 
@@ -320,7 +327,7 @@
         });
 
         cutPhoto.croppie('bind', {
-            url: 'demo/cat.jpg',
+            // url: 'demo/cat.jpg',
             points: [77, 469, 280, 739]
         });
 

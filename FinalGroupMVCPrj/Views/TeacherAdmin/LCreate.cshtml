@@ -6,21 +6,26 @@
 
 @section Styles {
     <style>
+        <style >
         .pic {
             width: 148px;
             height: 92px;
             overflow: hidden;
+            position: relative; /* 添加相对定位，用于图像的绝对定位 */
         }
 
-            .pic img {
-                transform: scale(1,1);
-                transition: all 1s ease-out;
-            }
+        .pic img {
+            width: 100%; /* 使图像填充其包含块 */
+            height: auto; /* 保持图像宽高比 */
+            position: absolute; /* 绝对定位，相对于 .pic 容器 */
+            top: 0; /* 图像距离容器顶部的位置 */
+            left: 0; /* 图像距离容器左侧的位置 */
+            transition: transform 1s ease-out; /* 将过渡效果应用于 transform 属性 */
+        }
 
-                .pic img:hover {
-                    transform: scale(1.2,1.2);
-                    transform-origin: center center;
-                }
+        .pic:hover img {
+            transform: scale(1.2); /* 在悬停时进行缩放 */
+        }
     </style>
 }
 
@@ -266,7 +271,8 @@
                 </div>
                 <div class="modal-body">
                     <figure style="border: thin #c0c0c0 solid;border-radius: 8px;  display: flex; flex-flow: column; padding: 8px;margin: auto; background-color: white;width:420px;height:280px;">
-                        <img class=" ls-is-cached lazyloaded" style="border-radius:6px;" src="@Url.Action("showPicture", "Lesson", new { id = Model.FLessonCourseId })" alt="course" id="cutPhoto" />
+                        @* <img class=" ls-is-cached lazyloaded" style="border-radius:6px;" src="@Url.Action("showPicture", "Lesson", new { id = Model.FLessonCourseId })" alt="course" id="cutPhoto" /> *@
+                        <img class=" ls-is-cached lazyloaded" style="border-radius:6px;" src="" alt="course" id="cutPhoto" />
                     </figure>
                 </div>
                 <div class="modal-footer">
@@ -438,7 +444,7 @@
 
    
     <!--用錯誤訊息攔住阻止提交 -->
-    <script>
+@*     <script>
         $(document).ready(function () {
             $('form').submit(function (e) {
                 e.preventDefault(); // 阻止表单默认提交行为
@@ -457,7 +463,7 @@
                 });
             });
         });
-    </script>
+    </script> *@
     <!-- ====================TinyMCE==================== -->
     <!-- 這一段放在自己要用的@section Script -->
     <script>
@@ -504,7 +510,7 @@
         });
 
         cutPhoto.croppie('bind', {
-            url: 'demo/cat.jpg',
+           
             points: [77, 469, 280, 739]
         });
 
