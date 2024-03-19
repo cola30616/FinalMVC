@@ -6,7 +6,7 @@
 
 @section Styles {
     <style>
-        <style >
+    
         .pic {
             width: 148px;
             height: 92px;
@@ -119,7 +119,7 @@
                                 <input class="form-control" type="file" asp-for="FPhoto" accept="image/*">
                             </div>
                             <div class="mb-4">
-                                <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#cut">裁切圖片</button>
+                                <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#cut" onclick="openCutPhoto()">裁切圖片</button>
                             </div>
                         </div>
                         @* 預覽圖 *@
@@ -270,14 +270,16 @@
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    <figure style="border: thin #c0c0c0 solid;border-radius: 8px;  display: flex; flex-flow: column; padding: 8px;margin: auto; background-color: white;width:420px;height:280px;">
+                    <div id="croppie-container">
+                    <!--<figure style="border: thin #c0c0c0 solid;border-radius: 8px;  display: flex; flex-flow: column; padding: 8px;margin: auto; background-color: white;width:420px;height:280px;">
                         @* <img class=" ls-is-cached lazyloaded" style="border-radius:6px;" src="@Url.Action("showPicture", "Lesson", new { id = Model.FLessonCourseId })" alt="course" id="cutPhoto" /> *@
-                        <img class=" ls-is-cached lazyloaded" style="border-radius:6px;" src="" alt="course" id="cutPhoto" />
-                    </figure>
+                        <img class=" ls-is-cached lazyloaded" style="border-radius:6px;width:420px;height:280px;" alt="course" id="cutPhoto" />
+                        </figure>-->
+                    </div>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                    <button type="button" class="btn btn-primary">Save changes</button>
+                    <button type="button" id="crop-button" class="btn btn-primary">Save changes</button>
                 </div>
 
             </div>
@@ -379,15 +381,7 @@
 
     </script>
 
-    <!--Image-->
-    <script>
-      
-        $("#FPhoto").on("change", function () {
-            console.log("Hello");
-            previewImage(this, $('#imgPreview'));
-        });
-
-    </script>
+   
     <!--課程型態-->
     <script>
         function setCourseType(courseTypeValue) {
@@ -493,28 +487,43 @@
 
         
     </script>
+    <!--Image-->
+    <script>
+
+        $("#FPhoto").on("change", function () {
+            previewImage(this, $('#imgPreview'));
+
+        });
+
+    </script>
 
     <!--Croppie-->
     <script>
-        const cutPhoto = $('#cutPhoto').croppie({
-            enableExif: true,
+        let photourl;
+        //載入圖片
+        function openCutPhoto() {
+            const photourl = $("#imgPreview").attr('src');
+            console.log(photourl)
+        };
+
+        openCutPhoto();
+
+        const basic = $('#croppie-container').croppie({
             viewport: {
-                width: 300,
-                height: 200,
-                type: 'square'
+                width: 420,
+                height: 280
             },
             boundary: {
-                width: 400,
-                height: 300
+                width: 480,
+                height: 320
             }
         });
-
-        cutPhoto.croppie('bind', {
-           
+        basic.croppie('bind', {
+            url: photourl,
             points: [77, 469, 280, 739]
         });
-
-        cutPhoto.croppie('result', 'html').then(function (html) {
+        //on button click
+        basic.croppie('result', 'html').then(function (html) {
             // html is div (overflow hidden)
             // with img positioned inside.
         });

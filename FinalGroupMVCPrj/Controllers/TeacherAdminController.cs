@@ -293,7 +293,7 @@ namespace FinalGroupMVCPrj.Controllers
                 _context.Update(course);
                 await _context.SaveChangesAsync();
                 //sweetalert有要重新整理才會出現
-                TempData["Success"] = "成功儲存變更";
+              
                 return Ok(course); // 返回 200 状态码表示操作成功
             }
             catch (Exception ex)

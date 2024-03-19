@@ -296,16 +296,25 @@
                     }).then((response) => {
                         // 处理响应
                         if (response.ok) {
-                            swal("成功", "課程已成功取消", "success");
+                             sweetMsg( "課程已成功取消", "success");
                         } else {
-                            swal("錯誤", "無法取消課程", "error");
+                                 sweetMsg( "無法取消課程", "error");
                         }
                     }).catch((error) => {
                         // 处理错误
-                        swal("錯誤", "無法取消課程", "error");
+                        sweetMsg( "無法取消課程", "error");
                     });
                 }
             });
         }
+        function sweetMsg(msg,icon) {
+            Swal.fire({
+                position: "center",
+                icon: icon,
+                title: msg,
+                showConfirmButton: false,
+                timer: 1500
+            });
+        };
     </script>
 }
