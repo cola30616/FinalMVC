@@ -7,5 +7,7 @@
         public List<TLessonCourse> CancelRecord { get; set; }
         public int FOrderId { get; set; }
 
+        //public Dictionary<int, TLessonCourse> SuccessRecord { get; set; }
+
     }
 }

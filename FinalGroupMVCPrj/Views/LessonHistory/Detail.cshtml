@@ -142,11 +142,12 @@
                             confirmButtonColor: "#3085d6",
                             confirmButtonText: "確定",
                             cancelButtonText: "取消"
-                        }).then((result) => {
+                        }).then((result) => {                            
                             if (result.isConfirmed) {
                                 // 發送 AJAX 請求更新資料庫中的 FOrderValid
                                 $.ajax({
                                     type: 'POST',
+                                    data: { reason: result.value }, // 將 result.value 傳遞給控制器
                                     url: `/LessonHistory/CancelOrder/${OrderID}`,
                                     success: function () {
                                         // 更新成功後執行下一步操作
@@ -158,6 +159,7 @@
                                             confirmButtonText: "返回首頁",
                                             cancelButtonText: "檢視課程紀錄頁面"
                                         }).then((result) => {
+                                           
                                             if (result.isConfirmed) {
                                                 window.location.href = '';
                                             } else if (result.dismiss === Swal.DismissReason.cancel) {

@@ -31,12 +31,10 @@ namespace FinalGroupMVCPrj.Controllers
             };
             return View(learningRecord);
         }
-
-
-
         //■ ==========================     Apple 作業區      ==========================■
         public IActionResult Detail(int? id)
         {
+
             ViewBag.FOrderDetailId = 5;
 
             if (id == null)

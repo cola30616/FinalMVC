@@ -37,7 +37,7 @@ namespace FinalGroupMVCPrj.Controllers
         { "TradeDesc",  "購買平台課程"},
         { "ItemName",  orderDetail.FLessonCourse.FName},  //
         { "ReturnURL",  $"{Url.Action("ECpayResult","ECpay")}"}, 
-        { "OrderResultURL", $"{Url.Action("ECpayResult","ECpay")}" }, //client端，回到LessonHistory/Detail/id
+        { "OrderResultURL", "https://localhost:7031/TestECpay/ECpayResult" }, //client端，回到LessonHistory/Detail/id
         { "MerchantID",  "3002607"},
         { "PaymentType",  "aio"}, 
         { "ChoosePayment",  "Credit"},
@@ -49,17 +49,50 @@ namespace FinalGroupMVCPrj.Controllers
         }
 
         //訂單交易成功與否及該筆訂單編號，RtnCode=1為成功
-        public IActionResult ECpayResult(int RtnCode, string MerchantTradeNo)
-        {
-            if (RtnCode == 1)
-            {
-                return Content("交易成功" + MerchantTradeNo);
-            }
-            return Content("交易失敗" + MerchantTradeNo);
-        }
+        //public IActionResult ECpayResult(int RtnCode, string MerchantTradeNo)
+        //{
+        //    if (RtnCode == 1)
+        //    {
+        //        // 根據 MerchantTradeNo 從 TOrderDetail 中找到相應的記錄
+        //        var orderDetail = _context.TOrder.FirstOrDefault(od => od.fOrderNumber == MerchantTradeNo);
 
-        //JObject 是 Newtonsoft.Json 套件中的類型，它表示一個動態的、可變的 JSON 物件。
-        public IActionResult ECpayResult2(JObject info)
+        //        if (orderDetail != null)
+        //        {
+        //            // 根據 TOrderDetail 記錄中的 TOrderId 找到相應的 TOrder 記錄
+        //            var order = _context.TOrders.FirstOrDefault(o => o.fOrderNumber == orderDetail.TOrderId);
+
+        //            if (order != null)
+        //            {
+        //                // 更新 TOrderDetail 記錄
+        //                orderDetail.fOrderValid = true;
+        //                orderDetail.fModificationDescription = null; // 或者您可以將其設置為空字符串，取決於您的需求
+
+        //                // 保存更改
+        //                _context.SaveChanges();
+
+        //                return Ok(); // 或者您可以返回其他成功的狀態碼或視圖
+        //            }
+        //            else
+        //            {
+        //                // 如果找不到相應的 TOrder 記錄，可能需要處理錯誤
+        //                return BadRequest("找不到相應的訂單記錄");
+        //            }
+        //        }
+        //        else
+        //        {
+        //            // 找不到相應的記錄，可能需要處理錯誤
+        //            return BadRequest("找不到相應的訂單詳細記錄");
+        //        }
+        //    }
+        //    else
+        //    {
+        //        // RtnCode 不為 1，可能需要處理錯誤
+        //        return BadRequest("系統出現錯誤");
+        //    }
+        //}
+
+    //JObject 是 Newtonsoft.Json 套件中的類型，它表示一個動態的、可變的 JSON 物件。
+    public IActionResult ECpayResult2(JObject info)
         {
             return Content("");
         }
