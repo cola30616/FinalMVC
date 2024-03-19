@@ -257,7 +257,15 @@ namespace FinalGroupMVCPrj.Controllers
         public async Task<IViewComponentResult> InvokeAsync()
         {
             var fields = await _context.TCourseFields.Select(u => u.FFieldName).ToListAsync();
-            var courseList = await _context.TLessonCourses               
+            var idText = HttpContext.User.Claims.Where(u => u.Type == "MemberId").FirstOrDefault();
+            int id = 0;
+            if (idText != null)
+            {
+                id =  Convert.ToInt32(idText.Value);
+            }
+            
+            var courseList = await _context.TLessonCourses
+                .Where(u => u.FTeacherId == id)
                 .Select(course => new LessonCourseVM
                 {
                     lessonCourse = course,
