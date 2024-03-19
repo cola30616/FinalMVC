@@ -389,7 +389,7 @@ namespace FinalGroupMVCPrj.Controllers
                             where lessoncourse.FTeacherId == currentTeacherId
                             select new OrderBasicViewModel
                             {
-                                FOrderId = order.FOrderId,
+                                FOrderNumber = order.FOrderNumber,
                                 FRealName = member.FRealName,
                                 FPhone= member.FPhone,
                                 FEmail = member.FEmail,

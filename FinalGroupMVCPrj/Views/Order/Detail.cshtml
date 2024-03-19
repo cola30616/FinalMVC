@@ -1,7 +1,8 @@
-﻿@model OrderDetailViewModel
+﻿@model CheckoutDetailViewModel
 
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
+<partial name="_SweetAlertPartial" />
 <!-- Breadcrumb start -->
 <div class="breadcrumb-area bg-img bg-cover" data-bg-image="/images/owenadd/breadcrumb-bg.jpg">
     <div class="container">
@@ -19,7 +20,7 @@
 <!-- Breadcrumb end -->
 <!-- Mentor-details-area start -->
 
-
+<form asp-controller="Order" asp-action="CheckOrder" method="post">
 <section class="mentor-details pt-60 pb-30">
     <div class="container">
         <div class="row gx-xl-5 align-items-center">
@@ -36,11 +37,11 @@
                     <span class=" fs-5 ">
                         課程資訊：@Html.DisplayFor(model => model.FDescription)
                     </span>
-                    <div class="content-text mt-20">
-                        <p class="fs-5 fw-bold">
-                            地點：@Html.DisplayFor(model => model.FDescription) @* 要改成FAddressDetail*@
-                        </p>
-                    </div>
+                        <div class="content-text mt-20">
+                            <p class="fs-5 fw-bold">
+                                課程費用：@Math.Floor(Model.FPrice) 元
+                            </p>
+                        </div>
                 </div>
             </div>
         </div>
@@ -59,21 +60,21 @@
                             <div class="col-lg-6">
                                 <div class="form-group mb-30 fs-5">
                                     <label for="firstName">姓名 </label>
-                                    <input type="text" id="readOnlyInput" value=@Html.DisplayFor(model => model.FRealName) class="form-control fs-5" readonly>
+                                    <input asp-for="FRealName" class="form-control fs-5" readonly>
 @*                                     <input id="firstName" type="text" class="form-control fs-3" name="firstName" placeholder="First Name" required="">
  *@                                </div>
                             </div>
                             <div class="col-lg-6">
                                 <div class="form-group mb-30 fs-5">
                                     <label for="phone">手機號碼 </label>
-                                    <input type="text" id="readOnlyInput" value=@Html.DisplayFor(model => model.FPhone) class="form-control fs-5" readonly>
+                                    <input asp-for="FPhone" class="form-control fs-5" readonly>
 @*                                     <input id="phone" type="text" class="form-control fs-3" name="phone" placeholder="Phone Number" required="">
  *@                                </div>
                             </div>
                             <div class="col-lg-6">
                                 <div class="form-group mb-30 fs-5">
                                     <label for="email">Email </label>
-                                    <input type="text" id="readOnlyInput" value=@Html.DisplayFor(model => model.FEmail) class="form-control fs-5" readonly>
+                                    <input asp-for="FEmail" class="form-control fs-5" readonly>
 @*                                     <input id="email" type="email" class="form-control fs-3" name="email" placeholder="Email Address" required="">
  *@                                </div>                                
                                 </div>
@@ -135,14 +136,22 @@
                             </div>
                         </div>
                     </div>
+
                     <div class="text-center">
-                        <button id="yourOrderButton" class="fs-3 btn btn-lg btn-primary radius-sm w-100" type="button" aria-label="button" data-bs-toggle="modal" data-bs-target="#orderSuccessModal">送出訂單</button>
+                    <input asp-for="FMemberId" class="form-control" style="visibility:hidden;height:0px" readonly>
+                        <input asp-for="FLessonCourseId" class="form-control" style="visibility:hidden;height:0px" readonly>
+                        <input asp-for="FName" class="form-control" style="visibility:hidden;height:0px" readonly>
+                        <input asp-for="FDescription" class="form-control" style="visibility:hidden;height:0px" readonly>
+                        <input asp-for="FPhoto" class="form-control" style="visibility:hidden;height:0px" readonly>
+                        <input asp-for="FPrice" class="form-control" style="visibility:hidden;height:0px" readonly>
+                    <button type="submit" class="fs-3 btn btn-lg btn-primary radius-sm w-100" title="CheckOrder" target="_self">送出訂單</button>
                     </div>
         </form>
     </div>
 </div>
+</form>
 @section Scripts{
-    <script>
+   @*  <script>
         $(document).ready(function () {
             $('#yourOrderButton').click(function () {
                 // 觸發SweetAlert
@@ -165,7 +174,6 @@
                 });
             });
         });
-    </script>
+    </script> *@
 }
-
 

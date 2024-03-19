@@ -422,6 +422,10 @@ public partial class LifeShareLearnContext : DbContext
                 .HasColumnName("fVenueName");
             entity.Property(e => e.FVenueType).HasColumnName("fVenueType");
 
+            entity.HasOne(d => d.FDistrict).WithMany(p => p.TLessonCourses)
+                .HasForeignKey(d => d.FDistrictId)
+                .HasConstraintName("FK_tLessonCourse_tCityDistricts");
+
             entity.HasOne(d => d.FSubject).WithMany(p => p.TLessonCourses)
                 .HasForeignKey(d => d.FSubjectId)
                 .HasConstraintName("FK_tLessonCourse_tCourseSubjects");
@@ -591,6 +595,11 @@ public partial class LifeShareLearnContext : DbContext
             entity.Property(e => e.FPushMessageId).HasColumnName("fPushMessageId");
             entity.Property(e => e.FPushRead).HasColumnName("fPushRead");
 
+            entity.HasOne(d => d.FMember).WithMany(p => p.TMemberGetPushes)
+                .HasForeignKey(d => d.FMemberId)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("FK_tMemberGetPush_tMember");
+
             entity.HasOne(d => d.FPushMessage).WithMany(p => p.TMemberGetPushes)
                 .HasForeignKey(d => d.FPushMessageId)
                 .OnDelete(DeleteBehavior.ClientSetNull)
@@ -658,6 +667,10 @@ public partial class LifeShareLearnContext : DbContext
             entity.Property(e => e.FOrderDate)
                 .HasColumnType("datetime")
                 .HasColumnName("fOrderDate");
+            entity.Property(e => e.FOrderNumber)
+                .HasMaxLength(11)
+                .IsFixedLength()
+                .HasColumnName("fOrderNumber");
             entity.Property(e => e.FPaymentMethod)
                 .IsRequired()
                 .HasMaxLength(50)

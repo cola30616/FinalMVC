@@ -8,7 +8,7 @@ function loadDataTable() {
     dataTable = $('#OrderListTable').DataTable({
         "ajax": { url: '/TeacherAdmin/ListDataJson2' },
         "columns": [
-            { data: 'fOrderId', "width": "5%", className: 'text-center' },
+            { data: 'fOrderNumber', "width": "6%", className: 'text-center' },
             { data: 'fRealName', "width": "5%", className: 'text-center' },
             { data: 'fPhone', "width": "6%", className: 'text-center' },
             { data: 'fEmail', "width": "6%", className: 'text-center' },
@@ -24,7 +24,7 @@ function loadDataTable() {
             { data: 'fLessonPrice', "width": "5%", className: 'text-center' },
             {
                 data: 'fOrderValid',
-                "width": "5%",
+                "width": "7%",
                 className: 'text-center',
                 "render": function (data) {
                     return data==true ? "是" : "否";

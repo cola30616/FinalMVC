@@ -6,7 +6,7 @@ namespace FinalGroupMVCPrj.Models.ViewModels
     public class OrderBasicViewModel
     {
         [Display(Name = "訂單編號")]
-        public int FOrderId { get; set; }
+        public string FOrderNumber { get; set; }
 
         //public int FMemberId { get; set; } //顯示會員名
         [Display(Name = "會員姓名")]
