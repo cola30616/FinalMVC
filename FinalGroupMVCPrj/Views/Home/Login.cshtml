@@ -74,14 +74,14 @@
                                 <div class="col-12">
                                     <div class="form-group mb-20">
                                     
-                                    <input asp-for="FEmail" class="pageFormText form-control" placeholder="電子信箱" value="caixiaofang@email.com">
+                                    <input asp-for="FEmail" class="pageFormText form-control" placeholder="電子信箱" value="">
                                     <span asp-validation-for="FEmail" class="text-danger"></span>
                                     </div>
                                 </div>
                                 <div class="col-12">
                                     <div class="form-group mb-20">
                                         <div class="position-relative">
-                                        <input asp-for="FPassword" type="password" class="pageFormText form-control" placeholder="密碼" value="asd123456">
+                                        <input asp-for="FPassword" type="password" class="pageFormText form-control" placeholder="密碼 至少8個字英數混合" value="">
                                             <span class="show-password-field">
                                             <i class="show-icon"></i>
                                             </span>
@@ -176,6 +176,7 @@
             }
 
             function ToSignup() {
+                document.getElementById('FPassword').placeholder = '密碼 至少8個字英數混合';
                 signupTogle.forEach((element) => {
                     element.style.display = "block";
                 });
@@ -186,6 +187,7 @@
             };
 
             function ToLogin() {
+            document.getElementById('FPassword').placeholder = '密碼';
                 signupTogle.forEach((element) => {
                     element.style.display = "none";
                 });
