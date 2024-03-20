@@ -320,6 +320,23 @@ namespace FinalGroupMVCPrj.Controllers
             }
         }
 
+
+        [HttpGet]
+        public  IActionResult LessonTestPhoto()
+        {
+
+            return View();
+
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> LessonTestPhoto(int? id, LessonCreateViewModel lesson)
+        {
+            
+            return RedirectToAction(nameof(LessonList));
+
+        }
+
         public IFormFile ConvertByteArrayToIFormFile(byte[] fileBytes, string fileName)
         {
             // 创建一个内存流，并将 byte[] 写入其中
