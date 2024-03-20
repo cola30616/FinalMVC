@@ -90,7 +90,16 @@
 @section Scripts {
     <script src="~/js/applescript/orderlist.js"asp-append-version="true"></script>
     <script>
+        //員工類型搜尋
+        $("#employeeType").change(() => { EmpType() });
+        function EmpType() {
+            if ($("#employeeType").find(":selected").text() == '選擇員工類別') {
 
+                $('#empdatatable').DataTable().column(9).search("").draw();
+            } else {
+                $('#empdatatable').DataTable().column(9).search($("#employeeType").find(":selected").text()).draw();
+            }
+        }
 
     </script>
 }

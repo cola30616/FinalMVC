@@ -17,17 +17,30 @@ namespace FinalGroupMVCPrj.Controllers
         //動作簡述：回傳課程記錄清單的頁面
         [HttpGet]
         public IActionResult LearningRecord()
-        {            
-            var successRecord = _context.TOrderDetails.Where(lr => lr.FOrder.FMemberId == GetCurrentMemberId() && lr.FOrderValid == true)
-                .Select(lr => lr.FLessonCourse).Distinct().ToList();
-            var cancelRecord = _context.TOrderDetails.Where(lr => lr.FOrder.FMemberId == GetCurrentMemberId() && lr.FOrderValid == false)
-                .Select(lr => lr.FLessonCourse).Distinct().ToList();
-            int orderId = _context.TOrders.Where(od => od.FMemberId == GetCurrentMemberId()).FirstOrDefault().FOrderId;
+        {
+            var memberId = GetCurrentMemberId(); // 获取当前会员ID
+            var successRecord = _context.TOrderDetails
+                .Include(lc => lc.FLessonCourse)
+                .Where(lr => lr.FOrder.FMemberId == memberId && lr.FOrderValid == true)               
+                .ToList(); // 将查询结果转换为列表           
+
+            // 将结果转换为字典
+            var successdict = successRecord.ToDictionary(lr => lr.FOrderId, lr => lr.FLessonCourse);
+
+
+            var cancelRecord = _context.TOrderDetails
+                .Include(lc => lc.FLessonCourse)
+                .Where(lr => lr.FOrder.FMemberId == memberId && lr.FOrderValid == false)
+                .ToList(); // 将查询结果转换为列表 
+
+            // 将结果转换为字典
+            var canceldict = successRecord.ToDictionary(lr => lr.FOrderId, lr => lr.FLessonCourse);
+
             LearningRecordVM learningRecord = new()
             {
-                SuccessRecord = successRecord,
-                CancelRecord = cancelRecord,
-                FOrderId = orderId
+                SuccessRecord = successdict,
+                CancelRecord = canceldict,
+
             };
             return View(learningRecord);
         }

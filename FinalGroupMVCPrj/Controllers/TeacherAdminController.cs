@@ -9,6 +9,7 @@ using System.Data;
 using System.IO;
 using System.Security.Cryptography.Pkcs;
 using static NuGet.Packaging.PackagingConstants;
+using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace FinalGroupMVCPrj.Controllers
 {
@@ -400,6 +401,6 @@ namespace FinalGroupMVCPrj.Controllers
                                 FModificationDescription = orderDetail.FModificationDescription,
                             };
             return Json(new { data = OrderData });
-        }       
+        }  
     }
 }
