@@ -492,22 +492,27 @@
 
         $("#FPhoto").on("change", function () {
             previewImage(this, $('#imgPreview'));
-
         });
 
     </script>
 
     <!--Croppie-->
     <script>
-        let photourl;
+        let finurl;
         //載入圖片
         function openCutPhoto() {
             const photourl = $("#imgPreview").attr('src');
-            console.log(photourl)
+            const img = new Image();            
+            img.src = $("#imgPreview").attr('src');
+            img.width = 420;
+            img.height = 280;
+            previewImage(this, img);
+             finurl = img.src;
+            console.log(img.src);
         };
-
         openCutPhoto();
-
+        
+        console.log(finurl);
         const basic = $('#croppie-container').croppie({
             viewport: {
                 width: 420,
@@ -519,13 +524,9 @@
             }
         });
         basic.croppie('bind', {
-            url: photourl,
+            url: finurl,
             points: [77, 469, 280, 739]
         });
-        //on button click
-        basic.croppie('result', 'html').then(function (html) {
-            // html is div (overflow hidden)
-            // with img positioned inside.
-        });
+       
     </script>
 } 
