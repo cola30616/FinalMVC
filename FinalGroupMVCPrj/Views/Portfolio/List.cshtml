@@ -1,7 +1,6 @@
 ﻿@using FinalGroupMVCPrj.Models.DTO
+
 @model IEnumerable<PortfolioListDTO>
-
-
 <!-- Breadcrumb start -->
 <div class="breadcrumb-area bg-img bg-cover" data-bg-image="/images/breadcrumb-bg.jpg">
     <div class="container">
@@ -30,35 +29,29 @@
                                 <img class="lazyload" src="/images/placeholder.png" data-src="/images/blog/blog-1.jpg" alt="blog Image">
                             </div>
                         </div>
+                        @foreach (var i in Model){
                         <div class="content">
                             <ul class="info-list">
-                                <li><i class="fal fa-user"></i>@Html.DisplayFor(m => m.FirstOrDefault().FShowName) </li>
-                                <li><i class="fal fa-calendar"></i>@Html.DisplayFor(m => m.FirstOrDefault().FLastModifyTime)</li>
-                                <li><i class="fal fa-tag"></i>@Html.DisplayFor(m => m.FirstOrDefault().FSubjectName)</li>
+                                <li><i class="fal fa-user"></i>@i.FName</li>
+                                    <li><i class="fal fa-calendar"></i>@i.FLastModifyTime</li>
+                                    <li><i class="fal fa-tag"></i>@i.FSubjectName</li>
                             </ul>
-                            
-                                <h4 class="title">                                    
-                                @Html.DisplayFor(m => m.FirstOrDefault().FName)                                 
-                            </h4>                           
+
+                            <h4 class="title">
+                                    @i.FName
+                            </h4>
                             <p>
-                                @Html.DisplayFor(m => m.FirstOrDefault().FDescrpition)
-                          
+                                    @i.FDescrpition
                             </p>
                             <blockquote class="blockquote mb-30">
                                 <i class="fas fa-quote-left"></i>
                                 <p>
-                                    @Html.DisplayFor(m => m.FirstOrDefault().FLessonCourseDescrpition)
-                                </p>
+                                  @i.FLessonCourseDescrpition
                             </blockquote>
                             <p class="m-0">
-                                All the Lorem Ipsum generators on the Internet tend to repeat predefined
-                                chunks as necessary, making this the first true generator on the Internet. It uses a
-                                dictionary of over 200 Latin words, combined with a handful model sentence
-                                structures, to generate Lorem Ipsum which looks reasonable. The generated Lorem
-                                Ipsum is therefore always free from. Lorem ipsum dolor sit amet consectetur
-                                adipisicing elit. Accusantium, optio!
                             </p>
-                        </div>
+                            </div>
+                        }
                     </article>
                 </div>
                 <div class="row">
@@ -71,16 +64,19 @@
                                         <div class="comment-body">
                                             <div class="comment-author">
                                                 <div class="lazy-container ratio ratio-1-1 rounded-circle">
-                                                    <img class="lazyload" src="/images/placeholder.png" data-src="/images/avatar-1.jpg" alt="image">
+                                                    <img class="lazyload" src="https://themeforest.kreativdev.com/oppida/demo/assets/images/avatar-2.jpg" data-src="https://themeforest.kreativdev.com/oppida/demo/assets/images/avatar-2.jpg" alt="image">
                                                 </div>
                                             </div>
-                                            <div class="comment-content">
-                                                <h6 class="name">Adam Haul</h6>
+                                            @foreach (var i in Model)
+                                            {
+                                                <div class="comment-content">
+                                                    <h6 class="name">小榮</h6>
                                                 <p>
-                                                    @Html.DisplayFor(m => m.FirstOrDefault().FComment)
+                                                    @i.FComment
                                                 </p>
                                                 <a href="blog-single.html" class="font-sm color-primary" target="_self" title="Reply">Reply</a>
                                             </div>
+                                            }
                                         </div>
                                     </li>
                                     <li class="comment">
@@ -126,25 +122,25 @@
                                     Required fields are marked
                                     <span class="required text-danger">*</span>
                                 </p>
-                                <form id="commentForm" class="comment-form">
+                                <form method="post" id="commentForm" class="comment-form">
                                     <div class="row">
                                         <div class="col-sm-6">
                                             <div class="form-group mb-20">
-                                                <input type="text" class="form-control" name="name" placeholder="Name*" required>
+                                                <input type="text" class="form-control" name="name" id="name" placeholder="Name*" required>
                                             </div>
                                         </div>
                                         <div class="col-sm-6">
                                             <div class="form-group mb-20">
-                                                <input type="email" class="form-control" name="email" placeholder="Email*" required>
+                                                <input type="email" class="form-control" name="email" id="email" placeholder="Email*">
                                             </div>
                                         </div>
                                         <div class="col-12">
                                             <div class="form-group mb-30">
-                                                <textarea name="message" class="form-control" placeholder="Comment" required rows="6"></textarea>
+                                                <textarea name="message" class="form-control" placeholder="Comment" id="comment" required rows="6" ></textarea>
                                             </div>
                                         </div>
                                     </div>
-                                    <button class="btn btn-lg btn-primary rounded-pill" type="button" aria-label="Post Comment">Post Comment</button>
+                                    <button class="btn btn-lg btn-primary rounded-pill" type="button" aria-label="Post Comment" asp-controller="Portfolio" asp-action="Create">Post Comment</button>
                                 </form>
                             </div>
                         </div>
@@ -239,11 +235,11 @@
                         </h5>
                         <div id="blogCategory" class="collapse show">
                             <div class="accordion-body mt-20 scroll-y">
-                                <ul class="list-unstyled m-0">                                  
+                                <ul class="list-unstyled m-0">
                                     <li class="d-flex align-items-center justify-content-between">
                                         <a href="blogs.html" target="_self" title="blogs"><i class="fal fa-folder"></i>烹飪</a>
                                         <span class="tqy">(11)</span>
-                                        </li>
+                                    </li>
                                     <li class="d-flex align-items-center justify-content-between">
                                         <a href="blogs.html" target="_self" title="blogs"><i class="fal fa-folder"></i>軟體工程</a>
                                         <span class="tqy">(02)</span>
@@ -300,22 +296,20 @@
         </div>
     </div>
 </div>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <script>
-    async function getData() {
-        ket htmlStr = ""
-        let res = await http({ 
-            method:'get',
-            url:'https://localhost:7031/Portfolio/List'});
+    commentForm.onsubmit = async (e) => {
+            e.preventDefault();
 
-        //res.data.forEach()
-        console.log(res)
+            let response = await fetch('/Portfolio/Create', {
+                method: 'POST',
+                body: new FormData(formElem)
+            });
 
-        //把傳回值改成json格式
-        let json = await res.json()
-        console.log(json)
-    }
+            let result = await response.json();
 
-    //調用函數，注意先後順序
-    getData()
+            alert(result.message);
+        };
+
+
 </script>
-<!-- blog-details-area end -->

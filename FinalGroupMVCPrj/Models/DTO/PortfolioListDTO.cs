@@ -17,6 +17,7 @@
         public string FShareAudience { get; set; } = "";
 
         public string FComment { get; set; } = "";
+        public string FCommentPerson { get; set; } = "";
         public string FLessonName { get; set; } = "";
 
         public DateTime? FCommentTime { get; set; }=DateTime.Now;
