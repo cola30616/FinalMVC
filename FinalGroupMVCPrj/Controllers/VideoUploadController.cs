@@ -16,6 +16,7 @@ namespace FinalGroupMVCPrj.Controllers
         public VideoUploadController(IVideoUploadService videoUploadService, LifeShareLearnContext lifeShareLearnContext)
         {
             _videoUploadService = videoUploadService;
+            _lifeShareLearnContext = lifeShareLearnContext;
         }
 
         [HttpPost]
