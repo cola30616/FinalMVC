@@ -200,14 +200,15 @@
                 </div>
                 <div class="row mb-3">
                     <div class="col-sm-3">
-                        <select class="form-select" aria-label="Default select example" id="city" name="city">
-                            <option selected>縣市</option>
-                        </select>
-                    </div>
-                    <div class="col-sm-3">
-                        <select class="form-select" aria-label="Default select example" asp-for="FDistrictId" id="district">
-                            <option selected>地區</option>
 
+                                <select  class="form-select" asp-items="ViewBag.CitySelectList" id="city"></select>
+
+                    </div>
+                    <div class="col-sm-3">       
+                   
+                            <input class="form-control" type="text" id="districtid" value=@ViewBag.DistrictSelect hidden>
+                            <select class="form-select" aria-label="Default select example" asp-for="FDistrictId" >
+                            <option selected>地區</option>
                         </select>
                     </div>
                     <div class="col-sm-6">
@@ -298,6 +299,8 @@
                     selector: 'textarea#FEditorDes',
                     plugins: 'anchor autolink charmap codesample emoticons image link lists media searchreplace table visualblocks wordcount linkchecker',
                     toolbar: 'undo redo | blocks fontfamily fontsize | bold italic underline strikethrough | link image media table | align lineheight | numlist bullist indent outdent | emoticons charmap | removeformat',
+                    language: 'zh_TW',
+                    placeholder: "請在這裡輸入..."
                 });
                 // 在此添加其他 TinyMCE 配置选项
             }
@@ -334,6 +337,39 @@
         cutPhoto.croppie('result', 'html').then(function (html) {
             // html is div (overflow hidden)
             // with img positioned inside.
+        });
+    </script>
+    <script>
+        const districtid = document.querySelector("#districtid");
+        const district = document.querySelector("#FDistrictId");
+        const id = districtid.value;
+
+        const city = document.querySelector("#city"); 
+        const cityid = parseInt(city.options[city.selectedIndex].value);
+        const setDistrict = async function setDistrict(cityid, districtid) {
+            const url = `@Url.Content("~/TeacherAdmin/allDistrict")?cityid=${cityid}`;
+            const response = await fetch(url);
+            const data = await response.json();
+
+            let options = data.map((item) => {
+                if (districtid === 0 || districtid == item.fDistrictId) {
+                    return `<option value="${item.fDistrictId}" ${districtid == item.fDistrictId ? 'selected' : ''}>${item.fDistrictName}</option>`;
+                } else {
+                    return `<option value="${item.fDistrictId}">${item.fDistrictName}</option>`;
+                }
+            });
+
+            district.innerHTML = options.join('');
+        };
+        // 在页面加载时根据 districtid 的值设置 district 的选项
+        document.addEventListener("DOMContentLoaded", function () {
+            const id = districtid.value;
+            setDistrict(parseInt(city.options[city.selectedIndex].value), id);
+        });
+
+        // 当 city 改变时动态更新 district 的选项
+        city.addEventListener('change', function () {
+            setDistrict(parseInt(city.options[city.selectedIndex].value), 0); // 传入0代表重新加载所有选项
         });
     </script>
 }

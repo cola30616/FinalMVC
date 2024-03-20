@@ -138,12 +138,12 @@
         };
 
         function goOpen() {
-            const nameValue = goToOpen.getAttribute('name');
-            const codeValue = goToOpen.getAttribute('value');
 
-            goToOpen.value = opendCourse.options[opendCourse.selectedIndex].value;
+            const codeValue = opendCourse.options[opendCourse.selectedIndex].value;
+
+           // goToOpen.value = opendCourse.options[opendCourse.selectedIndex].value;
             if (codeValue) {
-                const url = '/TeacherAdmin/LessonCreate?' + encodeURIComponent(nameValue) + '=' + encodeURIComponent(codeValue);
+                const url = '/TeacherAdmin/LessonCreate?code='  + encodeURIComponent(codeValue);
 
                 window.location.href = url;
             }

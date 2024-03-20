@@ -177,6 +177,22 @@ namespace FinalGroupMVCPrj.Controllers
             {
                 return NotFound();
             }
+            var selectcity= (from s in _context.TCities
+              join f in _context.TCityDistricts on s.FCityId equals f.FCityId
+             where f.FDistrictId== course.FDistrictId
+              select s.FCityId).Distinct().FirstOrDefault();
+            var CitySelectList = LessonCreateViewModel.GetCitySelectList();
+            foreach (var s in CitySelectList)
+            {
+                if (s.Value == selectcity.ToString())
+                {
+                    s.Selected = true;
+                    break;
+                }
+            }
+
+            ViewBag.CitySelectList = CitySelectList;
+            ViewBag.DistrictSelect = course.FDistrictId;
             if (course != null)
             {
                 lesson.FLessonCourseId = course.FLessonCourseId;
@@ -206,6 +222,7 @@ namespace FinalGroupMVCPrj.Controllers
                 lesson.FStatus = course.FStatus;
                 lesson.FStatusNote = course.FStatusNote;
                 lesson.FOnlineLink = course.FOnlineLink;
+                lesson.FDistrictId = course.FDistrictId;
                 lesson.FPhoto = course.FPhoto == null ? null : ConvertByteArrayToIFormFile(course.FPhoto, course.FName);
 
             }

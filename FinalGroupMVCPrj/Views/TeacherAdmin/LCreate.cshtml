@@ -6,7 +6,7 @@
 
 @section Styles {
     <style>
-    
+
         .pic {
             width: 148px;
             height: 92px;
@@ -14,18 +14,26 @@
             position: relative; /* 添加相对定位，用于图像的绝对定位 */
         }
 
-        .pic img {
-            width: 100%; /* 使图像填充其包含块 */
-            height: auto; /* 保持图像宽高比 */
-            position: absolute; /* 绝对定位，相对于 .pic 容器 */
-            top: 0; /* 图像距离容器顶部的位置 */
-            left: 0; /* 图像距离容器左侧的位置 */
-            transition: transform 1s ease-out; /* 将过渡效果应用于 transform 属性 */
-        }
+            .pic img {
+                width: 100%; /* 使图像填充其包含块 */
+                height: auto; /* 保持图像宽高比 */
+                position: absolute; /* 绝对定位，相对于 .pic 容器 */
+                top: 0; /* 图像距离容器顶部的位置 */
+                left: 0; /* 图像距离容器左侧的位置 */
+                transition: transform 1s ease-out; /* 将过渡效果应用于 transform 属性 */
+            }
 
-        .pic:hover img {
-            transform: scale(1.2); /* 在悬停时进行缩放 */
+            .pic:hover img {
+                transform: scale(1.2); /* 在悬停时进行缩放 */
+            }
+
+     /*    .croppie-container {
+            border-radius: 5px;
+            width: 495px;
+            height: 330px;
         }
+ */
+
     </style>
 }
 
@@ -40,7 +48,7 @@
                 <input type="hidden" id="courseType" value="@ViewBag.courseType" />
                 <input type="hidden" id="getcourseType" name="getcourseType" value="@ViewBag.courseType">
 
-                @if (@ViewBag.courseType=="new")
+                @if (@ViewBag.courseType == "new")
                 {
                     <div class="row mb-3">
                         <div class="col-sm-6">
@@ -55,7 +63,7 @@
                         </div>
                     </div>
                     <div class="form-floating mb-3">
-                        <input type="text" class="form-control"  placeholder="" asp-for="FName">
+                        <input type="text" class="form-control" placeholder="" asp-for="FName">
                         <span asp-validation-for="FName" class="text-danger"></span>
                         <label for="FName">課名</label>
                     </div>
@@ -73,13 +81,13 @@
                         </div>
                     </div>
                     <div class="form-floating mb-3">
-                        <input type="text" class="form-control"  placeholder="" asp-for="FName"  readonly>                        
+                        <input type="text" class="form-control" placeholder="" asp-for="FName" readonly>
                         <label for="FName">課名</label>
                     </div>
                 }
 
 
-                <input type="text" class="form-control" asp-for="FCode" hidden> 
+                <input type="text" class="form-control" asp-for="FCode" hidden>
 
                 <div class="form-floating mb-3">
                     <input type="text" class="form-control" id="FRequirement" placeholder="" asp-for="FRequirement">
@@ -87,17 +95,17 @@
                     <label for="FRequirement">要求</label>
                 </div>
                 <!--編輯器-->
-@*                 <div class="form-floating mb-3">
-                    <textarea class="form-control" placeholder="Leave a comment here" id="FDescription" style="height: 100px; resize: none;" asp-for="FDescription"></textarea>
-                    <span asp-validation-for="FDescription" class="text-danger"></span>
-                    <label for="FDescription">課程介紹</label>
+                @*                 <div class="form-floating mb-3">
+                <textarea class="form-control" placeholder="Leave a comment here" id="FDescription" style="height: 100px; resize: none;" asp-for="FDescription"></textarea>
+                <span asp-validation-for="FDescription" class="text-danger"></span>
+                <label for="FDescription">課程介紹</label>
                 </div> *@
                 <label for="FEditorDes">課程介紹</label>
                 <div class="form-floating mb-3">
-                    
-                    <textarea class="form-control" placeholder="Leave a comment here"  style="height: 100px; resize: none;" asp-for="FEditorDes"></textarea>
+
+                    <textarea class="form-control" placeholder="Leave a comment here" style="height: 100px; resize: none;" asp-for="FEditorDes"></textarea>
                     <span asp-validation-for="FEditorDes" class="text-danger"></span>
-                    
+
                 </div>
 
 
@@ -263,18 +271,14 @@
     <!--彈跳視窗-->
     <!-- Modal -->
     <div class="modal fade" id="cut" tabindex="-1" aria-labelledby="cutLabel" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-dialog modal-lg modal-dialog-centered">
             <div class="modal-content">
                 <div class="modal-header">
                     <h1 class="modal-title fs-5" id="cutLabel">裁切圖片</h1>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
-                <div class="modal-body">
-                    <div id="croppie-container">
-                    <!--<figure style="border: thin #c0c0c0 solid;border-radius: 8px;  display: flex; flex-flow: column; padding: 8px;margin: auto; background-color: white;width:420px;height:280px;">
-                        @* <img class=" ls-is-cached lazyloaded" style="border-radius:6px;" src="@Url.Action("showPicture", "Lesson", new { id = Model.FLessonCourseId })" alt="course" id="cutPhoto" /> *@
-                        <img class=" ls-is-cached lazyloaded" style="border-radius:6px;width:420px;height:280px;" alt="course" id="cutPhoto" />
-                        </figure>-->
+                <div class="modal-body d-flex justify-content-center align-items-center" style="height: 400px;">
+                    <div id="croppie-container" class="center" style="height: 360px;">
                     </div>
                 </div>
                 <div class="modal-footer">
@@ -340,7 +344,7 @@
         document.addEventListener("DOMContentLoaded", async () => {
             if (courseType.value == "old") {
             } else if (courseType.value == "new") { loadSubject(); }
-        
+
         });
     </script>
     <!--帶出縣市區域-->
@@ -359,9 +363,9 @@
             loadDistrict();
         };
         (() => {
-            
-                  loadcity();
-            
+
+            loadcity();
+
         })();
 
         const loadDistrict = async () => {
@@ -370,7 +374,7 @@
             const url = `@Url.Content("~/TeacherAdmin/allDistrict")?cityid=${cittyid}`;
             const response = await fetch(url);
             const data = await response.json();
-        
+
             const options = data.map((item) => {
                 return `<option value=${item.fDistrictId}>${item.fDistrictName}</option>`;
             })
@@ -381,7 +385,7 @@
 
     </script>
 
-   
+
     <!--課程型態-->
     <script>
         function setCourseType(courseTypeValue) {
@@ -390,11 +394,11 @@
         }
         window.onload = function () {
             setCourseType('@ViewBag.courseType');
-           
+
         };
     </script>
 
-  <!--Demo Button-->
+    <!--Demo Button-->
     <script>
         const demo1 = document.querySelector("#demo1");
 
@@ -425,20 +429,20 @@
             end.setAttribute('value', '13:00');
             minpeo.setAttribute('value', 8);
             maxpeo.setAttribute('value', 15);
-            desc.innerHTML= '這門課程將帶領您學習製作台灣傳統的鹹豆漿，這是一道兼具營養與美味的台灣早餐。我們將從基礎的黃豆處理開始，到鹹豆漿的製作，讓您了解其中的技巧與妙處。';
+            desc.innerHTML = '這門課程將帶領您學習製作台灣傳統的鹹豆漿，這是一道兼具營養與美味的台灣早餐。我們將從基礎的黃豆處理開始，到鹹豆漿的製作，讓您了解其中的技巧與妙處。';
             lessondate.setAttribute('value', '2024-03-29');
             deadline.setAttribute('value', '2024-03-27');
             vname.setAttribute('value', '食之藝術工作坊');
             address.setAttribute('value', '和平巷456弄78號');
             city.selectedIndex = 0;
-            district.selectedIndex=11;
-            subject.selectedIndex='1';
+            district.selectedIndex = 11;
+            subject.selectedIndex = '1';
         });
     </script>
 
-   
+
     <!--用錯誤訊息攔住阻止提交 -->
-@*     <script>
+    @*     <script>
         $(document).ready(function () {
             $('form').submit(function (e) {
                 e.preventDefault(); // 阻止表单默认提交行为
@@ -475,6 +479,8 @@
                     selector: 'textarea#FEditorDes',
                     plugins: 'anchor autolink charmap codesample emoticons image link lists media searchreplace table visualblocks wordcount linkchecker',
                     toolbar: 'undo redo | blocks fontfamily fontsize | bold italic underline strikethrough | link image media table | align lineheight | numlist bullist indent outdent | emoticons charmap | removeformat',
+                    language: 'zh_TW',
+                    placeholder: "請在這裡輸入..."
                 });
                 // 在此添加其他 TinyMCE 配置选项
             }
@@ -485,48 +491,83 @@
             initTinyMCE();
         });
 
-        
+
     </script>
     <!--Image-->
     <script>
 
+
         $("#FPhoto").on("change", function () {
             previewImage(this, $('#imgPreview'));
         });
+        // 表示原圖
+        const originalWidth = $('#imgPreview').attr('width'); // 獲取原圖的寬度
+        const originalHeight = $('#imgPreview').attr('height'); // 獲取原圖的寬度
 
+        // 將原圖的寬度應用到 CSS 中
+        const minZoomerWidth = originalWidth + 'px';
+        const minZoomerHeight = originalHeight + 'px';
+        $('.croppie-container .cr-slider-wrap').css('min-width', minZoomerWidth);
+        $('.croppie-container .cr-slider-wrap').css('min-height', minZoomerHeight);
     </script>
 
     <!--Croppie-->
     <script>
-        let finurl;
+
+
+
+
         //載入圖片
         function openCutPhoto() {
-            const photourl = $("#imgPreview").attr('src');
-            const img = new Image();            
-            img.src = $("#imgPreview").attr('src');
-            img.width = 420;
-            img.height = 280;
-            previewImage(this, img);
-             finurl = img.src;
-            console.log(img.src);
+            const basic = $('#croppie-container').croppie({
+                viewport: {
+                    width: 480,
+                    height: 320,
+                    type: 'square',
+                    center: true,
+                    zoom: 1
+                }
+                // ,
+                // boundary: {
+                //     width: 480,
+                //     height: 320
+                // }
+                // ,enableExif: true,
+                // enforceBoundary: false,
+                , mouseWheelZoom: false
+
+                // // customClass: 'my-custom-class',
+                // overlay: {
+                //     width: 420,
+                //     height: 280
+                // }
+            });
+            basic.croppie('bind', {
+                url: $('#imgPreview').attr('src'),
+                points: [77, 469, 280, 739]
+            });
         };
-        openCutPhoto();
-        
-        console.log(finurl);
-        const basic = $('#croppie-container').croppie({
-            viewport: {
-                width: 420,
-                height: 280
-            },
-            boundary: {
-                width: 480,
-                height: 320
-            }
+        // basic.setCropPoints([x1, y1, x2, y2]);
+        // basic.setZoom(zoom);
+
+        $('#crop-button').on('click', function () {
+            basic.croppie('result', {
+                type: 'canvas',
+                size: { width: 420, height: 280 },// 设置裁剪后的尺寸
+                format: 'jpeg',
+                circle: false
+            }).then(function (result) {
+                // 处理裁剪后的图像结果
+                console.log(result);
+                // 可以将结果展示在页面上或者上传到服务器等
+            });
+
+            basic.croppie('result', 'html').then(function (html) {
+                // html is div (overflow hidden)
+                // with img positioned inside.
+            });
         });
-        basic.croppie('bind', {
-            url: finurl,
-            points: [77, 469, 280, 739]
-        });
-       
+
+
     </script>
 } 
