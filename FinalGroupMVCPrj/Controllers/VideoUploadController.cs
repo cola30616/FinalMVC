@@ -4,6 +4,7 @@ using CloudinaryDotNet;
 using CloudinaryDotNet.Actions;
 using dotenv.net;
 using FinalGroupMVCPrj.Interface;
+using FinalGroupMVCPrj.Models;
 namespace FinalGroupMVCPrj.Controllers
 {
     [Route("api/[controller]")]
@@ -11,10 +12,12 @@ namespace FinalGroupMVCPrj.Controllers
     public class VideoUploadController : ControllerBase
     {
         private IVideoUploadService _videoUploadService;
-        public VideoUploadController(IVideoUploadService videoUploadService)
+        private readonly LifeShareLearnContext _lifeShareLearnContext;
+        public VideoUploadController(IVideoUploadService videoUploadService, LifeShareLearnContext lifeShareLearnContext)
         {
             _videoUploadService = videoUploadService;
         }
+
         [HttpPost]
         public async Task<IActionResult> UploadVideo(IFormFile file)
         {
@@ -23,6 +26,8 @@ namespace FinalGroupMVCPrj.Controllers
             return Ok(result);
         }
 
-        
+       
+
+
     }
 }

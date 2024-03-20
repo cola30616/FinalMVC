@@ -16,15 +16,19 @@ namespace FinalGroupMVCPrj.Controllers
         //動作簡述：回傳課程記錄清單的頁面
         [HttpGet]
         public IActionResult LearningRecord()
-        {            
-            var successRecord = _context.TOrderDetails.Where(lr => lr.FOrder.FMemberId == GetCurrentMemberId() && lr.FOrderValid == true)
-                .Select(lr => lr.FLessonCourse).Distinct().ToList();
-            var cancelRecord = _context.TOrderDetails.Where(lr => lr.FOrder.FMemberId == GetCurrentMemberId() && lr.FOrderValid == false)
-                .Select(lr => lr.FLessonCourse).Distinct().ToList();
+        {
+            var successRecord = _context.TOrderDetails
+                .Where(lr => lr.FOrder.FMemberId == GetCurrentMemberId() && lr.FOrderValid == true)               
+                .ToDictionary(lr => lr.FOrderId, lr => lr.FLessonCourse); // 将查询结果转换为字典
+            var cancelRecord = _context.TOrderDetails
+                .Where(lr => lr.FOrder.FMemberId == GetCurrentMemberId() && lr.FOrderValid == false)
+                .ToDictionary(lr => lr.FOrderId, lr => lr.FLessonCourse); // 将查询结果转换为字典
+            
             LearningRecordVM learningRecord = new()
             {
                 SuccessRecord = successRecord,
-                CancelRecord = cancelRecord
+                CancelRecord = cancelRecord,
+
             };
             return View(learningRecord);
         }

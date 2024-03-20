@@ -21,19 +21,25 @@ namespace FinalGroupMVCPrj.APIServices
         }
         public async Task<VideoUploadResult> AddVideoAsync(IFormFile file)
         {
-            var uploadParams = new VideoUploadParams()
+
+            // 从 IFormFile 中获取文件流
+            using (var stream = file.OpenReadStream())
             {
-                File = new FileDescription(file.FileName),                
-                EagerTransforms = new List<Transformation>()
+                var uploadParams = new VideoUploadParams()
                 {
+                    File = new FileDescription(file.FileName, stream), // 使用文件流初始化 FileDescription 对象
+                    EagerTransforms = new List<Transformation>()
+            {
                 new EagerTransformation().Width(300).Height(300).Crop("pad").AudioCodec("none"),
                 new EagerTransformation().Width(160).Height(100).Crop("crop").Gravity("south").AudioCodec("none")
-                },
-                EagerAsync = true,               
-            };
-            var uploadResult = await _cloudinary.UploadLargeAsync(uploadParams);
+            },
+                    EagerAsync = true
+                };
 
-            return uploadResult;
+                var uploadResult = await _cloudinary.UploadLargeAsync(uploadParams);
+
+                return uploadResult;
+            }
         }
 
         public async Task<DeletionResult> DeleteVideoAsync(string publicid)
