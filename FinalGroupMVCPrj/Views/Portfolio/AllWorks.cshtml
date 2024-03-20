@@ -5,7 +5,7 @@
     <div class="breadcrumb-area bg-img bg-cover" data-bg-image="assets/images/breadcrumb-bg.jpg">
         <div class="container">
             <div class="content text-center">
-                <h2>Blogs</h2>
+                <h2>作品總覽</h2>
                 <nav aria-label="breadcrumb">
                     <ol class="breadcrumb">
                         <li class="breadcrumb-item"><a href="index.html">Home</a></li>
@@ -20,33 +20,36 @@
     <div class="blog-area pt-100 pb-75">
         <div class="container">
             <div class="row">
-                <div class="col-md-6 col-xl-4" data-aos="fade-up">
-                    <article class="card mb-25 border radius-md">
-                        <div class="card-img">
-                            <a href="blog-single.html" target="_self" title="Link" class="lazy-container ratio ratio-2-3">
-                                <img class="lazyload" src="assets/images/placeholder.png" data-src="assets/images/blog/blog-1.jpg" alt="Blog Image">
-                            </a>
-                        </div>
-                        <div class="card-content p-25">
-                            <div class="card-info mb-10">
-                                <span>App Development</span>
-                                <span> 15 July 2023</span>
-                            </div>
-                            <h5 class="card-title lc-2 mb-15">
-                                <a href="blog-single.html" target="_self" title="Link">
-                                    Discover 5 effective strategies to enhance your learning experience and excel in design studies.
+                @foreach (var i in Model)
+                {
+                    <div class="col-md-6 col-xl-4" data-aos="fade-up">
+                        <article class="card mb-25 border radius-md">
+                            <div class="card-img">
+                                <a href="blog-single.html" target="_self" title="Link" class="lazy-container ratio ratio-2-3">
+                                    <img class="lazyload" src="assets/images/placeholder.png" data-src="assets/images/blog/blog-1.jpg" alt="Blog Image">
                                 </a>
-                            </h5>
-                            <p class="card-text lc-2">
-                                Lorem ipsum dolor sit amet consectetur adipisicing elit. Atque reprehenderit possimus, nesciunt fuga deserunt ratione non adipisci assumenda dicta exercitationem quisquam sit et autem cumque illo quas, natus maxime tenetur?
-                            </p>
-                            <div class="cta-btn mt-15">
-                                <a href="blogs.html" class="btn-text color-primary" target="_self" title="Read More">READ MORE</a>
                             </div>
-                        </div>
-                    </article>
-                </div>
-
+                            <div class="card-content p-25">
+                                <div class="card-info mb-10">
+                                    <span>@i.FFieldName</span>
+                                    <span> @i.FLastModifyTime</span>
+                                </div>
+                                <h5 class="card-title lc-2 mb-15">
+                                    <a asp-controller="Portfolio" asp-action="List" asp-route-id="@i.FCourseworkId" target="_self" title="Link">
+                                        @i.FName
+                                    </a>
+                                    
+                                </h5>
+                                <p class="card-text lc-2">
+                                    @i.FDescrpition
+                                </p>
+                                <div class="cta-btn mt-15">
+                                    <a href="blogs.html" class="btn-text color-primary" target="_self" title="Read More">READ MORE</a>
+                                </div>
+                            </div>
+                        </article>
+                    </div>
+                }
                 <div class="col-md-6 col-xl-4" data-aos="fade-up">
                     <article class="card mb-25 border radius-md">
                         <div class="card-img">

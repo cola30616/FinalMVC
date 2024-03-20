@@ -35,12 +35,12 @@ namespace FinalGroupMVCPrj.Controllers
                     FFieldName = c.FOrderDetail.FLessonCourse.FSubject.FField.FFieldName,
                     FLessonCourseDescrpition = c.FOrderDetail.FLessonCourse.FDescription,
                 }));
-            return View(portfolioListDTO);
+            return View(portfolioList);
         }
         [HttpGet]
-        public IActionResult List(int? id)
+        public IActionResult List(int? FCourseId)
         {
-            int memberId = 9;
+            //int memberId = 9;
             PortfolioListDTO portfolioListDTO = new PortfolioListDTO();
 
             //IEnumerable<PortfolioListDTO> portfolioList =
@@ -56,9 +56,10 @@ namespace FinalGroupMVCPrj.Controllers
 
             IEnumerable<PortfolioListDTO> portfolioList = new List<PortfolioListDTO>(_context.TCourseworks.Include(c => c.FOrderDetail).ThenInclude(o => o.FOrder).ThenInclude(o => o.FMember).Include(c => c.FOrderDetail).ThenInclude(o => o.FLessonCourse).ThenInclude(c => c.FSubject).ThenInclude(t => t.FField).ThenInclude(a => a.TMemberWishFields)
 
-                .Where(c => c.FMemberId == memberId)
+                .Where(c => c.FCourseworkId == FCourseId)
                 .Select(c => new PortfolioListDTO
                 {
+                    FCourseworkId = c.FCourseworkId,
                     FMemberId = c.FMemberId,
                     FShowName = c.FOrderDetail.FOrder.FMember.FShowName,
                     FName = c.FName,
