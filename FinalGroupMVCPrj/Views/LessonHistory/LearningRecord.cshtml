@@ -116,8 +116,7 @@
                         <div class="row">
                         @foreach (var course in Model.CancelRecord)
                         {
-                            if (course.Value.FLessonDate.HasValue && DateTime.Now.CompareTo(course.Value.FLessonDate.Value) > 0)
-                            {
+                           
                                 
                                     <div class="col-xl-3 col-lg-4 col-sm-6">
                                         <div class="course-default border radius-md mb-30">
@@ -150,7 +149,7 @@
                                         </div>
                                     </div>
                                 
-                            }
+                            
                         }
                         </div>
                     </div>

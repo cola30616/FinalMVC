@@ -1,4 +1,5 @@
 ﻿using FinalGroupMVCPrj.Models;
+using FinalGroupMVCPrj.Models.DTO;
 using FinalGroupMVCPrj.Models.ViewModels;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -22,19 +23,19 @@ namespace FinalGroupMVCPrj.Controllers
             var successRecord = _context.TOrderDetails
                 .Include(lc => lc.FLessonCourse)
                 .Where(lr => lr.FOrder.FMemberId == memberId && lr.FOrderValid == true)               
-                .ToList(); // 将查询结果转换为列表           
+                .ToList();            
 
-            // 将结果转换为字典
-            var successdict = successRecord.ToDictionary(lr => lr.FOrderId, lr => lr.FLessonCourse);
+            
+            var successdict = successRecord.ToDictionary(lr => lr.FOrderId, lr => lr.FLessonCourse);           
 
 
             var cancelRecord = _context.TOrderDetails
                 .Include(lc => lc.FLessonCourse)
                 .Where(lr => lr.FOrder.FMemberId == memberId && lr.FOrderValid == false)
-                .ToList(); // 将查询结果转换为列表 
+                .ToList();  
 
-            // 将结果转换为字典
-            var canceldict = successRecord.ToDictionary(lr => lr.FOrderId, lr => lr.FLessonCourse);
+            
+            var canceldict = cancelRecord.ToDictionary(lr => lr.FOrderId, lr => lr.FLessonCourse);
 
             LearningRecordVM learningRecord = new()
             {
@@ -65,33 +66,27 @@ namespace FinalGroupMVCPrj.Controllers
                     FName = od.FLessonCourse.FName,
                     FDescription = od.FLessonCourse.FDescription,
                     FOrderId = od.FOrderId,
+                    FOrderNumber = od.FOrder.FOrderNumber,
                     FOrderValid = od.FOrderValid,
                     FOrderDate = od.FOrder.FOrderDate,
+                    FLessonDate = od.FLessonCourse.FLessonDate,
                     FLessonPrice = od.FLessonPrice,
+                    FOrderDetailId = od.FOrderDetailId,
+                    FModificationDescription = od.FModificationDescription,
                 }).ToList().FirstOrDefault();
          
             return View("Detail", order);
         }
 
         [HttpPost]
-        public IActionResult CancelOrder(int? id, string reason)
+        public IActionResult CancelOrder(CancelOrderDTO cancelOrderDTO)
         {
-            string modificationDescription = null; //目前無法顯示取消原因，並且btn要變成灰色不能點選
-            switch (reason)
-            {
-                case "option1":
-                    modificationDescription = "事假";
-                    break;
-                case "option2":
-                    modificationDescription = "病假";
-                    break;
-            }
 
-            var orderDetail = _context.TOrderDetails.FirstOrDefault(od => od.FOrderId == id);
+            var orderDetail = _context.TOrderDetails.FirstOrDefault(od => od.FOrderId == cancelOrderDTO.id);
             if (orderDetail != null)
             {
-                orderDetail.FOrderValid = false;
-                orderDetail.FModificationDescription = modificationDescription; //將取消原因文字寫入資料庫
+                orderDetail.FOrderValid = false; // 更新 FOrderValid 為 false
+                orderDetail.FModificationDescription = cancelOrderDTO.reason; //將取消原因寫入資料庫
                 _context.SaveChanges();
                 return Ok(orderDetail);
             }

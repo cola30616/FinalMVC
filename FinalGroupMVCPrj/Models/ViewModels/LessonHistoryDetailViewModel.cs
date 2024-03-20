@@ -7,16 +7,17 @@
         public byte[]? FPhoto { get; set; }
 
         public int FOrderId { get; set; }
+        public string FOrderNumber { get; set; }
+        public string? FModificationDescription { get; set; }
         public bool FOrderValid { get; set; }
         public DateTime FOrderDate { get; set; }
+
         public decimal? FLessonPrice { get; set; }
-
-        public string FModificationDescription { get; set; }
-
         public int FLessonCourseId { get; set; }
+        public int FOrderDetailId { get; set; }
+
 
         public DateTime? FLessonDate { get; set; }
-
         public TOrder order { get; set; }
         public TOrderDetail orderDetail { get; set; }
         public TLessonCourse lessonCourse { get; set; }
