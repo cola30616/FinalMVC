@@ -217,6 +217,28 @@ namespace FinalGroupMVCPrj.Controllers
                 {
                     if (changeTo == "停權") { dbMember.FStatus = false; }
                     else if (changeTo == "恢復") { dbMember.FStatus = true; }
+                }else  if(property == "realName")
+                {
+                    dbMember.FRealName = changeTo;
+                }
+                else if (property == "showName")
+                {
+                    dbMember.FShowName = changeTo;
+                }
+                else if (property == "phone")
+                {
+                    dbMember.FPhone = changeTo;
+                }
+                else if (property == "birth")
+                {
+                    try
+                    {
+                        dbMember.FBirthDate = DateTime.Parse(changeTo);
+                    }catch (Exception ex)
+                    {
+                        return StatusCode(500, "系統異常：" + ex);
+                    }
+                 
                 }
                 _context.TMembers.Update(dbMember);
                 await _context.SaveChangesAsync();

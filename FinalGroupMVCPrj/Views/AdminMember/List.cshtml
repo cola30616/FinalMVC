@@ -3,6 +3,17 @@
     ViewData["Title"] = "List";
     Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
 }
+@section Styles{
+    <style>
+        .fa-solid.fa-check:hover {
+            color: limegreen;
+        }
+
+        .fa-solid.fa-x:hover {
+            color: red;
+        }
+    </style>
+}
 
 <div class="pagetitle">
     <h1>會員管理</h1>
@@ -98,7 +109,7 @@
                         <div class="d-flex justify-content-between">
                 <!-- 最上排會員資訊&關閉 -->
               <div class="d-flex gap-2 px-2 mb-3 mt-2">
-                    <span class="fw-bold">會員編號：</span><span id="curMemId">1</span> <span id="curMemRealName">陳小美</span><span id="curMemEmail">example@gmail.com</span>
+                    <span class="fw-bold">會員編號：</span><span id="curMemId">1</span> <span id="currealName">陳小美</span><span id="curMemEmail">example@gmail.com</span>
               </div>
                 <button type="button" class="btn" data-bs-dismiss="modal" aria-label="Close"><i class="fa-solid fa-x"></i></button>
             </div>
@@ -157,47 +168,47 @@
                         <!--第二區-->
                         <div class="flex-grow-1 d-flex flex-column" style="width:40%;height:50%">
                             <div class="mb-4"><span>※編輯&nbsp; <i class="fa-solid fa-pen-to-square"></i>&nbsp;僅限用於違規資料或必要</span></div>
-                            <div class="d-flex gap-3 align-items-end">
-                                <div class="flex-grow-1 form-group mb-3">
-                                    <label for="memRealName">真實姓名 </label>
-                                    <input disabled id="memRealName" type="text" class="form-control"  value="王小明">
+                            <div class="d-flex gap-3 justify-content-between align-items-center">
+                                <div class=" form-group mb-3">
+                                    <label for="realName">真實姓名 </label>
+                                    <input disabled id="realName" type="text" class="form-control"  value="王小明" style="width:135%">
                                 </div>       
-                                <div class="editValue pb-4" style="cursor:pointer"><i class="fa-solid fa-pen-to-square"></i></div>
+                                <div class="editValue " style="cursor:pointer"><i editProp="realName" class="fa-solid fa-pen-to-square"></i></div>
                             </div>
-                            <div class="d-flex gap-3 align-items-end">
-                                <div class="flex-grow-1 form-group mb-3">
-                                    <label for="memShowName">顯示名稱 </label>
-                                    <input disabled id="memShowName" type="text" class="form-control" placeholder="">
+                            <div class="d-flex gap-3 justify-content-between align-items-center">
+                                <div class=" form-group mb-3">
+                                    <label for="showName">顯示名稱 </label>
+                                    <input disabled id="showName" type="text" class="form-control" placeholder="" style="width:135%">
                                 </div>
-                                <div class="editValue pb-4" style="cursor:pointer"><i class="fa-solid fa-pen-to-square"></i></div>
+                                <div class="editValue " style="cursor:pointer"><i editProp="showName" class="fa-solid fa-pen-to-square"></i></div>
                             </div>
-                            <div class="d-flex gap-3 align-items-end">
-                                <div class="flex-grow-1 form-group mb-3">
-                                    <label for="memPhone">電話</label>
-                                    <input id="memPhone" disabled type="text" class="form-control">
+                            <div class="d-flex gap-3 justify-content-between align-items-center">
+                                <div class=" form-group mb-3">
+                                    <label for="phone">電話</label>
+                                    <input id="phone" disabled type="text" class="form-control" style="width:135%">
                                 </div>
-                                <div class="editValue pb-4" style="cursor:pointer"><i class="fa-solid fa-pen-to-square"></i></div>
+                                <div class="editValue d-flex align-items-center" style="cursor:pointer"><i editProp="phone" class="fa-solid fa-pen-to-square"></i></div>
                             </div>
-                            <div class="d-flex gap-3 align-items-end">
-                                <div class="flex-grow-1 form-group mb-3">
-                                    <label for="memBirth">生日  </label>
-                                    <input id ="memBirth" disabled type="date" class="form-control" placeholder="" required="">
+                            <div class="d-flex gap-3 justify-content-between align-items-center">
+                                <div class=" form-group mb-3">
+                                    <label for="birth">生日  </label>
+                                    <input id="birth" disabled type="date" class="form-control" placeholder="" required="" style="width:190%">
                                 </div>
-                                <div class="editValue pb-4" style="cursor:pointer"><i class="fa-solid fa-pen-to-square"></i></div>
+                                <div class="editValue " style="cursor:pointer"><i editProp="birth" class="fa-solid fa-pen-to-square"></i></div>
                             </div>
 
-                            <div class="d-flex gap-3 align-items-end">
-                                <div class="flex-grow-1 form-group mb-3">
+                            <div class="d-flex gap-3 justify-content-between align-items-center">
+                                <div class=" form-group mb-3 ">
                                     <label for="memGender">性別： </label>
                                     <label id ="memGender">其他</label>
                                 </div>
                             </div>
-                            <div class="d-flex gap-3 align-items-end">
-                                <div class="flex-grow-1 form-group mb-3">
+                            <div class="d-flex gap-3 justify-content-between align-items-center">
+                                <div class=" form-group mb-3">
                                     <label >備註：  </label>
-                                    <textarea disabled class="form-control"></textarea>
+                                    <textarea disabled class="form-control" style="width:135%"></textarea>
                                 </div>
-                                <div class="editValue pb-5" style="cursor:pointer"><i class="fa-solid fa-pen-to-square"></i></div>
+                                <div class="editValue d-flex flex-column " style="cursor:pointer"><i class="fa-solid fa-pen-to-square"></i></div>
                             </div>
                         </div>
                     </div>
@@ -449,7 +460,7 @@ https://cdn.jsdelivr.net/npm/moment@2.30.1/moment.min.js
             await fetchMemberDetail(currentMemberId)
             if (currentMemberData === null) { return; }
             document.querySelector('#curMemId').innerHTML = currentMemberId;
-            document.querySelector('#curMemRealName').innerHTML = currentMemberData.realName;
+            document.querySelector('#currealName').innerHTML = currentMemberData.realName;
             document.querySelector('#curMemEmail').innerHTML = currentMemberData.email;
             await loadMemberBasicInfo()
             await loadMemPhoto(currentMemberId)
@@ -489,10 +500,10 @@ https://cdn.jsdelivr.net/npm/moment@2.30.1/moment.min.js
 
 
             document.getElementById('memConnectAccount').innerHTML = currentMemberData.note
-            document.getElementById('memRealName').value = currentMemberData.realName
-            document.getElementById('memShowName').value = currentMemberData.showName
-            document.getElementById('memPhone').value = currentMemberData.phone
-            document.getElementById('memBirth').value = currentMemberData.birth
+            document.getElementById('realName').value = currentMemberData.realName
+            document.getElementById('showName').value = currentMemberData.showName
+            document.getElementById('phone').value = currentMemberData.phone
+            document.getElementById('birth').value = currentMemberData.birth
             document.getElementById('memGender').innerHTML = currentMemberData.gender
 
         }
@@ -604,6 +615,49 @@ https://cdn.jsdelivr.net/npm/moment@2.30.1/moment.min.js
                 document.getElementById('statusBtn').innerHTML = "恢復";
             }
         }
+
+        document.querySelectorAll(".editValue").forEach((e) => { e.addEventListener("click", (e) => {
+                if (e.target.tagName === "I" && e.target.classList.contains("fa-pen-to-square")) {
+                    const prop = e.target.getAttribute("editProp")
+                    e.target.closest(".editValue").innerHTML = `<div class=" d-flex gap-3"><i title="儲存" editProp="${prop}"  class="fa-solid fa-check"></i><i title="取消"editProp="${prop}" class="fa-solid fa-x"></i></div>`;
+                    document.getElementById(`${prop}`).disabled = false
+                    document.getElementById(`${prop}`).focus()
+                }
+                if (e.target.tagName === "I" && e.target.classList.contains("fa-x")) {
+                    const prop = e.target.getAttribute("editProp")
+                    e.target.closest(".editValue").innerHTML = `<i editProp="${prop}" class="fa-solid fa-pen-to-square"></i>`
+                    document.getElementById(`${prop}`).disabled = true 
+                    document.getElementById(`${prop}`).value = currentMemberData[`${prop}`]
+                }
+                if (e.target.tagName === "I" && e.target.classList.contains("fa-check")) {
+                    const prop = e.target.getAttribute("editProp")
+                    const newValue = document.getElementById(`${prop}`).value
+                    try{
+                        Swal.fire({
+                            title: `確認編輯資訊為  ${newValue}？`,
+                            icon: "info",
+                            showCancelButton: true,
+                            confirmButtonColor: "#30C2EC",
+                            cancelButtonColor: "#d33",
+                            confirmButtonText: "確定",
+                            cancelButtonText: "取消"
+                        }).then(async (result) => {
+                            if (!result.isConfirmed) { return }
+                            if (await changePropertyValue(prop, newValue)) {
+                                e.target.closest(".editValue").innerHTML = `<i editProp="${prop}" class="fa-solid fa-pen-to-square"></i>`
+                                document.getElementById(`${prop}`).disabled = true
+                                currentMemberData[`${prop}`] = newValue
+                            }
+                        })
+
+                    }catch{
+                        callSwalError("系統異常，請稍後再試")
+                    }
+
+        
+                        }
+
+        }) })
 
         async function changePropertyValue(property, value) {
             try {
