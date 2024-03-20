@@ -1,6 +1,4 @@
-﻿@using FinalGroupMVCPrj.Models.DTO
-
-@model IEnumerable<PortfolioListDTO>
+﻿@model IEnumerable<FinalGroupMVCPrj.Models.DTO.PortfolioListDTO>
 <!-- Breadcrumb start -->
 <div class="breadcrumb-area bg-img bg-cover" data-bg-image="/images/breadcrumb-bg.jpg">
     <div class="container">
@@ -140,7 +138,7 @@
                                             </div>
                                         </div>
                                     </div>
-                                    <button class="btn btn-lg btn-primary rounded-pill" type="button" aria-label="Post Comment" asp-controller="Portfolio" asp-action="Create">Post Comment</button>
+                                    <button class="btn btn-lg btn-primary rounded-pill" type="submit" aria-label="Post Comment" asp-controller="Portfolio" asp-action="Create">Post Comment</button>
                                 </form>
                             </div>
                         </div>
@@ -298,18 +296,24 @@
 </div>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <script>
+    console.log(commentForm)
     commentForm.onsubmit = async (e) => {
+        alert('點擊')
             e.preventDefault();
-
+          
             let response = await fetch('/Portfolio/Create', {
                 method: 'POST',
-                body: new FormData(formElem)
+            body: new FormData(commentForm)
             });
 
             let result = await response.json();
 
             alert(result.message);
+        console.log(result)
+        console.log(result.message)
         };
+    
 
-
+        let i =111
+        console.log(i)
 </script>

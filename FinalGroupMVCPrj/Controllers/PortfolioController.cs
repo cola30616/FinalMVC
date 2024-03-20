@@ -18,6 +18,26 @@ namespace FinalGroupMVCPrj.Controllers
         //List<PortfolioListDTO> portfolioRead = new List<PortfolioListDTO>();
         //回傳作品清單，https://localhost:7031/Portfolio/List
         [HttpGet]
+        public IActionResult AllWorks()
+        {
+            PortfolioListDTO portfolioListDTO = new PortfolioListDTO();
+            IEnumerable<PortfolioListDTO> portfolioList = new List<PortfolioListDTO>(_context.TCourseworks.Include(c => c.FOrderDetail).ThenInclude(o => o.FOrder).ThenInclude(o => o.FMember).Include(c => c.FOrderDetail).ThenInclude(o => o.FLessonCourse).ThenInclude(c => c.FSubject).ThenInclude(t => t.FField).ThenInclude(a => a.TMemberWishFields)
+                .Select(c => new PortfolioListDTO
+                {
+                    FMemberId = c.FMemberId,
+                    FShowName = c.FOrderDetail.FOrder.FMember.FShowName,
+                    FName = c.FName,
+                    FComment = c.FComment,
+                    FDescrpition = c.FDescrpition,
+                    FLessonName = c.FOrderDetail.FLessonCourse.FName,
+                    FLastModifyTime = c.FLastModifyTime,
+                    FSubjectName = c.FOrderDetail.FLessonCourse.FSubject.FSubjectName,
+                    FFieldName = c.FOrderDetail.FLessonCourse.FSubject.FField.FFieldName,
+                    FLessonCourseDescrpition = c.FOrderDetail.FLessonCourse.FDescription,
+                }));
+            return View(portfolioListDTO);
+        }
+        [HttpGet]
         public IActionResult List(int? id)
         {
             int memberId = 9;
