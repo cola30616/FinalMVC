@@ -1,0 +1,30 @@
+﻿@model LessonHistoryDetailViewModel
+
+@if (Model.FPhoto != null)
+{
+    //<img src="@Url.Action("showPicture","Lesson",new {id=Model.FLessonCourseId})" title="@Model.FName" style="width:320px;height:240px" />
+    <div class="col-lg-4">
+        <figure class="course-img" style="border: thin #c0c0c0 solid;border-radius: 8px;  display: flex; flex-flow: column; padding: 8px;margin: auto; background-color: white;">
+            <img class="lazyload" style="border-radius:6px;" src="@Url.Action("showPicture", "Lesson", new { id = Model.FLessonCourseId })" alt="course" title="@Model.FName" />
+        </figure>
+    </div>
+}
+else
+{
+    //<img src="~/images/no-image-icon.png" title="目前尚無內容" style="width:320px;height:240px" />
+    @*     <div class="col-lg-4">
+        <figure class="course-img" style="border: thin #c0c0c0 solid;border-radius: 8px;  display: flex; flex-flow: column; padding: 8px;margin: auto; background-color: white;;">
+            <img class="lazyload" style="border-radius:6px;width:400px;height:400px;" src="~/images/no-image.jpg" alt="course" title="目前尚無內容" />
+        </figure>
+    </div> *@
+    <div class="col-lg-4" style="position: relative;">
+        <figure class="course-img" style="border: thin #c0c0c0 solid; border-radius: 8px;  width: 420px; height: 280px;display: flex; flex-flow: column; padding: 8px; margin: auto; background-color: white; overflow: hidden;">
+            <img class="lazyload" style="width: 270px; height: 270px;  position: absolute; top: 50%; left: 50%;transform: translate(-50%, -50%); " src="~/images/no-image.jpg" alt="course" title="目前尚無內容" />
+        </figure>
+    </div>
+
+
+
+
+
+}

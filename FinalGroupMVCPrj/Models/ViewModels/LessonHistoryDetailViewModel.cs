@@ -13,6 +13,7 @@
 
         public string FModificationDescription { get; set; }
 
+        public int FLessonCourseId { get; set; }
 
         public DateTime? FLessonDate { get; set; }
 
