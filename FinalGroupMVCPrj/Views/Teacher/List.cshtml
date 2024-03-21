@@ -244,6 +244,9 @@
             searchData.keywordtn = inpKeyword.value;
             searchData.page = 1;
             loadTrcards();
+            //回歸預設
+            searchData.keywordtn = '';
+            inpKeyword.value = '';
         });
         //科目名稱篩選
         iconstarts.forEach(iconstart => {
@@ -253,6 +256,8 @@
                 searchData.keywordsb = subjectname;
                 searchData.page = 1;
                 loadTrcards();
+                //回歸預設
+                searchData.keywordsb = '';
             })
         })
 

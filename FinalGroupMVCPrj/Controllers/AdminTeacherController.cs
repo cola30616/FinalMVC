@@ -50,9 +50,31 @@ namespace FinalGroupMVCPrj.Controllers
             return View();
         }
         [HttpPost]
-        public IActionResult editTeacherSubject(List<List<string>> result,int teacherid) {
+        public async Task<IActionResult> editTeacherSubject(string result,int teacherid)
+        {
+            // 刪除 老師id = teacherid 的多筆科目
+            var deleteTeacherSubject = await _context.TTeacherSubjects.Where(id=>id.FTeacherId == teacherid).ToListAsync();
+            if (deleteTeacherSubject != null) { _context.TTeacherSubjects.RemoveRange(deleteTeacherSubject); }
+            await _context.SaveChangesAsync();
 
-            return Content("傳入成功");
+            if (result != null)
+            {
+                List<int> subjectIds = result.Split(',').Select(Int32.Parse).ToList();
+                foreach (var subjectId in subjectIds)
+                {
+                    var newTeacherSubject = new TTeacherSubject
+                    {
+                        FTeacherId = teacherid,
+                        FSubjectId = subjectId
+                    };
+
+                    _context.TTeacherSubjects.Add(newTeacherSubject);
+
+                    await _context.SaveChangesAsync();
+                }
+            }
+
+            return RedirectToAction("CheckList");
         }
         //動作簡述 : 作為dataTable套件的tbody
         public IActionResult CheckListDataJson()

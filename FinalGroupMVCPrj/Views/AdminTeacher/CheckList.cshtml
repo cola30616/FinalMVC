@@ -308,8 +308,12 @@
 
         document.querySelector('#inpSubmit').addEventListener('click', function (event) {
             const formData = new FormData();
-            formData.append('result', teacherSubjectArr);
+            const subjectId = teacherSubjectArr.map(arr => arr[0]);
+            console.log(subjectId)
+            formData.append('result', subjectId);
+            
             formData.append('teacherid', teacherid);
+           
             fetch('@Url.Content("~/AdminTeacher/editTeacherSubject")', {
                 method: 'POST',
                 body: formData
