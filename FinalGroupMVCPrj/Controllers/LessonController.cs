@@ -37,6 +37,7 @@ namespace FinalGroupMVCPrj.Controllers
                  SubjectNames = group.Select(subject => subject.FSubjectName).ToList() // 取得每個分組的 SubjectName
              })
              .ToList();
+
             var courseList = await _context.TLessonCourses
             .Include(course => course.FTeacher) // 加載 Teacher 導航屬性
             .Select(course => new LessonCourseVM
