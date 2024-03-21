@@ -14,4 +14,6 @@ public partial class TCityDistrict
     public int FCityId { get; set; }
 
     public virtual TCity FCity { get; set; }
+
+    public virtual ICollection<TLessonCourse> TLessonCourses { get; set; } = new List<TLessonCourse>();
 }
