@@ -329,13 +329,7 @@ namespace FinalGroupMVCPrj.Controllers
 
         }
 
-        [HttpPost]
-        public async Task<IActionResult> LessonTestPhoto(int? id, LessonCreateViewModel lesson)
-        {
-            
-            return RedirectToAction(nameof(LessonList));
-
-        }
+      
 
         public IFormFile ConvertByteArrayToIFormFile(byte[] fileBytes, string fileName)
         {

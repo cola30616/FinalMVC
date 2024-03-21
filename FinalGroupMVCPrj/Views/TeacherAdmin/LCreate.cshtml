@@ -561,7 +561,7 @@
                         .then(res => res.blob())
                         .then(blob => {
                             // 创建新的 File 对象
-                            const file = new File([blob], 'cropped_image.jpg', { type: 'image/jpeg' });
+                            const file = new File([blob], 'cropped_image.jpeg', { type: 'image/jpeg' });
                             // 创建包含文件的 FileList 对象
                             const filesList = new DataTransfer();
                             filesList.items.add(file);
