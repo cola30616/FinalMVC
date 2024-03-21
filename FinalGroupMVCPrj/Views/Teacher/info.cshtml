@@ -29,15 +29,17 @@
                 <div class="col-xl-4 col-lg-5">
                     <div class="content-img mb-40" data-aos="fade-up" style="position: relative;">
                         <div class="lazy-container ratio ratio-1-1 radius-md" style="position: relative;">
-                            <img class="lazyload blur-up" src="@item.TeacherProfilePicURL" alt="Mentor">
-                                                  
+                            <img class="lazyload blur-up" src="@item.TeacherProfilePicURL" alt="Mentor">                                                 
                             <div>
                                 <button class="fa-regular fa-heart" style="display: flex;justify-content: center; align-items: center;font-size:30px;width:40px;height:40px;position: absolute; top: 0; left: 85%; margin: 10px;border-radius:50px;"></button>
                             </div>
                         </div>
                     </div>                                                         
                 </div>
-                @await Component.InvokeAsync("VideoPlayer", new { id = item.TeacherId })
+
+                <div class="col-xl-4 col-lg-5 mb-40">                   
+                    @await Component.InvokeAsync("VideoPlayer", new { id = item.TeacherId })
+               </div>
                 <div class="col-xl-8 col-lg-7">
                     <div class="content-title mb-40" data-aos="fade-up">
                         <!-- 老師名稱 -->

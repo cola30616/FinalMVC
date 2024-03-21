@@ -1,6 +1,7 @@
 ﻿@model TVideoUploadUrl
 @if (Model != null)
 {
+    
     <video class="video-js vjs-custom-theme " data-setup="{}" autoplay muted loop controls>
         <source src="@Model?.FVideoPath" type="video/mp4" />
     </video>
