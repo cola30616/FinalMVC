@@ -10,8 +10,8 @@ function loadDataTable() {
         "ajax": { url: '/TeacherAdmin/ListDataJson' },
         "columns": [
             { data: 'code', "width": "5%", className:'text-center' },
-            { data: 'name', "width": "10%", className: 'text-center' },
-            { data: 'filed', "width": "8%", className: 'text-center' },
+            { data: 'name', "width": "15%", className: 'text-center' },
+            { data: 'filed', "width": "5%", className: 'text-center' },
             { data: 'price', "width": "5%", className: 'text-center' },
             {
                 data: 'lessonDate',
@@ -34,7 +34,7 @@ function loadDataTable() {
                     var disableButton = row.status === "課程取消" ? 'disabled' : '';
                     return `<div class="d-flex justify-content-between" role="">
     <a href="/TeacherAdmin/LessonEdit/${row.lessonid}" class="btn btn-primary mx-2 flex-grow-1" lessonid=${row.lessonid} ><i class="fa-solid fa-ellipsis-vertical"></i> 檢視</a>
-    <button onclick="calloffCourse(${row.lessonid})" lessonid=${row.lessonid} id="calloff" ${disableButton} class="btn btn-primary mx-2 flex-grow-1"  data-bs-toggle="tooltip" data-bs-placement="bottom" title="取消"><i class="fa-regular fa-rectangle-xmark"></i></button>
+    <button onclick="calloffCourse(${row.lessonid})" lessonid=${row.lessonid} id="calloff" ${disableButton} class="btn btn-primary mx-2 flex-grow-1"  data-bs-toggle="tooltip" data-bs-placement="bottom" title="取消"><i class="fa-regular fa-rectangle-xmark"></i> 取消</button>
 </div>`
                 },
                 "width": "10%"

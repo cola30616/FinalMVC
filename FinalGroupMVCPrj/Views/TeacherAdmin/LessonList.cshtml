@@ -131,10 +131,21 @@
             const url = `@Url.Content("~/TeacherAdmin/historycourse")`;
             const response = await fetch(url);
             const data = await response.json();
-            const options = data.map((item) => {
-                return `<option value=${item.fCode}>${item.fCode}-${item.fName}</option>`;
-            })
-            opendCourse.innerHTML = options.join('');
+            
+            if (data.length == 0) {
+                const option =  `<option>未曾開課</option>`;
+                opendCourse.innerHTML = option;
+            }
+            else {
+                const options = data.map((item) => {
+                            return `<option value=${item.fCode}>${item.fCode}-${item.fName}</option>`;
+                    })
+
+                opendCourse.innerHTML = options.join('');
+            }
+          
+          
+          
         };
 
         function goOpen() {

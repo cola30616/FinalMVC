@@ -123,7 +123,7 @@ namespace FinalGroupMVCPrj.Controllers
                 course.FVenueName = lesson.FVenueName;
                 course.FTeacherId = teacherid;
                 course.FEditorDes = lesson.FEditorDes;
-                var count = _context.TLessonCourses.Where(x => x.FSubjectId == Convert.ToInt32(course.FSubject)).Count();
+                var count = _context.TLessonCourses.Where(x => x.FSubjectId == Convert.ToInt32(course.FSubjectId)).Select(x=>x.FCode).Distinct().Count();
                 course.FCode = lesson.FCode != null ? lesson.FCode : $"{code}{(count + 1):D3}";
                 course.FDescription = lesson.FDescription;
                 course.FRequirement = lesson.FRequirement;
@@ -274,7 +274,8 @@ namespace FinalGroupMVCPrj.Controllers
                     {
                         course.FPhoto = await ReadUploadImage(lesson.FPhoto);
                     }
-
+                    //只要編輯後儲存，狀態全部從'未開放'變成'開始報名'
+                    course.FStatus = "開放報名";
                     _context.Update(course);
                     await _context.SaveChangesAsync();
                     TempData["Success"] = "成功儲存變更";
