@@ -97,8 +97,19 @@ const createCourseHtml = data => {
     const createCourseHtml = document.getElementById('createCourseHtml');
     createCourseHtml.innerHTML = '';
     for (const item of data.courses) {
-       /* <img class="" src="data:image;base64,@(Convert.ToBase64String(item.imageData))" alt="Image" />*/
+       
         let html = ''
+        // 使用Intl API 轉換時間
+        const date = new Date(`${item.lessonCourse.fLessonDate}`);
+        const formatter = new Intl.DateTimeFormat('zh-TW', {
+            year: 'numeric',
+            month: '2-digit',
+            day: '2-digit',
+            hour: '2-digit',
+            minute: '2-digit',
+            second: '2-digit'
+        });
+        const formattedDate = formatter.format(date);
         html = `<div class="col-xl-4 col-sm-6">
     <div class="course-default border radius-md mb-25">
         <figure class="course-img">
@@ -126,12 +137,16 @@ const createCourseHtml = data => {
                                  ${item.teacherName}
                             </a>
                         </span>
-                    </div>                   
+                         
+                    </div>   
+                    
                 </div>
             </div>
             <div class="course-bottom-info px-3 py-2">                
-                <span class="font-sm"><i class="fas fa-usd-circle"></i>NT ${item.lessonCourse.fPrice}</span>                               
+                <span class="font-sm"><i class="fas fa-usd-circle"></i>NT ${item.lessonCourse.fPrice}</span>  
+               <span class="font-sm icon-start"><i class="fas fa-clock"></i>${formattedDate}</span>
             </div>
+            
         </div>
     </div>
 </div>`
