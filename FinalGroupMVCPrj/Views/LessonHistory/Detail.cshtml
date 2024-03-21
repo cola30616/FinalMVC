@@ -26,7 +26,7 @@
             <div class="col-xl-4 col-lg-5">
                 <div class="content-img mb-40" data-aos="fade-up">
                     <div class="lazy-container ">
-                        <partial name="_LessonHistoryDetailPicturePartial" /> @* 圖片 *@
+                        <partial name="_LessonHistoryDetailPicturePartial" />
                     </div>
                 </div>
             </div>
@@ -91,9 +91,9 @@
                 <div>
                     <div class="col-lg-12 fs-5">
                         <ol class="indented-list" style="padding-right: 20px; list-style:cjk-ideographic;list-style-position:outside">
-                            <li>事假需於5日前申請，病假需於3小時前申請(並附上就診證明)。</li>
+                            <li>如需請假，需於課程開始前線上申請。</li>
                             <li>若未依規定請假，恕不順延與退費。</li>
-                            <li>若課程已開始上課，恕不提供退費服務。</li>
+                            <li>若課程進行中或課程已結束，恕不提供退費服務。</li>
                         </ol>
                     </div>
                 </div>
@@ -108,7 +108,7 @@
             </div>            
             <div class="text-center">
                 @{
-                    if (Model.FLessonDate < DateTime.Now)
+                    if (Model.FLessonDate < DateTime.Now && Model.FOrderValid == true)
                     {<br>
                         <button id="cancelOrderButton" class="fs-4 btn btn-lg btn-secondary radius-sm w-100" style="margin-bottom: 20px" type="button" aria-label="button" disabled>已無法取消報名</button>
                         
@@ -148,8 +148,9 @@
                     title: "請選擇取消原因：",
                     input: 'radio',
                     inputOptions: {
-                        '事假': '事假',
-                        '病假': '病假',
+                        '改變主意': '改變主意',
+                        '因病請假': '因病請假',
+                        '私人因素': '私人因素',
                     },
                     inputValidator: (value) => {
                         if (!value) {

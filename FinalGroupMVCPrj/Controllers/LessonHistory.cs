@@ -22,11 +22,11 @@ namespace FinalGroupMVCPrj.Controllers
             var memberId = GetCurrentMemberId(); // 获取当前会员ID
             var successRecord = _context.TOrderDetails
                 .Include(lc => lc.FLessonCourse)
-                .Where(lr => lr.FOrder.FMemberId == memberId && lr.FOrderValid == true)               
+                .Where(lr => lr.FOrder.FMemberId == memberId && lr.FOrderValid == true)                
                 .ToList();            
 
             
-            var successdict = successRecord.ToDictionary(lr => lr.FOrderId, lr => lr.FLessonCourse);           
+            var successdict = successRecord.OrderByDescending(lr => lr.FLessonCourse.FLessonDate).ToDictionary(lr => lr.FOrderId, lr => lr.FLessonCourse);           
 
 
             var cancelRecord = _context.TOrderDetails
@@ -35,7 +35,7 @@ namespace FinalGroupMVCPrj.Controllers
                 .ToList();  
 
             
-            var canceldict = cancelRecord.ToDictionary(lr => lr.FOrderId, lr => lr.FLessonCourse);
+            var canceldict = cancelRecord.OrderByDescending(lr => lr.FLessonCourse.FLessonDate).ToDictionary(lr => lr.FOrderId, lr => lr.FLessonCourse);
 
             LearningRecordVM learningRecord = new()
             {

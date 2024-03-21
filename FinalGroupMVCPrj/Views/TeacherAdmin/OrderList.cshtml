@@ -44,10 +44,11 @@
                             </select>
                         </div>
                         <div class="" style="width:10%">
-                            <select class="form-select" aria-label="Default select example">
+                            <select id="ordervalid" class="form-control" >
                                 <option selected>課程成立與否</option>
+                                <option value="1">全選</option>
                                 <option value="1">是</option>
-                                <option value="2">否</option>
+                                <option value="1">否</option>
                             </select>
                         </div>
                         <button class="btn btn-secondary"> 清除條件</button>
@@ -82,16 +83,15 @@
 @section Scripts {
     <script src="~/js/applescript/orderlist.js"asp-append-version="true"></script>
     <script>
-        //員工類型搜尋
-        $("#employeeType").change(() => { EmpType() });
-        function EmpType() {
-            if ($("#employeeType").find(":selected").text() == '選擇員工類別') {
-
-                $('#empdatatable').DataTable().column(9).search("").draw();
+        //訂單狀態搜尋
+        $("#ordervalid").change(() => { ordervalidstatus() });
+        function ordervalidstatus() {
+            if ($("#ordervalid").find(":selected").text() == '全選') 
+            {
+                $('#ordervalid').DataTable().column(8).search("").draw();
             } else {
-                $('#empdatatable').DataTable().column(9).search($("#employeeType").find(":selected").text()).draw();
+                $('#ordervalid').DataTable().column(8).search($("#ordervalid").find(":selected").text()).draw();
             }
         }
-
     </script>
 }
