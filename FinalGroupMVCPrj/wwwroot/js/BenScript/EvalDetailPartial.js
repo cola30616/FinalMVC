@@ -1,13 +1,13 @@
 ﻿document.addEventListener("DOMContentLoaded", async function () {
     /*    const lessonCourseId = @Model.FLessonCourseId;*/
-    let element = document.querySelector('div[FLessonCourseId]');
-    let lessonCourseId = element.getAttribute('FLessonCourseId');
+    const FOrderDetailId = document.querySelector('#FOrderDetailId').getAttribute('data-value');
+    const detailPartial = document.querySelector('#evalDetailPartial');
 
-    const url = "/LessonReview/GetAvgEvalScore?CourseId=" + lessonCourseId;
+    const url = "/LessonReview/GetEvalDetail?FOrderDetailId=" + FOrderDetailId;
 
     try {
         const response = await fetch(url, {
-            method: "GET"
+            method: "GET",
         });
 
         if (!response.ok) {
@@ -15,7 +15,7 @@
         }
 
         const data = await response.text();
-        document.getElementById("avgevalpartial").innerHTML = data;
+        detailPartial.innerHTML = data;
     } catch (error) {
         console.error("There was a problem with the fetch operation:", error);
     }

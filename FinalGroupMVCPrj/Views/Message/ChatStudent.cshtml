@@ -1,9 +1,9 @@
 ﻿@model IEnumerable<ChatTeacherViewModel>
 @{
-    ViewData["Title"] = "ChatTeacher";
-    Layout = "~/Views/Shared/_LayoutTeacherAdmin.cshtml";
+    ViewData["Title"] = "ChatStudent";
+    Layout = "~/Views/Shared/_Layout.cshtml";
 }
-<div id="teacherId" teacherId="@ViewBag.teacherId"></div>
+<div id="memberId" memberId="@ViewBag.memberId"></div>
 <div class="ChatContainer">
     <div class="leftSide">
         <!--header-->
@@ -21,22 +21,22 @@
             <!--search-->
             <div class="search_chat">
                 <div>
-                    <input type="text" placeholder="搜尋" />
+                    <input type="text" placeholder="Search or start new chat" />
                     <ion-icon name="search-outline"></ion-icon>
                 </div>
             </div>
-            <div class="chatlist-container" style="overflow-y: auto; max-height: 620px;">
+
             <!--chat list-->
             @foreach (var item in Model)
             {
-                <div class="chatlist" onclick="displaySelectMemberBox(@ViewBag.teacherId, @item.FMemberId)">
-                    <div class="block unread" data-chatbox-id="@item.FMemberId">
+                <div class="chatlist" onclick="displaySelectTeacherBox(@item.FTeacherId, @ViewBag.memberId)">
+                    <div class="block unread" data-chatbox-id="@item.FTeacherId">
                         <div class="imgbx">
-                            <img src="@Url.Action("GetStudentPicture", "Message", new { fMemberId = item.FMemberId })" class="cover" />
+                            <img src="@Url.Action("GetTeacherPicture", "Message", new { FTeacherId = item.FTeacherId })" class="cover" />
                         </div>
                         <div class="details">
                             <div class="listHead">
-                                <h4>@item.FShowName</h4>
+                                <h4>@item.FTeacherName</h4>
                                 <p class="time"></p>
                             </div>
                             <div class="message_p">
@@ -45,7 +45,6 @@
                     </div>
                 </div>
             }
-            </div>
         </div>
     </div>
     <div class="rightSide">
@@ -72,10 +71,9 @@
         <div class="chatbox_input">
             @*                     <ion-icon name="happy-outline"></ion-icon>
             <ion-icon name="attach-outline"></ion-icon> *@
-            <input type="text" id="messageInput" placeholder="輸入訊息" onkeypress="handleKeyPress(event)">
+            <input type="text" id="messageInput" placeholder="Type a message" onkeypress="handleKeyPress(event)">
             <a href="#" id="sendButton" class="avtar avtar-s btn-link-primary" onclick="sendMessage()">
                 <ion-icon name="send-outline"></ion-icon>
-            </a>
             </a>
         </div>
     </div>
@@ -87,18 +85,16 @@
         src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
 
 @section Style {
-    <link rel="stylesheet" href="~/css/BenAdd/ChStyle.css" />
+    <link rel="stylesheet" href="~/css/BenAdd/ChStyleStudent.css" />
 }
 
-@section Scripts {
 
-}
 <script src="~/js/BenScript/signalr.js">  </script>
 @* <script src="~/js/BenScript/ChatTeacher.js"></script>
         *@
 <script>
     let connection;
-    let selectMemberId;
+    let selectTeacherId;
     document.addEventListener("DOMContentLoaded", async () => {
 
         window.addEventListener('resize', function () {
@@ -111,14 +107,14 @@
 
         connection = new signalR.HubConnectionBuilder().withUrl("/teacherMsgHub").build();
 
-        const teacherId = document.getElementById("teacherId").getAttribute("teacherId");
+        const memberId = document.getElementById("memberId").getAttribute("memberId");
 
 
         //與Server建立連線
         connection.start().then(function () {
-            connection.invoke("SendTeacherId", teacherId)
+            connection.invoke("SendStudentId", memberId)
                 .then(function () {
-                    console.log("Teacher ID sent to server");
+                    console.log("Member ID sent to server");
                 }).catch(function (error) {
                     console.error("Error sending teacher ID: ", error);
                 });
@@ -141,7 +137,7 @@
         });
 
         connection.on("UpdContent", function (msg, teacherId, memberId) {
-            if (selectMemberId == memberId) {
+            if (selectTeacherId == teacherId) {
                 connection.invoke("GetChatMessages", teacherId, memberId)
                     .then(function (messages) {
                         console.log("Received chat messages:", messages);
@@ -152,7 +148,7 @@
                     });
             }
             else {
-                const newMsg = document.querySelector(`[data-chatbox-id="${memberId}"] .message_p`)
+                const newMsg = document.querySelector(`[data-chatbox-id="${teacherId}"] .message_p`)
                 newMsg.innerHTML = '<b>new</b>';
             }
             return;
@@ -160,7 +156,7 @@
 
         //有人連線時要做的動作
         connection.on("UpdList", function (msg) {
-            displaySelectMemberBox(teacherId, selectMemberId);
+            displaySelectTeacherBox(selectTeacherId, memberId);
             // connection.invoke("GetConnectionList")
             //     .then(function (messages) {
             //         console.log("Received chat messages:", messages);
@@ -178,28 +174,24 @@
         }
     }
 
-    function isStudentOnline(conList) {
-
-    }
-
-    function displaySelectMemberBox(teacherId, memberId) {
-        const newMsg = document.querySelector(`[data-chatbox-id="${memberId}"] .message_p`)
+    function displaySelectTeacherBox(teacherId, memberId) {
+        const newMsg = document.querySelector(`[data-chatbox-id="${teacherId}"] .message_p`)
         newMsg.innerHTML = '';
-        memberWindowActive(memberId);
-        updateSelectMemberHeader(memberId);
+        teacherWindowActive(teacherId);
+        updateSelectTeacherHeader(teacherId);
         connection.invoke("GetChatMessages", teacherId.toString(), memberId.toString())
             .then(function (messages) {
                 console.log("Received chat messages:", messages);
-                //獲得後將其展示
+
                 displayChatMessages(messages);
             }).catch(function (error) {
                 console.error("Error retrieving chat messages: ", error);
             });
     }
 
-    async function memberWindowActive(memberId) {
-        const activeWindow = document.querySelector(`[data-chatbox-id="${memberId}"]`);
-        const unreadWindow = document.querySelector(`[data-chatbox-id="${selectMemberId}"]`);
+    async function teacherWindowActive(teacherId) {
+        const activeWindow = document.querySelector(`[data-chatbox-id="${teacherId}"]`);
+        const unreadWindow = document.querySelector(`[data-chatbox-id="${selectTeacherId}"]`);
 
         if (activeWindow) {
             activeWindow.classList.remove('unread');
@@ -211,22 +203,22 @@
         }
     }
 
-    async function updateSelectMemberHeader(memberId) {
-        selectMemberId = memberId;
+    async function updateSelectTeacherHeader(teacherId) {
+        selectTeacherId = teacherId;
 
         try {
-            const response = await fetch(`/message/GetStudentInfo?fMemberId=${memberId}`);
+            const response = await fetch(`/message/GetTeacherInfo?fTeacherId=${teacherId}`);
             if (!response.ok) {
                 throw new Error('Network response was not ok');
             }
             const data = await response.json();
 
-            const memberName = data.fShowName;
-            const ImgSrc = `@Url.Action("GetStudentPicture", "Message", new { fMemberId = "__memberId__" })`.replace("__memberId__", memberId);
+            const teacherName = data.fTeacherName;
+            const ImgSrc = `@Url.Action("GetTeacherPicture", "Message", new { fTeacherId = "__teacherId__" })`.replace("__teacherId__", teacherId);
 
             const headerContent = document.querySelector('#headerContent');
             headerContent.innerHTML = '';
-            headerContent.innerHTML += memberName + '<br>';
+            headerContent.innerHTML += teacherName + '<br>';
 
             const headerImg = document.querySelector('#userImg');
             headerImg.src = ImgSrc;
@@ -236,7 +228,7 @@
         }
 
 
-        connection.invoke("MemberIsOnline", memberId.toString())
+        connection.invoke("TeacherIsOnline", teacherId.toString())
             .then(function (isOnline) {
                 const online = document.querySelector('#headerContent');
                 online.innerHTML += isOnline == true ? '<span class=" bg-success border border-light rounded-circle chat-badge"></span>' : '<span class=" bg-danger border border-light rounded-circle chat-badge"></span>';
@@ -257,10 +249,10 @@
         const date = new Date();
         const time = getCurrentTime(date);
 
-        const teacherId = @ViewBag.teacherId;
-        const memberId = selectMemberId;
+        const memberId = @ViewBag.memberId;
+        const teacherId = selectTeacherId
 
-        connection.invoke("SendMessage", teacherId.toString(), memberId.toString(), message, date, true)
+        connection.invoke("SendMessage", teacherId.toString(), memberId.toString(), message, date, false)
             .catch(function (err) {
                 alert('錯誤: ' + err.toString());
             });
@@ -275,51 +267,51 @@
         messages.forEach(function (message) {
             const time = getDisplayTime(new Date(message.fMessageTime));
             let messageDiv = document.createElement("div");
-            const ImgSrc = "@Url.Action("GetTeacherPicture", "Message", new { FTeacherId = ViewBag.teacherId })"
-            const ImgSrcInput = `@Url.Action("GetStudentPicture", "Message", new { fMemberId = "__memberId__" })`.replace("__memberId__", selectMemberId);
-            if (message.fIsTeacherMsg) {
+            const ImgSrc = "@Url.Action("GetStudentPicture", "Message", new { fMemberId = ViewBag.memberId })"
+            const ImgSrcInput = `@Url.Action("GetTeacherPicture", "Message", new { FTeacherId = "__teacherId__" })`.replace("__teacherId__", selectTeacherId);
+            if (!message.fIsTeacherMsg) {
                 messageDiv.className = "message my_message";
                 messageDiv.innerHTML = `
-                                                                <div class="d-flex">
-                                                                    <div class="flex-shrink-0">
-                                                                        <ul class="list-inline ms-auto mb-0">
-                                                                            <li class="list-inline-item">
-                                                                                <a href="#" class="avtar avtar-xs btn-link-secondary">
-                                                                                </a>
-                                                                            </li>
-                                                                        </ul>
-                                                                    </div>
-                                                                    <div class="flex-grow-1 mx-3">
-                                                                        <div class="msg-content">
-                                                                                <p class="mb-0" id="msgtxt">${message.fMessage}</p>
-                                                                        </div>
-                                                                            <p class="mb-0 text-muted text-sm msg_time" id="time">${time}</p>
-                                                                    </div>
-                                                                    <div class="flex-shrink-0">
-                                                                        <div class="chat-avtar">
-                                                                            <img class="rounded-circle img-fluid wid-40" style="max-width: 40px; max-height: 40px;" src=${ImgSrc} alt="User image">
-                                                                        </div>
-                                                                    </div>
-                                                                </div>
-                                                            `;
+                                                                            <div class="d-flex">
+                                                                                <div class="flex-shrink-0">
+                                                                                    <ul class="list-inline ms-auto mb-0">
+                                                                                        <li class="list-inline-item">
+                                                                                            <a href="#" class="avtar avtar-xs btn-link-secondary">
+                                                                                            </a>
+                                                                                        </li>
+                                                                                    </ul>
+                                                                                </div>
+                                                                                <div class="flex-grow-1 mx-3">
+                                                                                    <div class="msg-content">
+                                                                                            <p class="mb-0" id="msgtxt">${message.fMessage}</p>
+                                                                                    </div>
+                                                                                        <p class="mb-0 text-muted text-sm msg_time" id="time">${time}</p>
+                                                                                </div>
+                                                                                <div class="flex-shrink-0">
+                                                                                    <div class="chat-avtar">
+                                                                                        <img class="rounded-circle img-fluid wid-40" style="max-width: 40px; max-height: 40px;" src=${ImgSrc} alt="User image">
+                                                                                    </div>
+                                                                                </div>
+                                                                            </div>
+                                                                        `;
                 chatBox.appendChild(messageDiv);
             } else {
                 messageDiv.className = "message std_message";
                 messageDiv.innerHTML = `
-                                                        <div class="d-flex">
-                                                            <div class="flex-shrink-0">
-                                                                <div class="chat-avtar">
-                                                                        <img class="rounded-circle img-fluid wid-40 " style="max-width: 40px; max-height: 40px;" src=${ImgSrcInput} alt="User image">
-                                                                </div>
-                                                            </div>
-                                                            <div class="flex-grow-1 mx-3">
-                                                                <div class="msg-content">
-                                                                        <p class="mb-0" id="msgtxt">${message.fMessage}</p>
-                                                                </div>
-                                                                    <p class="mb-0 text-muted text-sm msg_time" id="time">${time}</p>
-                                                            </div>
-                                                        </div>
-                                                                `;
+                                                                    <div class="d-flex">
+                                                                        <div class="flex-shrink-0">
+                                                                            <div class="chat-avtar">
+                                                                                    <img class="rounded-circle img-fluid wid-40 " style="max-width: 40px; max-height: 40px;" src=${ImgSrcInput} alt="User image">
+                                                                            </div>
+                                                                        </div>
+                                                                        <div class="flex-grow-1 mx-3">
+                                                                            <div class="msg-content">
+                                                                                    <p class="mb-0" id="msgtxt">${message.fMessage}</p>
+                                                                            </div>
+                                                                                <p class="mb-0 text-muted text-sm msg_time" id="time">${time}</p>
+                                                                        </div>
+                                                                    </div>
+                                                                            `;
                 chatBox.appendChild(messageDiv);
             }
 

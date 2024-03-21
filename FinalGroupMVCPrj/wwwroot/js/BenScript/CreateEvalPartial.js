@@ -35,14 +35,13 @@
         const score = parseInt(scoreElement.innerText);
         const comment = evalComment.value;
 
-        const url = '/LessonReview/CreateEvaluation';
-        const data = {
-            FOrderDetailId: FOrderDetailId,
-            FScore: score,
-            FComment: comment
-        };
-
         try {
+            const url = '/LessonReview/CreateEvaluation';
+            const data = {
+                FOrderDetailId: FOrderDetailId,
+                FScore: score,
+                FComment: comment
+            };
             const response = await fetch(url, {
                 method: 'POST',
                 headers: {
@@ -56,23 +55,69 @@
                 console.log('Evaluation submitted successfully.');
                 const createModal = document.getElementById('evalModal');
                 $(createModal).modal('hide');
+
                 document.getElementById('createBtn').style.display = 'none';
                 document.getElementById('editBtn').style.display = 'block';
 
                 $(`#EditForm .star[data-value="${score}"]`).trigger('click');
-
                 $(`#EditForm .full[data-value="${score}"]`).trigger('click');
 
                 const comment = evalComment.value;
                 document.getElementById('editComment').value = comment;
 
+                // 使用 SweetAlert 提示评价提交成功
+                Swal.fire({
+                    icon: 'success',
+                    title: '評價提交成功',
+                    text: '您的評價已成功提交！',
+                    confirmButtonColor: '#3085d6',
+                    confirmButtonText: '確認'
+                });
+
             } else {
                 console.error('Error:', response.statusText);
+                
+                Swal.fire({
+                    icon: 'error',
+                    title: '評價提交失敗',
+                    text: '評價提交失敗，請稍後再試。',
+                    confirmButtonColor: '#3085d6',
+                    confirmButtonText: '確認'
+                });
             }
+        } catch (error) {
+            console.error('Error:', error);
+            
+            Swal.fire({
+                icon: 'error',
+                title: '評價提交失敗',
+                text: '評價提交失敗，請稍後再試。',
+                confirmButtonColor: '#3085d6',
+                confirmButtonText: '確認'
+            });
+        }
+
+        // 更新評價顯示
+        try {
+            const FOrderDetailId = document.querySelector('#FOrderDetailId').getAttribute('data-value');
+            const detailPartial = document.querySelector('#evalDetailPartial');
+            const url = "/LessonReview/GetEvalDetail?FOrderDetailId=" + FOrderDetailId;
+
+            const response = await fetch(url, {
+                method: "GET",
+            });
+
+            if (!response.ok) {
+                throw new Error("Network response was not ok");
+            }
+
+            const data = await response.text();
+            detailPartial.innerHTML = data;
         } catch (error) {
             console.error('Error:', error);
         }
     });
+
 
     cancelBtns.forEach(btn => {
         btn.addEventListener('click', function () {

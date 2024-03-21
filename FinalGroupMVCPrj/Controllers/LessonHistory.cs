@@ -34,7 +34,7 @@ namespace FinalGroupMVCPrj.Controllers
         //■ ==========================     Apple 作業區      ==========================■
         public IActionResult Details()
         {
-            ViewBag.FOrderDetailId = 5;
+            ViewBag.FOrderDetailId = 240;
             return View();
         }
     }

@@ -66,7 +66,15 @@
                         <div class="author d-flex align-items-center justify-content-between gap-3">
                             <div class="author-img">
                                 <div class="lazy-container ratio ratio-1-1 rounded-circle">
-                                        <img FMemberId="@item.FMemberId" src="/images/OwenAdd/memberNoPhoto.jpg" data-src="@Url.Action("GetPicture", "LessonReview", new { FMemberId = item.FMemberId })" title="@item.FName" class="lazyload" />
+                                        @{
+                                                string defaultImagePath = "/images/OwenAdd/memberNoPhoto.jpg"; 
+                                             }
+
+                                    <img FMemberId="@item.FMemberId" 
+                                         src="@Url.Action("GetPicture", "LessonReview", new { FMemberId = item.FMemberId })" 
+                                         title="@item.FName" 
+                                         class="lazyload" 
+                                         onerror="this.onerror=null; this.src='@defaultImagePath';" />
                                 </div>
                         </div>
                         <div class="author-info">
@@ -108,10 +116,15 @@
                     </div>
                     <div class="more-info font-sm">
                         <div class="icon-start">
-                            <i class="fa-solid fa-clock"></i>
-                                @{
-                                    // 獲取評論日期
-                                    DateTime commentDate = item.FCommentDate;
+                            @if (item.FCommentUpdateDate.HasValue)
+                            {
+                                <span>已編輯</span>
+                            }
+                            <i class="fa-solid fa-clock" style="margin-left:10px;"></i>
+                            @{
+                                // 獲取評論日期
+
+                                    var commentDate = item.FCommentUpdateDate.HasValue ? item.FCommentUpdateDate.Value : item.FCommentDate;
 
                                     // 獲取當前日期
                                     DateTime currentDate = DateTime.Now;
@@ -137,7 +150,7 @@
                                     }
                                 }
 
-                                @displayDate
+                            <span>@displayDate</span>
                         </div>
                     </div>
                 </div>

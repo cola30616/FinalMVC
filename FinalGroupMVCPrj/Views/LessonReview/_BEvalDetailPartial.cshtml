@@ -1,0 +1,55 @@
+﻿@model SingleEvaluationViewModel
+<section class="mentor-details pt-40 pb-60">
+    <div class="container">
+        <h3 class="title mt-0 fs-1" style="margin-bottom:20px;">已評價內容</h3>
+        <div class="row gx-xl-5 align-items-center">
+            <div class="col-xl-4 col-lg-5">
+                <div class="content-img mb-40" data-aos="fade-up">
+                    <li class="d-inline-block">
+                        <div class="ratings size-lg gap-2">
+                            <div class="rate bg-img" data-bg-image="/images/rate-star-lg.png" style="background-image: url('/images/rate-star-lg.png');">
+                                @{
+                                    string width = "";
+                                    switch (Model.FScore)
+                                    {
+                                        case 1:
+                                            width = "width:20%;";
+                                            break;
+                                        case 2:
+                                            width = "width:40%;";
+                                            break;
+                                        case 3:
+                                            width = "width:60%;";
+                                            break;
+                                        case 4:
+                                            width = "width:80%;";
+                                            break;
+                                        case 5:
+                                            width = "width:100%;";
+                                            break;
+                                        default:
+                                            width = "width:0%;";
+                                            break;
+                                    }
+                                }
+                                <div class="rating-icon bg-img" style="background-image: url('/images/rate-star-lg.png'); @width" data-bg-image="/images/rate-star-lg.png"></div>
+                            </div>
+                            @if (Model.FCommentUpdateDate != null)
+                            {
+                                <span style="margin-left:10px;">@Model.FCommentUpdateDate.Value.Year/@Model.FCommentUpdateDate.Value.Month/@Model.FCommentUpdateDate.Value.Day</span>
+                                <span style="margin-left:10px;">已修改</span>
+                            }
+                            else
+                            {
+                                <span style="margin-left:10px;">@Model.FCommentDate.Year/@Model.FCommentDate.Month/@Model.FCommentDate.Day</span>
+                            }
+                        </div>
+                    </li>
+                </div>
+            </div>
+            <div class="content-title mb-40" data-aos="fade-up">
+                <span class=" fs-4 " id="evalComment">@Model.FComment</span>
+            </div>
+        </div>
+    </div>
+</section>

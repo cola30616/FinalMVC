@@ -1,5 +1,6 @@
 using FinalGroupMVCPrj;
 using FinalGroupMVCPrj.Data;
+using FinalGroupMVCPrj.Hubs;
 using FinalGroupMVCPrj.Models;
 using FinalGroupMVCPrj.Services;
 using MailKit;
@@ -14,7 +15,7 @@ var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 var connectionString = builder.Configuration.GetConnectionString("DefaultConnection") ?? throw new InvalidOperationException("Connection string 'DefaultConnection' not found.");
-//CORS�]�w
+//CORS設定
 builder.Services.AddCors(options =>
 { options.AddPolicy("AllowAll", builder => builder.AllowAnyOrigin().AllowAnyHeader().AllowAnyMethod()); }
 );
@@ -77,5 +78,7 @@ app.MapControllerRoute(
     pattern: "{controller=Home}/{action=Index}/{id?}");
 app.MapRazorPages();
 
+app.MapHub<TeacherMsgHub>("/teacherMsgHub");
+app.MapHub<PushMsgHub>("/pushMsgHub");
 
 app.Run();

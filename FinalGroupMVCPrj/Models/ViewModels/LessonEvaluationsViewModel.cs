@@ -31,6 +31,8 @@ namespace FinalGroupMVCPrj.Models.ViewModels
         public string? FComment { get; set; }
         [Display(Name = "評價時間")]
         public DateTime FCommentDate { get; set; }
+        [Display(Name = "修改評價時間")]
+        public DateTime? FCommentUpdateDate { get; set; }
         [Display(Name = "評價狀態")]
         public bool FDisplayStatus { get; set; }
 

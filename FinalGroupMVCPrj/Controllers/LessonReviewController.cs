@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Build.Framework.Profiler;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.IdentityModel.Tokens;
 
 namespace FinalGroupMVCPrj.Controllers
 {
@@ -23,40 +24,49 @@ namespace FinalGroupMVCPrj.Controllers
         [HttpGet]
         public async Task<IActionResult> GetAvgEvalScore(int CourseId)
         {
-            var detail = await _context.TLessonCourses
-            .Include(order => order.TOrderDetails)
-                .ThenInclude(evaluation => evaluation.TLessonEvaluations)
-            .Where(eval => eval.FLessonCourseId == CourseId)
+            var FCode = _context.TLessonCourses.FirstOrDefault(l =>l.FLessonCourseId == CourseId).FCode ;
+            var detail = await _context.TLessonEvaluations
+            .Include(order => order.FOrderDetail)
+                .ThenInclude(evaluation => evaluation.FLessonCourse)
+            .Where(eval => eval.FOrderDetail.FLessonCourse.FCode == FCode)
             .Select(querystring => new LessonAvgEvalViewModel
             {
-                FAvgScore = Math.Round(querystring.TOrderDetails.SelectMany(order => order.TLessonEvaluations).Average(evaluation => evaluation.FScore), 1)
+                FAvgScore = querystring.FScore
             }).ToListAsync();
-            var details = detail.FirstOrDefault();
 
-            return PartialView("_BValuateAvgPartial", details);
+            double averageScore = Math.Round(detail.Select(x => x.FAvgScore).DefaultIfEmpty(0).Average(),1);
+
+            var avgScore = new LessonAvgEvalViewModel();
+            avgScore.FAvgScore = averageScore;
+
+            return PartialView("_BValuateAvgPartial", avgScore);
         }
 
         [HttpGet]
         public async Task<IActionResult> GetEvalList(int? CourseId)
         {
+            var FCode = _context.TLessonCourses.FirstOrDefault(l => l.FLessonCourseId == CourseId).FCode;
             var query = await _context.TLessonEvaluations
-                        .Include(member => member.FMember)
                         .Include(order => order.FOrderDetail)
                              .ThenInclude(course => course.FLessonCourse)
-                        .Where(eval => eval.FOrderDetail.FLessonCourseId == CourseId)
+                         .Include(order => order.FOrderDetail)
+                            .ThenInclude(od =>od.FOrder)
+                            .ThenInclude(o => o.FMember)
+                        .Where(eval => eval.FOrderDetail.FLessonCourse.FCode == FCode)
                         .Select(evaluation => new LessonEvaluationsViewModel
                         {
                             FLessonEvalId = evaluation.FLessonEvalId,
-                            FMemberId = evaluation.FMemberId,
-                            FShowName = evaluation.FMember.FShowName,
+                            FMemberId = evaluation.FOrderDetail.FOrder.FMemberId,
+                            FShowName = evaluation.FOrderDetail.FOrder.FMember.FShowName,
                             FOrderDetailId = evaluation.FOrderDetailId,
                             FLessonCourseId = evaluation.FOrderDetail.FLessonCourseId,
                             FName = evaluation.FOrderDetail.FLessonCourse.FName,
                             FScore = evaluation.FScore,
                             FComment = evaluation.FComment,
                             FCommentDate = evaluation.FCommentDate,
+                            FCommentUpdateDate = evaluation.FCommentUpdateDate,
                             FDisplayStatus = evaluation.FDisplayStatus
-                        }).ToListAsync();
+                        }).OrderByDescending(eval=>eval.FCommentDate).ToListAsync();
             int star1 = 0, star2 = 0, star3 = 0, star4 = 0, star5 = 0;
 
             foreach (var item in query)
@@ -86,9 +96,30 @@ namespace FinalGroupMVCPrj.Controllers
             ViewBag.percentStar4 = percentStar4;
             ViewBag.percentStar5 = percentStar5;
 
-            return PartialView("_BValuatePartial", query);
+            return PartialView("_BEvalListPartial", query);
         }
 
+        [HttpGet]
+        public async Task<IActionResult> GetEvalDetail(int FOrderDetailId)
+        {
+            var details = await _context.TLessonEvaluations.Where(eval => eval.FOrderDetailId == FOrderDetailId)
+            .Select(eval => new SingleEvaluationViewModel
+            {
+                FOrderDetailId = FOrderDetailId,
+                FScore = eval.FScore,
+                FComment = eval.FComment,
+                FCommentDate = eval.FCommentDate,
+                FCommentUpdateDate = eval.FCommentUpdateDate,
+            }).ToListAsync();
+            if (details.IsNullOrEmpty())
+            {
+                return Content("");
+            }
+            var detail = details.FirstOrDefault();
+            return PartialView("_BEvalDetailPartial", detail);
+        }
+
+        [HttpGet]
         //獲取照片
         public async Task<FileResult> GetPicture(int FMemberId)
         {
@@ -98,11 +129,20 @@ namespace FinalGroupMVCPrj.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> isValuated(int FOrderDetailId)
+        public async Task<IActionResult> isEvaluated(int FOrderDetailId)
         {
             bool isExisting = await _context.TLessonEvaluations.AnyAsync(eval => eval.FOrderDetailId == FOrderDetailId);
 
             return Json(new { isExisting = isExisting });
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> canEvaluated(int FOrderDetailId)
+        {
+
+            var od = await _context.TOrderDetails.FirstOrDefaultAsync(od => od.FOrderDetailId == FOrderDetailId);
+            var isValid = od.FOrderValid;
+            return Json(new { isValid = isValid });
         }
 
         [HttpGet]
@@ -140,7 +180,7 @@ namespace FinalGroupMVCPrj.Controllers
         [HttpGet]
         public async Task<IActionResult> EditEvaluation(int FOrderDetailId)
         {
-            if(FOrderDetailId == null || _context.TLessonEvaluations == null)
+            if (FOrderDetailId == null || _context.TLessonEvaluations == null)
             {
                 return NotFound();
             }
@@ -153,17 +193,17 @@ namespace FinalGroupMVCPrj.Controllers
                     FComment = ""
                 };
             }
-            return PartialView("_BEditEvaluationPartial",evaluation);
+            return PartialView("_BEditEvaluationPartial", evaluation);
         }
 
-        [HttpPost]  
+        [HttpPost]
         public async Task<IActionResult> EditEvaluation([FromBody] SingleEvaluationViewModel evaldata)
         {
             if (_context.TLessonEvaluations.Any(eval => eval.FOrderDetailId == evaldata.FOrderDetailId))
             {
                 var evaluation = await _context.TLessonEvaluations
                     .Include(eval => eval.FOrderDetail)
-                        .ThenInclude(eval =>eval.FOrder)
+                        .ThenInclude(eval => eval.FOrder)
                     .Where(eval => eval.FOrderDetailId == evaldata.FOrderDetailId).FirstOrDefaultAsync();
                 evaluation.FScore = evaldata.FScore;
                 evaluation.FComment = evaldata.FComment;
@@ -195,7 +235,7 @@ namespace FinalGroupMVCPrj.Controllers
                     FScore = 0
                 };
             }
-            return Ok(evaluation.FScore); 
+            return Ok(evaluation.FScore);
         }
 
     }
