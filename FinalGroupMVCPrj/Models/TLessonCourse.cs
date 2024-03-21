@@ -55,6 +55,8 @@ public partial class TLessonCourse
 
     public string FStatusNote { get; set; }
 
+    public virtual TCityDistrict FDistrict { get; set; }
+
     public virtual TCourseSubject FSubject { get; set; }
 
     public virtual TTeacher FTeacher { get; set; }

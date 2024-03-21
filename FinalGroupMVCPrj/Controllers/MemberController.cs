@@ -551,9 +551,23 @@ namespace FinalGroupMVCPrj.Controllers
             }
             return Content("假資料報名成功");
         }
+        //訂單補訂單編號
+        [AllowAnonymous]
+        [HttpGet]
+        public IActionResult AddOrderNumber()
+        {
+            var orders = _context.TOrders.OrderBy(o=>o.FOrderDate).ToList();
+            foreach (var o in orders)
+            {
+                o.FOrderNumber = GetOrderNumber(o.FOrderDate);
+                _context.TOrders.Update(o);
+                _context.SaveChanges();
+            }
+            
+            return Ok("成功！");
+        }
 
-
-                [AllowAnonymous]
+        [AllowAnonymous]
             static DateTime GetRandomDate(DateTime startDate, DateTime endDate)
             {
                 Random random = new Random();
@@ -564,5 +578,18 @@ namespace FinalGroupMVCPrj.Controllers
 
                 return randomDate;
             }
+
+
+
+        [AllowAnonymous]
+        // 獲取OrderNumber
+        private string GetOrderNumber(DateTime date)
+        {
+            DateTime start = date.Date;
+            DateTime end = start.AddDays(1);
+            int no = _context.TOrders.Where(o => o.FOrderDate < end && o.FOrderDate >= start &&o.FOrderNumber!=null).Count() + 1;
+            string orderNumber = "LSL" + start.ToString("yyMMdd") + $"{no:D4}";
+            return orderNumber;
         }
+    }
 }
