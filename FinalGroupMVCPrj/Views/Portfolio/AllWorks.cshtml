@@ -2,20 +2,81 @@
 
 <body class="theme-color-1">
     <!-- Breadcrumb start -->
-    <div class="breadcrumb-area bg-img bg-cover" data-bg-image="assets/images/breadcrumb-bg.jpg">
+  @*   <div class="breadcrumb-area" >
         <div class="container">
-            <div class="content text-center">
-                <h2>作品總覽</h2>
+            <div class="content text-left">
                 <nav aria-label="breadcrumb">
-                    <ol class="breadcrumb">
+                    <ol class="breadcrumb text-left">
                         <li class="breadcrumb-item"><a href="index.html">Home</a></li>
                         <li class="breadcrumb-item active" aria-current="page">Blogs</li>
                     </ol>
                 </nav>
             </div>
         </div>
-    </div>
+    </div> *@
     <!-- Breadcrumb end -->
+    <!-- Home-area start-->
+    <section class="hero-banner hero-banner_v3 header-next pb-60">
+        <div class="container">
+            <div class="row align-items-center gx-xl-5">
+                <div class="col-lg-6">
+                    <div class="banner-content mb-40">
+
+                        <h1 class="title mb-30" data-aos="fade-up" data-aos-delay="100">
+                            作品總覽
+                        </h1>
+                        <p class="text-center" data-aos="fade-up" data-aos-delay="100">
+                            歡迎到來學樂，來看看同學的作品
+                        </p>
+                        <div class="banner-filter-form mt-40" data-aos="fade-up" data-aos-delay="150">
+                            <div class="form-wrapper border rounded-pill">
+                                <form>
+                                    <div class="row align-items-center">
+                                        <div class="col-xl-4 col-lg-5 col-md-4 col-sm-6">
+                                            <div class="input-group">
+                                                <label for="search"><i class="fas fa-search"></i></label>
+                                                <input type="text" id="search" class="form-control" placeholder="Search course">
+                                                <div class="vr"></div>
+                                            </div>
+                                        </div>
+                                        <div class="col-xl-4 col-lg-5 col-md-4 col-sm-6">
+                                            <div class="input-group">
+                                                <label for="search"><i class="fas fa-th-large"></i></label>
+                                                <select class="niceselect">
+                                                    <option data-display="選擇課程">選擇課程種類...</option>
+                                                    <option value="1">投資理財</option>
+                                                    <option value="2">烹飪</option>
+                                                    <option value="3">語言</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <div class="col-xl-4 col-lg-2 col-md-4 col-sm-6">
+                                            <button class="btn btn-lg btn-primary btn-gradient rounded-pill w-100" type="button" aria-label="Find Portfolio">
+                                                <span>Find Portfolio</span>
+                                                <i class="fal fa-search"></i>
+                                            </button>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-6" data-aos="fade-up">
+                    <div class="banner-image mb-40">
+                        <img class="lazyload blur-up" src="https://themeforest.kreativdev.com/oppida/demo/assets/images/banner/hero-banner-1.png" data-src="https://themeforest.kreativdev.com/oppida/demo/assets/images/banner/hero-banner-1.png" alt="Banner Image">
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Bg shapes -->
+        <div class="shapes">
+            <span class="shape"></span>
+            <span class="shape"></span>
+            <span class="shape"></span>
+        </div>
+    </section>
+    <!-- Home-area end -->
     <!-- Blog-area start -->
     <div class="blog-area pt-100 pb-75">
         <div class="container">
@@ -26,7 +87,7 @@
                         <article class="card mb-25 border radius-md">
                             <div class="card-img">
                                 <a href="blog-single.html" target="_self" title="Link" class="lazy-container ratio ratio-2-3">
-                                    <img class="lazyload" src="assets/images/placeholder.png" data-src="assets/images/blog/blog-1.jpg" alt="Blog Image">
+                                    <img class="lazyload" src="@i.FFileLink" data-src="@i.FFileLink" alt="Blog Image">
                                 </a>
                             </div>
                             <div class="card-content p-25">
@@ -44,7 +105,7 @@
                                     @i.FDescrpition
                                 </p>
                                 <div class="cta-btn mt-15">
-                                    <a href="Portfolio/List?CourseworkId=@i.FCourseworkId" class="btn-text color-primary" target="_self" title="Read More">READ MORE</a>
+                                    <a asp-controller="Portfolio" asp-action="List" asp-route-id="@i.FCourseworkId" class="btn-text color-primary" target="_self" title="Read More">READ MORE</a>
                                 </div>
                             </div>
                         </article>

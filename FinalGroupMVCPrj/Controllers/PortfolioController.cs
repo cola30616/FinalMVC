@@ -34,11 +34,13 @@ namespace FinalGroupMVCPrj.Controllers
                     FSubjectName = c.FOrderDetail.FLessonCourse.FSubject.FSubjectName,
                     FFieldName = c.FOrderDetail.FLessonCourse.FSubject.FField.FFieldName,
                     FLessonCourseDescrpition = c.FOrderDetail.FLessonCourse.FDescription,
+                    FCourseworkId = c.FCourseworkId,
+                    FFileLink = c.TCourseworkFiles.FirstOrDefault(f => f.FCourseworkId == c.FCourseworkId).FFileLink
                 }));
             return View(portfolioList);
         }
         [HttpGet]
-        public IActionResult List(int CourseworkId)
+        public IActionResult List(int Id)
         {
             //int memberId = 9;
             PortfolioListDTO portfolioListDTO = new PortfolioListDTO();
@@ -54,9 +56,9 @@ namespace FinalGroupMVCPrj.Controllers
             //    }));
 
 
-            IEnumerable<PortfolioListDTO> portfolioList = new List<PortfolioListDTO>(_context.TCourseworks.Include(c => c.FOrderDetail).ThenInclude(o => o.FOrder).ThenInclude(o => o.FMember).Include(c => c.FOrderDetail).ThenInclude(o => o.FLessonCourse).ThenInclude(c => c.FSubject).ThenInclude(t => t.FField).ThenInclude(a => a.TMemberWishFields)
+            IEnumerable<PortfolioListDTO> portfolioList = new List<PortfolioListDTO>(_context.TCourseworks.Include(c => c.FOrderDetail).ThenInclude(o => o.FOrder).ThenInclude(o => o.FMember).Include(c => c.FOrderDetail).ThenInclude(o => o.FLessonCourse).ThenInclude(c => c.FSubject).ThenInclude(t => t.FField).ThenInclude(a => a.TMemberWishFields).Include(c => c.TCourseworkFiles)
 
-                .Where(c => c.FCourseworkId == CourseworkId)
+                .Where(c => c.FCourseworkId == Id)
                 .Select(c => new PortfolioListDTO
                 {
                     FCourseworkId = c.FCourseworkId,
@@ -70,6 +72,7 @@ namespace FinalGroupMVCPrj.Controllers
                     FSubjectName = c.FOrderDetail.FLessonCourse.FSubject.FSubjectName,
                     FFieldName = c.FOrderDetail.FLessonCourse.FSubject.FField.FFieldName,
                     FLessonCourseDescrpition = c.FOrderDetail.FLessonCourse.FDescription,
+                    FFileLink = c.TCourseworkFiles.FirstOrDefault(f => f.FCourseworkId == c.FCourseworkId).FFileLink
                 }));
             return View(portfolioList);
             //return Ok(portfolioList);

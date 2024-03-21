@@ -2,7 +2,7 @@
 {
     public class PortfolioListDTO
     {
-        public int FCourseworkId { get; set; } = 0;
+        public int? FCourseworkId { get; set; } 
 
         public string FName { get; set; } = "";
         public string FShowName { get; set; } = "";
@@ -19,6 +19,7 @@
         public string FComment { get; set; } = "";
         public string FCommentPerson { get; set; } = "";
         public string FLessonName { get; set; } = "";
+        public string FFileLink { get; set; } = "";
 
         public DateTime? FCommentTime { get; set; }=DateTime.Now;
 
