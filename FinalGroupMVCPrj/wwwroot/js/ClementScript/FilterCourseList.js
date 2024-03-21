@@ -10,7 +10,7 @@ const FilterSortData = {
     minPrice: 100,
     maxPrice: 2000,
     sortBy: 'desc',
-    sortType: 'enrollment'
+    sortType: 'newest'
 };
 
 const handleSubjects = (filterData) => {
@@ -37,18 +37,13 @@ const handlePriceInput = () => {
 }
 
 const handleSorting = (value) => {
-    if (value === 'enrollment') {
-        FilterSortData.sortBy = 'enrollment';
-        FilterSortData.sortType = 'desc'; //
-    } else if (value === 'rate') {
-        FilterSortData.sortBy = 'rate';
-        FilterSortData.sortType = 'desc'; 
-    } else if (value === 'newest') {
-        FilterSortData.sortBy = 'newest';
-        FilterSortData.sortType = 'desc'; 
-    } else if (value === 'Hot') {
-        FilterSortData.sortBy = 'Hot';
-        FilterSortData.sortType = 'desc'; 
+    if (value === 'newest') {
+        FilterSortData.sortType = 'newest';
+       
+    } else if (value === 'PriceDesc') {
+        FilterSortData.sortType = 'PriceDesc';              
+    } else if (value === 'PriceAsc') {
+        FilterSortData.sortType = 'PriceAsc';   
     }
 
     // 調用 loadCourses 函數重新加載課程列表

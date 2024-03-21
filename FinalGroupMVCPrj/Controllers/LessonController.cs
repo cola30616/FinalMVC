@@ -151,15 +151,14 @@ namespace FinalGroupMVCPrj.Controllers
                     case "newest":
                         query = query.OrderByDescending(course => course.FLessonDate);
                         break;
-                    //case "popular":
-                    //    // 在這裡根據你的定義添加最熱門課程的排序邏輯
-                    //    break;
-                    case "enrollment":
-                        query = query.OrderByDescending(course => course.FMaxPeople);
+                    
+                    case "PriceDesc":
+                        query = query.OrderByDescending(course => course.FPrice);
                         break;
-                    //case "rating":
-                    //    query = query.OrderByDescending(course => course.FRating);
-                    //    break;
+                    case "PriceAsc":
+                        query = query.OrderBy(course => course.FPrice);
+                        break;
+
                 }
             }
             // 目前課程總數量
