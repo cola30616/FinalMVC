@@ -65,7 +65,7 @@
                     <h4 class="mb-20 fs-4">訂單狀態</h4>
                     <div class="col-lg-6">
                         <div class="form-group mb-30 fs-5">
-                            <label for="firstName">@((Model.FOrderValid) ? "成立" : "取消")<span class="color-red"></span> </label>
+                            <label for="firstName"id="isvalid">@((Model.FOrderValid) ? "成立" : "取消")<span class="color-red"></span> </label>
                         </div>
                     </div>
                     <h4 class="mb-20 fs-4">訂單成立時間</h4>
@@ -102,7 +102,7 @@
                 @{
                     if (Model.FLessonDate > DateTime.Now && Model.FOrderValid == true)
                     {<br>
-                        <button id="cancelOrderButton" class="fs-4 btn btn-lg btn-primary radius-sm w-100" style="margin-bottom: 20px" type="button" aria-label="button" data-bs-toggle="modal" data-bs-target="#orderSuccessModal">我要取消報名</button>
+                                <button id="cancelOrderButton" class="fs-4 btn btn-lg btn-primary radius-sm w-100" style="margin-bottom: 20px" type="button" aria-label="button" data-bs-toggle="modal" data-bs-target="#orderSuccessModal">我要取消報名</button>
                     }
                 }
             </div>            
@@ -110,7 +110,7 @@
                 @{
                     if (Model.FLessonDate < DateTime.Now && Model.FOrderValid == true)
                     {<br>
-                        <button id="cancelOrderButton" class="fs-4 btn btn-lg btn-secondary radius-sm w-100" style="margin-bottom: 20px" type="button" aria-label="button" disabled>已無法取消報名</button>
+                                <button id="cancelOrderButton" class="fs-4 btn btn-lg btn-secondary radius-sm w-100" style="margin-bottom: 20px" type="button" aria-label="button" disabled>已無法取消報名</button>
                         
                     }
                 }
@@ -119,15 +119,21 @@
                 @{
                     if (Model.FOrderValid == false)
                     {<br>                      
-                        <button id="cancelOrderButton" class="fs-4 btn btn-lg btn-secondary radius-sm w-100" type="button" aria-label="button" disabled>已取消報名</button>
-                        <h4 class="mb-20 fs-4" style="margin-top: 20px">取消原因</h4>
-                        <div class="col-lg-6">
-                            <div class="form-group mb-10 fs-5">
-                                <label for="firstName">@Model.FModificationDescription</label>
-                            </div>
-                        </div>
+                                <button id="canceledOrderButton" class="fs-4 btn btn-lg btn-secondary radius-sm w-100" style="display:none;"type="button" aria-label="button" disabled>已取消報名</button>
+                                <h4 class="mb-20 fs-4" style="margin-top: 20px">取消原因</h4>
+                                <div class="col-lg-6">
+                                    <div class="form-group mb-10 fs-5">
+                                        <label for="firstName">@Model.FModificationDescription</label>
+                                    </div>
+                                </div>
                     }
                 }
+            </div>
+            <h4 id="cancelreason" class="mb-20 fs-4" style="margin-top:20px; display:none;">取消原因</h4>
+            <div class="col-lg-6 " >
+                <div class="form-group mb-10 fs-5">
+                    <label id="cancelreason2" for="firstName" style="display:none;">@Model.FModificationDescription</label>
+                </div>
             </div>
             <div class="text-center">
                 <button id="" class="fs-4 btn btn-lg btn-primary radius-sm w-100" type="button" aria-label="button" data-bs-toggle="modal" data-bs-target="#orderSuccessModal">我要評價課程</button>
@@ -139,6 +145,12 @@
 @section Scripts {
     <script>
         const OrderId = @Model.FOrderId;
+        const cancelbtn = document.querySelector('#cancelOrderButton');
+        const canceledbtn = document.querySelector('#canceledOrderButton');
+        const isvalidlbl = document.querySelector('#isvalid');
+        const cancelreasonlbl = document.querySelector('#cancelreason');
+        const cancelreason2lbl = document.querySelector('#cancelreason2');
+
         let selectedReason;
         $(document).ready(function () {
             // 點擊事件
@@ -190,13 +202,18 @@
                                             showCancelButton: true,
                                             confirmButtonColor: "#3085d6",
                                             confirmButtonText: "返回首頁",
-                                            cancelButtonText: "檢視課程紀錄頁面"
+                                            cancelButtonText: "關閉視窗"
                                         }).then((result) => {
 
                                             if (result.isConfirmed) {
                                                 window.location.href = '';
                                             } else if (result.dismiss === Swal.DismissReason.cancel) {
-                                                window.location.href = '/lessonhistory/LearningRecord';
+
+                                                cancelbtn.style.display = 'none';
+                                                isvalidlbl.innerHTML = "取消";
+                                                cancelreasonlbl.style.display = 'block';
+                                                cancelreason2lbl.style.display = 'block';
+                                                cancelreason2lbl.innerHTML = selectedReason;
                                             }
                                         });
                                     }
