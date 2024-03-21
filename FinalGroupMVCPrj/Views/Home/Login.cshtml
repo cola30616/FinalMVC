@@ -2,6 +2,33 @@
 @{
     ViewData["Title"] = "Login";
 }
+@section Styles {
+    <style>
+    
+        .demoDirect {
+            color: white;
+            background-color: white;
+            .btn {
+            color: white;
+            background-color: white
+        }
+
+        h6 {
+            color: white
+        }
+        }
+
+        .demoDirect:hover {
+            .btn {
+            background-color: lightgrey
+        }
+
+        h6 {
+            color: lightgrey
+        }
+        }
+    </style>
+}
 <partial name="_SweetAlertPartial" />
 <!-- Breadcrumb start -->
 <div class="breadcrumb-area bg-img bg-cover" data-bg-image="/images/owenadd/來學樂登入banner.png">
@@ -17,8 +44,23 @@
     <div class="authentication-area ">
         <div class="container">
             <div class="row">
-                <div class="col-12">
-                <div class="main-form">
+                <div class="col-12 d-flex justify-content-around">
+                <div class="d-flex flex-column  justify-content-start gap-2  pt-5" style="width:15%">
+                    <div class="d-flex flex-column demoDirect  gap-3 ">
+                        <h6>Demo註冊</h6>
+                        <button class="btn btn-sm rounded-pill">重複註冊</button>
+                        <button class="btn btn-sm rounded-pill">密碼不一致</button>
+                        <button class="btn btn-sm rounded-pill">登入新註冊會員</button>
+                    </div>
+                    <div class="d-flex flex-column demoDirect  gap-3 ">
+                        <h6>Demo超連結</h6>
+                        <button class="btn btn-sm  rounded-pill">管理員：會員</button>
+                        <button class="btn btn-sm rounded-pill">管理員：老師審核</button>
+                        <button class="btn btn-sm rounded-pill">管理員：老師清單</button>
+                        <button class="btn btn-sm rounded-pill">管理員：訊息</button>
+                    </div>
+                        </div>
+                <div class="main-form mx-5">
                     <div class="loginTogle mt-50 mb-15" style="display:block">
                         <div id="result"></div>
                         <div class=" d-flex justify-content-between flex-wrap gap-2 " >
@@ -117,7 +159,7 @@
                                 <button typeof="submit" id="submitBtn" class="btn btn-lg btn-primary rounded-pill w-100" type="submit" aria-label="Login">登入</button>
                             </div>
                             <div class=" loginTogle" style="display:block">
-                                <div class=" d-flex justify-content-between flex-wrap gap-2 mt-30" >
+                                <div class=" d-flex justify-content-between flex-wrap gap-2 mt-20" >
                                     <div class="link font-sm">
                                         <a href="error-404.html" title="Forgot Password">忘記密碼？</a>
                                     </div>
@@ -126,8 +168,18 @@
 
                     </div>
                         </form>
+
                     </div>
-         
+                <div class="d-flex flex-column  justify-content-start gap-2  pt-5" style="width:15%">
+                    <div class="d-flex flex-column demoDirect  gap-3 ">
+                        <h6>Demo腳色登入</h6>
+                        <button onclick="demoLogin('liuyijun@email.com')" class="btn  btn-sm rounded-pill">〈 學生 〉  小君</button>
+                        <button class="btn  btn-sm rounded-pill">〈 新學生 〉  小歐</button>
+                        <button class="btn  btn-sm rounded-pill">〈 申請老師 〉  婷婷</button>
+                        <button class="btn  btn-sm rounded-pill">〈 老師 1 〉 大成老師</button>
+                        <button class="btn  btn-sm rounded-pill">〈 老師 2 〉 彼得老師</button>
+                    </div>
+                </div>
                 </div>
             </div>
         </div>
@@ -140,6 +192,12 @@
     }
     <script src="https://cdn.jsdelivr.net/npm/platform@1.3.6/platform.js"></script>
 <script>
+        function demoLogin(email){
+            document.getElementById('FEmail').value = email
+            document.getElementById('FPassword').value = "asd123456"
+            setTimeout(() => { document.getElementById('submitBtn').click() }, 500)
+            
+        }
             const signupTogle = document.querySelectorAll(".signupTogle");
             const loginTogle = document.querySelectorAll(".loginTogle");
             const toggleToSignup = document.getElementById("toggleToSignup")
