@@ -49,6 +49,11 @@ namespace FinalGroupMVCPrj.Controllers
         {
             return View();
         }
+        [HttpPost]
+        public IActionResult editTeacherSubject(List<List<string>> result,int teacherid) {
+
+            return Content("傳入成功");
+        }
         //動作簡述 : 作為dataTable套件的tbody
         public IActionResult CheckListDataJson()
         {
@@ -122,7 +127,7 @@ namespace FinalGroupMVCPrj.Controllers
         {
             var subjectid = _context.TCourseSubjects
                 .Where(s => s.FSubjectName == subjectName)
-                .Select(id => id.FSubjectId);
+                .Select(id => id.FSubjectId.ToString());
             return Json(subjectid);
         }
     }

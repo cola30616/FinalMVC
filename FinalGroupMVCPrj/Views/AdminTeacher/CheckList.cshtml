@@ -197,9 +197,11 @@
 
     </script>
     <script>
-        const teacherSubjectArr = new Array()
+        let teacherSubjectArr = new Array()
         let currentCanChoseSub = new Array()
+        let teacherid = 0;
         async function editSubject(teacherId) {
+            teacherid = teacherId;
             document.querySelector('#ulSubjectResult').innerHTML = '';
             //console.log(teacherId)
             const response = await fetch(`@Url.Content("~/AdminTeacher/EditPartialViewInfo")?TeacherId=${teacherId}`)
@@ -228,6 +230,19 @@
                 teacherSubjectArr.push(new Array(item[0], item[1]))
 
             });
+
+            console.log("teacherSubjectArr:", teacherSubjectArr)
+        }
+
+        function ClickDelete(t) {
+            //console.log('button clicked');
+            //console.log(t.parentNode.parentNode);
+            const li = t.parentNode.parentNode;
+            //console.log("li.innerText : ", li.innerText);
+            li.remove();
+            const removedItem = li.innerText;
+            teacherSubjectArr = teacherSubjectArr.filter(item => item[1] !== removedItem);
+            console.log("teacherSubjectArr : ", teacherSubjectArr);
             // var indexToRemove = -1;
             // for (var i = 0; i < teacherSubjectArr.length; i++) {
             //     if (teacherSubjectArr[i][0] === "17" && teacherSubjectArr[i][1] === "羽球") {
@@ -236,20 +251,10 @@
             // //     }
             // }
             // console.log("indexToRemove:", indexToRemove)
-            console.log("teacherSubjectArr:", teacherSubjectArr)
-        }
-        function ClickDelete(t) {
-            //console.log('button clicked');
-            //console.log(t.parentNode.parentNode);
-            const li = t.parentNode.parentNode;
-            //li.innerHTML = '';
-            li.remove();
-
 
 
 
         }
-
 
         //點擊 + 按鈕事件
         document.querySelector('#buttonMove').addEventListener('click', function (event) {
@@ -273,17 +278,16 @@
 
             const ulSubjectResult = document.querySelector('#ulSubjectResult');
             //將ulChooseSubject內所有<li>的title屬性注入到新的<ul>
-            liTitles.forEach(function (title) {
+            liTitles.forEach(async function (title) {
                 ulSubjectResult.innerHTML += `<li class="list-group-item"><div class="d-flex justify-content-between">${title}<button class="btn btn-danger" style="width:25px;height:25px;padding:0" onclick="ClickDelete(this)"><i class="fa-solid fa-delete-left"></i></button></div></li>`;
 
+
                 //呼叫api傳回科目名稱對應的科目id
-                async function editSubject(title) {
-                    const response = await fetch(`@Url.Content("AdminTeacher/SubjectID")?subjectName=${title}`)
-                    const subjectid = await response.json();
-                    teacherSubjectArr.push(new Array(subjectid, title))
-                    console.log(subjectid);
-                    console.log(teacherSubjectArr);
-               } ;
+                const response = await fetch(`@Url.Content("~/AdminTeacher/SubjectID")?subjectName=${title}`)
+                const subjectid = await response.json();
+                teacherSubjectArr.push(new Array(subjectid[0], title))
+                console.log(subjectid[0]);
+                console.log("teacherSubjectArr", teacherSubjectArr);
 
 
                 // // 建新的 <li> 元素
@@ -296,8 +300,25 @@
                 // ulSaveSubject.appendChild(liElement);
             });
 
+
             //document.querySelector('#select2-availableSubjects-container').innerHTML =
         })
+
+        //將teacherSubjectArr傳到後端並修改老師可開課的科目
+
+        document.querySelector('#inpSubmit').addEventListener('click', function (event) {
+            const formData = new FormData();
+            formData.append('result', teacherSubjectArr);
+            formData.append('teacherid', teacherid);
+            fetch('@Url.Content("~/AdminTeacher/editTeacherSubject")', {
+                method: 'POST',
+                body: formData
+            })
+            // (async () => {
+            //     const response = await fetch(`@Url.Content("~/AdminTeacher/editTeacherSubject")?result=${teacherSubjectArr},teacherid=${teacherid}`);
+            // })();
+        });
+
     </script>
 
 }
