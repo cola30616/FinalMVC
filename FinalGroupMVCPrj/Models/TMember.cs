@@ -53,6 +53,8 @@ public partial class TMember
 
     public virtual ICollection<TMemberFavTeacher> TMemberFavTeachers { get; set; } = new List<TMemberFavTeacher>();
 
+    public virtual ICollection<TMemberGetPush> TMemberGetPushes { get; set; } = new List<TMemberGetPush>();
+
     public virtual ICollection<TMemberLoginLog> TMemberLoginLogs { get; set; } = new List<TMemberLoginLog>();
 
     public virtual ICollection<TMemberWishField> TMemberWishFields { get; set; } = new List<TMemberWishField>();

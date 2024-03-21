@@ -17,5 +17,7 @@ public partial class TMemberGetPush
 
     public DateTime FPushCreatedTime { get; set; }
 
+    public virtual TMember FMember { get; set; }
+
     public virtual TPushMessage FPushMessage { get; set; }
 }
