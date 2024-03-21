@@ -34,19 +34,10 @@
                             <div class="">
                                 <input type="date" class="form-control">
                             </div>
-                        </div>
-                        <div class="" style="width:15%">
-                            <select class="form-select" aria-label="Default select example">
-                                <option selected>選擇課程</option>
-                                <option value="1">A</option>
-                                <option value="2">B</option>
-                                <option value="3">C</option>
-                            </select>
-                        </div>
+                        </div>                        
                         <div class="" style="width:10%">
                             <select id="ordervalid" class="form-control" >
-                                <option selected>課程成立與否</option>
-                                <option value="1">全選</option>
+                                <option value="" disabled selected>課程成立與否</option>
                                 <option value="1">是</option>
                                 <option value="1">否</option>
                             </select>
@@ -86,11 +77,11 @@
         //訂單狀態搜尋
         $("#ordervalid").change(() => { ordervalidstatus() });
         function ordervalidstatus() {
-            if ($("#ordervalid").find(":selected").text() == '全選') 
+            if ($("#ordervalid").find(":selected").text() == '是') 
             {
-                $('#ordervalid').DataTable().column(8).search("").draw();
+                $('#OrderListTable').DataTable().column(8).search("").draw();
             } else {
-                $('#ordervalid').DataTable().column(8).search($("#ordervalid").find(":selected").text()).draw();
+                $('#OrderListTable').DataTable().column(8).search($("#ordervalid").find(":selected").text()).draw();
             }
         }
     </script>
