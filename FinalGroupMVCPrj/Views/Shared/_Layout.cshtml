@@ -50,6 +50,8 @@
     <!--調整前台右上角下拉選單和後台樣式相近-->
     <link href="~/css/adjustdropdown.css" rel="stylesheet" />
     <link rel="stylesheet" href="//cdn.datatables.net/2.0.1/css/dataTables.dataTables.min.css" />
+    <link href="https://vjs.zencdn.net/8.10.0/video-js.css" rel="stylesheet" />
+    <link href="~/css/video.css" rel="stylesheet" />    
     @RenderSection("Styles", required: false)
 
     @await RenderSectionAsync("Style", required: false)
@@ -342,6 +344,8 @@
     <script src="~/js/vendors/mouse-hover-move.js"></script>
     <!-- Main script JS -->
     <script src="~/js/script.js" asp-append-version="true"></script>
+    <!-- Video.js-->
+    <script src="https://vjs.zencdn.net/8.10.0/video.min.js"></script>
     <!--搜尋功能-->
     @await RenderSectionAsync("Scripts", required: false)
 
