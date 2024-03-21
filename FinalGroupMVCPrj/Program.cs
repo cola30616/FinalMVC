@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.CookiePolicy;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc.Authorization;
+using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
 
 
@@ -75,6 +76,11 @@ app.UseAuthorization();
 app.MapControllerRoute(
     name: "default",
     pattern: "{controller=Home}/{action=Index}/{id?}");
+//app.MapControllerRoute(
+//    name: "Portfolio", // 名稱
+//    url: "Portfolio/{action}/{number}", // 條件
+//    defaults: new { controller = "Portfolio", action = "Index", number = UrlParameter.Optional } // 參數預設值
+//);
 app.MapRazorPages();
 
 
