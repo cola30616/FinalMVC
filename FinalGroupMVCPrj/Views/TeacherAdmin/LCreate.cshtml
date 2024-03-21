@@ -283,7 +283,8 @@
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" aria-label="Close">Close</button>
+
                     <button type="button" id="crop-button" class="btn btn-primary">Save changes</button>
                 </div>
 
@@ -500,16 +501,22 @@
 
         $("#FPhoto").on("change", function () {
             previewImage(this, $('#imgPreview'));
+           
+                updateCroppieImage(this);
+            
+            
         });
-        // 表示原圖
-        const originalWidth = $('#imgPreview').attr('width'); // 獲取原圖的寬度
-        const originalHeight = $('#imgPreview').attr('height'); // 獲取原圖的寬度
-
-        // 將原圖的寬度應用到 CSS 中
-        const minZoomerWidth = originalWidth + 'px';
-        const minZoomerHeight = originalHeight + 'px';
-        $('.croppie-container .cr-slider-wrap').css('min-width', minZoomerWidth);
-        $('.croppie-container .cr-slider-wrap').css('min-height', minZoomerHeight);
+        function updateCroppieImage(input) {
+            if (input.files && input.files[0]) {
+                var reader = new FileReader();
+                reader.onload = function (e) {
+                    $('#croppie-container').croppie('bind', {
+                        url: e.target.result
+                    });
+                }
+                reader.readAsDataURL(input.files[0]);
+            }
+        }
     </script>
 
     <!--Croppie-->
@@ -525,16 +532,17 @@
                     width: 420,
                     height: 280,
                     type: 'square',
-                    center: true
-                    // zoom: 1
+                    center: true,
+                   
                 },
                 boundary: {
                     width: 480,
-                    height: 320
-                }
-                // ,enableExif: true,
+                    height: 320 }
+                //,
+                // zoom: 'fit'
+                 // ,enableExif: true
                 // enforceBoundary: false,
-                , mouseWheelZoom: false
+                // , mouseWheelZoom: false
 
             });
             basic.croppie('bind', {
@@ -548,15 +556,27 @@
                     format: 'jpeg',
                     circle: false
                 }).then(function (result) {
-                    // 处理裁剪后的图像结果
-                    console.log(result);
-                    // 可以将结果展示在页面上或者上传到服务器等
-                    alert(result);
-                    $('#imgPreview').src = result;
-                    previewImage($("#FPhoto"), result);
-                    previewImage($('#imgPreview'), result);
-                });
+                    // 创建 Blob 对象
+                    fetch(result)
+                        .then(res => res.blob())
+                        .then(blob => {
+                            // 创建新的 File 对象
+                            const file = new File([blob], 'cropped_image.jpg', { type: 'image/jpeg' });
+                            // 创建包含文件的 FileList 对象
+                            const filesList = new DataTransfer();
+                            filesList.items.add(file);
+                            // 将 FileList 对象设置为 #FPhoto 元素的值
+                            $('#FPhoto').prop('files', filesList.files);
+                            // 触发 change 事件以更新 #FPhoto 元素
+                            $('#FPhoto').trigger('change');
+                        });
 
+                    // 更新 #imgPreview 元素的 src 属性
+                    $('#imgPreview').attr('src', result);
+                    // 关闭模态框
+                    $('#cut').modal('hide');
+                });
+              
                 // basic.croppie('result', 'html').then(function (html) {
                 //     // html is div (overflow hidden)
                 //     // with img positioned inside.
@@ -566,8 +586,8 @@
         // basic.setCropPoints([x1, y1, x2, y2]);
         // basic.setZoom(zoom);
 
-       
 
+    
 
     </script>
 } 
