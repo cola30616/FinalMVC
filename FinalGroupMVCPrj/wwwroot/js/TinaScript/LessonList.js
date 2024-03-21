@@ -31,7 +31,7 @@ function loadDataTable() {
                 // 這段是新增及刪除按鈕 ， 刪除用到onclick 事件，觸發下方的Delete
                 data: null,
                 "render": function (data, type, row) {
-                    var disableButton = row.status === "課程取消" ? 'disabled' : '';
+                    var disableButton = row.status === "開放報名" ? '' : 'disabled';
                     return `<div class="d-flex justify-content-between" role="">
     <a href="/TeacherAdmin/LessonEdit/${row.lessonid}" class="btn btn-primary mx-2 flex-grow-1" lessonid=${row.lessonid} ><i class="fa-solid fa-ellipsis-vertical"></i> 檢視</a>
     <button onclick="calloffCourse(${row.lessonid})" lessonid=${row.lessonid} id="calloff" ${disableButton} class="btn btn-primary mx-2 flex-grow-1"  data-bs-toggle="tooltip" data-bs-placement="bottom" title="取消"><i class="fa-regular fa-rectangle-xmark"></i> 取消</button>

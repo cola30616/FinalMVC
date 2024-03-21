@@ -120,21 +120,29 @@
             <div class="col-6">
                 <div class="bg-warning-light text-center rounded-2 mb-2">其他資料</div>
                 <!--封面照 croppie裁切-->
-                <div class="container">
-                    <div class="row">
-                        <div class="col-sm-6">
-                            @* 檔案上傳  type="file"*@
-                            <div class="mb-3">
-                                <input class="form-control" type="file" asp-for="FPhoto" accept="image/*">
-                            </div>
-                            <div class="mb-4">
-                                <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#cut" onclick="openCutPhoto()">裁切圖片</button>
-                            </div>
+                <div class="container mb-3">
+                    <div class="row align-items-end">
+                        <div class="col-8 d-flex justify-content-start align-items-end position-relative">
+                            <!-- 圖片 -->
+                            <img src="~/images/defaultimage.png" alt="Image" id="imagePreview" style="cursor: pointer;width:420px; height:280px;" onclick="openFileInput()" title="更換圖片">
+                            <!-- 文件上傳輸入元素，但被隱藏 -->
+                            <input class="form-control" type="file" id="fileInput" asp-for="FPhoto" accept="image/*" style="display: none;">
                         </div>
-                        @* 預覽圖 *@
-                        <partial name="_LessonshowPicturePartial" />
+                        <div class="col-4 d-flex justify-content-end align-items-end">
+                            <!-- 裁剪按鈕 -->
+                            <button type="button" class="btn btn-primary btn-lg" data-bs-toggle="modal" data-bs-target="#cut" onclick="openCutPhoto()">
+                                <i class="fa-solid fa-scissors fa-rotate-by" style="--fa-rotate-angle: 224deg;"></i> 編輯圖片
+                            </button>
+                        </div>
                     </div>
                 </div>
+
+
+
+
+
+
+
 
 
                 <div class="input-group mb-3">
@@ -594,5 +602,12 @@
             // });
         });
 
+    </script>
+
+    <script>
+        // 點擊圖片時打開文件選擇對話框
+        function openFileInput() {
+            document.getElementById('fileInput').click();
+        }
     </script>
 } 

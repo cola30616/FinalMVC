@@ -28,21 +28,25 @@
     </style>
 }
 <h1 class="d-inline display-6 me-3">檢視/修改課程</h1>
-@* <button type="submit" class="btn btn-outline-info text-center align-self-center me-3">修改</button> *@
-<span class="badge-lg rounded bg-warning text-dark text-center align-self-center ">@Html.DisplayFor(x=>x.FStatus)</span> 
-
+<span class="badge-lg rounded bg-warning text-dark text-center align-self-center me-5">
+    @Html.DisplayFor(x => x.FStatus)@(!string.IsNullOrEmpty(Model.FStatusNote) ? "，原因: " + Model.FStatusNote : "")
+</span>
+@* <a class="btn btn-secondary" asp-action="LessonList" asp-controller="TeacherAdmin"><i class="fa-solid fa-xmark"></i></a> *@
 <hr />
 <form asp-action="LessonEdit" id="EditLesson" asp-controller="TeacherAdmin" method="post" enctype="multipart/form-data">
-<div class="container col-12">
-    <div class="row">
-        <div class="col-6">
-            <div class=" bg-info-light text-center rounded-2 mb-4">基本資料</div>
+    <div class="container col-12">
+        <div class="row">
+            <div class="col-6">
+                <div class=" bg-info-light text-center rounded-2 mb-4">基本資料</div>
 
                 @* 隱藏屬性 *@
                 <input type="hidden" id="courseType" value="@ViewBag.courseType" />
                 <input type="hidden" id="getcourseType" name="getcourseType" value="@ViewBag.courseType">
                 <input type="text" class="form-control" asp-for="FCode" hidden>
+                <input type="text" class="form-control" asp-for="FStatus" hidden>
                 <input type="text" class="form-control" asp-for="FLessonCourseId" hidden>
+              
+
 
                 <div class="row mb-3">
                     <div class="form-floating col-sm-6">
@@ -58,176 +62,176 @@
                     <input type="text" class="form-control" placeholder="" asp-for="FName" readonly>
                     <label for="FName">課名</label>
                 </div>
-            <!--代號 readonly-->
-            <div class="row">
-                <div class="col-sm-6">
-                    <div class="form-floating mb-3">
-                        <input type="text" class="form-control " id="floatingInput" placeholder="" asp-for="FCode" readonly>
-                        <label for="floatingInput">代號</label>
-                    </div>
-                </div>
-
-            </div>
-
-
-
-            <div class="form-floating mb-3">
-                <input type="text" class="form-control" placeholder="" asp-for="FRequirement">
-                    <label for="FRequirement">要求</label>
-            </div>
-            <!--編輯器-->
-            <label for="FEditorDes">課程介紹</label>
-            <div class="form-floating mb-3">
-
-                <textarea class="form-control" placeholder="Leave a comment here" style="height: 100px; resize: none;" asp-for="FEditorDes"></textarea>
-                <span asp-validation-for="FEditorDes" class="text-danger"></span>
-
-            </div>
-
-
-            <div class="form-floating mb-3">
-                <textarea class="form-control" placeholder="Leave a comment here" id="floatingTextarea" style="height: 100px; resize: none;" asp-for="FHomeworkDescription"></textarea>
-                <label for="floatingTextarea">作業</label>
-            </div>
-        </div>
-
-        <div class="col-6">
-            <div class="bg-warning-light text-center rounded-2 mb-4">其他資料</div>
-            <!--封面照 croppie裁切-->
-            <div class="container">
+                <!--代號 readonly-->
                 <div class="row">
                     <div class="col-sm-6">
-                        <div class="mb-3">
-                            <input class="form-control" type="file" asp-for="FPhoto" accept="image/*">
+                        <div class="form-floating mb-3">
+                            <input type="text" class="form-control " id="floatingInput" placeholder="" asp-for="FCode" readonly>
+                            <label for="floatingInput">代號</label>
                         </div>
-                        <div class="mb-4">
-                            <button type="submit" class="btn btn-primary">裁切圖片</button>
-                            <button type="submit" class="btn btn-warning">移除圖片</button>
+                    </div>
+
+                </div>
+
+
+
+                <div class="form-floating mb-3">
+                    <input type="text" class="form-control" placeholder="" asp-for="FRequirement">
+                    <label for="FRequirement">要求</label>
+                </div>
+                <!--編輯器-->
+                <label for="FEditorDes">課程介紹</label>
+                <div class="form-floating mb-3">
+
+                    <textarea class="form-control" placeholder="Leave a comment here" style="height: 100px; resize: none;" asp-for="FEditorDes"></textarea>
+                    <span asp-validation-for="FEditorDes" class="text-danger"></span>
+
+                </div>
+
+
+                <div class="form-floating mb-3">
+                    <textarea class="form-control" placeholder="Leave a comment here" id="floatingTextarea" style="height: 100px; resize: none;" asp-for="FHomeworkDescription"></textarea>
+                    <label for="floatingTextarea">作業</label>
+                </div>
+            </div>
+
+            <div class="col-6">
+                <div class="bg-warning-light text-center rounded-2 mb-4">其他資料</div>
+                <!--封面照 croppie裁切-->
+                <div class="container">
+                    <div class="row">
+                        <div class="col-sm-6">
+                            <div class="mb-3">
+                                <input class="form-control" type="file" asp-for="FPhoto" accept="image/*">
+                            </div>
+                            <div class="mb-4">
+                                <button type="submit" class="btn btn-primary">裁切圖片</button>
+                                <button type="submit" class="btn btn-warning">移除圖片</button>
+                            </div>
+
                         </div>
-                      
-                    </div>
-                    @* 預覽圖 *@
-                    <partial name="_LessonshowPicturePartial" />
-                </div>
-            </div>
-            @* <img src="~/images/defaultimage.png" class="d-block rounded" alt="..." title="600x400" style="max-width: 600px; max-height: 400px;"> *@
-            @* <img src="~/images/defaultimage.png" class=" rounded " alt="..." title="600x400" style="width:60px;height:40px"> *@
-
-
-
-            <div class="input-group mb-3">
-                <span class="input-group-text">$</span>
-                <input type="text" class="form-control" aria-label="Amount (to the nearest dollar)" placeholder="售價" asp-for="FPrice">
-                <span class="input-group-text">元</span>
-                <span asp-validation-for="FPrice" class="text-danger"></span>
-            </div>
-            <!--人數-->
-
-
-            <div class="row">
-                <div class="col-sm-6">
-                    <div class="form-floating mb-3">
-                        <input type="number" class="form-control" id="floatingInput1" placeholder="" asp-for="FMinPeople">
-                        <label for="floatingInput1">最低人數</label>
+                        @* 預覽圖 *@
+                        <partial name="_LessonshowPicturePartial" />
                     </div>
                 </div>
-                <div class="col-sm-6">
-                    <div class="form-floating mb-3">
-                        <input type="number" class="form-control" id="floatingInput2" placeholder="" asp-for="FMaxPeople">
-                        <label for="floatingInput2">名額</label>
-                    </div>
-                </div>
-            </div>
+                @* <img src="~/images/defaultimage.png" class="d-block rounded" alt="..." title="600x400" style="max-width: 600px; max-height: 400px;"> *@
+                @* <img src="~/images/defaultimage.png" class=" rounded " alt="..." title="600x400" style="width:60px;height:40px"> *@
 
-            <div class="row">
-                <div class="col-sm-6">
-                    <label>開課日期</label>
-                    <input type="date" class="form-control" asp-for="FLessonDate">
-                </div>
 
-                <div class="col-sm-6">
-                    <label>報名截止日期</label>
-                    <input type="date" class="form-control" asp-for="FRegDeadline">
-                </div>
-            </div>
 
-            <div class="row mb-3">
-                <div class="col-sm-6">
-                    <label for="inputTime1" class="col-form-label">開始時間</label>
-                    <div class="input-group">
-                        <input type="time" class="form-control" id="FStartTime" asp-for="FStartTime" >
-                       
-                    </div>
-                </div>
-               
-                <div class="col-sm-6">
-                    <label for="inputTime2" class="col-form-label">結束時間</label>
-                    <div class="input-group">
-                        <input type="time" class="form-control" id="FEndTime" asp-for="FEndTime">
-                    </div>
-                </div>
-            </div>
-
-            <div class="row mb-3">
-                <label asp-for="FVenueType">場地類型</label>
-                <div class="col-sm-6">
-                    <fieldset>
-                        <div class="form-check">
-                            <input class="form-check-input" type="radio" asp-for="FVenueType" id="onclass" value="true" checked>
-                            <label class="form-check-label" for="onclass">
-                                實體
-                            </label>
-                        </div>
-                    </fieldset>
-                </div>
-                <div class="col-sm-6">
-                    <fieldset>
-                        <div class="form-check">
-                            <input class="form-check-input" type="radio" asp-for="FVenueType" id="online" value="false">
-                            <label class="form-check-label" for="online">
-                                線上
-                            </label>
-                        </div>
-                    </fieldset>
-                </div>
-            </div>
-
-            <!--詳細場地資訊-->
-            <div id="onClassInfo">
                 <div class="input-group mb-3">
-                    <input type="text" class="form-control" aria-label="Amount (to the nearest dollar)" placeholder="場地名稱" asp-for="FVenueName">
-                    <span asp-validation-for="FVenueName" class="text-danger"></span>
+                    <span class="input-group-text">$</span>
+                    <input type="text" class="form-control" aria-label="Amount (to the nearest dollar)" placeholder="售價" asp-for="FPrice">
+                    <span class="input-group-text">元</span>
+                    <span asp-validation-for="FPrice" class="text-danger"></span>
                 </div>
-                <div class="row mb-3">
-                    <div class="col-sm-3">
+                <!--人數-->
 
-                                <select  class="form-select" asp-items="ViewBag.CitySelectList" id="city"></select>
 
-                    </div>
-                    <div class="col-sm-3">       
-                   
-                            <input class="form-control" type="text" id="districtid" value=@ViewBag.DistrictSelect hidden>
-                            <select class="form-select" aria-label="Default select example" asp-for="FDistrictId" >
-                            <option selected>地區</option>
-                        </select>
+                <div class="row">
+                    <div class="col-sm-6">
+                        <div class="form-floating mb-3">
+                            <input type="number" class="form-control" id="floatingInput1" placeholder="" asp-for="FMinPeople">
+                            <label for="floatingInput1">最低人數</label>
+                        </div>
                     </div>
                     <div class="col-sm-6">
-                        <input type="text" class="form-control" aria-label="Amount (to the nearest dollar)" placeholder="詳細地址" asp-for="FAddressDetail">
-                        <span asp-validation-for="FAddressDetail" class="text-danger"></span>
+                        <div class="form-floating mb-3">
+                            <input type="number" class="form-control" id="floatingInput2" placeholder="" asp-for="FMaxPeople">
+                            <label for="floatingInput2">名額</label>
+                        </div>
                     </div>
                 </div>
-            </div>
-            <div id="onlineInfo" hidden>
-                <p class="text-primary"> &#10132;將於成功開課後自動產生課程會議室連結</p>
-            </div>
 
+                <div class="row">
+                    <div class="col-sm-6">
+                        <label>開課日期</label>
+                        <input type="date" class="form-control" asp-for="FLessonDate">
+                    </div>
+
+                    <div class="col-sm-6">
+                        <label>報名截止日期</label>
+                        <input type="date" class="form-control" asp-for="FRegDeadline">
+                    </div>
+                </div>
+
+                <div class="row mb-3">
+                    <div class="col-sm-6">
+                        <label for="inputTime1" class="col-form-label">開始時間</label>
+                        <div class="input-group">
+                            <input type="time" class="form-control" id="FStartTime" asp-for="FStartTime">
+
+                        </div>
+                    </div>
+
+                    <div class="col-sm-6">
+                        <label for="inputTime2" class="col-form-label">結束時間</label>
+                        <div class="input-group">
+                            <input type="time" class="form-control" id="FEndTime" asp-for="FEndTime">
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row mb-3">
+                    <label asp-for="FVenueType">場地類型</label>
+                    <div class="col-sm-6">
+                        <fieldset>
+                            <div class="form-check">
+                                <input class="form-check-input" type="radio" asp-for="FVenueType" id="onclass" value="true" checked>
+                                <label class="form-check-label" for="onclass">
+                                    實體
+                                </label>
+                            </div>
+                        </fieldset>
+                    </div>
+                    <div class="col-sm-6">
+                        <fieldset>
+                            <div class="form-check">
+                                <input class="form-check-input" type="radio" asp-for="FVenueType" id="online" value="false">
+                                <label class="form-check-label" for="online">
+                                    線上
+                                </label>
+                            </div>
+                        </fieldset>
+                    </div>
+                </div>
+
+                <!--詳細場地資訊-->
+                <div id="onClassInfo">
+                    <div class="input-group mb-3">
+                        <input type="text" class="form-control" aria-label="Amount (to the nearest dollar)" placeholder="場地名稱" asp-for="FVenueName">
+                        <span asp-validation-for="FVenueName" class="text-danger"></span>
+                    </div>
+                    <div class="row mb-3">
+                        <div class="col-sm-3">
+
+                            <select class="form-select" asp-items="ViewBag.CitySelectList" id="city"></select>
+
+                        </div>
+                        <div class="col-sm-3">
+
+                            <input class="form-control" type="text" id="districtid" value=@ViewBag.DistrictSelect hidden>
+                            <select class="form-select" aria-label="Default select example" asp-for="FDistrictId">
+                                <option selected>地區</option>
+                            </select>
+                        </div>
+                        <div class="col-sm-6">
+                            <input type="text" class="form-control" aria-label="Amount (to the nearest dollar)" placeholder="詳細地址" asp-for="FAddressDetail">
+                            <span asp-validation-for="FAddressDetail" class="text-danger"></span>
+                        </div>
+                    </div>
+                </div>
+                <div id="onlineInfo" hidden>
+                    <p class="text-primary"> &#10132;將於成功開課後自動產生課程會議室連結</p>
+                </div>
+
+            </div>
         </div>
     </div>
-</div>
-<hr />
-<div class="row r">
-    <div class="col-1 ">
-    </div>
+    <hr />
+    <div class="row r">
+        <div class="col-1 ">
+        </div>
 
 
         <!-- 按鈕 -->
@@ -344,7 +348,7 @@
         const district = document.querySelector("#FDistrictId");
         const id = districtid.value;
 
-        const city = document.querySelector("#city"); 
+        const city = document.querySelector("#city");
         const cityid = parseInt(city.options[city.selectedIndex].value);
         const setDistrict = async function setDistrict(cityid, districtid) {
             const url = `@Url.Content("~/TeacherAdmin/allDistrict")?cityid=${cityid}`;
@@ -372,4 +376,28 @@
             setDistrict(parseInt(city.options[city.selectedIndex].value), 0); // 传入0代表重新加载所有选项
         });
     </script>
+
+    <!--設置表單是否只能readonly-->
+    <script>
+        // 當頁面加載完成時執行
+        document.addEventListener("DOMContentLoaded", function () {
+            // 獲取 FStatus 的值
+            const fStatus = document.getElementById('FStatus').value;
+            console.log(fStatus)
+            const readOnlyValues = ["課程取消", "報名截止", "課程結束"];
+            // 根據 FStatus 的值設置表單的唯讀屬性
+            const form = document.getElementById("EditLesson");
+            const formElements = form.elements;
+            for (let i = 0; i < formElements.length; i++) {
+                // // 將表單元素設置為唯讀
+                // formElements[i].readOnly = (fStatus === "SomeValue");
+                const element = formElements[i];
+                // 如果 FStatus 的值在 readOnlyValues 中，將該元素設置為唯讀
+                if (readOnlyValues.includes(fStatus)) {
+                    element.readOnly = true;
+                }
+            }
+        });
+    </script>
+
 }
