@@ -39,6 +39,7 @@ namespace FinalGroupMVCPrj.Controllers
              .ToList();
 
             var courseList = await _context.TLessonCourses
+             .Where(u => u.FStatus == "開放報名")
             .Include(course => course.FTeacher) // 加載 Teacher 導航屬性
             .Select(course => new LessonCourseVM
             {
@@ -99,7 +100,8 @@ namespace FinalGroupMVCPrj.Controllers
             
             // 全部資料
             var query = _context.TLessonCourses.AsQueryable();
-
+            // 只選開放報名的課
+            query = query.Where(u => u.FStatus == "開放報名");
             // 關鍵字查詢
             if (!string.IsNullOrEmpty(courseListDTO.Keyword))
             {
@@ -261,7 +263,7 @@ namespace FinalGroupMVCPrj.Controllers
             var fields = await _context.TCourseFields.Select(u => u.FFieldName).ToListAsync();
                       
             var courseList = await _context.TLessonCourses
-                .Where(u => u.FTeacherId == id)
+                .Where(u => u.FTeacherId == id && u.FStatus == "開放報名")              
                 .Select(course => new LessonCourseVM
                 {
                     lessonCourse = course,
