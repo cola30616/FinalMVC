@@ -46,12 +46,13 @@
                         <h3> </h3>
                         <div class="pt-2">
                             <!-- 上傳修改頭像input -->
-                            <span class="file-input-container">
-                                <input type="file" id="fileInput" class="hidden" accept="image/gif, image/jpeg, image/png" multiple />
-                                <label for="fileInput" class="btn btn-primary btn-sm" title="Upload new profile image"><i class="bi bi-upload"></i></label>
-                            </span>
+                                @* <input type="hidden" name="id" value="@item.TeacherId" /> *@
+                                <span class="file-input-container">
+                                <input type="file" id="InputUpladPicprofile" class="hidden" accept="image/gif, image/jpeg, image/png" multiple />
+                                <label for="InputUpladPicprofile" class="btn btn-primary btn-sm" title="Upload new profile image"><i class="bi bi-upload"></i></label>
+                                </span>
                             <!-- 清除頭像btn -->
-                            <button class="btn btn-danger btn-sm" title="Remove my profile image"><i class="bi bi-trash"></i></button>
+                            <button id="buttonDeletePicprofile" class="btn btn-danger btn-sm" title="Remove my profile image"><i class="bi bi-trash"></i></button>
                         </div>
                     }
                 </div>
@@ -90,7 +91,7 @@
                                 <h5 class="card-title">@Html.DisplayNameFor(tr => tr.TeacherName)</h5>
                                 <p class="small fst-italic">@item.TeacherName</p>
 
-                                <!-- 標題2 已開科目 -->
+                                <!-- 標題2 可開課科目 -->
                                 <h5 class="card-title">@Html.DisplayNameFor(t => t.SubjectName)</h5>
                                 <p class="small fst-italic">@string.Join(", ", item.SubjectName)</p>
 
@@ -125,5 +126,92 @@
 
 
 @section Scripts {
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            //上傳頭像按鈕change事件
+            const InputUpladPicprofile = document.getElementById("InputUpladPicprofile");
+            InputUpladPicprofile.addEventListener("change", function () {
+                if (InputUpladPicprofile.files.length > 0) {
+                    const formData = new FormData();
+                    console.log(InputUpladPicprofile.files[0])
+                    formData.append("profilePic", InputUpladPicprofile.files[0]);
 
+                    // 发送FormData对象
+                    fetch('@Url.Content("~/TeacherAdmin/TEditTrProfilePic")', {
+                        method: 'POST',
+                        body: formData
+                    })
+                    Swal.fire({
+                        position: "center",
+                        icon: "success",
+                        title: "已成功上傳頭像",
+                        showConfirmButton: false,
+                        timer: 1500
+                    }).then(() => {
+                        //https://ithelp.ithome.com.tw/articles/10190062
+                        //Javascript 頁面跳轉、刷新、重定向的幾種方式
+                        window.location.href = '/TeacherAdmin/TBasicInfo';
+                    });
+                }
+            });
+            //刪除頭像按鈕click事件
+            const buttonDeletePicprofile = document.querySelector('#buttonDeletePicprofile');
+            buttonDeletePicprofile.addEventListener("click", function () {
+                //圖像url轉blob方法 : urlToBlob
+                function urlToBlob(url) {
+                    return new Promise((resolve, reject) => {
+                        fetch(url)
+                            .then(response => {
+                                if (!response.ok) {
+                                    throw new Error('Network response was not ok');
+                                }
+                                return response.blob();
+                            })
+                            .then(blob => {
+                                resolve(blob);
+                            })
+                            .catch(error => {
+                                reject(error);
+                            });
+                    });
+                }
+                var imageUrl = "https://as1.ftcdn.net/v2/jpg/02/59/39/46/1000_F_259394679_GGA8JJAEkukYJL9XXFH2JoC3nMguBPNH.jpg";
+                //使用圖像url轉blob方法
+                urlToBlob(imageUrl)
+                    .then(blob => {
+                        // 在这里可以使用 blob 对象，例如将其转换为文件对象
+                        var file = new File([blob], "image.jpg", { type: "image/jpeg" });
+                        console.log(file);
+
+
+                        const formData = new FormData();
+                        formData.append("profilePic", file);
+
+                        // 发送FormData对象
+                        fetch('@Url.Content("~/TeacherAdmin/TEditTrProfilePic")', {
+                            method: 'POST',
+                            body: formData
+                        })
+                        Swal.fire({
+                            position: "center",
+                            icon: "success",
+                            title: "刪除頭像成功",
+                            showConfirmButton: false,
+                            timer: 1500
+                        }).then(() => {
+                            //https://ithelp.ithome.com.tw/articles/10190062
+                            //Javascript 頁面跳轉、刷新、重定向的幾種方式
+                            window.location.href = '/TeacherAdmin/TBasicInfo';
+                        });
+
+
+
+
+
+                    })
+              
+
+            });
+        });
+    </script>
 }

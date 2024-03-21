@@ -4,7 +4,7 @@ namespace FinalGroupMVCPrj.Models.Metadatas
 {
     public class TTeacherMatadata
     {
-        [Required(ErrorMessage = "老師名稱為必填")]
+        //[Required(ErrorMessage = "老師名稱為必填")]
         [Display(Name = "老師名稱")]
         public string? FTeacherName { get; set; }
         [Display(Name = "老師頭像")]
