@@ -34,7 +34,7 @@ namespace FinalGroupMVCPrj.Models.Metadatas
         [Unicode(false)]
         public string FPhone { get; set; }
 
-        [RegularExpression(@"^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$",ErrorMessage = "至少至少8個字英數混合")]
+        [RegularExpression(@"^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$",ErrorMessage = "密碼至少至少8個字英數混合")]
         [Required(ErrorMessage ="未填寫密碼")]
         [Column("fPassword")]
         [StringLength(200)]
