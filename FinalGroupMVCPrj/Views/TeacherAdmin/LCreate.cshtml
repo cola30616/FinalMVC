@@ -9,31 +9,27 @@
     <style>
 
         .pic {
-            width: 148px;
-            height: 92px;
             overflow: hidden;
             position: relative; /* 添加相对定位，用于图像的绝对定位 */
         }
 
             .pic img {
-                width: 100%; /* 使图像填充其包含块 */
-                height: auto; /* 保持图像宽高比 */
-                position: absolute; /* 绝对定位，相对于 .pic 容器 */
                 top: 0; /* 图像距离容器顶部的位置 */
                 left: 0; /* 图像距离容器左侧的位置 */
                 transition: transform 1s ease-out; /* 将过渡效果应用于 transform 属性 */
             }
-
             .pic:hover img {
                 transform: scale(1.2); /* 在悬停时进行缩放 */
             }
 
-     /*    .croppie-container {
-            border-radius: 5px;
-            width: 495px;
-            height: 330px;
+        .croppie-container {
+            border-radius: 8px;
+            width: 540px;
+            height: 361px;
+            background-color: #cfe2f3;
         }
- */
+
+          
 
     </style>
 }
@@ -120,28 +116,32 @@
             <div class="col-6">
                 <div class="bg-warning-light text-center rounded-2 mb-2">其他資料</div>
                 <!--封面照 croppie裁切-->
-                <div class="container mb-3">
+                <div class="container mb-3" style="position: relative;width:540px;height:361px;">
                     <div class="row align-items-end">
-                        <div class="col-8 d-flex justify-content-start align-items-end position-relative">
-                            <!-- 圖片 -->
-                            <img src="~/images/defaultimage.png" alt="Image" id="imagePreview" style="cursor: pointer;width:420px; height:280px;" onclick="openFileInput()" title="更換圖片">
-                            <!-- 文件上傳輸入元素，但被隱藏 -->
-                            <input class="form-control" type="file" id="fileInput" asp-for="FPhoto" accept="image/*" style="display: none;">
+                        <div class="col-12 d-flex justify-content-start align-items-end position-relative">
+                            <div style="border-radius: 8px; width: 540px; height: 361px; background-color: #cfe2f3; display: flex; justify-content: center; align-items: center;" class="pic ">
+                                <!-- 图片 -->
+                                <img src="~/images/defaultimage.png" alt="Image" id="imagePreview" class="rounded border border-secondary border-3 m-3" style="cursor: pointer; width:420px; height:280px; margin: auto;" onclick="openFileInput()" title="更換圖片">
+                                <!-- 文件上传输入元素，但被隐藏 -->
+                                <input class="form-control" type="file" asp-for="FPhoto" accept="image/*" style="display: none;">
+                            </div>
                         </div>
-                        <div class="col-4 d-flex justify-content-end align-items-end">
+
+
+
+                        <div id="cropper-container" style="position: absolute; top: 0; left: 0; visibility: " class="mb-3">
+                            <div id="cropper" style="position: relative;hidden; "></div>
+                            <button id="crop-button" pe="button" class="btn btn-light " title="裁切" style="position: absolute; bottom: 10px; left: calc(100% ); transform: translateX(-50%);visibility: hidden;"> <i class="fa-solid fa-scissors fa-rotate-by" style="color: #6997e8;--fa-rotate-angle: 224deg;"></i> </button>
+                        </div>
+
+                      @*   <div class="col-4 d-flex justify-content-end align-items-end">
                             <!-- 裁剪按鈕 -->
                             <button type="button" class="btn btn-primary btn-lg" data-bs-toggle="modal" data-bs-target="#cut" onclick="openCutPhoto()">
                                 <i class="fa-solid fa-scissors fa-rotate-by" style="--fa-rotate-angle: 224deg;"></i> 編輯圖片
                             </button>
-                        </div>
+                        </div> *@
                     </div>
                 </div>
-
-
-
-
-
-
 
 
 
@@ -279,7 +279,7 @@
 
     <!--彈跳視窗-->
     <!-- Modal -->
-    <div class="modal fade" id="cut" tabindex="-1" aria-labelledby="cutLabel" aria-hidden="true">
+@*     <div class="modal fade" id="cut" tabindex="-1" aria-labelledby="cutLabel" aria-hidden="true">
         <div class="modal-dialog modal-lg modal-dialog-centered">
             <div class="modal-content">
                 <div class="modal-header">
@@ -298,7 +298,7 @@
 
             </div>
         </div>
-    </div>
+    </div> *@
 </form>
 
 
@@ -451,27 +451,7 @@
     </script>
 
 
-    <!--用錯誤訊息攔住阻止提交 -->
-    @*     <script>
-        $(document).ready(function () {
-            $('form').submit(function (e) {
-                e.preventDefault(); // 阻止表单默认提交行为
-                var form = $(this);
-                $.ajax({
-                    url: form.attr('action'),
-                    method: form.attr('method'),
-                    data: form.serialize(),
-                    success: function (response) {
-                        // 在这里可以处理成功提交后的逻辑
-                    },
-                    error: function (xhr, status, error) {
-                        // 如果提交失败，则重新加载验证错误信息
-                        form.html(xhr.responseText);
-                    }
-                });
-            });
-        });
-    </script> *@
+
     <!-- ====================TinyMCE==================== -->
     <!-- 這一段放在自己要用的@section Script -->
     <script>
@@ -503,7 +483,7 @@
 
 
     </script>
-    <!--Image-->
+@*     <!--Image-->
     <!--Croppie-->
     <script>
         const basic = $('#croppie-container').croppie({
@@ -602,12 +582,81 @@
             // });
         });
 
-    </script>
+    </script> *@
 
     <script>
         // 點擊圖片時打開文件選擇對話框
         function openFileInput() {
-            document.getElementById('fileInput').click();
+            document.getElementById('FPhoto').click();
+        }
+        const imagePreview = document.getElementById('imagePreview');
+        const container = document.getElementById('container');
+        const FPhoto = document.getElementById('FPhoto');
+        const cropperContainer = document.getElementById('cropper-container');
+        const cropperElement = document.getElementById('cropper');
+        const cropButton = document.getElementById('crop-button');
+        let cropper;
+
+        // imagePreview.addEventListener('click', function () {
+        //     FPhoto.click();
+        // });
+
+        FPhoto.addEventListener('change', function () {
+            const file = this.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function () {
+                    imagePreview.src = reader.result;
+                    imagePreview.style.visibility = 'hidden';
+                    
+                    showCropper();
+                    cropButton.style.visibility = 'visible';
+                }
+                reader.readAsDataURL(file);
+            }
+        });
+
+        function showCropper() {
+            cropperContainer.style.visibility = 'visible';
+
+            cropper = new Croppie(cropperElement, {
+                viewport: {   width: 420, height: 280,  type: 'square'  },
+                boundary: { width: 480, height: 320  }
+            });
+            cropper.bind({
+                url: imagePreview.src,
+            });
+            
+        }
+
+        cropButton.addEventListener('click', function () {
+            cropper.result({
+                type: 'canvas',
+                size: { width: 420, height: 280 },
+                format: 'jpeg',
+                circle: false
+            }).then(function (result) {
+                console.log(result);
+                fetch(result)
+                    .then(res => res.blob())
+                    .then(blob => {
+                        const file = new File([blob], 'cropped_image.jpeg', { type: 'image/jpeg' });
+                        const filesList = new DataTransfer();
+                        filesList.items.add(file);
+                        FPhoto.files = filesList.files;
+                        imagePreview.src = result;
+                        imagePreview.style.visibility = 'visible';
+                        hideCropper();
+                    });
+            });
+        });
+
+
+        function hideCropper() {
+            cropper.destroy();
+            cropperContainer.style.visibility = 'hidden';
+            cropButton.style.visibility = 'hidden';
+            
         }
     </script>
 } 
