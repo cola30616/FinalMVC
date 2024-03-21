@@ -63,7 +63,7 @@
                     <label for="FName">課名</label>
                 </div>
                 <!--代號 readonly-->
-                <div class="row">
+                @* <div class="row">
                     <div class="col-sm-6">
                         <div class="form-floating mb-3">
                             <input type="text" class="form-control " id="floatingInput" placeholder="" asp-for="FCode" readonly>
@@ -71,7 +71,7 @@
                         </div>
                     </div>
 
-                </div>
+                </div> *@
 
 
 
@@ -230,13 +230,19 @@
     </div>
     <hr />
     <div class="row r">
-        <div class="col-1 ">
+     @*    <div class="col-1 ">
+            <p class="text-danger"></p>
         </div>
+        <div class="col-4 ">
+            <p class="text-danger">*點擊儲存變更後，將改變課程狀態為開放報名</p>
+        </div> *@
 
 
         <!-- 按鈕 -->
         <div class="col-12 d-flex justify-content-end">
             <button type="button" class="btn btn-light me-2 text-light" id="demo1">demo1</button>
+            <p class="text-danger">*點擊儲存變更後，將改變課程狀態為開放報名 &nbsp;</p>
+          
 
             <button type="submit" class="btn btn-primary me-2" name="status" value="Update" onclick="setCourseType('@ViewBag.courseType')">儲存變更</button>
             <a class="btn btn-secondary" asp-action="LessonList" asp-controller="TeacherAdmin">取消</a>
