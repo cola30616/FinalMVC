@@ -128,7 +128,7 @@ namespace FinalGroupMVCPrj.Controllers
             //根據科目搜尋
             if (!string.IsNullOrEmpty(_search.Keywordsb))
             {
-                if (_search.Keywordsb == "顯示所有")
+                if (_search.Keywordsb == "所有老師")
                 {
                     tr = tr.Select(t => t);
                 }

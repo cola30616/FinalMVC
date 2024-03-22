@@ -9,12 +9,6 @@
     <div class="container">
         <div class="content text-center">
             <h2>推薦的老師</h2>
-            <nav aria-label="breadcrumb">
-                <ol class="breadcrumb">
-                    <li class="breadcrumb-item"><a href="index.html">Home</a></li>
-                    <li class="breadcrumb-item active" aria-current="page">老師</li>
-                </ol>
-            </nav>
         </div>
     </div>
 </div>
@@ -51,13 +45,17 @@
                             <div class="widget widget-categories py-20">
                                 <h5 class="title">
                                     <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#categories">
-                                        科目
+                                        領域/科目
                                     </button>
                                 </h5>
                                 <div id="categories" class="collapse show">
                                     <div class="accordion-body mt-20 scroll-y">
                                         <ul class="list-group">
                                             <!-- Add class .list-dropdown for dropdown-menu -->
+                                            <!-- 顯示所有圖片 -->
+                                            <li class="list-item list-dropdown">
+                                                <a class="icon-start" href="#development">所有老師</a>
+                                            </li>
                                             <li class="list-item list-dropdown">
                                                 <a class="category-toggle" href="#development">烹飪<span class="qty">(3)</span></a>
                                                 <ul class="menu-collapse">
@@ -103,11 +101,7 @@
                                         </ul>
                                     </div>
                                 </div>
-                            </div>
-                            <!-- 顯示所有圖片 -->
-                            <div class="widget widget-search py-20" style="display: flex; justify-content: flex-end;">
-                                <button type="button" style="color: 	#4F4F4F" class="icon-start">顯示所有</button>
-                            </div>
+                            </div>                          
                         </aside>
                     </div>
                 </div>
