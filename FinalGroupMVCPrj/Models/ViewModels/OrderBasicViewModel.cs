@@ -28,11 +28,11 @@ namespace FinalGroupMVCPrj.Models.ViewModels
         [Display(Name = "課程費用")]
         public decimal? FLessonPrice { get; set; }
 
-        [Display(Name = "訂單是否成立")]
+        [Display(Name = "成立與否")]
         public bool FOrderValid { get; set; }
         //public string DisplayFOrderValid { get; set; }  => FOrderValid ? "是" : "否";
 
-        [Display(Name = "訂單狀態描述")]
+        [Display(Name = "狀態描述")]
         public string? FModificationDescription { get; set; }
     }
 }

@@ -8,29 +8,39 @@ function loadDataTable() {
     dataTable = $('#OrderListTable').DataTable({
         "ajax": { url: '/TeacherAdmin/ListDataJson2' },
         "columns": [
-            { data: 'fOrderNumber', "width": "6%", className: 'text-center' },
-            { data: 'fRealName', "width": "6%", className: 'text-center' },
-            { data: 'fPhone', "width": "6%", className: 'text-center' },
-            { data: 'fEmail', "width": "5%", className: 'text-center' },
+            { data: 'fOrderNumber', "width": "5%", className: 'text-center' },
+            { data: 'fRealName', "width": "5%", className: 'text-center' },
+            { data: 'fPhone', "width": "5%", className: 'text-center' },
+            { data: 'fEmail', "width": "4%", },       
             {
                 data: 'fOrderDate',
-                "width": "7%",
+                "width": "10%",
                 className: 'text-center',
                  "render": function (data) {
-                    return data.substring(0, 10).replace(/-/g, '/');
+                     const date = new Date(`${data}`);
+                     const formatter = new Intl.DateTimeFormat('zh-TW', {
+                         year: 'numeric',
+                         month: '2-digit',
+                         day: '2-digit',
+                         hour: '2-digit',
+                         minute: '2-digit',
+                         second: '2-digit',
+                     });
+                     const formattedDate = formatter.format(date);
+                     return formattedDate;
                 }
             },
-            { data: 'fName', "width": "11%", className: 'text-center' },
-            { data: 'fLessonPrice', "width": "6%", className: 'text-center' },
+            { data: 'fName', "width": "11%",  },
+            { data: 'fLessonPrice', "width": "5%", className: 'text-center' },
             {
                 data: 'fOrderValid',
-                "width": "7%",
+                "width": "5%",
                 className: 'text-center',
                 "render": function (data) {
                     return data==true ? "是" : "否";
                 }
             },
-            { data: 'fModificationDescription', "width": "8%", className: 'text-center' },
+            { data: 'fModificationDescription', "width": "5%",  },
             //{
             //    // 這段是新增及刪除按鈕 ， 刪除用到onclick 事件，觸發下方的Delete
             //    data: 'orderID',

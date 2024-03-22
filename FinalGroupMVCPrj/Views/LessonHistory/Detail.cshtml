@@ -32,16 +32,21 @@
             </div>
             <div class="col-xl-8 col-lg-7">
                 <div class="content-title mb-70" data-aos="fade-up">
-                    <h3 class="title mt-0 mb-2 fs-3">@Html.DisplayFor(model => model.FName)</h3>
+                    <h3 class="title mt-0 mb-4 fs-3">@Html.DisplayFor(model => model.FName)</h3>
+                    <i class="fa-solid fa-circle-info fa-1.5x color-primary"></i>
+                    <span class=" fs-5 " style="margin-top: 60px; font-weight: bold; color: black;">
+                        課程資訊：
+                    </span>
+                    <span class=" fs-5 " style="text-align: justify;">
+                        @Html.DisplayFor(model => model.FDescription)
+                    </span>
                     <div style="margin-top: 20px">
-                        <span class=" fs-5 ">
-                            課程資訊：@Html.DisplayFor(model => model.FDescription)
+                        <i class="fa-solid fa-calendar-days fa-1.5x color-primary"></i>
+                        <span class="fs-5 fw-bold" style="font-weight: bold; color: black;">
+                            課程時間：
                         </span>
-                    </div>
-
-                    <div style="margin-top: 20px">
-                        <span class=" fs-5 ">
-                            課程時間：@Html.DisplayFor(model => model.FLessonDate)
+                        <span class="fs-5 fw-bold">
+                            @Html.DisplayFor(model => model.FLessonDate)
                         </span>
                     </div>
                 </div>

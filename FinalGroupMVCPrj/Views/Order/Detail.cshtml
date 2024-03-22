@@ -33,14 +33,22 @@
                 </div>
             <div class="col-xl-8 col-lg-7">
                 <div class="content-title mb-40" data-aos="fade-up">
-                    <h3 class="title mt-0 mb-1 fs-3">@Html.DisplayFor(model => model.FName)</h3>
-                    <span class=" fs-5 ">
-                        課程資訊：@Html.DisplayFor(model => model.FDescription)
-                    </span>
+                        <h3 class="title mt-0 mb-4 fs-3">@Html.DisplayFor(model => model.FName)</h3>
+                        <i class="fa-solid fa-circle-info fa-1.5x color-primary"></i>
+                        <span class=" fs-5 " style="margin-top: 60px; font-weight: bold; color: black;">
+                        課程資訊：
+                        </span>                        
+                        <span class=" fs-5 " style="text-align: justify;">
+                            @Html.DisplayFor(model => model.FDescription)
+                        </span>
                         <div class="content-text mt-20">
-                            <p class="fs-5 fw-bold">
-                                課程費用：@Math.Floor(Model.FPrice) 元
-                            </p>
+                            <i class="fas fa-usd-circle fa-1x color-primary"></i>
+                            <span class="fs-5 fw-bold" style="font-weight: bold; color: black;">
+                                課程費用：
+                            </span>
+                            <span class="fs-5 fw-bold">
+                                @Math.Floor(Model.FPrice) 元
+                            </span>
                         </div>
                 </div>
             </div>
@@ -80,20 +88,23 @@
                                 </div>
                             </div>
                             <div class="col-lg-6">
-                                <div class="form-group mb-30 fs-5">
+                                <div class="form-group mb-30 fs-6">
                                     <label for="email">資料如欲修改，請至<a href="https://localhost:7031/Member/Setting" style="color: blue;">  會員中心</a></label>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
-           
-                <div data-aos="fade-up">
-                    <h4 class="mb-20">付款方式</h4>
-                    <div class="form-group mb-40">
-                        <select id="payment-gateway" class="niceselect form-control fs-5">
-                            <option value="" selected="">信用卡付款</option>
-                        </select>
+
+                <div class="col-lg-8">
+                    <div class="col-lg-6">
+
+                        <div class="billing-details" data-aos="fade-up">
+                            <h4 class="mb-20">付款方式</h4>
+                            <div class="form-group mb-40">
+                                <input value="信用卡一次付清" class="form-control fs-5" readonly>
+                            </div>
+                        </div>
                     </div>
 
                 </div>
