@@ -209,8 +209,8 @@
                                                 </a>
                                             </h6>
                                             <div class="authors mt-15">
-                                                <div class="author">                                                  
-                                                    @if (course.imageData != null)
+                                                <div class="author">
+                                                    @if (course.TeacherImage != null)
                                                     {
                                                         <img class="lazyload blur-up radius-sm" src="data:image;base64,@(Convert.ToBase64String(course.TeacherImage))" alt="Image" />
                                                     }
@@ -336,7 +336,14 @@
                                                         </h6>
                                                         <div class="authors mt-15">
                                                             <div class="author">
-                                                                <img class="lazyload blur-up radius-sm" src="/images/placeholder.png" data-src="/images/avatar-1.jpg" alt="Image">
+                                                                @if (course.TeacherImage != null)
+                                                                {
+                                                                    <img class="lazyload blur-up radius-sm" src="data:image;base64,@(Convert.ToBase64String(course.TeacherImage))" alt="Image" />
+                                                                }
+                                                                else
+                                                                {
+                                                                    <img class="lazyload blur-up radius-sm" src="/images/placeholder.png" data-src="/images/course/pro-1.jpg" alt="course">
+                                                                }
                                                                 <span class="font-sm">
                                                                     <a asp-controller="Teacher" asp-action="Info" asp-route-id="@course.lessonCourse.FTeacherId" title="@course.teacherName">
                                                                         @course.teacherName
@@ -356,8 +363,13 @@
                                                                 @((decimal)Math.Floor((double)course.lessonCourse.FPrice))
                                                             }
                                                         </span>
-                                                        <!--這個堂數有考慮新增嗎-->
-                                                        @* <span class="font-sm"><i class="fas fa-book-alt"></i>11 Lessons</span> *@
+                                                        @{
+                                                            if (course.lessonCourse.FLessonDate != null)
+                                                            {
+                                                                var lessonDateStr = course.lessonCourse.FLessonDate.Value.ToString("yyyy/MM/dd");
+                                                                <span class="font-sm icon-start"><i class="fas fa-clock"></i>@lessonDateStr</span>
+                                                            }
+                                                        }
                                                     </div>
                                                 </div>
                                             </div>
@@ -390,7 +402,7 @@
 </section>
 <!-- Course-area end -->
 <!-- Mentor-area start -->
-<section class="mentor-area mentor-area_v1 pt-100 pb-70 bg-img bg-cover mb-10" data-bg-image="/images/mentor-bg-1.jpg">
+<section class="mentor-area mentor-area_v1 pt-100 pb-70 bg-img bg-cover mb-10" data-bg-image="/images/OwenAdd/breadcrumb-bg.jpg">
     <div class="overlay opacity-85 bg-primary-light"></div>
     <div class="container">
         <div class="row">
@@ -398,7 +410,7 @@
                 <div class="section-title title-center mb-50" data-aos="fade-up">
                     <h2 class="title">
                         來認識我們的 <span>優質講師</span>
-                        <img class="title-shape lazyload" src="/images/placeholder.png" data-src="/images/shape/title-shape.png" alt="Shape">
+                        <img class="title-shape lazyload" src="/images/breadcrumb-bg.png" data-src="/images/shape/title-shape.png" alt="Shape">
                     </h2>
                 </div>
             </div>
