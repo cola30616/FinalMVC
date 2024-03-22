@@ -1,0 +1,357 @@
+﻿@model AdminTCheckVM
+@{
+    ViewData["Title"] = "List";
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+}
+@section Styles {
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/select2-bootstrap-5-theme@1.3.0/dist/select2-bootstrap-5-theme.min.css" />
+    <!-- Or for RTL support -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/select2-bootstrap-5-theme@1.3.0/dist/select2-bootstrap-5-theme.rtl.min.css" />
+}
+<div class="pagetitle">
+    <h1>老師管理</h1>
+    <nav>
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="index.html">管理員後台</a></li>
+            <li class="breadcrumb-item">老師管理</li>
+            <li class="breadcrumb-item active">老師清單</li>
+        </ol>
+    </nav>
+</div>
+
+<section class="section">
+    <div class="row">
+        <div class="col-lg-12">
+        </div>
+        <div class="card">
+            <div class="card-body">
+                <h5 class="card-title">老師清單</h5>
+                <div>
+                    <!--篩選資料區-->
+                    <div class="d-flex align-items-center gap-4 mb-3">
+                        <div class="d-flex align-items-center gap-2 ">
+                            <label for="inputDate" class="">申請日期</label>
+                            <div class="">
+                                <input type="date" class="form-control">
+                            </div>
+                            <span>~</span>
+                            <div class="">
+                                <input type="date" class="form-control">
+                            </div>
+                        </div>
+                        <div class="d-flex align-items-center gap-2 ">
+                            <label for="inputDate" class="">更新日期</label>
+                            <div class="">
+                                <input type="date" class="form-control">
+                            </div>
+                            <span>~</span>
+                            <div class="">
+                                <input type="date" class="form-control">
+                            </div>
+                        </div>
+                        <div class="" style="width:10%">
+                            <select class="form-select" aria-label="Default select example">
+                                <option selected>狀態不拘</option>
+                                <option value="1">One</option>
+                                <option value="2">Two</option>
+                                <option value="3">Three</option>
+                            </select>
+                        </div>
+                        <button class="btn btn-secondary"> 清除條件</button>
+                        <button class="btn btn-success"> 匯出CSV</button>
+                    </div>
+
+                    <div>
+                        <!-- 表格-->
+                        <table id="tApplyListTable" class="datatable">
+                            <thead>
+                                <tr>
+
+                                    <th>@Html.DisplayNameFor(m => m.TeacherName)</th>
+                                    <th>@Html.DisplayNameFor(m => m.RealName)</th>
+                                    <th>@Html.DisplayNameFor(m => m.SubjectName)</th>
+                                    <th>@Html.DisplayNameFor(m => m.Note)</th>
+                                    <th>操作</th>
+                                </tr>
+                            </thead>
+                        </table>
+                        <!--結束表格 -->
+                    </div>
+
+                </div>
+            </div>
+
+        </div>
+    </div>
+</section>
+<!-- 彈跳視窗 -->
+<partial name="T_EditTrSubjectPartial" model="new TCourseSubject()"></partial>
+
+@section Scripts {
+
+
+    <script>
+        let dataTable; // 這段要記得加，先宣告datatable的變數
+
+        $(document).ready(function () {
+            loadDataTable();
+        })
+
+        function loadDataTable() {
+            // html 欄位跟 ajax 的欄位務必相同
+            dataTable = $('#tApplyListTable').DataTable({
+                "ajax": { url: '/AdminTeacher/CheckListDataJson' },
+                "columns": [
+                    //  { data: 'SubjectName', "width": "12%" },
+                    // { data: 'TeacherProfilePic', "width": "8%" },
+                    { data: 'teacherName', "width": "10%" },
+                    { data: 'realName', "width": "10%" },
+                    { data: 'subjectName', "width": "15%" },
+                    { data: 'note', "width": "15%" },
+                    {
+                        // 這段是新增及刪除按鈕 ， 刪除用到onclick 事件，觸發下方的Delete
+                        data: 'teacherId',
+                        "render": function (data) {
+                            return `<div class="" role="">
+                                                         <button onclick="editSubject(${data})" class="btn btn-primary mx-2" data-bs-toggle="modal" data-bs-target="#staticBackdrop"><i class="fa-solid fa-list"></i></button>
+                                            </div>`
+                        },
+                        "width": "5%"
+                    },
+                ],
+                language: {
+                    url: "https://cdn.datatables.net/plug-ins/1.13.7/i18n/zh-HANT.json"
+                },
+                order: [[1, 'dsc']]
+
+
+            });
+        }
+    </script>
+
+    <script>
+        const selField = document.querySelector('#selectField');
+        const selSubject = document.querySelector('#selectSubject');
+
+        (async () => {
+            const url = '@Url.Content("~/AdminTeacher/Fields")';
+            const response = await fetch(url);
+            const datas = await response.json();
+            //資料讀取  datas.forEach()  for(let i=0;i<datas.length;i++){}
+            //[{},{}]
+            const optFiedls = datas.map(field => `<option value='${field}'>${field}</option>`);
+
+            //資料顯示
+            selField.innerHTML = optFiedls.join("");
+
+            //載入科目的資料
+            loadSubjects();
+
+        })();
+
+
+        const loadSubjects = async () => {
+            //  == 獲得 可開課科目的div有哪些科目(text) == //
+            const ulElement = document.querySelector('#ulSubjectResult');
+            let liElements = ulElement.querySelectorAll('li');
+            const liElementArr = new Array();
+
+            liElements.forEach(function (li) {
+                let divElement = li.querySelector('div');
+                let text = divElement.textContent.trim();
+                //console.log(text);
+                liElementArr.push(text);
+
+
+
+            });
+            // console.log("liElementArr : ", liElementArr);
+            // 取得科目下拉選項
+            const field = selField.options[selField.selectedIndex].value;
+
+            const url = `@Url.Content("~/AdminTeacher/Subjects")?fieldName=${field}`;
+            const response = await fetch(url);
+            const datas = await response.json();
+            //console.log("datas::",datas);
+            //讀取資料
+            const optSubjects = datas.map(subject => {
+                //  判斷 : 如果可開課科目欄位已經有的，則 科目的下拉選項不顯示
+                const matchingStrings = liElementArr.filter(text => text === subject[1]);
+                if (matchingStrings.length > 0) {
+                    return;
+                } else {
+                    return `<option subjectid="${subject[0]}">${subject[1]}</option>`;
+                }
+            }
+                //`<option subjectid="${subject[0]}">${subject[1]}</option>`
+            );
+            //顯示資料
+            selSubject.innerHTML = optSubjects.join("");
+        }
+
+        selField.addEventListener('change', loadSubjects);
+    </script>
+    <script>
+        let teacherSubjectArr = new Array()
+        let currentCanChoseSub = new Array()
+        let teacherid = 0;
+        async function editSubject(teacherId) {
+            teacherid = teacherId;
+            const response2 = await fetch(`@Url.Content("~/AdminTeacher/trNameEmail")?TeacherId=${teacherId}`)
+            const data = await response2.json();
+            console.log("名子 : ",data[0])
+            document.querySelector('#labelTop').innerHTML = data[0].teacherName + ` : ` + data[0].email;
+            document.querySelector('#ulSubjectResult').innerHTML = '';
+            //console.log(teacherId)
+            const response = await fetch(`@Url.Content("~/AdminTeacher/EditPartialViewInfo")?TeacherId=${teacherId}`)
+            const datas = await response.json();
+            //console.log("datas:", datas)
+            //console.log("datas:", datas[0].subjectName)
+
+            // datas.forEach(function (data) {
+            //     //console.log(data.subjectName);
+            //     document.querySelector('#labelTop').innerHTML = data.teacherName + ` : ` + data.email;
+            //     document.querySelector('#ulSubjectResult').innerHTML += `  <li class="list-group-item"><div class="d-flex justify-content-between">${data.subjectName}<button class="btn btn-danger" style="width:25px;height:25px;padding:0" onclick="ClickDelete(this)"><i class="fa-solid fa-delete-left"></i></button></div></li>`;
+            // });
+            // console.log(Object.entries(datas))
+            // for (const c of Object.entries(datas)) {
+            //     console.log(c.key)
+            //     console.log(c.value)
+            // }
+            // Object.entries(datas).forEach(([key, value]) => {
+            //     console.log(key, value);
+            // });
+            teacherSubjectArr = [];
+            datas.forEach(function (item) {
+                // 遍历对象中的每个键值对
+
+                document.querySelector('#ulSubjectResult').innerHTML += `  <li subjectId="${item[0]}" class="list-group-item"><div class="d-flex justify-content-between">${item[1]}<button class="btn btn-danger" style="width:25px;height:25px;padding:0" onclick="ClickDelete(this)"><i class="fa-solid fa-delete-left"></i></button></div></li>`;
+                // console.log("Key:", key, "Value:", item[key]);
+                teacherSubjectArr.push(new Array(item[0], item[1]))
+
+            });
+
+            console.log("teacherSubjectArr:", teacherSubjectArr)
+        }
+
+        function ClickDelete(t) {
+            //console.log('button clicked');
+            //console.log(t.parentNode.parentNode);
+            const li = t.parentNode.parentNode;
+            //console.log("li.innerText : ", li.innerText);
+            li.remove();
+            const removedItem = li.innerText;
+            teacherSubjectArr = teacherSubjectArr.filter(item => item[1] !== removedItem);
+            console.log("teacherSubjectArr : ", teacherSubjectArr);
+            // var indexToRemove = -1;
+            // for (var i = 0; i < teacherSubjectArr.length; i++) {
+            //     if (teacherSubjectArr[i][0] === "17" && teacherSubjectArr[i][1] === "羽球") {
+            //         indexToRemove = i;
+            //         break;
+            // //     }
+            // }
+            // console.log("indexToRemove:", indexToRemove)
+
+
+
+        }
+
+        //點擊 + 按鈕事件
+        document.querySelector('#buttonMove').addEventListener('click', function (event) {
+            //console.log('buttonMove clicked');
+
+
+            //科目文字框
+            const ulChooseSubject = document.querySelector('#select2-selectSubject-container');
+            //所有<li>的title屬性(將要新增的科目們)
+            let liTitles = [];
+            // 這段迴圈目的 : 獲取ulChooseSubject內所有<li>的title屬性
+            let liElements = ulChooseSubject.getElementsByTagName('li');
+            for (let i = 0; i < liElements.length; i++) {
+                let liElement = liElements[i];
+                liTitles.push(liElement.getAttribute('title'));
+            }
+            //console.log(liTitles);
+            //清空動作
+            ulChooseSubject.innerHTML = '';
+
+
+            const ulSubjectResult = document.querySelector('#ulSubjectResult');
+            //將ulChooseSubject內所有<li>的title屬性注入到新的<ul>
+            liTitles.forEach(async function (title) {
+                ulSubjectResult.innerHTML += `<li class="list-group-item"><div class="d-flex justify-content-between">${title}<button class="btn btn-danger" style="width:25px;height:25px;padding:0" onclick="ClickDelete(this)"><i class="fa-solid fa-delete-left"></i></button></div></li>`;
+
+
+                //呼叫api傳回科目名稱對應的科目id
+                const response = await fetch(`@Url.Content("~/AdminTeacher/SubjectID")?subjectName=${title}`)
+                const subjectid = await response.json();
+                teacherSubjectArr.push(new Array(subjectid[0], title))
+                console.log(subjectid[0]);
+                console.log("teacherSubjectArr", teacherSubjectArr);
+
+
+                // // 建新的 <li> 元素
+                // let liElement = document.createElement('li');
+                // // 設置 <li> 元素的 title 屬性
+                // liElement.setAttribute('title', title);
+                // liElement.setAttribute('class', 'select2-selection__choice');
+                // //liElement.setAttribute('data-select2-id', 'select2-data-4-qpa5');
+                // // 將 <li> 元素添加到 <ul> 元素中
+                // ulSaveSubject.appendChild(liElement);
+            });
+
+
+            //document.querySelector('#select2-availableSubjects-container').innerHTML =
+        })
+
+        //將teacherSubjectArr傳到後端並修改老師可開課的科目
+
+        document.querySelector('#inpSubmit').addEventListener('click', function (event) {
+            const formData = new FormData();
+            const subjectId = teacherSubjectArr.map(arr => arr[0]);
+            console.log(subjectId)
+            formData.append('result', subjectId);
+            
+            formData.append('teacherid', teacherid);
+           
+            fetch('@Url.Content("~/AdminTeacher/editTeacherSubject")', {
+                method: 'POST',
+                body: formData
+            }).then(response => {
+                if (response.ok) {
+                    Swal.fire({
+                        position: "center",
+                        icon: "success",
+                        title: "儲存成功",
+                        showConfirmButton: false,
+                        timer: 1500
+                    }).then(() => {
+                        //https://ithelp.ithome.com.tw/articles/10190062
+                        //Javascript 頁面跳轉、刷新、重定向的幾種方式
+                        //window.location.href = '/AdminTeacher/CheckList';
+                        $('#staticBackdrop').find('form').trigger('reset');
+                        $('#staticBackdrop').modal('hide');
+                        dataTable.ajax.reload();
+                        $('.modal-backdrop').remove();
+                        // $('#staticBackdrop').on('hidden.bs.modal', function (e) {
+                        //     // 关闭模态框时移除背景
+                        //     $('.modal-backdrop').remove();
+                        // });
+                    });
+                } else {
+                    throw new Error('Network response was not ok.');
+                }
+            })
+            if (response.ok) {
+
+            };
+            // (async () => {
+            //     const response = await fetch(`@Url.Content("~/AdminTeacher/editTeacherSubject")?result=${teacherSubjectArr},teacherid=${teacherid}`);
+            // })();
+        });
+
+    </script>
+
+}

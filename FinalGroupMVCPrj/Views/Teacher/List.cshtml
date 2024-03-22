@@ -5,7 +5,7 @@
 }
 
 <!-- Breadcrumb start -->
-<div class="breadcrumb-area bg-img bg-cover" data-bg-image="/images/breadcrumb-bg.jpg">
+<div class="breadcrumb-area bg-img bg-cover" data-bg-image="/images/owenadd/breadcrumb-bg.jpg">
     <div class="container">
         <div class="content text-center">
             <h2>推薦的老師</h2>
@@ -104,7 +104,10 @@
                                     </div>
                                 </div>
                             </div>
-                         
+                            <!-- 顯示所有圖片 -->
+                            <div class="widget widget-search py-20" style="display: flex; justify-content: flex-end;">
+                                <button type="button" style="color: 	#4F4F4F" class="icon-start">顯示所有</button>
+                            </div>
                         </aside>
                     </div>
                 </div>
@@ -119,9 +122,9 @@
                                     <a asp-controller="Teacher" asp-action="info" title="Image" target="_self" class="lazy-container ratio ratio-1-2">
                                         <img id="lazyload" src="/images/placeholder.png" data-src="/images/mentor/mentor-1.jpg" alt="Image">
                                     </a>
-                                    <div>
+                                @*     <div>
                                         <button class="fa-regular fa-heart" style="display: flex;justify-content: center; align-items: center;font-size:30px;width:40px;height:40px;position: absolute; top: 0; left: 82%; margin: 10px;border-radius:50px;background-color:white;z-index:1"></button>
-                                    </div>
+                                    </div> *@
                                 </div>
                                 <div class="card-content text-center">
                                     <h4 class="card-title lc-1 mb-1">
@@ -163,7 +166,7 @@
             "keywordsb": "",
             "subject": "",
             "page": 1,
-            "pageSize": 3,
+            "pageSize": 9,
         };
         const inpKeyword = document.querySelector('#inputKeyword');
         const row = document.querySelector('#row');
@@ -183,34 +186,32 @@
             const divTrpics = datas.cardsResult.map(tr => {
                 const { fTeacherId, teacherProfilePicURL, fTeacherName, subjectNames } = tr;
                 return (
-                                                                     `<div class="col-lg-4 col-sm-6" data-aos="fade-up">
-                                                                        <div class="card radius-md mb-30 shadow-md">
-                                                                            <div class="card-img">
-                                                                                     <a href="https://localhost:7031/Teacher/Info?id=${fTeacherId}" title="Image" target="_self" class="lazy-container ratio ratio-1-2">
-                                                                                     <img id="lazyload" src=${teacherProfilePicURL} data-src="/images/mentor/mentor-1.jpg" alt="Image">
-                                                                                </a>
-                                                                                <div>
-                                                                                    <button class="fa-regular fa-heart" style="display: flex;justify-content: center; align-items: center;font-size:30px;width:40px;height:40px;position: absolute; top: 0; left: 82%; margin: 10px;border-radius:50px;background-color:white;z-index:1"></button>
-                                                                                </div>
-                                                                            </div>
-                                                                            <div class="card-content text-center">
-                                                                                <h4 class="card-title lc-1 mb-1">
-                                                                                    <a href="mentor-details.html" target="_self" title="Link">
-                                                                                          ${fTeacherName}
-                                                                                    </a>
-                                                                                </h4>
-                                                                                <p class="card-text color-primary font-sm">
-                                                                                          ${subjectNames}
-                                                                                </p>
-                                                                                <div class="social-link justify-content-center">
-                                                                                    <a href="https://www.instagram.com/" target="_blank" title="instagram"><i class="fab fa-instagram"></i></a>
-                                                                                    <a href="https://www.dribbble.com/" target="_blank" title="dribbble"><i class="fab fa-dribbble"></i></a>
-                                                                                    <a href="https://www.twitter.com/" target="_blank" title="twitter"><i class="fab fa-twitter"></i></a>
-                                                                                    <a href="https://www.youtube.com/" target="_blank" title="youtube"><i class="fab fa-youtube"></i></a>
-                                                                                </div>
-                                                                            </div>
-                                                                        </div>
-                                                                    </div>`
+                    `<div class="col-lg-4 col-sm-6" data-aos="fade-up">
+                          <div class="card radius-md mb-30 shadow-md">
+                                <div class="card-img">
+                                        <a href="https://localhost:7031/Teacher/Info?id=${fTeacherId}" title="Image" target="_self" class="lazy-container ratio ratio-1-2">
+                                            <img id="lazyload" src=${teacherProfilePicURL} data-src="/images/mentor/mentor-1.jpg" alt="Image">
+                                         </a>
+                        
+                                                                                            </div>
+                                                                                            <div class="card-content text-center">
+                                                                                                <h4 class="card-title lc-1 mb-1">
+                                                                                                    <a href="mentor-details.html" target="_self" title="Link">
+                                                                                                          ${fTeacherName}
+                                                                                                    </a>
+                                                                                                </h4>
+                                                                                                <p class="card-text color-primary font-sm">
+                                                                                                          ${subjectNames}
+                                                                                                </p>
+                                                                                                <div class="social-link justify-content-center">
+                                                                                                    <a href="https://www.instagram.com/" target="_blank" title="instagram"><i class="fab fa-instagram"></i></a>
+                                                                                                    <a href="https://www.dribbble.com/" target="_blank" title="dribbble"><i class="fab fa-dribbble"></i></a>
+                                                                                                    <a href="https://www.twitter.com/" target="_blank" title="twitter"><i class="fab fa-twitter"></i></a>
+                                                                                                    <a href="https://www.youtube.com/" target="_blank" title="youtube"><i class="fab fa-youtube"></i></a>
+                                                                                                </div>
+                                                                                            </div>
+                                                                                        </div>
+                                                                                    </div>`
                 )
             });
             row.innerHTML = divTrpics.join("");
@@ -243,6 +244,9 @@
             searchData.keywordtn = inpKeyword.value;
             searchData.page = 1;
             loadTrcards();
+            //回歸預設
+            searchData.keywordtn = '';
+            inpKeyword.value = '';
         });
         //科目名稱篩選
         iconstarts.forEach(iconstart => {
@@ -252,6 +256,8 @@
                 searchData.keywordsb = subjectname;
                 searchData.page = 1;
                 loadTrcards();
+                //回歸預設
+                searchData.keywordsb = '';
             })
         })
 

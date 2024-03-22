@@ -18,7 +18,7 @@ namespace FinalGroupMVCPrj.Models.ViewModels
         public string? ContactInfo { get; set; }
         [Display(Name = "備註")]
         public string? Note { get; set; }
-        [Display(Name = "已開科目")]
+        [Display(Name = "可開課科目")]
         public IEnumerable<string>? SubjectName { get; set; }
         public TTeacher? TeacherModel { get; set; }
 

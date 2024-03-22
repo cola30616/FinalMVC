@@ -4,10 +4,15 @@ using FinalGroupMVCPrj.Models.ViewModels;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.ModelBinding;
 using Microsoft.EntityFrameworkCore;
+using System;
 using System.Data;
 using System.IO;
+using System.Net;
+using System.Net.Http;
 using System.Security.Cryptography.Pkcs;
+using System.Security.Policy;
 using static NuGet.Packaging.PackagingConstants;
 
 namespace FinalGroupMVCPrj.Controllers
@@ -15,12 +20,14 @@ namespace FinalGroupMVCPrj.Controllers
     [Authorize(Roles = "Teacher")]
     public class TeacherAdminController : UserInfoController
     {
+        private readonly HttpClient _httpClient;
         private IWebHostEnvironment _hostEnv;
         private readonly LifeShareLearnContext _context;
         public TeacherAdminController(LifeShareLearnContext context, IWebHostEnvironment env)
         {
             _context = context;
             _hostEnv = env;
+            _httpClient = new HttpClient();
         }
         //■ ==========================     翊妏作業區      ==========================■
         // GET: TeacherAdmin/LessonList
@@ -90,7 +97,8 @@ namespace FinalGroupMVCPrj.Controllers
             IEnumerable<TeacherBasicViewModel> vBasicVMCollection = new List<TeacherBasicViewModel>(
                     _context.TTeachers
                       .Where(t => t.FTeacherId == id)
-                    .Select(t =>new TeacherBasicViewModel {
+                    .Select(t => new TeacherBasicViewModel
+                    {
                         TeacherId = id,
                         TeacherName = t.FTeacherName,
                         TeacherProfilePicURL = (t.FTeacherProfilePic != null) ? GetImageDataURL(t.FTeacherProfilePic) : "https://upload.wikimedia.org/wikipedia/commons/thumb/6/65/No-Image-Placeholder.svg/1665px-No-Image-Placeholder.svg.png",
@@ -103,6 +111,50 @@ namespace FinalGroupMVCPrj.Controllers
                 );
             return View("TBasicinfo", vBasicVMCollection);
         }
+        //
+        //動作簡述 : 上傳老師頭像(將老師頭像編輯成另一張照片)
+        [HttpPost]
+        public async Task<IActionResult> TEditTrProfilePic(TTeacher teacher, IFormFile ProfilePic)
+        {
+            TTeacher? dbTeacher = _context.TTeachers
+                .Where(t => t.FMemberId == GetCurrentMemberId()).FirstOrDefault();
+            if (dbTeacher == null) { return BadRequest("系統異常"); }
+            if (ProfilePic != null && ProfilePic.Length > 0)
+            {
+                using (BinaryReader br = new BinaryReader(ProfilePic.OpenReadStream()))
+                {
+                    dbTeacher.FTeacherProfilePic = br.ReadBytes((int)ProfilePic.Length);
+                }
+            }
+            else
+            {
+                //return
+                //ModelState.IsValid = false ，參數(ProfilePic)=null 會有錯 errormessage: ProfilePic是必要項
+                HttpResponseMessage response =await _httpClient.GetAsync("https://as1.ftcdn.net/v2/jpg/02/59/39/46/1000_F_259394679_GGA8JJAEkukYJL9XXFH2JoC3nMguBPNH.jpg");
+                response.EnsureSuccessStatusCode();
+                // 读取图片数据并转换为字节数组
+                byte[] imageBytes =await response.Content.ReadAsByteArrayAsync();
+                dbTeacher.FTeacherProfilePic = imageBytes;
+            } 
+            //dbTeacher.FTeacherName = teacher.FTeacherName; 
+            teacher = dbTeacher as TTeacher;
+            foreach (var modelStateEntry in ModelState.Values)
+            {
+                foreach (var error in modelStateEntry.Errors)
+                {
+                    var errorMessage = error.ErrorMessage;
+                    Console.WriteLine(errorMessage);
+                }
+            }
+            if (ModelState.IsValid)
+            {
+                _context.Update(teacher);
+                await _context.SaveChangesAsync();
+                //RedirectToAction沒有反應，所以在script導頁
+                return RedirectToAction("TBasicInfo");
+            }
+            return Content("修改失敗");
+        }
         // POST: TeacherAdmin/TEdittrbasicprofile
         //動作簡述：編輯老師基本資料(不包含老師頭像)
         [HttpPost]
@@ -112,7 +164,7 @@ namespace FinalGroupMVCPrj.Controllers
             // https://www.google.com/search?q=.net+core+mva+update+partial+model+property&rlz=1C1ONGR_zh-TWTW1027TW1027&oq=.net+core+mva+update+partial+model+property&gs_lcrp=EgZjaHJvbWUyBggAEEUYOdIBCTMwMzYzajBqMagCALACAA&sourceid=chrome&ie=UTF-8#ip=1
             // ======== 局部更新資料 start =========
             TTeacher? dbTeacher = _context.TTeachers.Where(t => t.FTeacherId == GetCurrentTeacherId()).FirstOrDefault();
-            if(dbTeacher == null )
+            if (dbTeacher == null)
             {
                 return BadRequest("系統異常");
             }
@@ -132,13 +184,11 @@ namespace FinalGroupMVCPrj.Controllers
             return View(teacher);
         }
         /////////////////////////////////////// ///////////////////////////////////////
-
-
         // POST: TeacherAdmin/TAddtrimage
         //動作簡述：新增單/多張圖片
         [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> TAddtrimage(TTeacherImage trimg)
+        //[ValidateAntiForgeryToken]
+        public async Task<IActionResult> TAddtrimage(Models.TTeacherImage trimg, IList<IFormFile> f)
         {
             //byte[] fileBytes = await ConvertFileToByteArrayAsync(file);
             //trimg.FImageLink = fileBytes;
@@ -148,16 +198,18 @@ namespace FinalGroupMVCPrj.Controllers
             if (trimg.FImageName == null) { trimg.FImageName = "尚未命名"; }
             if (ModelState.IsValid)
             {
-                foreach (var file in Request.Form.Files)
+                //foreach (var file in Request.Form.Files)
+                foreach (var file in f)
                 {
                     if (file != null && file.Length > 0)
                     {
                         // 創建新的 TTeacherImage 對象
-                        var newTrimg = new TTeacherImage
+                        var newTrimg = new Models.TTeacherImage
                         {
                             FTeacherId = trimg.FTeacherId,
                             FImageSize = trimg.FImageSize,
-                            FImageName = trimg.FImageName
+                            FImageName = trimg.FImageName,
+                            FCategory = trimg.FCategory,
                             // 在這裡添加其他屬性的設置
                         };
 
@@ -169,14 +221,14 @@ namespace FinalGroupMVCPrj.Controllers
                         //await ReadUploadImage(newTrimg);
                         _context.Add(newTrimg);
                         await _context.SaveChangesAsync();
+
                     }
                 }
                 return RedirectToAction("TRelatedPic");
+                //return Redirect("~/TeacherAdmin/TRelatedPic");
             }
             return Content("新增失敗");
         }
-     
-       
         // GET: TeacherAdmin/TRelatedPic
         //動作簡述：回傳老師相關圖片
         [HttpGet]
@@ -196,7 +248,7 @@ namespace FinalGroupMVCPrj.Controllers
                     TeacherImageModel = t,
                 })
             );
-            return View("TRelatedPic",vBasicVMCollection);
+            return View("TRelatedPic", vBasicVMCollection);
         }
         // GET: /TeacherAdmin/EditPartialViewInfo
         //動作簡述：顯示編輯畫面的資訊
@@ -204,7 +256,7 @@ namespace FinalGroupMVCPrj.Controllers
         {
             var a = _context.TTeacherImages
                 .Where(a => a.FTeacherImagesId == teacherImagesId)
-                .Select(a => new { ImageName = a.FImageName, Category = a.FCategory })
+                .Select(a => new { ImageName = a.FImageName, Category = a.FCategory, ImageId = a.FTeacherImagesId })
                 .FirstOrDefault();
             return Json(a);
         }
@@ -213,11 +265,11 @@ namespace FinalGroupMVCPrj.Controllers
         public async Task<FileResult> GetPicture(int id)
         {
             //可能沒拿到值//抓的到有值 抓不到空值
-            TTeacherImage? c = await _context.TTeacherImages.FindAsync(id);
+            Models.TTeacherImage? c = await _context.TTeacherImages.FindAsync(id);
             byte[]? Content = c?.FImageLink;
             return File(Content, "image/jpeg");
         }
-       
+
         // POST: TeacherAdmin/TdeletePic
         //動作簡述：刪除老師相關圖片(單張)
         [HttpPost]
@@ -232,22 +284,25 @@ namespace FinalGroupMVCPrj.Controllers
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(TRelatedPic));
         }
-        // GET: TeacherAdmin/TEdit
-        //動作簡述：產生編輯modal畫面(未使用)
-        public async Task<IActionResult> TEdit(int? id)
-        {
-            var teacherimage = await _context.TTeacherImages.FindAsync(id);
-            return PartialView("T_EditTrPicPartial", teacherimage);
-        }
+
         // GET: TeacherAdmin/TeditPic
         //動作簡述：編輯單張圖片
-        public async Task<IActionResult> TeditPic(int id,TTeacherImage trimg)
+        public async Task<IActionResult> TeditPic(Models.TTeacherImage trimg)
         {
-            if (id != trimg.FTeacherImagesId) { return NotFound(); }
+            Models.TTeacherImage? dbTeacher = _context.TTeacherImages
+                .Where(t => t.FTeacherImagesId == trimg.FTeacherImagesId).FirstOrDefault();
+            if (dbTeacher == null)
+            {
+                return BadRequest("系統異常");
+            }
+            dbTeacher.FCategory = trimg.FCategory;
+            dbTeacher.FImageName = trimg.FImageName;
+            //trimg.FTeacherId = GetCurrentTeacherId();
+            trimg = dbTeacher as Models.TTeacherImage;
             //驗證成功
             if (ModelState.IsValid)
             {
-                await ReadUploadImage(trimg);
+                //await ReadUploadImage(trimg);
                 _context.Update(trimg);
                 await _context.SaveChangesAsync();
                 return RedirectToAction("TRelatedPic");
@@ -255,8 +310,15 @@ namespace FinalGroupMVCPrj.Controllers
             return Content("修改失敗");
         }
         //方法簡述：處理上傳的圖片
-        private async Task ReadUploadImage(TTeacherImage image)
+        private async Task ReadUploadImage(Models.TTeacherImage image)
         {
+            //var files = Request.Form.Files["FImageLink"];
+            //for(int i = 0; i < files.Length; i++)
+            //{
+            //    files[i]
+            //}
+
+
             //因為try是捕捉傳到資料庫的錯誤，不是捕捉讀檔案的錯誤，所以寫到try裡外都可以
             if (Request.Form.Files["FImageLink"] != null)
             //如果有值
@@ -275,7 +337,7 @@ namespace FinalGroupMVCPrj.Controllers
             {
                 return;
                 //讀原來的FImageLink
-                TTeacherImage c = await _context.TTeacherImages.FindAsync(image.FTeacherImagesId);
+                Models.TTeacherImage c = await _context.TTeacherImages.FindAsync(image.FTeacherImagesId);
                 image.FImageLink = c.FImageLink;
                 //c要解除追蹤//因為不能重複追蹤
                 _context.Entry(c).State = EntityState.Detached;
@@ -322,6 +384,13 @@ namespace FinalGroupMVCPrj.Controllers
                 file.CopyTo(ms);
                 return ms.ToArray();
             }
+        }
+        // GET: TeacherAdmin/TEdit
+        //動作簡述：產生編輯modal畫面
+        public async Task<IActionResult> TEdit(int? id)
+        {
+            var teacherimage = await _context.TTeacherImages.FindAsync(id);
+            return PartialView("T_EditTrPicPartial", teacherimage);
         }
         //■ ==========================     子謙作業區      ==========================■
         [HttpGet]

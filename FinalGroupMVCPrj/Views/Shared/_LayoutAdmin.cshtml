@@ -33,7 +33,7 @@
     <link href="~/assets/css/style.css" rel="stylesheet" asp-append-version="true">
     <!--DataTable CDN-->
     <link rel="stylesheet" href="//cdn.datatables.net/2.0.1/css/dataTables.dataTables.min.css" />
-
+    @await RenderSectionAsync("Styles", required: false)
     <!-- =======================================================
     * Template Name: NiceAdmin
     * Updated: Jan 29 2024 with Bootstrap v5.3.2
@@ -254,7 +254,7 @@
             </a>
             <ul id="components-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
                 <li>
-                        <a asp-controller="AdminTeacher" asp-action="ApplyList">
+                        <a asp-controller="AdminTeacher" asp-action="CheckList">
                             <i class="bi bi-circle"></i><span>老師清單</span>
                     </a>
                 </li>
