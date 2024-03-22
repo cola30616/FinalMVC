@@ -209,8 +209,15 @@
                                                 </a>
                                             </h6>
                                             <div class="authors mt-15">
-                                                <div class="author">
-                                                    <img class="lazyload blur-up radius-sm" src="/images/placeholder.png" data-src="/images/avatar-1.jpg" alt="Image">
+                                                <div class="author">                                                  
+                                                    @if (course.imageData != null)
+                                                    {
+                                                        <img class="lazyload blur-up radius-sm" src="data:image;base64,@(Convert.ToBase64String(course.TeacherImage))" alt="Image" />
+                                                    }
+                                                    else
+                                                    {
+                                                        <img class="lazyload blur-up radius-sm" src="/images/placeholder.png" data-src="/images/course/pro-1.jpg" alt="course">
+                                                    }
                                                     <span class="font-sm">
                                                         <a asp-controller="Teacher" asp-action="Info" asp-route-id="@course.lessonCourse.FTeacherId" title="@course.teacherName">
                                                             @course.teacherName
@@ -227,7 +234,14 @@
                                                     @((decimal)Math.Floor((double)course.lessonCourse.FPrice))
                                                 }
                                            </span>
-                                            
+                                            @{
+                                                if (course.lessonCourse.FLessonDate != null)
+                                                {
+                                                    var lessonDateStr = course.lessonCourse.FLessonDate.Value.ToString("yyyy/MM/dd");
+                                                    <span class="font-sm icon-start"><i class="fas fa-clock"></i>@lessonDateStr</span>
+                                                }                                            
+                                             }
+                                           
                                         </div>
                                     </div>
                                 </div>

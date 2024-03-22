@@ -61,6 +61,7 @@ namespace FinalGroupMVCPrj.Controllers
                 fields = fields,
                 fieldName = course.FSubject.FField.FFieldName,
                 fieldNumber = course.FSubject.FFieldId,
+                TeacherImage = course.FTeacher.FTeacherProfilePic,
             })
             .ToListAsync();
             return View(courseList);

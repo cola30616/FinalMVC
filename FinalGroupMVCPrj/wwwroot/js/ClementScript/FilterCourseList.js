@@ -39,11 +39,13 @@ const handlePriceInput = () => {
 const handleSorting = (value) => {
     if (value === 'newest') {
         FilterSortData.sortType = 'newest';
-       
+        FilterSortData.page = 1;
     } else if (value === 'PriceDesc') {
-        FilterSortData.sortType = 'PriceDesc';              
+        FilterSortData.sortType = 'PriceDesc';
+        FilterSortData.page = 1;
     } else if (value === 'PriceAsc') {
         FilterSortData.sortType = 'PriceAsc';   
+        FilterSortData.page = 1;
     }
 
     // 調用 loadCourses 函數重新加載課程列表
@@ -104,10 +106,7 @@ const createCourseHtml = data => {
         const formatter = new Intl.DateTimeFormat('zh-TW', {
             year: 'numeric',
             month: '2-digit',
-            day: '2-digit',
-            hour: '2-digit',
-            minute: '2-digit',
-            second: '2-digit'
+            day: '2-digit',           
         });
         const formattedDate = formatter.format(date);
         html = `<div class="col-xl-4 col-sm-6">
@@ -130,7 +129,7 @@ const createCourseHtml = data => {
                 </h6>
                 <div class="authors mt-15">
                     <div class="author">
-                        <img class="radius-sm" src="/images/avatar-1.jpg" alt="Image">
+                         <img src="data:image/gif;base64,${item.teacherImage}" onerror="this.src='/images/Clement/nothing.jpg'" alt="/images/Clement/nothing.jpg">
                         <span class="font-sm">
 
                             <a href="/Teacher/Info/${item.id}" target="_self" title=" ${item.lessonCourse.teacherName}">
