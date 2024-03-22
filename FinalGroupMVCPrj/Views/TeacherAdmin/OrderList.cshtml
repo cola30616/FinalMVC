@@ -37,9 +37,10 @@
                         </div>                        
                         <div class="" style="width:10%">
                             <select id="ordervalid" class="form-control" >
-                                <option value="" disabled selected hidden>課程成立與否</option>
+                                <option value="" hidden>課程成立與否</option>
+                                <option value="0">顯示全部</option>
                                 <option value="1">是</option>
-                                <option value="1">否</option>
+                                <option value="2">否</option>
                             </select>
                         </div>
                         <button class="btn btn-secondary"> 清除條件</button>
@@ -74,14 +75,13 @@
 @section Scripts {
     <script src="~/js/applescript/orderlist.js"asp-append-version="true"></script>
     <script>
-        //訂單狀態搜尋
+        //訂單狀態搜尋        
         $("#ordervalid").change(() => { ordervalidstatus() });
         function ordervalidstatus() {
-            if ($("#ordervalid").find(":selected").text() == '是') 
-            {
-                $('#OrderListTable').DataTable().column(8).search("").draw();
+            if ($("#ordervalid").val() == '0') {
+                $('#OrderListTable').DataTable().column(7).search("").draw();
             } else {
-                $('#OrderListTable').DataTable().column(8).search($("#ordervalid").find(":selected").text()).draw();
+                $('#OrderListTable').DataTable().column(7).search($("#ordervalid").find(":selected").text()).draw();
             }
         }
     </script>

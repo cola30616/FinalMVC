@@ -105,7 +105,7 @@ namespace FinalGroupMVCPrj.Controllers
             DateTime start = DateTime.Now.Date;
             DateTime end = DateTime.Now.Date.AddDays(1);
             int no = _context.TOrders.Where(o=>o.FOrderDate < end && o.FOrderDate > start).Count() + 1;
-            string orderNumber = "LSLtset" +start.ToString("yyMMdd") + $"{no:D4}";
+            string orderNumber = "LSLtest" +start.ToString("yyMMdd") + $"{no:D4}";
             return orderNumber;
         }  
     }
