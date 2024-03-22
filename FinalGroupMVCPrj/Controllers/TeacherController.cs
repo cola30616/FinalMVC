@@ -44,7 +44,6 @@ namespace FinalGroupMVCPrj.Controllers
                     ContactInfo = t.FContactInfo,
                     Note = t.FNote,
                     SubjectName = t.TTeacherSubjects.Select(ts => ts.FSubject.FSubjectName),
-                    TeacherId = t.FTeacherId,
                 })
                 );
             ViewBag.Id = id;
