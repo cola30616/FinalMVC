@@ -43,6 +43,7 @@ namespace FinalGroupMVCPrj.Controllers
                     ContactInfo = t.FContactInfo,
                     Note = t.FNote,
                     SubjectName = t.TTeacherSubjects.Select(ts => ts.FSubject.FSubjectName),
+                    TeacherId = t.FTeacherId,
                 })
                 );
             //var tr = _context.TTeachers.FindAsync(id);
@@ -168,6 +169,26 @@ namespace FinalGroupMVCPrj.Controllers
                 blobDataURL = $"data:image/jpeg;base64,{base64String}";
             }
             return Content(blobDataURL);
+        }
+    }
+
+    //VideoPlayer，viewComponent
+    public class VideoPlayer : ViewComponent
+    {
+        private readonly LifeShareLearnContext _context;
+
+        public VideoPlayer(LifeShareLearnContext context)
+        {
+            _context = context;
+        }
+
+
+        // 這邊使用viewComponent
+        public async Task<IViewComponentResult> InvokeAsync(int? id)
+        {
+            
+            var video = await _context.TVideoUploadUrls.Where(u => u.FTeacherId == id).FirstOrDefaultAsync();           
+            return View(video);
         }
     }
 }

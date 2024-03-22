@@ -10,7 +10,7 @@
     <meta name="description" content="Multi-Tenant, Course, Course Selling">
 
     <!-- Title -->
-    <title>來學樂 線下課程預約平台</title>
+    <title>來學樂-多元課程預約平台</title>
     <!-- Favicon -->
     <link rel="shortcut icon" href="/images/logo/favicon.png" type="image/x-icon">
 
@@ -50,6 +50,8 @@
     <!--調整前台右上角下拉選單和後台樣式相近-->
     <link href="~/css/adjustdropdown.css" rel="stylesheet" />
     <link rel="stylesheet" href="//cdn.datatables.net/2.0.1/css/dataTables.dataTables.min.css" />
+    <link href="https://vjs.zencdn.net/8.10.0/video-js.css" rel="stylesheet" />
+    <link href="~/css/video.css" rel="stylesheet" asp-append-version="true" />    
     @RenderSection("Styles", required: false)
 
     @await RenderSectionAsync("Style", required: false)
@@ -236,7 +238,7 @@
                                 來學樂
                             </p>
                             <p>
-                                全台最優質線下學習預約平台
+                                多元課程預約平台
                             </p>
                         </div>
                     </div>
@@ -321,11 +323,9 @@
         </div>
     </footer>
     <!-- Footer-area end-->
-    
- 
-
+    @await RenderSectionAsync("LessonScripts", required: false)
     <!--首頁搜尋bar-->
-    <script src="~/js/search.js" asp-append-version="true"></script>
+    <script src="~/js/clementscript/search.js" asp-append-version="true"></script> 
     <!-- Lazysizes --> 
     <script src="~/js/vendors/lazysizes.min.js"></script>
     <!-- Jquery JS -->
@@ -348,6 +348,8 @@
     <script src="~/js/vendors/mouse-hover-move.js"></script>
     <!-- Main script JS -->
     <script src="~/js/script.js" asp-append-version="true"></script>
+    <!-- Video.js-->
+    <script src="https://vjs.zencdn.net/8.10.0/video.min.js"></script>
     <!--搜尋功能-->
     
 

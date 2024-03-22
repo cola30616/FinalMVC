@@ -21,10 +21,17 @@ namespace FinalGroupMVCPrj.Controllers
                 .Select(lr => lr.FLessonCourse).Distinct().ToList();
             var cancelRecord = _context.TOrderDetails.Where(lr => lr.FOrder.FMemberId == GetCurrentMemberId() && lr.FOrderValid == false)
                 .Select(lr => lr.FLessonCourse).Distinct().ToList();
+            //var recordDictionary = successRecord
+            //.GroupBy(lr => lr.TOrderDetails)
+            //.ToDictionary(
+            //    group => group.Key, // 使用 orderID 作為字典的鍵
+            //    group => group.Select(lr => lr.FLessonCourse).FirstOrDefault() // 將每個組的 TLessonCourse 映射為字典值
+            //);
             LearningRecordVM learningRecord = new()
             {
                 SuccessRecord = successRecord,
-                CancelRecord = cancelRecord
+                CancelRecord = cancelRecord,
+
             };
             return View(learningRecord);
         }

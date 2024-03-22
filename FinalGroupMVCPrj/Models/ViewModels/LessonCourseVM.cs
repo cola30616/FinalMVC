@@ -18,6 +18,7 @@
         public byte[] imageData { get; set; }
 
         public TTeacher teacher { get; set; }
+        public byte[] TeacherImage { get; set; }
 
     }
 

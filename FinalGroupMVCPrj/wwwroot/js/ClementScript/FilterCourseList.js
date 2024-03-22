@@ -10,12 +10,19 @@ const FilterSortData = {
     minPrice: 100,
     maxPrice: 2000,
     sortBy: 'desc',
-    sortType: 'enrollment'
+    sortType: 'newest'
 };
 
 const handleSubjects = (filterData) => {
     FilterSortData.fieldId = filterData.fieldId;
     FilterSortData.subjectName = filterData.subjectName;
+    FilterSortData.page = filterData.page;
+    FilterSortData.pageSize = filterData.pageSize;
+    loadCourses(FilterSortData);
+}
+const handleAllCourses = () => {  
+    FilterSortData.fieldId = undefined;
+    FilterSortData.subjectName = undefined; 
     loadCourses(FilterSortData);
 }
 const handlePriceInput = () => {
@@ -30,18 +37,15 @@ const handlePriceInput = () => {
 }
 
 const handleSorting = (value) => {
-    if (value === 'enrollment') {
-        FilterSortData.sortBy = 'enrollment';
-        FilterSortData.sortType = 'desc'; //
-    } else if (value === 'rate') {
-        FilterSortData.sortBy = 'rate';
-        FilterSortData.sortType = 'desc'; 
-    } else if (value === 'newest') {
-        FilterSortData.sortBy = 'newest';
-        FilterSortData.sortType = 'desc'; 
-    } else if (value === 'Hot') {
-        FilterSortData.sortBy = 'Hot';
-        FilterSortData.sortType = 'desc'; 
+    if (value === 'newest') {
+        FilterSortData.sortType = 'newest';
+        FilterSortData.page = 1;
+    } else if (value === 'PriceDesc') {
+        FilterSortData.sortType = 'PriceDesc';
+        FilterSortData.page = 1;
+    } else if (value === 'PriceAsc') {
+        FilterSortData.sortType = 'PriceAsc';   
+        FilterSortData.page = 1;
     }
 
     // 調用 loadCourses 函數重新加載課程列表
@@ -95,13 +99,21 @@ const createCourseHtml = data => {
     const createCourseHtml = document.getElementById('createCourseHtml');
     createCourseHtml.innerHTML = '';
     for (const item of data.courses) {
-       /* <img class="" src="data:image;base64,@(Convert.ToBase64String(item.imageData))" alt="Image" />*/
+       
         let html = ''
+        // 使用Intl API 轉換時間
+        const date = new Date(`${item.lessonCourse.fLessonDate}`);
+        const formatter = new Intl.DateTimeFormat('zh-TW', {
+            year: 'numeric',
+            month: '2-digit',
+            day: '2-digit',           
+        });
+        const formattedDate = formatter.format(date);
         html = `<div class="col-xl-4 col-sm-6">
     <div class="course-default border radius-md mb-25">
         <figure class="course-img">
             <a href="/Lesson/Details/${item.lessonCourse.fLessonCourseId}" title="" target="_self" class="lazy-container ratio ratio-2-3">
-                <img src="data:image/gif;base64,${item.imageData} alt="Image"">                    
+                <img src="data:image/gif;base64,${item.imageData}" onerror="this.src='/images/Clement/nothing.jpg'" alt="/images/Clement/nothing.jpg">                    
             </a>
             <div class="hover-show">
                 <a href="/Lesson/Details/${item.lessonCourse.fLessonCourseId}" class="btn btn-md btn-primary rounded-pill" title="Enroll Now" target="_self">立即預約</a>
@@ -117,19 +129,23 @@ const createCourseHtml = data => {
                 </h6>
                 <div class="authors mt-15">
                     <div class="author">
-                        <img class="radius-sm" src="/images/avatar-1.jpg" alt="Image">
+                         <img src="data:image/gif;base64,${item.teacherImage}" onerror="this.src='/images/Clement/nothing.jpg'" alt="/images/Clement/nothing.jpg">
                         <span class="font-sm">
 
                             <a href="/Teacher/Info/${item.id}" target="_self" title=" ${item.lessonCourse.teacherName}">
                                  ${item.teacherName}
                             </a>
                         </span>
-                    </div>                   
+                         
+                    </div>   
+                    
                 </div>
             </div>
             <div class="course-bottom-info px-3 py-2">                
-                <span class="font-sm"><i class="fas fa-usd-circle"></i>NT ${item.lessonCourse.fPrice}</span>                               
+                <span class="font-sm"><i class="fas fa-usd-circle"></i>NT ${item.lessonCourse.fPrice}</span>  
+               <span class="font-sm icon-start"><i class="fa-solid fa-calendar-days color-primary"></i>${formattedDate}</span>
             </div>
+            
         </div>
     </div>
 </div>`

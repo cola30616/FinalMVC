@@ -40,7 +40,7 @@ namespace FinalGroupMVCPrj.Controllers
         {
             var fields = await _context.TCourseFields.Select(u => u.FFieldName).ToListAsync();
             var courseList = await _context.TLessonCourses
-            .Include(course => course.FTeacher) // 加載 Teacher 導航屬性
+            .Where(u => u.FStatus == "開放報名")
             .Select(course => new LessonCourseVM
             {
                 lessonCourse = course,
@@ -61,6 +61,7 @@ namespace FinalGroupMVCPrj.Controllers
                 fields = fields,
                 fieldName = course.FSubject.FField.FFieldName,
                 fieldNumber = course.FSubject.FFieldId,
+                TeacherImage = course.FTeacher.FTeacherProfilePic,
             })
             .ToListAsync();
             return View(courseList);

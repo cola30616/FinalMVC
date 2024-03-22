@@ -6,5 +6,6 @@
 
         public List<TLessonCourse> CancelRecord { get; set; }
 
+        
     }
 }

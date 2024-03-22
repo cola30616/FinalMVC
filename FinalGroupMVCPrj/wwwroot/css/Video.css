@@ -1,0 +1,87 @@
+﻿.video-js {
+    width: 800px;
+    height: 400px;
+    border-radius: 10px; /* 添加圓角 */
+}
+
+.vjs-custom-theme .vjs-control-bar {
+    background-color: transparent !important;
+}
+
+.vjs-custom-theme .vjs-big-play-button {
+    opacity: 0 !important;
+}
+
+.vjs-custom-theme .vjs-volume-control {
+    align-items: center !important;
+}
+
+.vjs-custom-theme .vjs-play-progress:before {
+    top: -4px !important;
+}
+
+.vjs-custom-theme .vjs-fullscreen-control .vjs-icon-placeholder:before {
+    line-height: 30px;
+}
+
+.vjs-custom-theme button:hover {
+    color: #fff;
+}
+
+.vjs-custom-theme .vjs-progress-control .vjs-progress-holder {
+    margin: 0 10px;
+    background: rgba(255, 255, 255, 0.25);
+    height: 1px;
+}
+
+.vjs-custom-theme .vjs-progress-control:hover .vjs-play-progress:before {
+    top: -7px !important;
+}
+
+.vjs-custom-theme .vjs-control-bar {
+    height: 54px;
+    background: none;
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    visibility: visible;
+    opacity: 1;
+    -webkit-transition: visibility 0.1s, opacity 0.1s;
+    -o-transition: visibility 0.1s, opacity 0.1s;
+    transition: visibility 0.1s, opacity 0.1s;
+}
+
+.vjs-custom-theme .vjs-volume-panel {
+    -webkit-box-ordinal-group: 5;
+    -ms-flex-order: 4;
+    order: 4;
+    display: flex;
+    align-items: center;
+}
+
+.vjs-custom-theme .vjs-fullscreen-control {
+    -webkit-box-ordinal-group: 5;
+    -ms-flex-order: 5;
+    order: 5;
+}
+
+.vjs-custom-theme .vjs-picture-in-picture-control, .vjs-custom-theme .vjs-remaining-time {
+    display: none;
+}
+
+.vjs-custom-theme .vjs-play-control {
+    width: 5em !important;
+}
+
+    .vjs-custom-theme .vjs-play-control .vjs-icon-placeholder::before {
+        font-size: 13px;
+        letter-spacing: 0.16px;
+        content: "Play" !important;
+        font-family: sans-serif;
+        line-height: 30px;
+    }
+
+    .vjs-custom-theme .vjs-play-control.vjs-playing .vjs-icon-placeholder::before {
+        content: "Pause" !important;
+        font-family: sans-serif;
+    }

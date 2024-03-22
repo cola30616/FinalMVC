@@ -27,18 +27,19 @@
             <div class="row gx-xl-5 align-items-center">
                 <!-- 老師頭像 -->
                 <div class="col-xl-4 col-lg-5">
-                    <div class="content-img mb-40" data-aos="fade-up">
-                        <div class="lazy-container ratio ratio-1-1 radius-md">
-                            <img class="lazyload blur-up" src="@item.TeacherProfilePicURL"  alt="Mentor">
+                    <div class="content-img mb-40" data-aos="fade-up" style="position: relative;">
+                        <div class="lazy-container ratio ratio-1-1 radius-md" style="position: relative;">
+                            <img class="lazyload blur-up" src="@item.TeacherProfilePicURL" alt="Mentor">                                                 
                             <div>
-                                <button class="fa-regular fa-heart" style="display: flex;justify-content: center; align-items: center;font-size:30px;width:40px;height:40px;position: absolute; top: 0; left: 85%; margin: 10px;border-radius:50px;background-color:white"></button>
+                                <button class="fa-regular fa-heart" style="display: flex;justify-content: center; align-items: center;font-size:30px;width:40px;height:40px;position: absolute; top: 0; left: 85%; margin: 10px;border-radius:50px;"></button>
                             </div>
                         </div>
-
-
-                    </div>
+                    </div>                                                         
                 </div>
 
+                <div class="col-xl-4 col-lg-5 mb-40">                   
+                    @await Component.InvokeAsync("VideoPlayer", new { id = item.TeacherId })
+               </div>
                 <div class="col-xl-8 col-lg-7">
                     <div class="content-title mb-40" data-aos="fade-up">
                         <!-- 老師名稱 -->
@@ -55,7 +56,7 @@
                             <span class="ratings-total">(5)</span>
                         </div>
                         <!-- 老師自我介紹 -->
-                        <div class="content-text mt-20">
+                        <div class="content-text mt-20" style="white-space: nowrap; ">
                             <p>
                                 @item.Introduction
                             </p>
@@ -68,9 +69,11 @@
                             <a href="https://www.twitter.com/" target="_blank" title="twitter" class="color-primary"><i class="fab fa-twitter"></i></a>
                             <a href="https://www.youtube.com/" target="_blank" title="youtube" class="color-primary"><i class="fab fa-youtube"></i></a>
                         </div>
+                        
                     </div>
-                </div>
+                </div>               
             </div>
+           
         </div>
     </section>
 }

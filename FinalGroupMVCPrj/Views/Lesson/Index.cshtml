@@ -4,12 +4,12 @@
     <div class="container">
         <div class="content text-center">
             <h2>課程清單</h2>
-            <nav aria-label="breadcrumb">
+            @* <nav aria-label="breadcrumb">
                 <ol class="breadcrumb">
                     <li class="breadcrumb-item"><a asp-controller="Home" asp-action="Index">首頁</a></li>
                     <li class="breadcrumb-item active" aria-current="page">課程</li>
                 </ol>
-            </nav>
+            </nav> *@
         </div>
     </div>
 </div>
@@ -38,6 +38,9 @@
                                     <div class="accordion-body mt-20 scroll-y">
                                         <ul id="fieldsSubjects" class="list-group">
                                             <!-- Add class .list-dropdown for dropdown-menu --> 
+                                            <li class="list-item">
+                                                <a class="category-toggle" title="link" href="#"target="_self" onclick="handleAllCourses()">所有課程</a>
+                                            </li>
                                             @foreach(var course in Model.Take(1))
                                             {
                                                 @foreach(var detail in course.fieldWithSubjects)
@@ -49,7 +52,10 @@
                                                             {
                                                                  @foreach(var subject in detail.SubjectNames)
                                                             {
-                                                                    <li><button class="icon-start" title="link" target="_self" onclick="handleSubjects({ fieldId: @(detail.FieldId), subjectName: '@(subject)' })"><i class="fal fa-angle-right"></i>@subject</button></li>
+                                                                    <li><button class="icon-start" title="link" target="_self"
+                                                                                onclick="handleSubjects({ fieldId: @(detail.FieldId), subjectName: '@(subject)', page: 1, pageSize: 6})">
+                                                                        <i class="fal fa-angle-right"></i>@subject
+                                                                    </button></li>
                                                             }    
                                                             }
                                                                                                                                                                             
@@ -96,7 +102,7 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="widget widget-ratings py-20">
+                            @* <div class="widget widget-ratings py-20">
                                 <h5 class="title">
                                     <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#sort" aria-expanded="true" aria-controls="sort">
                                         評價
@@ -173,7 +179,7 @@
                                         </ul>
                                     </div>
                                 </div>
-                            </div>
+                            </div> *@
                            
                         </aside>
                     </div>
@@ -197,11 +203,10 @@
                                 <li class="item">
                                     <div class="sort-item d-flex align-items-center">
                                         <label class="me-2 font-sm">篩選依據</label>
-                                        <select name="type" class="niceselect right" onchange="handleSorting(this.value)">
-                                            <option value="enrollment" >上課人數</option>
-                                            <option value="rate">評價</option>
+                                        <select name="type" class="niceselect right" onchange="handleSorting(this.value)">                                                                             
                                             <option value="newest">最新</option>
-                                            <option value="Hot">最熱門</option>                                     
+                                            <option value="PriceDesc">價格高至低</option>
+                                            <option value="PriceAsc">價格低至高</option>
                                         </select>
                                     </div>
                                 </li>
@@ -222,7 +227,7 @@
     </div>
 </div>
 <!-- Course-area end -->
-@section Scripts {
+@section LessonScripts {
     <!--篩選功能-->
-    <script src="~/js/FilterCourseList.js" asp-append-version="true"></script>
+    <script src="~/js/clementscript/filtercourselist.js" asp-append-version="true"></script>
 }
