@@ -1,0 +1,51 @@
+﻿@model CreatePushMsgViewModel
+<div class="modal fade " id="createPMsgModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg modal-dialog-scrollable">
+        <div class="modal-content p-3 ">
+            <div class="d-flex justify-content-between">
+                <!-- 最上排會員資訊&關閉 -->
+                <div class="d-flex gap-2  mb-3 mt-2 fw-bold" style="font-size:150%">
+                    新增推播訊息
+                </div>
+                <button type="button" class="btn" data-bs-dismiss="modal" aria-label="Close"><i class="fa-solid fa-x"></i></button>
+            </div>
+            <!--內容-->
+            <form id="createPushMsg" method="post" enctype="multipart/form-data">
+                <div class="d-flex flex-column">
+                    <div class="d-flex gap-2 align-items-center mb-3 ">
+                        <label for="FPushType" class="fw-bold">推播類型：</label>
+                        <select id="FPushType" name="FPushType" class="form-select" style="width:auto;">
+                            <option selected value="最新消息">最新消息</option>
+                            <option value="會員優惠">會員優惠</option>
+                            <option value="課程公告">課程公告</option>
+                            <option value="活動促銷">活動促銷</option>
+                        </select>
+                    </div>
+                    <hr>
+                    <div class="d-flex gap-2 mb-1">
+                        <div class="row-cols-1">
+                            <label for="FPushContent" name="FPushContent" class="col-form-label fw-bold">推播內容：</label>
+                            <textarea id="FPushContent" class="mt-1" rows="10" cols="30"></textarea>
+                            <span id="FPushContentError" class="mt-2 text-sm text-red-700"></span>
+                        </div>
+                        <div class="row-cols-1">
+                            <label>上傳圖片：</label>
+                            <label for="FPushImagePath" class="col-form-label fw-bold">
+                                <img id="previewImage" src="@Url.Content("~/images/no-image.jpg")" title="看板圖片" style="width:360px;height:245px; cursor: pointer;margin-top:2.5%;" class="cursor-pointer  rounded-b" />
+                            </label>
+                            <input id="FPushImagePath" class="form-control" type="file" style="display: none;">
+                            <span id="FPushImageError" class="mt-2 text-sm text-red-700"></span>
+                        </div>
+                    </div>
+                    <hr>
+                    <div class="row mb-3">
+                        <div class="d-flex justify-content-end">
+                            <button type="button" class="btn btn-primary" data-bs-dismiss="modal" aria-label="Close">取消</button>
+                            <button id="createPM-btn" type="button" class="btn btn-primary" style="margin-left:2%;">新增</button>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

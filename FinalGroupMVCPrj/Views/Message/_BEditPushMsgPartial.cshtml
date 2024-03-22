@@ -1,0 +1,62 @@
+﻿@model TPushMessage
+<div class="modal fade " id="editPMsgModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg modal-dialog-scrollable">
+        <div class="modal-content p-3 ">
+            <div class="d-flex justify-content-between">
+                <!-- 最上排會員資訊&關閉 -->
+                <div class="d-flex gap-2  mb-3 mt-2 fw-bold" style="font-size:150%">
+                    新增推播訊息
+                </div>
+                <button type="button" class="btn" data-bs-dismiss="modal" aria-label="Close"><i class="fa-solid fa-x"></i></button>
+            </div>
+            <!--內容-->
+            <form asp-action="CreatePushMsg" id="createPushMsg">
+                <div class="d-flex flex-column">
+                    @*                 <div class="d-flex gap-2 align-items-center mb-3 ">
+                    <label for="inputId" class="fw-bold">推播編號：</label>
+                    <span>1</span>
+                    </div> *@
+                    <div class="d-flex gap-2 align-items-center mb-3 ">
+                        <label asp-for="FPushType" class="fw-bold">推播類型：</label>
+                        <select asp-for="FPushType" class="form-select" style="width:auto;">
+                            <option selected value="1">最新消息</option>
+                            <option value="2">會員優惠</option>
+                            <option value="3">課程公告</option>
+                            <option value="4">活動促銷</option>
+                        </select>
+                    </div>
+                    @*                 <div class="d-flex gap-2 align-items-center mb-3 ">
+                    <label for="inputDate" class="col-form-label fw-bold">推播日期：</label>
+                    <input type="date" class="form-control" style="width:auto;">
+                    </div>
+                    <div class="d-flex gap-2 align-items-center mb-3 ">
+                    <label for="inputTime" class="col-form-label fw-bold">推播時間：</label>
+
+                    <input type="time" class="form-control" style="width:auto;">
+
+                    </div> *@
+                    <hr>
+                    <div class="d-flex gap-2 mb-1">
+                        <div class="row-cols-1">
+                            <label asp-for="FPushContent" class="col-form-label fw-bold">推播內容：</label>
+                            <textarea asp-for="FPushContent" class="mt-1" rows="10" cols="30"></textarea>
+                            <span asp-validation-for="FPushContent" class="mt-2 text-sm text-red-700"></span>
+                        </div>
+                        <div class="row-cols-1">
+                            <label asp-for="FPushImagePath" class="col-form-label fw-bold">圖片上傳:</label>
+                            <input asp-for="FPushImagePath" class="form-control" type="file" id="formFile">
+                            <span asp-validation-for="FPushImagePath" class="mt-2 text-sm text-red-700"></span>
+                        </div>
+                    </div>
+                    <hr>
+                    <div class="row mb-3">
+                        <div class=" d-flex justify-content-end">
+                            <button type="button" class="btn btn-primary" data-bs-dismiss="modal" aria-label="Close" >取消</button>
+                            <button id="create-btn" type="submit" class="btn btn-primary" style="margin-left:2%;">新增</button>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

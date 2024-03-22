@@ -1,0 +1,52 @@
+﻿@model IEnumerable<TMember>
+
+    <div PutmsgId="@ViewBag.PutmsgId"></div>
+    <h5>推送訊息ID：@ViewBag.PutmsgId</h5>
+    <div class="d-flex flex-column">
+    <form id="pushMsgToMember">
+
+        <div PutmsgId="@ViewBag.PutmsgId"></div>
+        <div class="form-group">
+            <div style="height: 200px; overflow-y: auto;">
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>選擇</th>
+                            <th>會員ID</th>
+                            <th>會員暱稱</th>
+                            <th>會員性別</th>
+                            <th>會員年齡</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in Model)
+                        {
+                            string gender = item.FGender == false ? "女性" : (item.FGender == null ? "未填" : "男性");
+                            var age = DateTime.Today.Year - item.FBirthDate.Value.Year;
+                            if (DateTime.Today < item.FBirthDate.Value.AddYears(age))   age--;
+
+                            <tr class="memberRow" data-gender="@gender" data-age="@age">
+                                <td>
+                                    <input class="form-check-input memberCheckbox" type="checkbox" value="@item.FMemberId" id="memberCheckbox_@item.FMemberId">
+                                </td>
+                                <td>@item.FMemberId</td>
+                                <td>@item.FShowName</td>
+                                <td>@gender</td>
+                                <td>@age</td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <hr>
+</form>
+
+        <div class="row mb-3">
+            <div class="col d-flex justify-content-end">
+                <button type="button" class="btn btn-secondary me-2" data-bs-dismiss="modal">取消</button>
+            <button id="push-btn" type="submit" class="btn btn-primary" onclick="sendPushMessage()" data-bs-dismiss="modal">推播</button>
+            </div>
+        </div>
+    </div>

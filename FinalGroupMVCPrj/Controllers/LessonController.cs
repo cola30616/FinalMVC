@@ -235,7 +235,9 @@ namespace FinalGroupMVCPrj.Controllers
                 FLessonCourseId = querystring.FLessonCourseId,
             }).ToListAsync();
 
-            return View("LDetails", detail[0]);
+           var dt = detail.FirstOrDefault();
+
+            return View("LDetails", dt);
         }
 
         [HttpGet]

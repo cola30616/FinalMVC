@@ -1,6 +1,7 @@
 using FinalGroupMVCPrj;
 using FinalGroupMVCPrj.APIServices;
 using FinalGroupMVCPrj.Data;
+using FinalGroupMVCPrj.Hubs;
 using FinalGroupMVCPrj.Interface;
 using FinalGroupMVCPrj.Models;
 using FinalGroupMVCPrj.Services;
@@ -21,6 +22,7 @@ var connectionString = builder.Configuration.GetConnectionString("DefaultConnect
 builder.Services.AddScoped<IVideoUploadService, VideoUploadServices>();
 
 //CORS�]�w
+//CORS設定
 builder.Services.AddCors(options =>
 { options.AddPolicy("AllowAll", builder => builder.AllowAnyOrigin().AllowAnyHeader().AllowAnyMethod()); }
 );
@@ -91,5 +93,7 @@ app.MapControllerRoute(
     pattern: "{controller=Home}/{action=Index}/{id?}");
 app.MapRazorPages();
 
+app.MapHub<TeacherMsgHub>("/teacherMsgHub");
+app.MapHub<PushMsgHub>("/pushMsgHub");
 
 app.Run();

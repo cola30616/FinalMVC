@@ -4,7 +4,7 @@
     const FOrderDetailId = parseInt(FOrderDetailIdElement.getAttribute('data-value'));
 
     try {
-        const response = await fetch(`/LessonReview/isValuated?FOrderDetailId=${FOrderDetailId}`);
+        const response = await fetch(`/LessonReview/isEvaluated?FOrderDetailId=${FOrderDetailId}`);
         const data = await response.json();
 
         if (data.isExisting) {
@@ -13,6 +13,33 @@
         else {
             document.getElementById('editBtn').style.display = 'none';
         }
+    } catch (error) {
+        console.error('Error', error);
+    }
+
+    try {
+        const response = await fetch(`/LessonReview/isEvaluated?FOrderDetailId=${FOrderDetailId}`);
+        const data = await response.json();
+
+        if (data.isExisting) {
+            document.getElementById('createBtn').style.display = 'none';
+        }
+        else {
+            document.getElementById('editBtn').style.display = 'none';
+        }
+    } catch (error) {
+        console.error('Error', error);
+    }
+
+    try {
+        const response = await fetch(`/LessonReview/canEvaluated?FOrderDetailId=${FOrderDetailId}`);
+        const data = await response.json();
+
+        if (!data.isValid) {
+            document.getElementById('createBtn').style.display = 'none';
+            document.getElementById('editBtn').style.display = 'none';
+        };
+
     } catch (error) {
         console.error('Error', error);
     }
@@ -69,15 +96,57 @@
                 console.log('Evaluation submitted successfully.');
                 const editModal = document.getElementById('editEvalModal');
                 $(editModal).modal('hide');
-
+                
+                Swal.fire({
+                    icon: 'success',
+                    title: '評價修改成功',
+                    text: '您的評價已成功修改！',
+                    confirmButtonColor: '#3085d6',
+                    confirmButtonText: '確認'
+                });
 
             } else {
                 console.error('Error:', response.statusText);
+                Swal.fire({
+                    icon: 'error',
+                    title: '評價修改失敗',
+                    text: '評價修改失敗，請稍後再試。',
+                    confirmButtonColor: '#3085d6',
+                    confirmButtonText: '確認'
+                });
             }
+        } catch (error) {
+            console.error('Error:', error);
+            Swal.fire({
+                icon: 'error',
+                title: '評價修改失敗',
+                text: '評價修改失敗，請稍後再試。',
+                confirmButtonColor: '#3085d6',
+                confirmButtonText: '確認'
+            });
+        }
+
+        // 更新評價顯示
+        try {
+            const FOrderDetailId = document.querySelector('#FOrderDetailId').getAttribute('data-value');
+            const detailPartial = document.querySelector('#evalDetailPartial');
+            const url = "/LessonReview/GetEvalDetail?FOrderDetailId=" + FOrderDetailId;
+
+            const response = await fetch(url, {
+                method: "GET",
+            });
+
+            if (!response.ok) {
+                throw new Error("Network response was not ok");
+            }
+
+            const data = await response.text();
+            detailPartial.innerHTML = data;
         } catch (error) {
             console.error('Error:', error);
         }
     });
+
 
     $(document).ready(function () {
         var starClicked = false;

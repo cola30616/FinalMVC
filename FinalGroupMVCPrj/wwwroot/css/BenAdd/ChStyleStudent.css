@@ -1,13 +1,9 @@
 ﻿@import url("https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;500;600;700&display=swap");
 
-.chatlist-container {
-    max-height: 50px;
-    overflow-y: auto;
-}
-
 .ChatContainer {
     width: 100%;
     max-width: 100%;
+    margin-top:120px;
     height: calc(100vh - 100px);
     background: #fff;
     box-shadow: 0 1px 1px 0 rgba(0, 0, 0, 0.06), 0 2px 5px 0 rgba(0, 0, 0, 0.06);
@@ -18,7 +14,6 @@
         position: relative;
         flex: 30%;
         background: #fff;
-        overflow-y: auto;
     }
 
     .ChatContainer .rightSide {
