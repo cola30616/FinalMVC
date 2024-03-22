@@ -1,0 +1,62 @@
+﻿@{
+    ViewData["Title"] = "ECpayCheckout";
+}
+@model System.Collections.Generic.Dictionary<string, string>
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>結帳成功</title>
+    <style>
+        .center-text {
+            text-align: center;
+        }
+
+        #preLoader {
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <div class="shopping-area" style="padding-top: 240px; padding-bottom: 80px;">
+        <div class="container">
+            <div style="text-align: center;">
+                <i class="fa-regular fa-circle-check fa-beat center-text" style="color: #3aec22; font-size: 8em; margin-bottom: 20px;"></i>
+            </div>
+            <h4 class="mb-10 fs-5 center-text" style="margin-top: 20px">交易成功</h4>
+            <h4 class="mb-10 fs-5 center-text" style="margin-bottom: 40px">您可至課程紀錄查看詳細資訊</h4>
+            <div style="text-align: center;">
+                <button type="submit" class="fs-5 btn btn-lg btn-primary radius-sm" id="backBtn" style="margin-top: 20px;width: 15%; margin-right: 5px;">返回首頁</button>
+                <button type="submit" class="fs-5 btn btn-lg btn-primary radius-sm" id="detailsBtn" style="margin-top: 20px;width: 15%; margin-left: 5px;">檢視課程紀錄</button>
+            </div>
+          
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {    
+            //第一按鍵
+            const checkoutBtn = document.querySelector("#checkoutBtn"); 
+            if (checkoutBtn) {
+                checkoutBtn.addEventListener("click", function () {
+                    window.location.href = "https://localhost:7031";
+                });
+            }; 
+            //第二按鍵
+            const detailsBtn = document.querySelector("#detailsBtn"); 
+            if (detailsBtn) {
+                detailsBtn.addEventListener("click", function () {
+                    window.location.href = "https://localhost:7031/lessonhistory/LearningRecord";
+                });
+            }
+        });
+
+    </script>
+
+</body>
+</html>

@@ -19,6 +19,7 @@ using static Org.BouncyCastle.Crypto.Engines.SM2Engine;
 using Microsoft.CodeAnalysis.FlowAnalysis;
 using Newtonsoft.Json.Linq;
 using System.Drawing;
+using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace FinalGroupMVCPrj.Controllers
 {
@@ -942,18 +943,19 @@ namespace FinalGroupMVCPrj.Controllers
                             join member in _context.TMembers on order.FMemberId equals member.FMemberId
                             join lessoncourse in _context.TLessonCourses on orderDetail.FLessonCourseId equals lessoncourse.FLessonCourseId
                             where lessoncourse.FTeacherId == currentTeacherId
-                            select new 
+                            select new OrderBasicViewModel
                             {
-                                OrderID = order.FOrderId,
-                                RealName = member.FRealName,
-                                Email = member.FEmail,
-                                OrderDate = order.FOrderDate,
-                                Name = lessoncourse.FName,
-                                Price = lessoncourse.FPrice,
-                                OrderValid = orderDetail.FOrderValid,
-                                ModificationDescription = orderDetail.FModificationDescription,
+                                FOrderNumber = order.FOrderNumber,
+                                FRealName = member.FRealName,
+                                FPhone= member.FPhone,
+                                FEmail = member.FEmail,
+                                FOrderDate = order.FOrderDate,
+                                FName = lessoncourse.FName,
+                                FLessonPrice = lessoncourse.FPrice,
+                                FOrderValid = orderDetail.FOrderValid,
+                                FModificationDescription = orderDetail.FModificationDescription,
                             };
             return Json(new { data = OrderData });
-        }       
+        }  
     }
 }

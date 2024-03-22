@@ -1,0 +1,148 @@
+﻿@model CheckoutDetailViewModel
+
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+<!-- Breadcrumb start -->
+<div class="breadcrumb-area bg-img bg-cover" data-bg-image="/images/owenadd/breadcrumb-bg.jpg">
+    <div class="container">
+        <div class="content text-center">
+            <h2>訂單資訊</h2>
+            <nav aria-label="breadcrumb">
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item"><a href="index.html">首頁</a></li>
+                    <li class="breadcrumb-item active" aria-current="page">訂單確認</li>
+                </ol>
+            </nav>
+        </div>
+    </div>
+</div>
+<!-- Breadcrumb end -->
+
+<!-- Checkout-area start -->
+<div class="shopping-area pt-30 pb-60">
+    <div class="container">
+        <form>
+            <div class="row gx-xl-5">
+                <div class="col-lg-8">
+                    <div class="billing-details" data-aos="fade-up">
+                        <h4 class="mb-20 fs-4">訂購人資訊</h4>
+                        <div class="row">
+                            <div class="col-lg-6">
+                                <div class="form-group mb-30 fs-5">
+                                    <label for="firstName">姓名 </label>
+                                    <input type="text" id="readOnlyInput" value=@Html.DisplayFor(model => model.FRealName) class="form-control fs-5" readonly>
+                                    @*                                     <input id="firstName" type="text" class="form-control fs-3" name="firstName" placeholder="First Name" required="">
+                                    *@
+                                </div>
+                            </div>
+                            <div class="col-lg-6">
+                                <div class="form-group mb-30 fs-5">
+                                    <label for="phone">手機號碼 </label>
+                                    <input type="text" id="readOnlyInput" value=@Html.DisplayFor(model => model.FPhone) class="form-control fs-5" readonly>
+                                    @*                                     <input id="phone" type="text" class="form-control fs-3" name="phone" placeholder="Phone Number" required="">
+                                    *@
+                                </div>
+                            </div>
+                            <div class="col-lg-6">
+                                <div class="form-group mb-30 fs-5">
+                                    <label for="email">Email </label>
+                                    <input type="text" id="readOnlyInput" value=@Html.DisplayFor(model => model.FEmail) class="form-control fs-5" readonly>
+                                    @*                                     <input id="email" type="email" class="form-control fs-3" name="email" placeholder="Email Address" required="">
+                                    *@
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-6">
+                            <div class="form-group mb-30 fs-5">
+                                <label for="email">資料如欲修改，請至<a href="https://localhost:7031/Member/Setting" style="color: blue;">  會員中心</a></label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div data-aos="fade-up">
+                <h4 class="mb-20">付款方式</h4>
+                <div class="form-group mb-40">
+                    <select id="payment-gateway" class="niceselect form-control fs-5">
+                        <option value="" selected="">信用卡付款</option>
+                    </select>
+                </div>
+
+            </div>
+
+            <div class="order-payment form-block border radius-md mb-30" data-aos="fade-up">
+                <h4 class="mb-20">報名注意事項</h4>
+                <div class="form-group mb-20">
+                    <div class="tab-pane slide slide show active" id="tab1">
+                        <div class="content pb-20">
+                            <h5 class="title mb-20 color-red">※此注意事項關係學員受訓權益，請務必詳讀學員須知後並確認可配合再進行課程報名，若因學員本身忽略而使權益受損，須自行負責。</h5>
+                            <p class="text">
+                                ￭ 上課注意事項：
+                            </p>
+                            <div>
+                                <div class="row gl-xl-5 mt-20">
+                                    <div class="col-lg-12">
+                                        <ol style="list-style:cjk-ideographic;list-style-position:outside">
+                                            <li>為維護學習權益，學員若有不當行為，以致影響班級運作或講師教學情事，得取消其上課資格，一律不予退費。</li>
+                                            <li>學員務必依課程表上課時間準時到課，上課期間應依規定全程辦理親自簽到、簽退，嚴禁代簽(代簽觸犯偽造文書等相關刑責，依法移送)。且不得冒名頂替代上課，違者經查證屬實將取消其上課資格，一律不予退費。</li>
+                                            <li>為確保學員路途安全，未準時到課者，將不再電聯催促學員上課時間。 </li>
+                                            <li>學員若因事無法準時出席上課者，需自行主動提早申請，並完成相關請假規定(詳見退費注意事項)，未事先申請者，一律不予退費。</li>
+                                        </ol>
+                                    </div>
+                                </div>
+                                <br />
+                                <p class="text">
+                                    ￭ 退費注意事項：
+                                </p>
+                                <div>
+                                    <div class="row gl-xl-5 mt-20">
+                                        <div class="col-lg-12">
+                                            <ol style="list-style:cjk-ideographic;list-style-position:outside">
+                                                <li>事假需於5日前申請，病假需於3小時前申請(並附上就診證明)。若未依規定請假，恕不順延與退費。</li>
+                                                <li>若課程已開始上課，恕不提供退費服務。</li>
+                                            </ol>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="text-center">
+                    @*                         <button id="yourOrderButton" class="fs-3 btn btn-lg btn-primary radius-sm w-100" type="button" aria-label="button" data-bs-toggle="modal" data-bs-target="#orderSuccessModal">送出訂單</button> *@
+                    <a asp-controller="Order" asp-action="CheckOrder" class="fs-3 btn btn-lg btn-primary radius-sm w-100" title="CheckOrder" target="_self">送出訂單</a>
+
+                </div>
+        </form>
+    </div>
+</div>
+@section Scripts {
+    @*  <script>
+        $(document).ready(function () {
+            $('#yourOrderButton').click(function () {
+                // 觸發SweetAlert
+                Swal.fire({
+                    title: "我們已收到您的訂單！",
+                    text: "您可至訂購人信箱查看詳細資訊！",
+                    icon: "success",
+                    showCancelButton: true,
+                    confirmButtonColor: "#3085d6",
+                    confirmButtonText: "返回首頁",
+                    cancelButtonText: "檢視訂單",
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        // 導回首頁
+                        window.location.href = 'https://localhost:7031';
+                    } else if (result.dismiss === Swal.DismissReason.cancel) {
+                        // 導回檢視課程記錄清單
+                        window.location.href = 'https://localhost:7031/lessonhistory/LearningRecord';
+                    }
+                });
+            });
+        });
+    </script> *@
+}
+
+
+@*                 asp-route-id="@Model.FLessonCourseId" *@

@@ -6,16 +6,41 @@ $(document).ready(function () {
 
 function loadDataTable() {
     dataTable = $('#OrderListTable').DataTable({
-        "ajax": { url: '/TeacherAdmin/ListDataJson' },
+        "ajax": { url: '/TeacherAdmin/ListDataJson2' },
         "columns": [
-            { data: 'orderID', "width": "5%", className: 'text-center' },
-            { data: 'realName', "width": "5%", className: 'text-center' },
-            { data: 'email', "width": "7%", className: 'text-center' },
-            { data: 'orderDate', "width": "7%", className: 'text-center' },
-            { data: 'name', "width": "7%", className: 'text-center' },
-            { data: 'price', "width": "5%", className: 'text-center' },
-            { data: 'orderValid', "width": "5%", className: 'text-center' },
-            { data: 'modificationDescription', "width": "10%", className: 'text-center' },
+            { data: 'fOrderNumber', "width": "5%", className: 'text-center' },
+            { data: 'fRealName', "width": "5%", className: 'text-center' },
+            { data: 'fPhone', "width": "5%", className: 'text-center' },
+            { data: 'fEmail', "width": "4%", },       
+            {
+                data: 'fOrderDate',
+                "width": "10%",
+                className: 'text-center',
+                 "render": function (data) {
+                     const date = new Date(`${data}`);
+                     const formatter = new Intl.DateTimeFormat('zh-TW', {
+                         year: 'numeric',
+                         month: '2-digit',
+                         day: '2-digit',
+                         hour: '2-digit',
+                         minute: '2-digit',
+                         second: '2-digit',
+                     });
+                     const formattedDate = formatter.format(date);
+                     return formattedDate;
+                }
+            },
+            { data: 'fName', "width": "11%",  },
+            { data: 'fLessonPrice', "width": "5%", className: 'text-center' },
+            {
+                data: 'fOrderValid',
+                "width": "5%",
+                className: 'text-center',
+                "render": function (data) {
+                    return data==true ? "是" : "否";
+                }
+            },
+            { data: 'fModificationDescription', "width": "5%",  },
             //{
             //    // 這段是新增及刪除按鈕 ， 刪除用到onclick 事件，觸發下方的Delete
             //    data: 'orderID',

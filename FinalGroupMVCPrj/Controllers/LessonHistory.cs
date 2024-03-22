@@ -1,4 +1,5 @@
 ﻿using FinalGroupMVCPrj.Models;
+using FinalGroupMVCPrj.Models.DTO;
 using FinalGroupMVCPrj.Models.ViewModels;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -17,31 +18,37 @@ namespace FinalGroupMVCPrj.Controllers
         //動作簡述：回傳課程記錄清單的頁面
         [HttpGet]
         public IActionResult LearningRecord()
-        {            
-            var successRecord = _context.TOrderDetails.Where(lr => lr.FOrder.FMemberId == GetCurrentMemberId() && lr.FOrderValid == true)
-                .Select(lr => lr.FLessonCourse).Distinct().ToList();
-            var cancelRecord = _context.TOrderDetails.Where(lr => lr.FOrder.FMemberId == GetCurrentMemberId() && lr.FOrderValid == false)
-                .Select(lr => lr.FLessonCourse).Distinct().ToList();
-            //var recordDictionary = successRecord
-            //.GroupBy(lr => lr.TOrderDetails)
-            //.ToDictionary(
-            //    group => group.Key, // 使用 orderID 作為字典的鍵
-            //    group => group.Select(lr => lr.FLessonCourse).FirstOrDefault() // 將每個組的 TLessonCourse 映射為字典值
-            //);
+        {
+            var memberId = GetCurrentMemberId(); // 获取当前会员ID
+            var successRecord = _context.TOrderDetails
+                .Include(lc => lc.FLessonCourse)
+                .Where(lr => lr.FOrder.FMemberId == memberId && lr.FOrderValid == true)                
+                .ToList();            
+
+            
+            var successdict = successRecord.OrderByDescending(lr => lr.FLessonCourse.FLessonDate).ToDictionary(lr => lr.FOrderId, lr => lr.FLessonCourse);           
+
+
+            var cancelRecord = _context.TOrderDetails
+                .Include(lc => lc.FLessonCourse)
+                .Where(lr => lr.FOrder.FMemberId == memberId && lr.FOrderValid == false)
+                .ToList();  
+
+            
+            var canceldict = cancelRecord.OrderByDescending(lr => lr.FLessonCourse.FLessonDate).ToDictionary(lr => lr.FOrderId, lr => lr.FLessonCourse);
+
             LearningRecordVM learningRecord = new()
             {
-                SuccessRecord = successRecord,
-                CancelRecord = cancelRecord,
+                SuccessRecord = successdict,
+                CancelRecord = canceldict,
 
             };
             return View(learningRecord);
         }
-
-
-
         //■ ==========================     Apple 作業區      ==========================■
-        public IActionResult Details(int? id)
+        public IActionResult Detail(int? id)
         {
+
             ViewBag.FOrderDetailId = 5;
 
             if (id == null)
@@ -67,8 +74,23 @@ namespace FinalGroupMVCPrj.Controllers
                     FOrderDetailId = od.FOrderDetailId,
                     FModificationDescription = od.FModificationDescription,
                 }).ToList().FirstOrDefault();
+         
+            return View("Detail", order);
+        }
 
-            return View("Details", order);
+        [HttpPost]
+        public IActionResult CancelOrder(CancelOrderDTO cancelOrderDTO)
+        {
+
+            var orderDetail = _context.TOrderDetails.FirstOrDefault(od => od.FOrderId == cancelOrderDTO.id);
+            if (orderDetail != null)
+            {
+                orderDetail.FOrderValid = false; // 更新 FOrderValid 為 false
+                orderDetail.FModificationDescription = cancelOrderDTO.reason; //將取消原因寫入資料庫
+                _context.SaveChanges();
+                return Ok(orderDetail);
+            }
+            return NotFound();
         }
     }
 }

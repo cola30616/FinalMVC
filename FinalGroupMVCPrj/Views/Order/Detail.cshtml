@@ -1,46 +1,49 @@
-﻿@model OrderDetailViewModel
+﻿@model CheckoutDetailViewModel
 
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
+<partial name="_SweetAlertPartial" />
 <!-- Breadcrumb start -->
-<div class="breadcrumb-area bg-img bg-cover" data-bg-image="assets/images/breadcrumb-bg.jpg">
+<div class="breadcrumb-area bg-img bg-cover" data-bg-image="/images/owenadd/breadcrumb-bg.jpg">
     <div class="container">
         <div class="content text-center">
-            <h2>訂單資訊</h2>
-            <nav aria-label="breadcrumb">
-                <ol class="breadcrumb">
-                    <li class="breadcrumb-item"><a href="index.html">Home</a></li>
-                    <li class="breadcrumb-item active" aria-current="page">OrderDetail</li>
-                </ol>
-            </nav>
+            <h2>訂單資訊</h2>            
         </div>
     </div>
 </div>
 <!-- Breadcrumb end -->
 <!-- Mentor-details-area start -->
 
-
-<section class="mentor-details pt-100 pb-60">
+<form asp-controller="Order" asp-action="CheckOrder" method="post">
+<section class="mentor-details pt-60 pb-30">
     <div class="container">
         <div class="row gx-xl-5 align-items-center">
-            <div class="col-xl-4 col-lg-5">
-                <div class="content-img mb-40" data-aos="fade-up">
-                    <div class="lazy-container ratio ratio-1-1 radius-md">
-                        <img class="lazyload blur-up" src="assets/images/placeholder.png" data-src="assets/images/mentor/mentor-1.jpg" alt="Mentor">
+                <div class="col-xl-4 col-lg-5">
+                    <div class="content-img mb-40" data-aos="fade-up">
+                        <div class="lazy-container ">
+                            <partial name="_OrderDetailPicturePartial" />
+                        </div>
                     </div>
                 </div>
-            </div>
             <div class="col-xl-8 col-lg-7">
                 <div class="content-title mb-40" data-aos="fade-up">
-                    <h3 class="title mt-0 mb-1 fs-1">@Html.DisplayFor(model => model.FName)</h3>
-                    <span class=" fs-4 ">
-                        課程資訊：@Html.DisplayFor(model => model.FDescription)
-                    </span>
-                    <div class="content-text mt-20">
-                        <p class="fs-3 fw-bold">
-                            地點：@Html.DisplayFor(model => model.FDescription) @* 要改成FAddressDetail*@
-                        </p>
-                    </div>
+                        <h3 class="title mt-0 mb-4 fs-3">@Html.DisplayFor(model => model.FName)</h3>
+                        <i class="fa-solid fa-circle-info fa-1.5x color-primary"></i>
+                        <span class=" fs-5 " style="margin-top: 60px; font-weight: bold; color: black;">
+                        課程資訊：
+                        </span>                        
+                        <span class=" fs-5 " style="text-align: justify;">
+                            @Html.DisplayFor(model => model.FDescription)
+                        </span>
+                        <div class="content-text mt-20">
+                            <i class="fas fa-usd-circle fa-1x color-primary"></i>
+                            <span class="fs-5 fw-bold" style="font-weight: bold; color: black;">
+                                課程費用：
+                            </span>
+                            <span class="fs-5 ">
+                                @Math.Floor(Model.FPrice) 元
+                            </span>
+                        </div>
                 </div>
             </div>
         </div>
@@ -48,48 +51,54 @@
 </section>
 <!-- Mentor-details-area end -->
 <!-- Checkout-area start -->
-<div class="shopping-area pt-100 pb-60">
+<div class="shopping-area pt-30 pb-60">
     <div class="container">
         <form>
             <div class="row gx-xl-5">
                 <div class="col-lg-8">
                     <div class="billing-details" data-aos="fade-up">
-                        <h4 class="mb-20 fs-2">訂購人資訊</h4>
+                        <h4 class="mb-20 fs-4">訂購人資訊</h4>
                         <div class="row">
                             <div class="col-lg-6">
-                                <div class="form-group mb-30 fs-4">
+                                <div class="form-group mb-30 fs-5">
                                     <label for="firstName">姓名 </label>
-                                    <input type="text" id="readOnlyInput" value=@Html.DisplayFor(model => model.FRealName) class="form-control fs-4" readonly>
+                                    <input asp-for="FRealName" class="form-control fs-5" readonly>
 @*                                     <input id="firstName" type="text" class="form-control fs-3" name="firstName" placeholder="First Name" required="">
  *@                                </div>
                             </div>
                             <div class="col-lg-6">
-                                <div class="form-group mb-30 fs-4">
+                                <div class="form-group mb-30 fs-5">
                                     <label for="phone">手機號碼 </label>
-                                    <input type="text" id="readOnlyInput" value=@Html.DisplayFor(model => model.FPhone) class="form-control fs-4" readonly>
+                                    <input asp-for="FPhone" class="form-control fs-5" readonly>
 @*                                     <input id="phone" type="text" class="form-control fs-3" name="phone" placeholder="Phone Number" required="">
  *@                                </div>
                             </div>
                             <div class="col-lg-6">
-                                <div class="form-group mb-30 fs-4">
-                                    <label for="email">Email </label>
-                                    <input type="text" id="readOnlyInput" value=@Html.DisplayFor(model => model.FEmail) class="form-control fs-4" readonly>
-@*                                     <input id="email" type="email" class="form-control fs-3" name="email" placeholder="Email Address" required="">
- *@                                </div>
                                 <div class="form-group mb-30 fs-5">
-                                    <label for="email">資料如欲修改，請至<a href="/會員中心的URL" style="color: blue;">  會員中心</a></label>
+                                    <label for="email">Email </label>
+                                    <input asp-for="FEmail" class="form-control fs-5" readonly>
+@*                                     <input id="email" type="email" class="form-control fs-3" name="email" placeholder="Email Address" required="">
+ *@                                </div>                                
+                                </div>
+                            </div>
+                            <div class="col-lg-6">
+                                <div class="form-group mb-30 fs-6">
+                                    <label for="email">資料如欲修改，請至<a href="https://localhost:7031/Member/Setting" style="color: blue;">  會員中心</a></label>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
 
-                <div data-aos="fade-up">
-                    <h4 class="mb-20">付款方式</h4>
-                    <div class="form-group mb-20">
-                        <select id="payment-gateway" class="niceselect form-control fs-4">
-                            <option value="" selected="">信用卡付款</option>
-                        </select>
+                <div class="col-lg-8">
+                    <div class="col-lg-6">
+
+                        <div class="billing-details" data-aos="fade-up">
+                            <h4 class="mb-20">付款方式</h4>
+                            <div class="form-group mb-40">
+                                <input value="信用卡一次付清" class="form-control fs-5" readonly>
+                            </div>
+                        </div>
                     </div>
 
                 </div>
@@ -132,14 +141,22 @@
                             </div>
                         </div>
                     </div>
+
                     <div class="text-center">
-                        <button id="yourOrderButton" class="fs-3 btn btn-lg btn-primary radius-sm w-100" type="button" aria-label="button" data-bs-toggle="modal" data-bs-target="#orderSuccessModal">送出訂單</button>
+                    <input asp-for="FMemberId" class="form-control" style="visibility:hidden;height:0px" readonly>
+                        <input asp-for="FLessonCourseId" class="form-control" style="visibility:hidden;height:0px" readonly>
+                        <input asp-for="FName" class="form-control" style="visibility:hidden;height:0px" readonly>
+                        <input asp-for="FDescription" class="form-control" style="visibility:hidden;height:0px" readonly>
+                        <input asp-for="FPhoto" class="form-control" style="visibility:hidden;height:0px" readonly>
+                        <input asp-for="FPrice" class="form-control" style="visibility:hidden;height:0px" readonly>
+                    <button type="submit" class="fs-3 btn btn-lg btn-primary radius-sm w-100" title="CheckOrder" target="_self">送出訂單</button>
                     </div>
         </form>
     </div>
 </div>
+</form>
 @section Scripts{
-    <script>
+   @*  <script>
         $(document).ready(function () {
             $('#yourOrderButton').click(function () {
                 // 觸發SweetAlert
@@ -154,15 +171,14 @@
                 }).then((result) => {
                     if (result.isConfirmed) {
                         // 導回首頁
-                        window.location.href = '/URL';
+                        window.location.href = 'https://localhost:7031';
                     } else if (result.dismiss === Swal.DismissReason.cancel) {
-                        // 導回檢視訂單頁面or子謙的課程記錄清單
-                        window.location.href = '/URL';
+                        // 導回檢視課程記錄清單
+                        window.location.href = 'https://localhost:7031/lessonhistory/LearningRecord';
                     }
                 });
             });
         });
-    </script>
+    </script> *@
 }
-
 

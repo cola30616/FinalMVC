@@ -27,19 +27,19 @@
                 <div class="tab-content" data-aos="fade-up">
                     <!--課程未開始-->                   
                     <div class="tab-pane slide show active" id="tab1">
-                       
-                        @foreach (var course in Model.SuccessRecord)
+                        <div class="row">
+                            @foreach (var course in Model.SuccessRecord)
                         {
-                            if (course.FLessonDate.HasValue && DateTime.Now.CompareTo(course.FLessonDate.Value) < 0)
+                            if (course.Value.FLessonDate.HasValue && DateTime.Now.CompareTo(course.Value.FLessonDate.Value) < 0)
                             {
-                                <div class="row">
+                                
                                     <div class="col-xl-3 col-lg-4 col-sm-6">
                                         <div class="course-default border radius-md mb-30">
                                             <figure class="course-img">
-                                                <a asp-controller="Lesson" asp-action="Details" asp-route-id="@course.FLessonCourseId" title="Image" target="_self" class="lazy-container ratio ratio-2-3">
-                                                    @if (course.FPhoto != null)
+                                                <a asp-controller="LessonHistory" asp-action="Detail" asp-route-id="@course.Key" title="Image" target="_self" class="lazy-container ratio ratio-2-3">
+                                                    @if (course.Value.FPhoto != null)
                                                     {
-                                                        <img class="lazyload" src="data:image;base64,@(Convert.ToBase64String(course.FPhoto))" alt="Image" />
+                                                        <img class="lazyload" src="data:image;base64,@(Convert.ToBase64String(course.Value.FPhoto))" alt="Image" />
                                                     }
                                                     else
                                                     {
@@ -47,14 +47,14 @@
                                                     }
                                                 </a>
                                                 <div class="hover-show">
-                                                    <a asp-controller="Lesson" asp-action="Details" asp-route-id="@course.FLessonCourseId" class="btn btn-md btn-primary rounded-pill" title="Enroll Now" target="_self">查詢課程細節</a>
+                                                    <a asp-controller="LessonHistory" asp-action="Detail" asp-route-id="@course.Key" class="btn btn-md btn-primary rounded-pill" title="Enroll Now" target="_self">查詢課程細節</a>
                                                 </div>
                                             </figure>
                                             <div class="course-details">
                                                 <div class="p-3">                                                  
                                                     <h6 class="course-title lc-2 mb-0">
-                                                        <a asp-controller="Lesson" asp-action="Details" asp-route-id="@course.FLessonCourseId" target="_self" title="Link">
-                                                            @course.FName
+                                                        <a asp-controller="LessonHistory" asp-action="Detail" asp-route-id="@course.Key" target="_self" title="Link">
+                                                            @course.Value.FName
                                                         </a>
                                                     </h6>
                                                     
@@ -63,25 +63,26 @@
                                             </div>
                                         </div>
                                     </div>
-                                </div>
+                                
                             }
-                        }
-                                        
+                        }  
+                        </div>
                     </div>
                     <!--課程已完成-->
                     <div class="tab-pane slide" id="tab2">
+                        <div class="row">
                         @foreach (var course in Model.SuccessRecord)
                         {
-                            if (course.FLessonDate.HasValue && DateTime.Now.CompareTo(course.FLessonDate.Value) >= 0)
+                            if (course.Value.FLessonDate.HasValue && DateTime.Now.CompareTo(course.Value.FLessonDate.Value) >= 0)
                             {
-                                <div class="row">
+                                
                                     <div class="col-xl-3 col-lg-4 col-sm-6">
                                         <div class="course-default border radius-md mb-30">
                                             <figure class="course-img">
-                                                <a asp-controller="Lesson" asp-action="Details" asp-route-id="@course.FLessonCourseId" title="Image" target="_self" class="lazy-container ratio ratio-2-3">
-                                                    @if (course.FPhoto != null)
+                                                <a asp-controller="LessonHistory" asp-action="Detail" asp-route-id="@course.Key" title="Image" target="_self" class="lazy-container ratio ratio-2-3">
+                                                    @if (course.Value.FPhoto != null)
                                                     {
-                                                        <img class="lazyload" src="data:image;base64,@(Convert.ToBase64String(course.FPhoto))" alt="Image" />
+                                                        <img class="lazyload" src="data:image;base64,@(Convert.ToBase64String(course.Value.FPhoto))" alt="Image" />
                                                     }
                                                     else
                                                     {
@@ -89,14 +90,14 @@
                                                     }
                                                 </a>
                                                 <div class="hover-show">
-                                                    <a asp-controller="Lesson" asp-action="Details" asp-route-id="@course.FLessonCourseId" class="btn btn-md btn-primary rounded-pill" title="Enroll Now" target="_self">查詢課程細節</a>
+                                                    <a asp-controller="LessonHistory" asp-action="Detail" asp-route-id="@course.Key" class="btn btn-md btn-primary rounded-pill" title="Enroll Now" target="_self">查詢課程細節</a>
                                                 </div>
                                             </figure>
                                             <div class="course-details">
                                                 <div class="p-3">
                                                     <h6 class="course-title lc-2 mb-0">
-                                                        <a asp-controller="Lesson" asp-action="Details" asp-route-id="@course.FLessonCourseId" target="_self" title="Link">
-                                                            @course.FName
+                                                        <a asp-controller="LessonHistory" asp-action="Detail" asp-route-id="@course.Key" target="_self" title="Link">
+                                                            @course.Value.FName
                                                         </a>
                                                     </h6>
                                                   
@@ -105,25 +106,25 @@
                                             </div>
                                         </div>
                                     </div>
-                                </div>
+                                
                             }
                         }
-                        
+                        </div>
                     </div>
                     <!--課程已取消-->
                     <div class="tab-pane slide" id="tab3">
+                        <div class="row">
                         @foreach (var course in Model.CancelRecord)
                         {
-                            if (course.FLessonDate.HasValue && DateTime.Now.CompareTo(course.FLessonDate.Value) > 0)
-                            {
-                                <div class="row">
+                           
+                                
                                     <div class="col-xl-3 col-lg-4 col-sm-6">
                                         <div class="course-default border radius-md mb-30">
                                             <figure class="course-img">
-                                                <a asp-controller="Lesson" asp-action="Details" asp-route-id="@course.FLessonCourseId" title="Image" target="_self" class="lazy-container ratio ratio-2-3">
-                                                    @if (course.FPhoto != null)
+                                                <a asp-controller="LessonHistory" asp-action="Detail" asp-route-id="@course.Key" title="Image" target="_self" class="lazy-container ratio ratio-2-3">
+                                                    @if (course.Value.FPhoto != null)
                                                     {
-                                                        <img class="lazyload" src="data:image;base64,@(Convert.ToBase64String(course.FPhoto))" alt="Image" />
+                                                        <img class="lazyload" src="data:image;base64,@(Convert.ToBase64String(course.Value.FPhoto))" alt="Image" />
                                                     }
                                                     else
                                                     {
@@ -131,14 +132,14 @@
                                                     }
                                                 </a>
                                                 <div class="hover-show">
-                                                    <a asp-controller="Lesson" asp-action="Details" asp-route-id="@course.FLessonCourseId" class="btn btn-md btn-primary rounded-pill" title="Enroll Now" target="_self">查詢課程細節</a>
+                                                    <a asp-controller="LessonHistory" asp-action="Detail" asp-route-id="@course.Key" class="btn btn-md btn-primary rounded-pill" title="Enroll Now" target="_self">查詢課程細節</a>
                                                 </div>
                                             </figure>
                                             <div class="course-details">
                                                 <div class="p-3">
                                                     <h6 class="course-title lc-2 mb-0">
-                                                        <a asp-controller="Lesson" asp-action="Details" asp-route-id="@course.FLessonCourseId" target="_self" title="Link">
-                                                            @course.FName
+                                                        <a asp-controller="LessonHistory" asp-action="Detail" asp-route-id="@course.Key" target="_self" title="Link">
+                                                            @course.Value.FName
                                                         </a>
                                                     </h6>
                                              
@@ -147,10 +148,10 @@
                                             </div>
                                         </div>
                                     </div>
-                                </div>
-                            }
+                                
+                            
                         }
-                        
+                        </div>
                     </div>
                    
                 </div>
