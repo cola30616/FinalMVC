@@ -41,6 +41,7 @@ namespace FinalGroupMVCPrj.Controllers
             var fields = await _context.TCourseFields.Select(u => u.FFieldName).ToListAsync();
             var courseList = await _context.TLessonCourses
             .Where(u => u.FStatus == "開放報名")
+            .OrderByDescending(t => t.FLessonDate)
             .Select(course => new LessonCourseVM
             {
                 lessonCourse = course,
