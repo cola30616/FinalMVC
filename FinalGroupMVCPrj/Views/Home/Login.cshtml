@@ -22,7 +22,13 @@
             .btn {
             background-color: lightgrey
         }
+       .btn:hover{
+            background-color: #30C2EC
+       }
 
+        .btn:active {
+            background-color: black
+        }
         h6 {
             color: lightgrey
         }
@@ -50,14 +56,16 @@
                         <h6>Demo註冊</h6>
                         <button class="btn btn-sm rounded-pill">重複註冊</button>
                         <button class="btn btn-sm rounded-pill">密碼不一致</button>
+                        <a href="https://outlook.live.com/mail/0/" target="_blank" class="btn btn-sm rounded-pill">Outlook信箱</a>
+                        <a href="https://jwt.io/" target="_blank" class="btn btn-sm rounded-pill">jwt.io 解碼查看</a>
                         <button class="btn btn-sm rounded-pill">登入新註冊會員</button>
                     </div>
                     <div class="d-flex flex-column demoDirect  gap-3 ">
                         <h6>Demo超連結</h6>
-                        <button class="btn btn-sm  rounded-pill">管理員：會員</button>
-                        <button class="btn btn-sm rounded-pill">管理員：老師審核</button>
-                        <button class="btn btn-sm rounded-pill">管理員：老師清單</button>
-                        <button class="btn btn-sm rounded-pill">管理員：訊息</button>
+                        <a href="@Url.Action("List", "AdminMember")" target="_blank" class="btn btn-sm  rounded-pill">管理員：會員</a>
+                        <a href="@Url.Action("ApplyList", "AdminTeacher")" target="_blank" class="btn btn-sm rounded-pill">管理員：老師審核</a>
+                        <a href="@Url.Action("CheckList", "AdminTeacher")" target="_blank" class="btn btn-sm rounded-pill">管理員：老師清單</a>
+                        <a href="@Url.Action("Pushmsglist", "message")" target="_blank" class="btn btn-sm rounded-pill">管理員：推播</a>
                     </div>
                         </div>
                 <div class="main-form mx-5">
@@ -174,10 +182,10 @@
                     <div class="d-flex flex-column demoDirect  gap-3 ">
                         <h6>Demo腳色登入</h6>
                         <button onclick="demoLogin('liuyijun@email.com')" class="btn  btn-sm rounded-pill">〈 學生 〉  小君</button>
-                        <button class="btn  btn-sm rounded-pill">〈 新學生 〉  小歐</button>
-                        <button class="btn  btn-sm rounded-pill">〈 申請老師 〉  婷婷</button>
-                        <button class="btn  btn-sm rounded-pill">〈 老師 1 〉 大成老師</button>
-                        <button class="btn  btn-sm rounded-pill">〈 老師 2 〉 彼得老師</button>
+                        <button onclick="demoLogin('wen2024113@outlook.com')" class="btn  btn-sm rounded-pill">〈 新學生 〉  小歐</button>
+                        <button onclick="demoLogin('tinachen@email.com')" class="btn  btn-sm rounded-pill">〈 申請老師 〉  婷婷</button>
+                        <button onclick="demoLogin('lindacheng@email.com')" class="btn  btn-sm rounded-pill">〈 老師 1 〉 大成老師</button>
+                        <button onclick="demoLogin('handsomepeter@email.com')" class="btn  btn-sm rounded-pill">〈 老師 2 〉 彼得老師</button>
                     </div>
                 </div>
                 </div>
