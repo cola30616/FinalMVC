@@ -1,12 +1,12 @@
 ﻿@model IEnumerable< LessonListViewModel>
 
 
-    @{
+@{
     ViewData["Title"] = "LessonList";
     Layout = "~/Views/Shared/_LayoutTeacherAdmin.cshtml";
 }
 
-
+<partial name="_SweetAlertPartial" />
 <nav style="--bs-breadcrumb-divider: '|';">
     <ol class="breadcrumb">
         <li class="breadcrumb-item"><a asp-controller="TeacherAdmin" asp-action="LessonList"><i class="bi bi-house-door"></i>老師後台</a></li>
@@ -15,40 +15,53 @@
     </ol>
 </nav>
 <h1>老師後台課程清單</h1>
-<a asp-controller="TeacherAdmin" asp-action="LessonCreate"  class="btn btn-primary" data-bs-toggle="tooltip" data-bs-placement="right" title="點擊新增課程">開課</a>
+@* asp-controller="TeacherAdmin" asp-action="LessonCreate" *@
+<!--改成-->
+<button onclick="loadHistoryCourse()" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#open" data-bs-placement="right" title="點擊新增課程"><i class="fa-regular fa-square-plus"></i> 開課</button>
 
 <div class="row">
-    <div class="col-sm-10">
+    <div class="col-sm-6">
         <div class="row mb-3">
             <label class="col-sm-2  align-self-center">開課日期區間:</label>
             <div class="col-sm-10">
                 <div class="row">
                     <div class="col-sm-5">
-                        <input type="date" class="form-control">
+                        <input type="date" class="form-control" id="startDate">
                     </div>
                     <div class="col-sm-1 text-center align-self-center">
                         ~
                     </div>
                     <div class="col-sm-5">
-                        <input type="date" class="form-control">
+                        <input type="date" class="form-control" id="endDate">
                     </div>
                 </div>
             </div>
         </div>
     </div>
 
-    <div class="col-sm-2">
+    <div class="col-sm-4">
         <div class="col-sm-10">
-            <select class="form-select" aria-label="Default select example">
-                <option selected>狀態</option>
-                <option value="1">One</option>
-                <option value="2">Two</option>
-                <option value="3">Three</option>
-            </select>
+            <div class="row">
+                <label class="col-sm-4  align-self-center">課程狀態:</label>
+                <div class="col-sm-8">
+                    <select class="form-select" id="courseStatus">
+                        <option value="0" disabled selected hidden>狀態</option>
+                        <option value="0">全部</option>
+                        <option value="1">課程取消</option>
+                        <option value="2">尚未開放</option>
+                        <option value="3">開放報名</option>
+                        <option value="4">報名截止</option>
+                        <option value="5">課程結束</option>
+                    </select>
+                </div>
+            </div>
         </div>
     </div>
+    <div class="col-sm-2">
+        <button class="btn btn-secondary" id="clearall"> 清除條件</button>
+        <button class="btn btn-success"> 匯出CSV</button>
+    </div>
 </div>
-
 
 
 
@@ -57,7 +70,7 @@
 <table id="lessonListTable" class="datatable">
     <thead>
         <tr>
-            <th>@Html.DisplayNameFor(m=>m.Code)</th>
+            <th>@Html.DisplayNameFor(m => m.Code)</th>
             <th>@Html.DisplayNameFor(m => m.Name)</th>
             <th>@Html.DisplayNameFor(m => m.Filed)</th>
             <th>@Html.DisplayNameFor(m => m.Price)</th>
@@ -67,15 +80,350 @@
             <th>@Html.DisplayNameFor(m => m.RegPeople)</th>
             <th>@Html.DisplayNameFor(m => m.Status)</th>
             <th>@Html.DisplayNameFor(m => m.VenueType)</th>
-            <th></th> 
+            <th></th>
         </tr>
     </thead>
- 
+
 </table>
+
+
+
+<!--彈跳視窗-->
+<!-- Modal -->
+<div class="modal fade" id="open" tabindex="-1" aria-labelledby="openLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5" id="openLabel">請選擇開課類型</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div class="d-flex justify-content-center">
+                    <div class="mt-3 mb-3">
+                        <h6>建立全新課程</h6>
+                        <a class="btn btn-warning" asp-controller="TeacherAdmin" asp-action="LessonCreate">開新課程</a>
+                    </div>
+                </div>
+                <div class="d-flex justify-content-center mb-3">
+                    <h6>或</h6>
+                </div>
+                <div class="row">
+                    <div class="col-12 mb-3 mb-md-0 me-md-3 mt-2">
+                        <div class="d-flex justify-content-center">
+                            <h6>重新開之前開過的課</h6>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-8">
+                        <select id="opendCourse" class="form-select mb-3" aria-label="Default select example"></select>
+                    </div>
+                    <div class="col-md-4">
+                        <button onclick="goOpen()" type="button" class="btn btn-primary" name="code" value="" id="goToOpen">前往開課</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
 <!-- End Table with stripped rows -->
-
-
-
-@section Scripts{
+@section Scripts {
     <script src="~/js/tinascript/lessonlist.js" asp-append-version="true"></script>
+
+    <script>
+        $(document).ready(function () {
+            const goToOpen = document.querySelector('#goToOpen');
+            loadHistoryCourse();
+        })
+        const opendCourse = document.querySelector('#opendCourse');
+        async function loadHistoryCourse() {
+            const url = `@Url.Content("~/TeacherAdmin/historycourse")`;
+            const response = await fetch(url);
+            const data = await response.json();
+
+            if (data.length == 0) {
+                const option = `<option>未曾開課</option>`;
+                opendCourse.innerHTML = option;
+            }
+            else {
+                const options = data.map((item) => {
+                    return `<option value=${item.fCode}>${item.fCode}-${item.fName}</option>`;
+                })
+
+                opendCourse.innerHTML = options.join('');
+            }
+
+
+
+        };
+
+        function goOpen() {
+
+            const codeValue = opendCourse.options[opendCourse.selectedIndex].value;
+
+            // goToOpen.value = opendCourse.options[opendCourse.selectedIndex].value;
+            if (codeValue) {
+                const url = '/TeacherAdmin/LessonCreate?code=' + encodeURIComponent(codeValue);
+
+                window.location.href = url;
+            }
+        };
+        //     goToOpen.addEventListener('click', function () {
+        //     const nameValue = this.getAttribute('name');
+        //     const codeValue = this.getAttribute('value');
+
+        //    this.value=opendCourse.options[opendCourse.selectedIndex].value;
+        //     if (codeValue) {
+        //         const url = '/TeacherAdmin/LessonCreate?' + encodeURIComponent(nameValue) + '=' + encodeURIComponent(codeValue);
+
+        //         window.location.href = url;
+        //     }
+        // });
+    </script>
+
+    <!--SweetAlert Version Open-->
+    @* <script>
+    const open = document.querySelector("#open");
+
+    open.addEventListener('click', openCourseOption);
+
+    function openCourseOption() {
+    Swal.fire({
+    title: "開課類型",
+    text: `請先選擇開課類型`,
+    icon: "info",
+    html: `
+    <div >
+    <input type="radio" id="new" name="courseType" value="new">
+    <label for="new">新課新開</label>
+    </div>
+    <div >
+    <input type="radio" id="old" name="courseType" value="old">
+    <label for="old">舊課新開</label>
+    </div>`,
+
+
+    showCancelButton: false,
+    confirmButtonColor: "#30C2EC",
+    cancelButtonColor: "#d33",
+    confirmButtonText: "確定",
+    cancelButtonText: "取消"
+    }).then((result) => {
+    if (result.isConfirmed) {
+    const selectedValue = document.querySelector('input[name="courseType"]:checked').value;
+    if (selectedValue === "new") {
+    window.location.href = `${location.origin}/TeacherAdmin/LessonCreate`;
+    }
+    else if (selectedValue === "old") {
+
+    choiceCode();
+
+    }
+    }
+    });
+    }
+
+    const loadFiled = async () => {
+    const url = `@Url.Content("~/TeacherAdmin/TeacherOpenedFiled")`;
+    const response = await fetch(url);
+    const data = await response.json();
+    const options = data.map((item) => {
+    return `<option value=${item.fFieldId}>${item.fFieldName}</option>`;
+    })
+    openfiled.innerHTML += options.join('');
+
+    };
+
+    const loadsubject = async () => {
+
+    const selectedFiledId = openfiled.options[openfiled.selectedIndex].value;
+    const url = `@Url.Content("~/TeacherAdmin/TeacherOpenedSubject")?filedId=${selectedFiledId}`;
+    const response = await fetch(url);
+    const data = await response.json();
+    const options = data.map((item) => {
+    return `<option value=${item.fSubjectId}>${item.fSubjectName}</option>`;
+    })
+    opensubject.innerHTML = options.join('');
+
+    };
+
+    function choiceCode() {
+    swal.fire({
+    title: "選擇領域科目",
+    icon: "info",
+    html:
+    `<select class="form-select" id="openfiled" aria-label="Default select example"><option> 請選擇 </option></select >
+    <select class="form-select" id="opensubject" aria-label="Default select example"><option> 請選擇 </option></select>`,
+    showCancelButton: true,
+    confirmButtonText: "確定",
+    cancelButtonText: "取消",
+    didOpen: () => {
+    // 在對話框打開時填充 select 元素的選項
+    loadFiled();
+    const openfiled = document.getElementById('openfiled');
+    console.log(openfiled);
+    openfiled.addEventListener('change', loadsubject);
+    },
+    preConfirm: () => {
+    return {
+    openfiled: document.getElementById('openfiled').value,
+    opensubject: document.getElementById('opensubject').value
+    };
+    }
+    }).then((result) => {
+    if (result.isConfirmed) {
+    const { openfiled, opensubject } = result.value;
+    console.log({ openfiled, opensubject });
+    // Do something with the selected subjects
+    window.location.href = `${location.origin}/TeacherAdmin/LessonEdit`;
+    }
+    });
+    }
+
+    </script> *@
+    <!--取消開課-->
+    <script>
+        const calloff = document.getElementById('calloff');
+        // console.log(calloff);
+        // const formData = new FormData(document.querySelector('#EditLesson'));
+
+        function calloffCourse(lessonid) {
+            Swal.fire({
+                title: "取消開課",
+                text: `請填寫取消開課原因`,
+                icon: "info",
+                input: "text",
+                inputLabel: "填寫取消開課原因",
+                showCancelButton: true,
+                confirmButtonColor: "#30C2EC",
+                cancelButtonColor: "#d33",
+                confirmButtonText: "確定",
+                cancelButtonText: "取消"
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    // console.log(formData);
+                    // 使用fetch API發送POST請求
+                    const url = `${location.origin}/TeacherAdmin/LessonCancel/${lessonid}`
+
+                    fetch(url, {
+                        method: "POST",
+                        headers: {
+                            "Content-Type": "application/json",
+                        },
+                        mode: 'cors',
+                        credentials: 'same-origin',
+                        body: JSON.stringify({ reason: result.value }),
+                    }).then((response) => {
+                        // 处理响应
+                        if (response.ok) {
+                            location.reload();
+                            sweetMsg("課程已成功取消", "success");
+                    
+                        } else {
+                            sweetMsg("無法取消課程", "error");
+                        }
+                    }).catch((error) => {
+                        // 处理错误
+                        sweetMsg("無法取消課程", "error");
+                    });
+                }
+            });
+        }
+        function sweetMsg(msg, icon) {
+            Swal.fire({
+                position: "center",
+                icon: icon,
+                title: msg,
+                showConfirmButton: false,
+                timer: 1500
+            });
+        };
+    </script>
+
+    <script>
+        //狀態搜尋
+        $("#courseStatus").change(() => { ordervalidstatus() });
+        function ordervalidstatus() {
+            var searchText = ''; // 初始化搜索文本为空字符串
+
+            // 根据选定的值设置搜索文本
+            switch ($("#courseStatus").val()) {
+                case "1":
+                    searchText = "課程取消";
+                    break;
+                case "2":
+                    searchText = "未開放";
+                    break;
+                case "3":
+                    searchText = "開放報名";
+                    break;
+                case "4":
+                    searchText = "報名截止";
+                    break;
+                case "5":
+                    searchText = "課程結束";
+                    break;
+                default:
+                    // 如果未选择任何选项，则搜索全部内容
+                    searchText = '';
+                    break;
+            }
+            // 执行搜索并重新绘制 DataTable
+            $('#lessonListTable').DataTable().column(8).search(searchText).draw();
+
+        }
+
+        //清除
+        const clearall = document.getElementById('clearall');
+        clearall.addEventListener('click', function () {
+            // 清除下拉菜單的選取狀態
+            $("#courseStatus").val('0');
+            // 執行搜尋並重新繪製 DataTable，搜尋條件為空字串表示搜尋所有內容
+            ordervalidstatus();
+
+        })
+        const startDate = document.getElementById('startDate');
+        const endDate = document.getElementById('endDate');
+
+      startDate.addEventListener('change', function () {
+            //console.log(startDate.value)
+    if (startDate.value && endDate.value) {
+        // 如果開始日期和結束日期都有值，則執行查詢
+        performDateRangeSearch();
+    }
+});
+
+endDate.addEventListener('change', function () {
+     //console.log(startDate.value)
+    if (startDate.value && endDate.value) {
+            
+        // 如果開始日期和結束日期都有值，則執行查詢
+        performDateRangeSearch();
+    }
+});
+
+function performDateRangeSearch() {
+    // 確保開始日期小於結束日期
+    if (startDate.value > endDate.value) {
+        // 如果開始日期大於結束日期，顯示錯誤提示
+        $('#dateRangeError').text('查詢日期的區間起始日期不能大於結束日期').css('color', 'red');
+       alert('查詢日期的區間起始日期不能大於結束日期');
+    } else {
+
+                // const startDateParts = startDate.value.split('T')[0].split('-'); // 拆分為年、月、日
+                // const endDateParts = endDate.value.split('T')[0].split('-'); // 拆分為年、月、日
+
+                // // 格式化為YYYY/MM/DD
+                // const startDateFormatted = startDateParts[0] + '/' + startDateParts[1] + '/' + startDateParts[2];
+                // const endDateFormatted = endDateParts[0] + '/' + endDateParts[1] + '/' + endDateParts[2];
+                // const searchValue = '^' + startDateFormatted + '$|^' + endDateFormatted + '$';
+                // console.log(searchValue)
+                // // 在 DataTable 中執行日期範圍查詢
+                // $('#lessonListTable').DataTable().column(4).search(searchValue, true, false).draw();
+
+    }
+}
+
+    </script>
 }

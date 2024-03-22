@@ -22,7 +22,7 @@
             display: inline-block;
             margin-left: 5px; /* Adjust as needed */
         }
-     
+
     </style>
 }
 
@@ -30,7 +30,7 @@
 
 <div class="course-details-area pb-60">
     <!-- Course title -->
-    <div class="course-banner bg-img bg-cover pb-5 bg-light">
+    <div class="course-banner bg-img bg-cover pb-5 " style="background-color:#f8ffff;">
         <div class="container">
             <div class="row">
                 @* 封面照 *@
@@ -42,7 +42,7 @@
                         <nav aria-label="breadcrumb">
                             <ol class="breadcrumb">
                                 <!--老師-->
-                                <li class="breadcrumb-item active" aria-current="page"><a href="#"><img src="/images/dog.png" style="height: 40px;height: 40px;" class="border border-primary rounded-circle  "></a>@Html.DisplayFor(x => x.FTeacher.FTeacherName)</li>
+                                <li class="breadcrumb-item active" aria-current="page"><a asp-action="Info" asp-controller="Teacher" asp-route-id="@Model.FTeacherId"><img teacherid="@Model.FTeacherId" id="avatorimg" src="~/images/people.png" style="height: 40px;height: 40px;" class="border border-primary rounded-circle  "> @Html.DisplayFor(x => x.FTeacher.FTeacherName)</a></li>
                             </ol>
                         </nav>
                         <!--課名-->
@@ -51,13 +51,13 @@
                         </h3>
                         <div class="mb-3">
                             <!--領域-->
-                            <span class=" center  badge-sm rounded bg-primary text-bg-primary "> @Html.DisplayFor(x => x.FFiled) </span>&nbsp;&#47;
+                            <span class=" center  badge-sm rounded bg-primary text-bg-primary " style="padding:2px 10px;"> @Html.DisplayFor(x => x.FFiled)</span>&nbsp;&#47;
                             <!--科目-->
-                            <span class=" center  badge-sm rounded bg-primary text-bg-primary"> @Html.DisplayFor(x=>x.FSubject.FSubjectName)</span>&nbsp;
+                            <span class=" center  badge-sm rounded bg-primary text-bg-primary" style="padding:2px 10px;"> @Html.DisplayFor(x => x.FSubject.FSubjectName)</span>&nbsp;
                             <!--場地類型-->
-                            <span class=" center  badge-lg rounded" style="background-color: #FDC501; color:#654e00;">
-                                @(Model.FVenueType==true?"實體":"線上")
-                             
+                            <span class=" center  badge-lg rounded" style="background-color: #FDC501; color:#654e00; padding:2px 10px;">
+                                @(Model.FVenueType == true ? "實體" : "線上")
+
                             </span>
                         </div>
                         <ul class="list-group list-group-horizontal align-items-center">
@@ -65,7 +65,7 @@
 
                             <li class="d-inline-block icon-start font-sm">
                                 <!--報名 人數-->
-                                <i class="fa-regular fa-user"></i>已報名 @Html.DisplayFor(m=>m.FRegPeople)人
+                                <i class="fa-regular fa-user"></i>已報名 @Html.DisplayFor(m => m.FRegPeople)人
                             </li>
                             <li class="d-inline-block icon-start font-sm">
                                 <!--售價-->
@@ -73,7 +73,7 @@
                                 @* @Html.DisplayFor(m => m.FPrice) *@
                                 @{
                                     int price = Convert.ToInt32(Model.FPrice);
-                                    @price
+                                                    @price
                                 }
 
                             </li>
@@ -82,12 +82,12 @@
                         <div class="ratings size-md gap-2 text-end">
 
                             @* <a href="checkout.html" class="btn btn-lg btn-outline radius-sm w-30 br-10" title="點擊收藏" target="_self"><i class="fa-regular fa-bookmark fa-xl" style="color: #30c2ec;"></i> 收藏</a> *@
-                            <a href="checkout.html" class="btn btn-lg btn-outline radius-sm w-30 br-10" title="點擊收藏" target="_self">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-bookmark" viewBox="0 0 16 16">
-                                    <path d="M2 2a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v13.5a.5.5 0 0 1-.777.416L8 13.101l-5.223 2.815A.5.5 0 0 1 2 15.5zm2-1a1 1 0 0 0-1 1v12.566l4.723-2.482a.5.5 0 0 1 .554 0L13 14.566V2a1 1 0 0 0-1-1z" />
-                                </svg> 收藏
-                            </a>
-                            <a asp-controller="Order" asp-action="Details" asp-route-id="@Model.FLessonCourseId" class="btn btn-lg btn-outline radius-sm w-30 br-10" title="Buy Now" target="_self">購買課程</a>
+                            @* <a href="checkout.html" class="btn btn-lg btn-outline radius-sm w-30 br-10" title="點擊收藏" target="_self">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-bookmark" viewBox="0 0 16 16">
+                            <path d="M2 2a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v13.5a.5.5 0 0 1-.777.416L8 13.101l-5.223 2.815A.5.5 0 0 1 2 15.5zm2-1a1 1 0 0 0-1 1v12.566l4.723-2.482a.5.5 0 0 1 .554 0L13 14.566V2a1 1 0 0 0-1-1z" />
+                            </svg> 收藏
+                            </a> *@
+                            <a asp-controller="Order" asp-action="Detail" asp-route-id="@Model.FLessonCourseId" class="btn btn-lg btn-outline radius-sm w-30 br-10" title="Buy Now" target="_self">購買課程</a>
                         </div>
 
                     </div>
@@ -149,7 +149,7 @@
                                                             <span class="align-text">
                                                                 &nbsp;
                                                                 場地類型:
-                                                                @(Model.FVenueType == true ? "實體" : "線上")                                                                
+                                                                @(Model.FVenueType == true ? "實體" : "線上")
                                                                 &#124;
                                                                 場地名稱:
                                                                 @Html.DisplayFor(m => m.FVenueName)
@@ -157,10 +157,10 @@
                                                                 詳細地址:
                                                                 @{
                                                                     string alladdress = Model.FCity + Model.FDistrict + Model.FAddressDetail;
-                                                                    @alladdress
+                                                                                    @alladdress
                                                                 }
 
-                                                             
+
 
                                                             </span>
                                                         </li>
@@ -172,12 +172,14 @@
                                                         <!--開課日期-->
                                                         <li class=" icon-start font-sm"><i class="fa-solid fa-calendar-days color-primary"></i>&nbsp;開課日期: @Html.DisplayFor(m => m.FLessonDate)</li>
                                                         <!--開課時間-->
-                                                        <li class="icon-start font-sm"><i class="fa-solid fa-hourglass color-primary"></i> 
+                                                        <li class="icon-start font-sm">
+                                                            <i class="fa-solid fa-hourglass color-primary"></i>
                                                             開課時間:
-                                                             @Html.DisplayFor(m => m.FStartTime)~@Html.DisplayFor(m => m.FEndTime)</li> 
+                                                            @Html.DisplayFor(m => m.FStartTime)~@Html.DisplayFor(m => m.FEndTime)
+                                                        </li>
                                                         <!--報名截止日期-->
                                                         <li class="icon-start font-sm"><i class="fa-regular fa-calendar-check color-primary"></i></i> 報名截止日期:@Html.DisplayFor(m => m.FRegDeadline)</li>
-                                                     
+
 
                                                     </ul>
                                                 </div>
@@ -192,22 +194,26 @@
                                 <div class="content pb-20">
                                     <h5 class="title mb-20">課程敘述</h5>
                                     <div class="row gl-xl-5 mt-20">
-                                        <p style="border-radius:8px">@Html.DisplayFor(m=>m.FDescription)</p>
+                                        
+                                            @Html.Raw(Model.FEditorDes)
+                                                
+                                                                              
+                                        
                                     </div>
                                 </div>
                                 @* 課程要求 *@
                                 <div class="content pb-20">
                                     <h5 class="title mb-20">課程要求</h5>
                                     <div class="row gl-xl-5 mt-20">
-                                        <div class="col-lg-6">
+                                        <div class="col-lg-12">
                                             <ul class="info-list list-unstyled mb-20">
-                                                <li>@Html.DisplayFor(m=>m.FRequirement)</li>
+                                                <li>@Html.DisplayFor(m => m.FRequirement)</li>
                                             </ul>
                                         </div>
                                         @* <div class="col-lg-6">
-                                            <ul class="info-list list-unstyled mb-20">
-                                                <li>請自備筆、筆記本、水</li>
-                                            </ul>
+                                        <ul class="info-list list-unstyled mb-20">
+                                        <li>請自備筆、筆記本、水</li>
+                                        </ul>
                                         </div> *@
                                     </div>
 
@@ -254,14 +260,31 @@
 
 <script src="~/js/BenScript/LessonEvalList.js"></script>
 <script src="~/js/BenScript/LessonAvg.js"></script>
+</div>
+
+
+@section Scripts{
+    <!--帶入老師頭像-->
+    <script>
+        const img = document.querySelector("#avatorimg");
+        console.log(img);
+        const id = parseInt(img.getAttribute('teacherid'));
+        console.log(id);
+        (async() => {
+            const url = `@Url.Content("~/Teacher/TeacherPhoto")?id=${id}`;
+            const response = await fetch(url);
+            const data = await response.text();
+            if (data == '') {
+                console.log('Hello');
+                img.setAttribute('src', "/images/people.png");
+            } else {
+                img.setAttribute('src', data);
+            }
+           
+        })();
+    </script>
+}
 
 
 
 
-
-
-
-
-
-    <!-- Course-area end -->
-    </div>

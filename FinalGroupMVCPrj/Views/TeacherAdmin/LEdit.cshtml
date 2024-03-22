@@ -1,4 +1,4 @@
-﻿
+﻿@model LessonCreateViewModel
 @{
     ViewData["Title"] = "LEdit";
     Layout = "~/Views/Shared/_LayoutTeacherAdmin.cshtml";
@@ -10,221 +10,432 @@
             width: 148px;
             height: 92px;
             overflow: hidden;
+            position: relative; /* 添加相对定位，用于图像的绝对定位 */
         }
 
             .pic img {
-                transform: scale(1,1);
-                transition: all 1s ease-out;
+                width: 100%; /* 使图像填充其包含块 */
+                height: auto; /* 保持图像宽高比 */
+                position: absolute; /* 绝对定位，相对于 .pic 容器 */
+                top: 0; /* 图像距离容器顶部的位置 */
+                left: 0; /* 图像距离容器左侧的位置 */
+                transition: transform 1s ease-out; /* 将过渡效果应用于 transform 属性 */
             }
 
-                .pic img:hover {
-                    transform: scale(1.2,1.2);
-                    transform-origin: center center;
-                }
+            .pic:hover img {
+                transform: scale(1.2); /* 在悬停时进行缩放 */
+            }
     </style>
 }
-<h1 class="d-inline display-6 me-3">檢視課程</h1>
-<button type="submit" class="btn btn-outline-info text-center align-self-center me-3">修改</button>
-<span class="badge-lg rounded bg-warning text-dark text-center align-self-center ">狀態</span> 
-@* <button class="btn btn-outline-warning color-brown text-center align-self-center  disabled">狀態</button> *@
+<div class="row">
+    <div class="col-11 d-flex align-items-center">
+        <!-- Column for the h1 and span -->
+        <h1 class="d-inline display-6 me-3">檢視/修改課程</h1>
+        <span class="badge-lg rounded bg-warning text-dark text-center me-5" style="padding:2px 10px;">
+            @Html.DisplayFor(x => x.FStatus)@(!string.IsNullOrEmpty(Model.FStatusNote) ? "，原因: " + Model.FStatusNote : "")
+        </span>
+    </div>
+    <div class="col-1 d-flex justify-content-center align-items-center">
+        <!-- Column for the icon -->
+        <a asp-action="LessonList" asp-controller="TeacherAdmin"><i class="fa-solid fa-xmark fa-2xl"></i></a>
+    </div>
+</div>
+
+@* <a class="btn btn-secondary" asp-action="LessonList" asp-controller="TeacherAdmin"><i class="fa-solid fa-xmark"></i></a> *@
 <hr />
-<div class="container col-12">
-    <div class="row">
-        <div class="col-6">
-            <div class=" bg-info-light text-center rounded-2 mb-4">基本資料</div>
-            <div class="row mb-3">
-                <div class="col-sm-6">
-                    <select class="form-select " aria-label="Default select example">
-                        <option selected>領域</option>
-                        <option value="1">One</option>
-                        <option value="2">Two</option>
-                        <option value="3">Three</option>
-                    </select>
-                </div>
-                <div class="col-sm-6">
-                    <select class="form-select " aria-label="Default select example">
-                        <option selected>科目</option>
-                        <option value="1">One</option>
-                        <option value="2">Two</option>
-                        <option value="3">Three</option>
-                    </select>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-sm-6">
-                    <div class="form-floating mb-3">
-                        <input type="text" class="form-control " id="floatingInput" placeholder="">
-                        <label for="floatingInput">代號</label>
+<form asp-action="LessonEdit" id="EditLesson" asp-controller="TeacherAdmin" method="post" enctype="multipart/form-data">
+    <div class="container col-12">
+        <div class="row">
+            <div class="col-6">
+                <div class=" bg-info-light text-center rounded-2 mb-4">基本資料</div>
+
+                @* 隱藏屬性 *@
+                <input type="hidden" id="courseType" value="@ViewBag.courseType" />
+                <input type="hidden" id="getcourseType" name="getcourseType" value="@ViewBag.courseType">
+                <input type="text" class="form-control" asp-for="FCode" hidden>
+                <input type="text" class="form-control" asp-for="FStatus" hidden>
+                <input type="text" class="form-control" asp-for="FLessonCourseId" hidden>
+              
+
+
+                <div class="row mb-3">
+                    <div class="form-floating col-sm-6">
+                        <input type="text" class="form-control" placeholder="" asp-for="FFiled" readonly>
+                        <label for="FFiled">領域</label>
+                    </div>
+                    <div class="form-floating col-sm-6">
+                        <input type="text" class="form-control" placeholder="" asp-for="FSubject" readonly>
+                        <label for="FSubject">科目</label>
                     </div>
                 </div>
-                <div class="col-sm-6">
-                    <button type="submit" class="btn btn-primary align-self-center">自動帶入上筆資料</button>
+                <div class="form-floating mb-3">
+                    <input type="text" class="form-control" placeholder="" asp-for="FName" readonly>
+                    <label for="FName">課名</label>
+                </div>
+                <!--代號 readonly-->
+                @* <div class="row">
+                    <div class="col-sm-6">
+                        <div class="form-floating mb-3">
+                            <input type="text" class="form-control " id="floatingInput" placeholder="" asp-for="FCode" readonly>
+                            <label for="floatingInput">代號</label>
+                        </div>
+                    </div>
+
+                </div> *@
+
+
+
+                <div class="form-floating mb-3">
+                    <input type="text" class="form-control" placeholder="" asp-for="FRequirement">
+                    <label for="FRequirement">要求</label>
+                </div>
+                <!--編輯器-->
+                <label for="FEditorDes">課程介紹</label>
+                <div class="form-floating mb-3">
+                    @* <input hidden type="text" value="@Model.FEditorDes" id="loadDesc" /> *@
+                    <input hidden type="text" value="@Model.FDescription" id="loadDesc" />
+                    <textarea class="form-control" placeholder="Leave a comment here" style="height: 100px; resize: none;" asp-for="FEditorDes"></textarea>
+                    <span asp-validation-for="FEditorDes" class="text-danger"></span>
+
+                </div>
+
+
+                <div class="form-floating mb-3">
+                    <textarea class="form-control" placeholder="Leave a comment here" id="floatingTextarea" style="height: 100px; resize: none;" asp-for="FHomeworkDescription"></textarea>
+                    <label for="floatingTextarea">作業</label>
                 </div>
             </div>
 
+            <div class="col-6">
+                <div class="bg-warning-light text-center rounded-2 mb-4">其他資料</div>
+                <!--封面照 croppie裁切-->
+                <div class="container">
+                    <div class="row">
+                        <div class="col-sm-6">
+                            <div class="mb-3">
+                                <input class="form-control" type="file" asp-for="FPhoto" accept="image/*">
+                            </div>
+                            <div class="mb-4">
+                                <button type="submit" class="btn btn-primary">裁切圖片</button>
+                                <button type="submit" class="btn btn-warning">移除圖片</button>
+                            </div>
 
-            <div class="form-floating mb-3">
-                <input type="text" class="form-control" id="floatingInput" placeholder="">
-                <label for="floatingInput">課名</label>
-            </div>
-            <div class="form-floating mb-3">
-                <input type="text" class="form-control" id="floatingInput" placeholder="">
-                <label for="floatingInput">要求</label>
-            </div>
-            <!--編輯器-->
-            <div class="form-floating mb-3">
-                <textarea class="form-control" placeholder="Leave a comment here" id="floatingTextarea" style="height: 100px; resize: none;"></textarea>
-                <label for="floatingTextarea">課程介紹</label>
-            </div>
+                        </div>
+                        @* 預覽圖 *@
+                        <partial name="_LessonshowPicturePartial" />
+                    </div>
+                </div>
+                @* <img src="~/images/defaultimage.png" class="d-block rounded" alt="..." title="600x400" style="max-width: 600px; max-height: 400px;"> *@
+                @* <img src="~/images/defaultimage.png" class=" rounded " alt="..." title="600x400" style="width:60px;height:40px"> *@
 
 
-            <div class="form-floating mb-3">
-                <textarea class="form-control" placeholder="Leave a comment here" id="floatingTextarea" style="height: 100px; resize: none;"></textarea>
-                <label for="floatingTextarea">作業</label>
-            </div>
-        </div>
 
-        <div class="col-6">
-            <div class="bg-warning-light text-center rounded-2 mb-4">其他資料</div>
-            <!--封面照 croppie裁切-->
-            <div class="container">
+                <div class="input-group mb-3">
+                    <span class="input-group-text">$</span>
+                    <input type="text" class="form-control" aria-label="Amount (to the nearest dollar)" placeholder="售價" asp-for="FPrice">
+                    <span class="input-group-text">元</span>
+                    <span asp-validation-for="FPrice" class="text-danger"></span>
+                </div>
+                <!--人數-->
+
+
                 <div class="row">
                     <div class="col-sm-6">
-                        <div class="mb-3">
-                            <input class="form-control" type="file" id="formFile">
+                        <div class="form-floating mb-3">
+                            <input type="number" class="form-control" id="floatingInput1" placeholder="" asp-for="FMinPeople">
+                            <label for="floatingInput1">最低人數</label>
                         </div>
-                        <div class="mb-4">
-                            <button type="submit" class="btn btn-primary">裁切圖片</button>
-                            <button type="submit" class="btn btn-warning">移除圖片</button>
+                    </div>
+                    <div class="col-sm-6">
+                        <div class="form-floating mb-3">
+                            <input type="number" class="form-control" id="floatingInput2" placeholder="" asp-for="FMaxPeople">
+                            <label for="floatingInput2">名額</label>
                         </div>
-                      
-                    </div>
-                    <div class="col-sm-6 d-flex rounded border border-dark border-2 pic">
-                        <img src="~/images/defaultimage.png" class="rounded" alt="..." title="放大檢視" style="width:145px;height:90px">
                     </div>
                 </div>
-            </div>
-            @* <img src="~/images/defaultimage.png" class="d-block rounded" alt="..." title="600x400" style="max-width: 600px; max-height: 400px;"> *@
-            @* <img src="~/images/defaultimage.png" class=" rounded " alt="..." title="600x400" style="width:60px;height:40px"> *@
 
-           
+                <div class="row">
+                    <div class="col-sm-6">
+                        <label>開課日期</label>
+                        <input type="date" class="form-control" asp-for="FLessonDate">
+                    </div>
 
-            <div class="input-group mb-3">
-                <span class="input-group-text">$</span>
-                <input type="text" class="form-control" aria-label="Amount (to the nearest dollar)" placeholder="售價">
-                <span class="input-group-text">元</span>
-            </div>
-            <!--人數-->
-
-
-            <div class="row">
-                <div class="col-sm-6">
-                    <div class="form-floating mb-3">
-                        <input type="number" class="form-control" id="floatingInput1" placeholder="">
-                        <label for="floatingInput1">最低人數</label>
+                    <div class="col-sm-6">
+                        <label>報名截止日期</label>
+                        <input type="date" class="form-control" asp-for="FRegDeadline">
                     </div>
                 </div>
-                <div class="col-sm-6">
-                    <div class="form-floating mb-3">
-                        <input type="number" class="form-control" id="floatingInput2" placeholder="">
-                        <label for="floatingInput2">名額</label>
-                    </div>
-                </div>
-            </div>
 
-            <div class="row">
-                <div class="col-sm-6">
-                    <label>開課日期</label>
-                    <input type="date" class="form-control">
-                </div>
-
-                <div class="col-sm-6">
-                    <label>報名截止日期</label>
-                    <input type="date" class="form-control">
-                </div>
-            </div>
-
-            <div class="row mb-3">
-                <div class="col-sm-6">
-                    <label for="inputTime1" class="col-form-label">開始時間</label>
-                    <div class="input-group">
-                        <input type="time" class="form-control" id="inputTime1">
-                       
-                    </div>
-                </div>
-               
-                <div class="col-sm-6">
-                    <label for="inputTime2" class="col-form-label">結束時間</label>
-                    <div class="input-group">
-                        <input type="time" class="form-control" id="inputTime2">
-                    </div>
-                </div>
-            </div>
-
-            <div class="row mb-3">
-                <label class="mb-2">場地類型</label>
-                <div class="col-sm-6">
-                    <fieldset>
-                        <div class="form-check">
-                            <input class="form-check-input" type="radio" name="VenueType" id="onclass" value="true" checked>
-                            <label class="form-check-label" for="onclass">
-                                實體
-                            </label>
-                        </div>
-                    </fieldset>
-                </div>
-                <div class="col-sm-6">
-                    <fieldset>
-                        <div class="form-check">
-                            <input class="form-check-input" type="radio" name="VenueType" id="online" value="false">
-                            <label class="form-check-label" for="online">
-                                線上
-                            </label>
-                        </div>
-                    </fieldset>
-                </div>
-            </div>
-
-            <!--詳細場地資訊-->
-            <div id="onClassInfo">
-                <div class="input-group mb-3">
-                    <input type="text" class="form-control" aria-label="Amount (to the nearest dollar)" placeholder="場地名稱">
-                </div>
                 <div class="row mb-3">
-                    <div class="col-sm-4">
-                        <select class="form-select" aria-label="Default select example">
-                            <option selected>地區</option>
-                            <option value="1">One</option>
-                            <option value="2">Two</option>
-                            <option value="3">Three</option>
-                        </select>
+                    <div class="col-sm-6">
+                        <label for="inputTime1" class="col-form-label">開始時間</label>
+                        <div class="input-group">
+                            <input type="time" class="form-control" id="FStartTime" asp-for="FStartTime">
+
+                        </div>
                     </div>
-                    <div class="col-sm-8">
-                        <input type="text" class="form-control" aria-label="Amount (to the nearest dollar)" placeholder="詳細地址">
+
+                    <div class="col-sm-6">
+                        <label for="inputTime2" class="col-form-label">結束時間</label>
+                        <div class="input-group">
+                            <input type="time" class="form-control" id="FEndTime" asp-for="FEndTime">
+                        </div>
                     </div>
                 </div>
+
+                <div class="row mb-3">
+                    <label asp-for="FVenueType">場地類型</label>
+                    <div class="col-sm-6">
+                        <fieldset>
+                            <div class="form-check">
+                                <input class="form-check-input" type="radio" asp-for="FVenueType" id="onclass" value="true" checked>
+                                <label class="form-check-label" for="onclass">
+                                    實體
+                                </label>
+                            </div>
+                        </fieldset>
+                    </div>
+                    <div class="col-sm-6">
+                        <fieldset>
+                            <div class="form-check">
+                                <input class="form-check-input" type="radio" asp-for="FVenueType" id="online" value="false">
+                                <label class="form-check-label" for="online">
+                                    線上
+                                </label>
+                            </div>
+                        </fieldset>
+                    </div>
+                </div>
+
+                <!--詳細場地資訊-->
+                <div id="onClassInfo">
+                    <div class="input-group mb-3">
+                        <input type="text" class="form-control" aria-label="Amount (to the nearest dollar)" placeholder="場地名稱" asp-for="FVenueName">
+                        <span asp-validation-for="FVenueName" class="text-danger"></span>
+                    </div>
+                    <div class="row mb-3">
+                        <div class="col-sm-3">
+
+                            <select class="form-select" asp-items="ViewBag.CitySelectList" id="city"></select>
+
+                        </div>
+                        <div class="col-sm-3">
+
+                            <input class="form-control" type="text" id="districtid" value=@ViewBag.DistrictSelect hidden>
+                            <select class="form-select" aria-label="Default select example" asp-for="FDistrictId">
+                                <option selected>地區</option>
+                            </select>
+                        </div>
+                        <div class="col-sm-6">
+                            <input type="text" class="form-control" aria-label="Amount (to the nearest dollar)" placeholder="詳細地址" asp-for="FAddressDetail">
+                            <span asp-validation-for="FAddressDetail" class="text-danger"></span>
+                        </div>
+                    </div>
+                </div>
+                <div id="onlineInfo" hidden>
+                    <p class="text-primary"> &#10132;將於成功開課後自動產生課程會議室連結</p>
+                </div>
+
             </div>
-
         </div>
     </div>
-</div>
-<hr />
-<div class="row r">
-    <div class="col-1 ">
-    </div>
-    <!-- 進度條 -->
-    <div class="col-7 ">
-        <div class="progress">
-            <div class="progress-bar progress-bar-striped bg-info" role="progressbar" style="width: 25%" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100">25%</div>
+    <hr />
+    <div class="row r">
+     @*    <div class="col-1 ">
+            <p class="text-danger"></p>
         </div>
+        <div class="col-4 ">
+            <p class="text-danger">*點擊儲存變更後，將改變課程狀態為開放報名</p>
+        </div> *@
+
+
+        <!-- 按鈕 -->
+        <div class="col-12 d-flex justify-content-end">
+            <button type="button" class="btn btn-light me-2 text-light" id="demo1">demo1</button>
+           @*  <p class="text-danger">*點擊儲存變更後，將改變課程狀態為開放報名 &nbsp;</p> *@
+            @if (Model.FStatus == "未開放")
+            {
+                <button type="submit" class="btn btn-primary me-2" name="openstatus" value="TempSave" onclick="setCourseType('@ViewBag.courseType')">暫存</button>
+            }
+            else
+            {
+                <button type="submit" class="btn btn-primary me-2" name="openstatus" value="TempSave" onclick="setCourseType('@ViewBag.courseType')" hidden>暫存</button>
+            }
+            
+            <button type="submit" class="btn btn-primary me-2" name="openstatus" value="Update" onclick="setCourseType('@ViewBag.courseType')">開放報名</button>
+            <a class="btn btn-secondary" asp-action="LessonList" asp-controller="TeacherAdmin">取消</a>
+            <div class="col-1"></div>
+        </div>
+
+
+
     </div>
 
-    <!-- 按鈕 -->
-    <div class="col-4  d-flex text-align-end">
-        <button type="button" class="btn btn-primary me-2">確定</button>
-        <button type="button" class="btn btn-secondary">取消</button>
-    </div>
-</div>
+
+@*     <!--彈跳視窗-->
+    <!-- Modal -->
+    <div class="modal fade" id="cut" tabindex="-1" aria-labelledby="cutLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5" id="cutLabel">裁切圖片</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <figure style="border: thin #c0c0c0 solid;border-radius: 8px;  display: flex; flex-flow: column; padding: 8px;margin: auto; background-color: white;width:420px;height:280px;">
+                        <img class=" ls-is-cached lazyloaded" style="border-radius:6px;" src="@Url.Action("showPicture", "Lesson", new { id = Model.FLessonCourseId })" alt="course" id="cutPhoto" />
+                    </figure>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary">Save changes</button>
+                </div>
+
+            </div>
+        </div>
+    </div> *@
+
+</form>
 @section Scripts {
     <script src="~/js/tinascript/changevenuetype.js" asp-append-version="true"></script>
+    <script src="~/js/tinascript/previewimage.js" asp-append-version="true"></script>
+    <script src="https://cdn.tiny.cloud/1/forirr314cvct8ywt434kbf87vah6743olso1oyjfnhh3vhi/tinymce/6/tinymce.min.js" referrerpolicy="origin"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/croppie/2.6.5/croppie.min.js" referrerpolicy="origin"></script>
+    <!--Image-->
+    <script>
+
+        // $("#FPhoto").on("change", function () {
+        //     console.log("Hello");
+        //     previewImage(this, $('#imgPreview'));
+        // });
+
+    </script>
+    <!-- ====================TinyMCE==================== -->
+    <!-- 這一段放在自己要用的@section Script -->
+    <script>
+
+        // 检查是否需要初始化 TinyMCE
+        function initTinyMCE() {
+            // 检查是否存在 id 或 name 为 'fEditorDes' 的 textarea
+            const textarea = document.getElementById('FEditorDes') || document.querySelector('textarea[name="FEditorDes"]');
+
+            // 如果存在，则初始化 TinyMCE
+            console.log(textarea)
+            const status = document.getElementById('FStatus').value;
+
+            const isReadOnly = status !== "未開放" && status !== "開放報名";
+            console.log(status)
+            console.log(isReadOnly)
+            if (textarea) {
+
+                tinymce.init({
+                    selector: 'textarea#FEditorDes',
+                    plugins: 'anchor autolink charmap codesample emoticons image link lists media searchreplace table visualblocks wordcount linkchecker',
+                    toolbar: 'undo redo | blocks fontfamily fontsize | bold italic underline strikethrough | link image media table | align lineheight | numlist bullist indent outdent | emoticons charmap | removeformat',
+                    language: 'zh_TW',
+                    placeholder: "請在這裡輸入...",
+                    readonly: isReadOnly,
+                    setup: function (editor) {
+                        editor.on('init', function () {
+                            // Set content of the editor
+                            console.log(document.getElementById('loadDesc').value)
+                            editor.setContent(document.getElementById('loadDesc').value);
+                        });
+                    }
+                });
+                // 在此添加其他 TinyMCE 配置选项
+            }
+        }
+
+        // 在页面加载完成后调用函数
+        document.addEventListener('DOMContentLoaded', function () {
+            initTinyMCE();
+        });
+
+
+    </script>
+
+    <!--Croppie-->
+@*     <script>
+        const cutPhoto = $('#cutPhoto').croppie({
+            enableExif: true,
+            viewport: {
+                width: 300,
+                height: 200,
+                type: 'square'
+            },
+            boundary: {
+                width: 400,
+                height: 300
+            }
+        });
+
+        cutPhoto.croppie('bind', {
+            // url: 'demo/cat.jpg',
+            points: [77, 469, 280, 739]
+        });
+
+        cutPhoto.croppie('result', 'html').then(function (html) {
+            // html is div (overflow hidden)
+            // with img positioned inside.
+        }); *@
+   @*  </script> *@
+    <script>
+        const districtid = document.querySelector("#districtid");
+        const district = document.querySelector("#FDistrictId");
+        const id = districtid.value;
+
+        const city = document.querySelector("#city");
+        const cityid = parseInt(city.options[city.selectedIndex].value);
+        const setDistrict = async function setDistrict(cityid, districtid) {
+            const url = `@Url.Content("~/TeacherAdmin/allDistrict")?cityid=${cityid}`;
+            const response = await fetch(url);
+            const data = await response.json();
+
+            let options = data.map((item) => {
+                if (districtid === 0 || districtid == item.fDistrictId) {
+                    return `<option value="${item.fDistrictId}" ${districtid == item.fDistrictId ? 'selected' : ''}>${item.fDistrictName}</option>`;
+                } else {
+                    return `<option value="${item.fDistrictId}">${item.fDistrictName}</option>`;
+                }
+            });
+
+            district.innerHTML = options.join('');
+        };
+        // 在页面加载时根据 districtid 的值设置 district 的选项
+        document.addEventListener("DOMContentLoaded", function () {
+            const id = districtid.value;
+            setDistrict(parseInt(city.options[city.selectedIndex].value), id);
+        });
+
+        // 当 city 改变时动态更新 district 的选项
+        city.addEventListener('change', function () {
+            setDistrict(parseInt(city.options[city.selectedIndex].value), 0); // 传入0代表重新加载所有选项
+        });
+    </script>
+
+    <!--設置表單是否只能readonly-->
+    <script>
+        // 當頁面加載完成時執行
+        document.addEventListener("DOMContentLoaded", function () {
+            // 獲取 FStatus 的值
+            const fStatus = document.getElementById('FStatus').value;
+            console.log(fStatus)
+            const readOnlyValues = ["課程取消", "報名截止", "課程結束"];
+            // 根據 FStatus 的值設置表單的唯讀屬性
+            const form = document.getElementById("EditLesson");
+            const formElements = form.elements;
+            for (let i = 0; i < formElements.length; i++) {
+                // // 將表單元素設置為唯讀
+                // formElements[i].readOnly = (fStatus === "SomeValue");
+                const element = formElements[i];
+                // 如果 FStatus 的值在 readOnlyValues 中，將該元素設置為唯讀
+                if (readOnlyValues.includes(fStatus)) {
+                    element.readOnly = true;
+                    element.setAttribute('disabled', "");
+                }
+            }
+        });
+    </script>
+
 }

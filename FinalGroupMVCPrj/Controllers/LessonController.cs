@@ -227,17 +227,17 @@ namespace FinalGroupMVCPrj.Controllers
                 FEndTime = querystring.FEndTime,
                 FRegDeadline = querystring.FRegDeadline,
                 FDescription = querystring.FDescription,
+                //TinyMCE
                 FEditorDes = querystring.FEditorDes,
                 FRequirement = querystring.FRequirement,
                 FTeacherId = querystring.FTeacherId,
-
+               FPhoto = querystring.FPhoto,
+                
                 //// 評價部分
                 FLessonCourseId = querystring.FLessonCourseId,
             }).ToListAsync();
 
-           var dt = detail.FirstOrDefault();
-
-            return View("LDetails", dt);
+            return View("LDetails", detail[0]);
         }
 
         [HttpGet]
