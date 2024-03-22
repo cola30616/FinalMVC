@@ -12,7 +12,7 @@
                         <img class="title-shape lazyload" src="/images/placeholder.png" data-src="" alt="Shape">
                     </h1>
                     <p class="text text-center" data-aos="fade-up" data-aos-delay="100">
-                        歡迎到來學樂，選擇全台最優質多元學習預約平台。
+                        歡迎到來學樂，選擇全台最優質多元課程預約平台。
                     </p>
                     <div class="banner-filter-form mt-40" data-aos="fade-up" data-aos-delay="150">
                         <div class="form-wrapper border rounded-pill">
@@ -238,7 +238,7 @@
                                                 if (course.lessonCourse.FLessonDate != null)
                                                 {
                                                     var lessonDateStr = course.lessonCourse.FLessonDate.Value.ToString("yyyy/MM/dd");
-                                                    <span class="font-sm icon-start"><i class="fas fa-clock"></i>@lessonDateStr</span>
+                                                    <span class="font-sm icon-start"><i class="fa-solid fa-calendar-days color-primary"></i>@lessonDateStr</span>
                                                 }                                            
                                              }
                                            
@@ -304,7 +304,7 @@
                     {                      
                         <div class="tab-pane slide @(i == 1 ? "show active" : "")" id="tab@(i)">
                             <div class="row">
-                                @foreach (var course in Model.Take(50))
+                                @foreach (var course in Model.Take(15))
                                 {
                                     @if (course.fieldNumber == i)
                                     {
@@ -417,10 +417,10 @@
             <div class="col-12">
                 <div class="row">
                     <!-- 這邊是講師介紹 用Razor-->
-                    @foreach (var course in Model.Skip(1).Take(3))
+                    @foreach (var course in Model.Skip(10).Take(3))
                     {
                         <div class="col-lg-4 col-sm-6" data-aos="fade-up">
-                            <div class="card radius-md mb-30">
+                            <div class="card radius-md mb-30 shadow">
                                 <div class="card-img">
                                     <a asp-controller="Teacher" asp-action="Info" asp-route-id="@course.lessonCourse.FTeacherId" asp-route-id="@course.teacher.FTeacherId" title="Image" target="_self" class="lazy-container ratio ratio-1-2">
                                         @if (course.teacher.FTeacherProfilePic != null) // 空值檢查
@@ -466,7 +466,7 @@
 <!-- Mentor-area end -->
 
 <!-- Newsletter-area start -->
-<section class="newsletter-area newsletter-area_v1">
+<section class="newsletter-area newsletter-area_v1 mt-50">
     <div class="container">
         <div class="newsletter-inner ptb-60 px-3 px-lg-5 radius-lg bg-img bg-cover" data-bg-image="/images/Clement/NewLetter.jpg" data-aos="fade-up">
             <div class="row">

@@ -143,7 +143,7 @@ const createCourseHtml = data => {
             </div>
             <div class="course-bottom-info px-3 py-2">                
                 <span class="font-sm"><i class="fas fa-usd-circle"></i>NT ${item.lessonCourse.fPrice}</span>  
-               <span class="font-sm icon-start"><i class="fas fa-clock"></i>${formattedDate}</span>
+               <span class="font-sm icon-start"><i class="fa-solid fa-calendar-days color-primary"></i>${formattedDate}</span>
             </div>
             
         </div>
