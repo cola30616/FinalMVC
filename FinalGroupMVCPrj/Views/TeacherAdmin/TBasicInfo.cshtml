@@ -19,6 +19,18 @@
         .btn.btn-primary.btn-sm:hover {
             background-color: #2828FF;
         }
+
+    #profile-overview > p {
+        font-size:20px;
+    }
+
+    #profile-overview > h5 {
+        font-size: 25px;
+    }
+
+    .nav-item {
+        font-size: 20px;
+    }
 </style>
 
 <div class="pagetitle">
@@ -46,11 +58,11 @@
                         <h3> </h3>
                         <div class="pt-2">
                             <!-- 上傳修改頭像input -->
-                                @* <input type="hidden" name="id" value="@item.TeacherId" /> *@
-                                <span class="file-input-container">
+                            @* <input type="hidden" name="id" value="@item.TeacherId" /> *@
+                            <span class="file-input-container">
                                 <input type="file" id="InputUpladPicprofile" class="hidden" accept="image/gif, image/jpeg, image/png" multiple />
                                 <label for="InputUpladPicprofile" class="btn btn-primary btn-sm" title="Upload new profile image"><i class="bi bi-upload"></i></label>
-                                </span>
+                            </span>
                             <!-- 清除頭像btn -->
                             <button id="buttonDeletePicprofile" class="btn btn-danger btn-sm" title="Remove my profile image"><i class="bi bi-trash"></i></button>
                         </div>
@@ -107,11 +119,11 @@
                                 <h5 class="card-title">@Html.DisplayNameFor(t => t.ContactInfo)</h5>
                                 <p class="small fst-italic">@item.ContactInfo</p>
                             </div>
-                             <!-- ========== 編輯表單 ========== -->
+                            <!-- ========== 編輯表單 ========== -->
                             <div class="tab-pane fade profile-edit pt-3" id="profile-edit">
-                            <partial name="T_EditFormBasicInfo" model="@item.TeacherModel"></partial>
+                                <partial name="T_EditFormBasicInfo" model="@item.TeacherModel"></partial>
                             </div>
-                        }                    
+                        }
 
                     </div><!-- End Bordered Tabs -->
 
@@ -209,7 +221,7 @@
 
 
                     })
-              
+
 
             });
         });

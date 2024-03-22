@@ -191,10 +191,7 @@
             selSubject.innerHTML = optSubjects.join("");
         }
 
-
-
         selField.addEventListener('change', loadSubjects);
-
     </script>
     <script>
         let teacherSubjectArr = new Array()
@@ -202,6 +199,10 @@
         let teacherid = 0;
         async function editSubject(teacherId) {
             teacherid = teacherId;
+            const response2 = await fetch(`@Url.Content("~/AdminTeacher/trNameEmail")?TeacherId=${teacherId}`)
+            const data = await response2.json();
+            console.log("名子 : ",data[0])
+            document.querySelector('#labelTop').innerHTML = data[0].teacherName + ` : ` + data[0].email;
             document.querySelector('#ulSubjectResult').innerHTML = '';
             //console.log(teacherId)
             const response = await fetch(`@Url.Content("~/AdminTeacher/EditPartialViewInfo")?TeacherId=${teacherId}`)
@@ -222,6 +223,7 @@
             // Object.entries(datas).forEach(([key, value]) => {
             //     console.log(key, value);
             // });
+            teacherSubjectArr = [];
             datas.forEach(function (item) {
                 // 遍历对象中的每个键值对
 
@@ -317,7 +319,34 @@
             fetch('@Url.Content("~/AdminTeacher/editTeacherSubject")', {
                 method: 'POST',
                 body: formData
+            }).then(response => {
+                if (response.ok) {
+                    Swal.fire({
+                        position: "center",
+                        icon: "success",
+                        title: "儲存成功",
+                        showConfirmButton: false,
+                        timer: 1500
+                    }).then(() => {
+                        //https://ithelp.ithome.com.tw/articles/10190062
+                        //Javascript 頁面跳轉、刷新、重定向的幾種方式
+                        //window.location.href = '/AdminTeacher/CheckList';
+                        $('#staticBackdrop').find('form').trigger('reset');
+                        $('#staticBackdrop').modal('hide');
+                        dataTable.ajax.reload();
+                        $('.modal-backdrop').remove();
+                        // $('#staticBackdrop').on('hidden.bs.modal', function (e) {
+                        //     // 关闭模态框时移除背景
+                        //     $('.modal-backdrop').remove();
+                        // });
+                    });
+                } else {
+                    throw new Error('Network response was not ok.');
+                }
             })
+            if (response.ok) {
+
+            };
             // (async () => {
             //     const response = await fetch(`@Url.Content("~/AdminTeacher/editTeacherSubject")?result=${teacherSubjectArr},teacherid=${teacherid}`);
             // })();

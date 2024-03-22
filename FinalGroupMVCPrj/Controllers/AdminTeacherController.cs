@@ -70,11 +70,11 @@ namespace FinalGroupMVCPrj.Controllers
 
                     _context.TTeacherSubjects.Add(newTeacherSubject);
 
-                    await _context.SaveChangesAsync();
                 }
+                await _context.SaveChangesAsync();
             }
 
-            return RedirectToAction("CheckList");
+            return Ok();
         }
         //動作簡述 : 作為dataTable套件的tbody
         public IActionResult CheckListDataJson()
@@ -152,5 +152,19 @@ namespace FinalGroupMVCPrj.Controllers
                 .Select(id => id.FSubjectId.ToString());
             return Json(subjectid);
         }
+        //根據老師id讀取老師名稱和電子郵件
+        public IActionResult trNameEmail(int TeacherId)
+        {
+            var a = _context.TTeachers
+                .Include(a => a.FMember)
+                .Where(a => a.FTeacherId == TeacherId)
+            .Select(a => new
+            {
+                Email = a.FMember.FEmail,
+                TeacherName = a.FTeacherName
+            });
+            return Json(a);
+        }
+
     }
 }
