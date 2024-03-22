@@ -2,8 +2,6 @@
 using FinalGroupMVCPrj.Models.DTO;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using System.Collections.Generic;
-using System.Runtime.Versioning;
 
 namespace FinalGroupMVCPrj.Controllers
 {
@@ -15,8 +13,8 @@ namespace FinalGroupMVCPrj.Controllers
             _context = context;
         }
         PortfolioListDTO portfolioRead = new PortfolioListDTO();
-        //List<PortfolioListDTO> portfolioRead = new List<PortfolioListDTO>();
-        //回傳作品清單，https://localhost:7031/Portfolio/List
+
+        //回傳作品清單，https://localhost:7031/Portfolio/AllWorks
         [HttpGet]
         public IActionResult AllWorks()
         {
@@ -35,27 +33,17 @@ namespace FinalGroupMVCPrj.Controllers
                     FFieldName = c.FOrderDetail.FLessonCourse.FSubject.FField.FFieldName,
                     FLessonCourseDescrpition = c.FOrderDetail.FLessonCourse.FDescription,
                     FCourseworkId = c.FCourseworkId,
+                    FFieldId = c.FOrderDetail.FLessonCourse.FSubject.FField.FFieldId,
                     FFileLink = c.TCourseworkFiles.FirstOrDefault(f => f.FCourseworkId == c.FCourseworkId).FFileLink
-                }));
+                })).Distinct();
             return View(portfolioList);
         }
+
+
         [HttpGet]
         public IActionResult List(int Id)
         {
-            //int memberId = 9;
             PortfolioListDTO portfolioListDTO = new PortfolioListDTO();
-
-            //IEnumerable<PortfolioListDTO> portfolioList =
-            //    new List<PortfolioListDTO>(_context.TCourseworks
-            //    .Where(m => m.FCourseworkId == id)
-            //    .Select(c => new PortfolioListDTO
-            //    {
-            //        FName = c.FName,
-            //        FDescrpition = c.FDescrpition,
-            //        //FShowName = _context.TMembers.
-            //    }));
-
-
             IEnumerable<PortfolioListDTO> portfolioList = new List<PortfolioListDTO>(_context.TCourseworks.Include(c => c.FOrderDetail).ThenInclude(o => o.FOrder).ThenInclude(o => o.FMember).Include(c => c.FOrderDetail).ThenInclude(o => o.FLessonCourse).ThenInclude(c => c.FSubject).ThenInclude(t => t.FField).ThenInclude(a => a.TMemberWishFields).Include(c => c.TCourseworkFiles)
 
                 .Where(c => c.FCourseworkId == Id)
@@ -74,14 +62,14 @@ namespace FinalGroupMVCPrj.Controllers
                     FLessonCourseDescrpition = c.FOrderDetail.FLessonCourse.FDescription,
                     FFileLink = c.TCourseworkFiles.FirstOrDefault(f => f.FCourseworkId == c.FCourseworkId).FFileLink
                 }));
+
             return View(portfolioList);
-            //return Ok(portfolioList);
         }
         [HttpPost]
-        public IActionResult data() 
+        public IActionResult data()
         {
             IEnumerable<PortfolioListDTO> portfolioList = new List<PortfolioListDTO>(_context.TCourseworks.Include(c => c.FOrderDetail).ThenInclude(o => o.FOrder).ThenInclude(o => o.FMember).Include(c => c.FOrderDetail).ThenInclude(o => o.FLessonCourse).ThenInclude(c => c.FSubject).ThenInclude(t => t.FField).ThenInclude(a => a.TMemberWishFields)
-                
+
                 .Select(c => new PortfolioListDTO
                 {
                     FMemberId = c.FMemberId,
@@ -95,32 +83,9 @@ namespace FinalGroupMVCPrj.Controllers
                     FFieldName = c.FOrderDetail.FLessonCourse.FSubject.FField.FFieldName,
                     FLessonCourseDescrpition = c.FOrderDetail.FLessonCourse.FDescription,
                 })).ToList();
-            return Json(portfolioList); 
+            return Json(portfolioList);
         }
-        [HttpPost]
-        public IActionResult Create(PortfolioListDTO portfolioList)
-        {
-            if (ModelState.IsValid)
-            {
-                // 将数据转换成实体对象
-                var newPortfolio = new TCoursework                  
-                    {
-                    FCommentPerson = portfolioList.FCommentPerson,
-                    FComment = portfolioList.FComment,
-                    };
-            
 
-                // 添加到数据库并保存更改
-                _context.TCourseworks.Add(newPortfolio);
-                _context.SaveChanges();
-
-                // 返回新建的数据
-                return Json(newPortfolio);
-            }
-
-            // 如果模型验证失败，则返回错误信息
-            return BadRequest(ModelState);
-        }
         //public IActionResult Create(string itemName, string itemDescription)
         //{
         //    // 在这里执行新增逻辑，比如将数据保存到数据库
@@ -137,35 +102,5 @@ namespace FinalGroupMVCPrj.Controllers
         //    ViewBag.name = member;
         //    return View("List", member);
         //}
-
-        //    [HttpGet]
-        //public IActionResult List(int id)
-        //{
-
-        //    var result = portfolioRead.
-        //        Where(m => m.FMemberId==id);
-
-        //    if(result != null)
-        //    {
-        //        //var result2 = _context.TCourseworks
-        //        //    .Select(c => new List<PortfolioListDTO>
-        //        //    {
-        //        //         FName = c.FName,
-        //        //        FDescrpition = c.FDescrpition,
-        //        //    });
-        //            IEnumerable<PortfolioListDTO> portfolioList =
-        //            new List<PortfolioListDTO>(_context.TCourseworks
-        //                .Select(c => new PortfolioListDTO
-        //                    {
-        //                        FName = c.FName,
-        //                        FDescrpition = c.FDescrpition,
-        //                    }));
-        //        }
-        //    return View(result);
-        //}
-        //public RedirectToRouteResult List(int id)
-        //{
-        //    portfolioRead.FMemberId = id;
-        //    return  RedirectToAction("portfolioList", new {id=id});
     }
 }

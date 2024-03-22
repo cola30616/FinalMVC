@@ -82,8 +82,11 @@
                                             }
                                         </div>
                                     </li>
-                                    <li class="comment">
-                                        <div class="comment-body">
+                                    <li id="li1" class="comment">
+                                            <div class="comment-body">
+                                       
+                                            </div>
+                                        @* <div class="comment-body">
                                             <div class="comment-author">
                                                 <div class="lazy-container ratio ratio-1-1 rounded-circle">
                                                     <img class="lazyload" src="/images/placeholder.png" data-src="/images/avatar-2.jpg" alt="image">
@@ -96,8 +99,8 @@
                                                 </p>
                                                 <a href="blog-single.html" class="font-sm color-primary" target="_self" title="Reply">Reply</a>
                                             </div>
-                                        </div>
-                                        <ol class="children">
+                                        </div> *@
+@*                                         <ol class="children">
                                             <li class="comment">
                                                 <div class="comment-body">
                                                     <div class="comment-author">
@@ -105,7 +108,7 @@
                                                             <img class="lazyload" src="/images/placeholder.png" data-src="/images/avatar-3.jpg" alt="image">
                                                         </div>
                                                     </div>
-                                                    <div class="comment-content">
+                                                        <div class="comment-content" id="comment">
                                                         <h6 class="name">Harry jain</h6>
                                                         <p>
                                                             完全同意！這款法式馬卡龍看起來就像是藝術品一般，色彩搭配得恰到好處，每一口都是味蕾的享受。這位學生的手藝真是了不起，期待他未來更多的烹飪驚喜！
@@ -114,7 +117,8 @@
                                                     </div>
                                                 </div>
                                             </li>
-                                        </ol>
+
+                                        </ol> *@
                                     </li>
                                 </ol>
                             </div>
@@ -129,21 +133,16 @@
                                     <div class="row">
                                         <div class="col-sm-6">
                                             <div class="form-group mb-20">
-                                                <input type="text" class="form-control" name="name" id="name" placeholder="Name*" required>
-                                            </div>
-                                        </div>
-                                        <div class="col-sm-6">
-                                            <div class="form-group mb-20">
-                                                <input type="email" class="form-control" name="email" id="email" placeholder="Email*">
+                                                <input type="text" class="form-control" name="name" id="inputName" placeholder="Name*" required>
                                             </div>
                                         </div>
                                         <div class="col-12">
                                             <div class="form-group mb-30">
-                                                <textarea name="message" class="form-control" placeholder="Comment" id="comment" required rows="6" ></textarea>
+                                                <textarea name="message" class="form-control" placeholder="Comment" id="textareaComment" required rows="6" ></textarea>
                                             </div>
                                         </div>
                                     </div>
-                                    <button class="btn btn-lg btn-primary rounded-pill" type="submit" aria-label="Post Comment" asp-controller="Portfolio" asp-action="Create">Post Comment</button>
+                                    <button id="buttonPost" class="btn btn-lg btn-primary rounded-pill" type="submit" aria-label="Post Comment" asp-controller="Portfolio" asp-action="Create">Post Comment</button>
                                 </form>
                             </div>
                         </div>
@@ -300,6 +299,32 @@
     </div>
 </div>
 </body>
+<script>
+    const btnPost =  document.querySelector('#buttonPost');
+    const iptName = document.querySelector('#inputName');
+    const txtComment = document.querySelector('#textareaComment');
+    const li1 = document.querySelector('#li1');
+    btnPost.addEventListener('click', ()=>{ 
+        //console.log("Name : ", iptName.value, "Comment : ", txtComment.value)
+        li1.innerHTML +=
+            `
+              <div class="comment-body">
+            <div class="comment-author">
+         <div class="lazy-container ratio ratio-1-1 rounded-circle">
+                 <img class="lazyload" src=""  alt="image">
+         </div>
+     </div>
+     <div class="comment-content">
+             <h6 class="name">${iptName.value}</h6>
+         <p>
+             ${txtComment.value}
+         </p>
+         <a href="blog-single.html" class="font-sm color-primary" target="_self" title="Reply">Reply</a>
+     </div> </div>
+
+        `
+    })
+</script>
 <script>
     // 获取引用块元素
     var blockquote = document.getElementById('tab');
