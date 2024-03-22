@@ -29,16 +29,17 @@
                         <div class="d-flex align-items-center gap-2 ">
                             <label for="inputDate" class="">推播日期</label>
                             <div class="">
-                                <input type="date" class="form-control">
+                                <input id="startDate" type="date" class="form-control">
                             </div>
                             <span>~</span>
                             <div class="">
-                                <input type="date" class="form-control">
+                                <input id="endDate" type="date" class="form-control">
                             </div>
                         </div>
-                        <div class="" style="width:12%">
-                            <select class="form-select" aria-label="Default select example">
-                                <option selected>推播類型</option>
+                            <label class="">推播類型</label>
+                        <div class="d-flex align-items-center" style="width:12%">
+                            <select id="selectPushType" class="form-select" aria-label="Default select example">
+                                <option value="全部" selected>全部</option>
                                 <option value="最新消息">最新消息</option>
                                 <option value="會員優惠">會員優惠</option>
                                 <option value="課程公告">課程公告</option>
@@ -51,7 +52,7 @@
 
                     <div>
                         <!-- 表格-->
-                        <table id="pushMsgListTable" class="datatable">
+                        <table id="pushMsgListTable" class="datatable row-border stripe hover">
                             <thead>
                                 <tr>
                                     <th>@Html.DisplayNameFor(pm => pm.FPushMessageId)</th>
@@ -145,7 +146,7 @@
         <!--DataTable的部分-->
         <script src="
 https://cdn.jsdelivr.net/npm/moment@2.30.1/moment.min.js
-                                                ">//格式化日期的插件</script>
+                                                            ">//格式化日期的插件</script>
 
         <style>
             #pushMsgListTable th {
@@ -155,11 +156,130 @@ https://cdn.jsdelivr.net/npm/moment@2.30.1/moment.min.js
             #pushMsgListTable td {
                 text-align: center;
             }
+
+            /*上傳圖片部分*/
+
+            #previewImage {
+                width: 240px;
+                height: 240px;
+                transition: filter 0.3s;
+            }
+
+                #previewImage:hover {
+                    filter: brightness(70%);
+                }
+
+            #uploadText {
+                display: none;
+                position: absolute;
+                top: 50%;
+                left: 50%;
+                transform: translate(-50%, -50%);
+                background-color: rgba(0, 0, 0, 0.5);
+                color: white;
+                padding: 10px 20px;
+                border-radius: 5px;
+                cursor: pointer;
+                transition: opacity 0.3s;
+            }
+
+            #previewImage:hover + #uploadText {
+                display: block;
+            }
         </style>
         <script>
             let dataTable; // 這段要記得加，先宣告datatable的變數
             $(document).ready(function () {
                 loadDataTable();
+
+                //新建推播
+                $('#createPM-btn').on('click', function () {
+                    let formData = new FormData();
+
+                    const pushType = $('#FPushType').val();
+                    formData.append('FPushType', pushType);
+
+                    const pushContent = $('#FPushContent').val().trim();
+                    formData.append('FPushContent', pushContent);
+
+                    const pushImage = $('#FPushImagePath')[0].files[0];
+                    formData.append('FPushImagePath', pushImage);
+
+                    if (pushContent === '') {
+                        $('#FPushContentError').text('必須填寫推播內容');
+                        return;
+                    } else {
+                        $('#FPushContentError').text('');
+                    }
+                    if (pushImage === '') {
+                        $('#FPushImageError').text('必須上傳圖片');
+                        return;
+                    } else {
+                        $('#FPushImageError').text('');
+                    }
+
+                    $('#FPushImagePath').on('change', function () {
+                        var file = this.files[0];
+                        if (file) {
+                            var reader = new FileReader();
+                            reader.onload = function (e) {
+                                $('#previewImage').attr('src', e.target.result);
+                            }
+                            reader.readAsDataURL(file);
+                        }
+                    });
+
+                    $.ajax({
+                        url: '/Message/CreatePushMsg',
+                        type: 'POST',
+                        data: formData,
+                        processData: false,
+                        contentType: false,
+                        success: function (response) {
+                            console.log(response);
+
+                            Swal.fire({
+                                icon: 'success',
+                                title: '推播訊息新增成功',
+                                timer: 1500,
+                                confirmButtonColor: '#3085d6',
+                                confirmButtonText: '確認'
+                            }).then((result) => {
+                                if (result.isConfirmed) {
+                                    $('#createPMsgModal').modal('hide');
+                                    dataTable.ajax.reload(); 
+                                }
+                            });
+                        },
+                        error: function (xhr, status, error) {
+                            console.error(xhr.responseText);
+
+                            if (xhr.responseText.includes('FPushContent')) {
+                                Swal.fire({
+                                    icon: 'error',
+                                    title: '必須填寫推播內容',
+                                    timer: 1500,
+                                    confirmButtonText: '確認'
+                                });
+                            } else if (xhr.responseText.includes('FPushImagePath')) {
+                                Swal.fire({
+                                    icon: 'error',
+                                    title: '必須上傳圖片',
+                                    timer: 1500,
+                                    confirmButtonText: '確認'
+                                });
+                            } else {
+                                Swal.fire({
+                                    icon: 'error',
+                                    title: '出现错误',
+                                    text: '內容格式錯誤',
+                                    timer: 1500,
+                                    confirmButtonText: '確認'
+                                });
+                            }
+                        }
+                    });
+                });
             });
 
             function loadDataTable() {
@@ -200,8 +320,8 @@ https://cdn.jsdelivr.net/npm/moment@2.30.1/moment.min.js
                             data: 'fPushMessageId',
                             "render": function (data) {
                                 return `<div class="" role="">
-                                                                                                                                                <button  fPushMessageId=${data}" class="btn btn-primary mx-2" data-bs-toggle="modal" data-bs-target="#editPMsgModal"><i class="fa-solid fa-gear"></i></button>
-                                                                                                                                    </div>`
+                                                                                                                                                                                    <button  fPushMessageId=${data}" class="btn btn-primary mx-2" data-bs-toggle="modal" data-bs-target="#editPMsgModal"><i class="fa-solid fa-gear"></i></button>
+                                                                                                                                                                        </div>`
                             },
                             "width": "5%"
                         },
@@ -210,8 +330,8 @@ https://cdn.jsdelivr.net/npm/moment@2.30.1/moment.min.js
                             data: 'fPushMessageId',
                             "render": function (data) {
                                 return `<div class="" role="">
-                                                                                                                        <button  fPushMessageId=${data}" onclick="loadPushModalData(${data})" class="btn btn-primary mx-2" data-bs-toggle="modal" data-bs-target="#pushMsgModal"><i class="fa-solid fa-bell"></i></button>
-                                                                                                                  </div>`
+                                                                                                                                                            <button  fPushMessageId=${data}" onclick="loadPushModalData(${data})" class="btn btn-primary mx-2" data-bs-toggle="modal" data-bs-target="#pushMsgModal"><i class="fa-solid fa-bell"></i></button>
+                                                                                                                                                      </div>`
                             },
                             "width": "5%"
                         },
@@ -228,8 +348,19 @@ https://cdn.jsdelivr.net/npm/moment@2.30.1/moment.min.js
                     language: {
                         url: "https://cdn.datatables.net/plug-ins/1.13.7/i18n/zh-HANT.json"
                     },
-                    order: [[0, 'dsc']]
+                    order: [[0, 'dsc']],
                 });
+
+                $('#selectPushType').on('change', function () {
+                    const selectedType = $(this).val();
+
+                    if (selectedType === '全部') {
+                        dataTable.search('').columns().search('').draw();
+                    } else {
+                        dataTable.column(1).search(selectedType).draw();
+                    }
+                });
+
             }
 
             async function loadPushModalData(pushId) {
@@ -261,6 +392,7 @@ https://cdn.jsdelivr.net/npm/moment@2.30.1/moment.min.js
                 $('#createPMsgModal').on('hidden.bs.modal', function () {
                     // 清除表單中的值
                     $('#createPushMsg').trigger("reset");
+                    $('#previewImage').attr('src', '/images/no-image.jpg');
                 });
             });
         </script>
@@ -282,24 +414,25 @@ https://cdn.jsdelivr.net/npm/moment@2.30.1/moment.min.js
                 reader.readAsDataURL(input.files[0]);
             }
 
+            //推播內的按鍵設定
             function selectAllCheckboxes() {
-                
+
                 const checkboxes = document.querySelectorAll('.memberCheckbox');
-                
+
                 checkboxes.forEach(function (checkbox) {
                     checkbox.checked = true;
                 });
             }
 
             function unselectAllCheckboxes() {
-                
+
                 const checkboxes = document.querySelectorAll('.memberCheckbox');
-               
+
                 checkboxes.forEach(function (checkbox) {
                     checkbox.checked = false;
                 });
             }
-            
+
             function searchMembers() {
                 const genderSelect = document.getElementById('genderSelect');
                 const minAgeInput = document.getElementById('minAgeInput');
@@ -377,7 +510,7 @@ https://cdn.jsdelivr.net/npm/moment@2.30.1/moment.min.js
                 const selectElement = document.querySelector('#pushDelaySelect');
                 const pushDelay = parseInt(selectElement.value);
 
-                
+
                 if (checkboxes.length === 0) {
                     Swal.fire({
                         icon: 'error',
@@ -386,10 +519,10 @@ https://cdn.jsdelivr.net/npm/moment@2.30.1/moment.min.js
                         confirmButtonColor: '#3085d6',
                         confirmButtonText: '確認'
                     });
-                    return; 
+                    return;
                 }
 
-               
+
                 const minAgeInput = document.querySelector('#minAgeInput').value;
                 if (minAgeInput.trim() === '') {
                     Swal.fire({
@@ -399,7 +532,7 @@ https://cdn.jsdelivr.net/npm/moment@2.30.1/moment.min.js
                         confirmButtonColor: '#3085d6',
                         confirmButtonText: '確認'
                     });
-                    return; 
+                    return;
                 }
 
                 const maxAgeInput = document.querySelector('#maxAgeInput').value;

@@ -92,25 +92,64 @@ async function uploadPushMsg(memberIdString) {
             } else {
                 // 添加通知項目
                 notifications.forEach(notification => {
-                    let imageUrl ='0';
+                    let imageUrl = '0';
                     if (notification.fPushImagePath !== null) {
                         imageUrl = 'data:image/jpeg;base64,' + notification.fPushImagePath;
                     }
                     else {
                         imageUrl = '/images/no-image.jpg';
                     }
-                    const notificationItem = document.createElement('li');
-                    notificationItem.classList.add('notification-item');
-                    notificationItem.innerHTML = `
-                            <div style="overflow: auto;">
-                                <img src="${imageUrl}" style="float: left; margin-right: 10px;" width="110" height="110" />
-                                <div>
-                                    <h5>${notification.fPushContent}</h5>
-                                    <p>${notification.fPushCreatedTime}</p>
-                                </div>
-                            </div>`;
-                    notificationsMenu.appendChild(notificationItem);
+
+                    // 計算時間差
+                    const pushTime = new Date(notification.fPushCreatedTime);
+                    const currentTime = new Date();
+                    const timeDifference = Math.abs(currentTime - pushTime);
+
+                    // 如果在一天以內
+                    if (timeDifference < 24 * 60 * 60 * 1000) {
+                        const hoursDifference = Math.floor(timeDifference / (1000 * 60 * 60));
+                        const minutesDifference = Math.floor((timeDifference % (1000 * 60 * 60)) / (1000 * 60));
+                        const secondsDifference = Math.floor((timeDifference % (1000 * 60)) / 1000);
+
+                        let timeAgo = '';
+                        if (hoursDifference > 0) {
+                            timeAgo = `${hoursDifference} 小時前`;
+                        } else if (minutesDifference > 0) {
+                            timeAgo = `${minutesDifference} 分鐘前`;
+                        } else {
+                            timeAgo = `${secondsDifference} 秒前`;
+                        }
+
+                        const notificationItem = document.createElement('li');
+                        notificationItem.classList.add('notification-item');
+                        notificationItem.innerHTML = `
+            <div style="overflow: auto;">
+                <img src="${imageUrl}" style="float: left; margin-right: 10px;" width="110" height="110" />
+                <div>
+                    <h5>${notification.fPushContent}</h5>
+                    <p>${timeAgo}</p>
+                </div>
+            </div>`;
+                        notificationsMenu.appendChild(notificationItem);
+                    } else {
+                        // 超過一天，顯示天數
+                        const daysDifference = Math.ceil(timeDifference / (1000 * 60 * 60 * 24));
+
+                        const notificationItem = document.createElement('li');
+                        notificationItem.classList.add('notification-item');
+                        notificationItem.innerHTML = `
+            <div style="overflow: auto;">
+                <img src="${imageUrl}" style="float: left; margin-right: 10px;" width="110" height="110" />
+                <div>
+                    <h5>${notification.fPushContent}</h5>
+                    <p>${daysDifference} 天前</p>
+                </div>
+            </div>`;
+                        notificationsMenu.appendChild(notificationItem);
+                    }
                 });
+
+
 
                 //更新通知數量標籤
                 const badgeElement = document.querySelector('.badge-number');

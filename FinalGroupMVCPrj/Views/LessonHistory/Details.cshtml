@@ -1,4 +1,6 @@
-﻿<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+﻿@model LessonHistoryDetailViewModel
+
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
 <!-- Breadcrumb start -->
 <div class="breadcrumb-area bg-img bg-cover" data-bg-image="/images/breadcrumb-bg.jpg">
@@ -115,7 +117,7 @@
 </div>
 
 <!--FOrderDetailId儲存-->
-<div id="FOrderDetailId" data-value="@ViewBag.FOrderDetailId"></div>
+<div id="FOrderDetailId" data-value="@Model.FOrderDetailId"></div>
 
 <!--評價呈現-->
 <div id="evalDetailPartial"></div>

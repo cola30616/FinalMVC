@@ -21,30 +21,31 @@
             <!--search-->
             <div class="search_chat">
                 <div>
-                    <input type="text" placeholder="Search or start new chat" />
+                    <input id="searchInputTeacher" type="text" placeholder="搜尋" />
                     <ion-icon name="search-outline"></ion-icon>
                 </div>
             </div>
-
-            <!--chat list-->
-            @foreach (var item in Model)
-            {
-                <div class="chatlist" onclick="displaySelectTeacherBox(@item.FTeacherId, @ViewBag.memberId)">
-                    <div class="block unread" data-chatbox-id="@item.FTeacherId">
-                        <div class="imgbx">
-                            <img src="@Url.Action("GetTeacherPicture", "Message", new { FTeacherId = item.FTeacherId })" class="cover" />
-                        </div>
-                        <div class="details">
-                            <div class="listHead">
-                                <h4>@item.FTeacherName</h4>
-                                <p class="time"></p>
+            <div class="chatlist-container" style="overflow-y: auto; max-height: 620px;">
+                <!--chat list-->
+                @foreach (var item in Model)
+                {
+                    <div class="chatlist" onclick="displaySelectTeacherBox(@item.FTeacherId, @ViewBag.memberId)">
+                        <div class="block unread" data-chatbox-id="@item.FTeacherId">
+                            <div class="imgbx">
+                                <img src="@Url.Action("GetTeacherPicture", "Message", new { FTeacherId = item.FTeacherId })" class="cover" />
                             </div>
-                            <div class="message_p">
+                            <div class="details">
+                                <div class="listHead">
+                                    <h4 id="Chatmname">@item.FTeacherName</h4>
+                                    <p class="time"></p>
+                                </div>
+                                <div class="message_p">
+                                </div>
                             </div>
                         </div>
                     </div>
-                </div>
-            }
+                }
+            </div>
         </div>
     </div>
     <div class="rightSide">
@@ -71,7 +72,7 @@
         <div class="chatbox_input">
             @*                     <ion-icon name="happy-outline"></ion-icon>
             <ion-icon name="attach-outline"></ion-icon> *@
-            <input type="text" id="messageInput" placeholder="Type a message" onkeypress="handleKeyPress(event)">
+            <input type="text" id="messageInput" placeholder="輸入訊息" onkeypress="handleKeyPress(event)">
             <a href="#" id="sendButton" class="avtar avtar-s btn-link-primary" onclick="sendMessage()">
                 <ion-icon name="send-outline"></ion-icon>
             </a>
@@ -165,6 +166,22 @@
             //         console.error("Error retrieving chat messages: ", error);
             //     });
         });
+
+        //搜尋功能
+        document.querySelector("#searchInputTeacher").addEventListener("input", function () {
+            var searchValue = this.value.toLowerCase();
+            var chatList = document.querySelectorAll(".chatlist");
+
+            chatList.forEach(function (chatItem) {
+                var chatName = chatItem.querySelector("#Chatmname").innerText.toLowerCase();
+                if (chatName.includes(searchValue)) {
+                    chatItem.style.display = "block";
+                } else {
+                    chatItem.style.display = "none";
+                }
+            });
+        });
+
     });
 
     function handleKeyPress(event) {
@@ -272,46 +289,46 @@
             if (!message.fIsTeacherMsg) {
                 messageDiv.className = "message my_message";
                 messageDiv.innerHTML = `
-                                                                            <div class="d-flex">
-                                                                                <div class="flex-shrink-0">
-                                                                                    <ul class="list-inline ms-auto mb-0">
-                                                                                        <li class="list-inline-item">
-                                                                                            <a href="#" class="avtar avtar-xs btn-link-secondary">
-                                                                                            </a>
-                                                                                        </li>
-                                                                                    </ul>
-                                                                                </div>
-                                                                                <div class="flex-grow-1 mx-3">
-                                                                                    <div class="msg-content">
-                                                                                            <p class="mb-0" id="msgtxt">${message.fMessage}</p>
+                                                                                <div class="d-flex">
+                                                                                    <div class="flex-shrink-0">
+                                                                                        <ul class="list-inline ms-auto mb-0">
+                                                                                            <li class="list-inline-item">
+                                                                                                <a href="#" class="avtar avtar-xs btn-link-secondary">
+                                                                                                </a>
+                                                                                            </li>
+                                                                                        </ul>
                                                                                     </div>
-                                                                                        <p class="mb-0 text-muted text-sm msg_time" id="time">${time}</p>
-                                                                                </div>
-                                                                                <div class="flex-shrink-0">
-                                                                                    <div class="chat-avtar">
-                                                                                        <img class="rounded-circle img-fluid wid-40" style="max-width: 40px; max-height: 40px;" src=${ImgSrc} alt="User image">
+                                                                                    <div class="flex-grow-1 mx-3">
+                                                                                        <div class="msg-content">
+                                                                                                <p class="mb-0" id="msgtxt">${message.fMessage}</p>
+                                                                                        </div>
+                                                                                            <p class="mb-0 text-muted text-sm msg_time" id="time">${time}</p>
+                                                                                    </div>
+                                                                                    <div class="flex-shrink-0">
+                                                                                        <div class="chat-avtar">
+                                                                                            <img class="rounded-circle img-fluid wid-40" style="max-width: 40px; max-height: 40px;" src=${ImgSrc} alt="User image">
+                                                                                        </div>
                                                                                     </div>
                                                                                 </div>
-                                                                            </div>
-                                                                        `;
+                                                                            `;
                 chatBox.appendChild(messageDiv);
             } else {
                 messageDiv.className = "message std_message";
                 messageDiv.innerHTML = `
-                                                                    <div class="d-flex">
-                                                                        <div class="flex-shrink-0">
-                                                                            <div class="chat-avtar">
-                                                                                    <img class="rounded-circle img-fluid wid-40 " style="max-width: 40px; max-height: 40px;" src=${ImgSrcInput} alt="User image">
+                                                                        <div class="d-flex">
+                                                                            <div class="flex-shrink-0">
+                                                                                <div class="chat-avtar">
+                                                                                        <img class="rounded-circle img-fluid wid-40 " style="max-width: 40px; max-height: 40px;" src=${ImgSrcInput} alt="User image">
+                                                                                </div>
+                                                                            </div>
+                                                                            <div class="flex-grow-1 mx-3">
+                                                                                <div class="msg-content">
+                                                                                        <p class="mb-0" id="msgtxt">${message.fMessage}</p>
+                                                                                </div>
+                                                                                    <p class="mb-0 text-muted text-sm msg_time" id="time">${time}</p>
                                                                             </div>
                                                                         </div>
-                                                                        <div class="flex-grow-1 mx-3">
-                                                                            <div class="msg-content">
-                                                                                    <p class="mb-0" id="msgtxt">${message.fMessage}</p>
-                                                                            </div>
-                                                                                <p class="mb-0 text-muted text-sm msg_time" id="time">${time}</p>
-                                                                        </div>
-                                                                    </div>
-                                                                            `;
+                                                                                `;
                 chatBox.appendChild(messageDiv);
             }
 

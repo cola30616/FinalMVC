@@ -15,7 +15,7 @@ public partial class TOrderDetail
 
     public decimal FLessonPrice { get; set; }
 
-    public decimal FDiscount { get; set; }
+    public decimal? FDiscount { get; set; }
 
     public bool FOrderValid { get; set; }
 

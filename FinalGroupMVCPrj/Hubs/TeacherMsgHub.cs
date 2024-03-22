@@ -221,15 +221,6 @@ namespace FinalGroupMVCPrj.Hubs
                     }
                 }
             }
-            // 發送人
-            //var queryTeacher = teacherDict.Where(key => key.Value == teacherId);
-            //if (queryTeacher.Any())
-            //{
-            //    foreach (var item in queryTeacher)
-            //    {
-            //        await Clients.Client(item.Key).SendAsync("UpdContent", msg, teacherId, memberId);
-            //    }
-            //}
         }
 
 

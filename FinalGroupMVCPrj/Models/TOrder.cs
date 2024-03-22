@@ -17,6 +17,8 @@ public partial class TOrder
 
     public string FPaymentMethod { get; set; }
 
+    public string FOrderNumber { get; set; }
+
     public virtual TMember FMember { get; set; }
 
     public virtual ICollection<TOrderDetail> TOrderDetails { get; set; } = new List<TOrderDetail>();

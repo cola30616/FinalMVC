@@ -21,7 +21,7 @@
             <!--search-->
             <div class="search_chat">
                 <div>
-                    <input type="text" placeholder="搜尋" />
+                    <input id="searchInputTeacher" type="text" placeholder="搜尋" />
                     <ion-icon name="search-outline"></ion-icon>
                 </div>
             </div>
@@ -36,7 +36,7 @@
                         </div>
                         <div class="details">
                             <div class="listHead">
-                                <h4>@item.FShowName</h4>
+                                <h4 id="Chatmname">@item.FShowName</h4>
                                 <p class="time"></p>
                             </div>
                             <div class="message_p">
@@ -169,6 +169,22 @@
             //         console.error("Error retrieving chat messages: ", error);
             //     });
         });
+
+        //搜尋功能
+        document.querySelector("#searchInputTeacher").addEventListener("input", function () {
+            var searchValue = this.value.toLowerCase();
+            var chatList = document.querySelectorAll(".chatlist");
+
+            chatList.forEach(function (chatItem) {
+                var chatName = chatItem.querySelector("#Chatmname").innerText.toLowerCase();
+                if (chatName.includes(searchValue)) {
+                    chatItem.style.display = "block";
+                } else {
+                    chatItem.style.display = "none";
+                }
+            });
+        });
+
     });
 
     function handleKeyPress(event) {
@@ -280,11 +296,12 @@
             if (message.fIsTeacherMsg) {
                 messageDiv.className = "message my_message";
                 messageDiv.innerHTML = `
-                                                                <div class="d-flex">
+                                                                        <div class="d-flex">
                                                                     <div class="flex-shrink-0">
                                                                         <ul class="list-inline ms-auto mb-0">
                                                                             <li class="list-inline-item">
-                                                                                <a href="#" class="avtar avtar-xs btn-link-secondary">
+                                                                                <a href="#" class="avtar avtar-xs btn-link-secondary" >
+                                                                                            <ion-icon name="checkmark-done-outline"style="margin-top: 25px;display:none;"></ion-icon>
                                                                                 </a>
                                                                             </li>
                                                                         </ul>

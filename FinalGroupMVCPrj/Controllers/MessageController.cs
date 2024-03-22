@@ -1,6 +1,7 @@
 ﻿using FinalGroupMVCPrj.Models;
 using FinalGroupMVCPrj.Models.DTO;
 using FinalGroupMVCPrj.Models.ViewModels;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using NuGet.DependencyResolver;
