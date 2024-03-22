@@ -81,7 +81,7 @@ namespace FinalGroupMVCPrj.Controllers
                                           .Select(data => new
                                           {
                                               name = data.FName,
-                                              id = data.FTeacherId,
+                                              id = data.FLessonCourseId,
                                               teacherId = data.FTeacher.FTeacherId,
                                               teacherName = data.FTeacher.FTeacherName,
                                           })
