@@ -8,6 +8,7 @@ using NuGet.DependencyResolver;
 
 namespace FinalGroupMVCPrj.Controllers
 {
+    [AllowAnonymous]
     public class MessageController : UserInfoController
     {
         private readonly LifeShareLearnContext _context;
