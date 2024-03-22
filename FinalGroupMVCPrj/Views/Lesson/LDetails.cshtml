@@ -22,6 +22,7 @@
             display: inline-block;
             margin-left: 5px; /* Adjust as needed */
         }
+
     </style>
 }
 
@@ -29,7 +30,7 @@
 
 <div class="course-details-area pb-60">
     <!-- Course title -->
-    <div class="course-banner bg-img bg-cover pb-5 bg-light">
+    <div class="course-banner bg-img bg-cover pb-5 " style="background-color:#f8ffff;">
         <div class="container">
             <div class="row">
                 @* 封面照 *@
@@ -50,11 +51,11 @@
                         </h3>
                         <div class="mb-3">
                             <!--領域-->
-                            <span class=" center  badge-sm rounded bg-primary text-bg-primary "> @Html.DisplayFor(x => x.FFiled) </span>&nbsp;&#47;
+                            <span class=" center  badge-sm rounded bg-primary text-bg-primary " style="padding:2px 10px;"> @Html.DisplayFor(x => x.FFiled)</span>&nbsp;&#47;
                             <!--科目-->
-                            <span class=" center  badge-sm rounded bg-primary text-bg-primary"> @Html.DisplayFor(x => x.FSubject.FSubjectName)</span>&nbsp;
+                            <span class=" center  badge-sm rounded bg-primary text-bg-primary" style="padding:2px 10px;"> @Html.DisplayFor(x => x.FSubject.FSubjectName)</span>&nbsp;
                             <!--場地類型-->
-                            <span class=" center  badge-lg rounded" style="background-color: #FDC501; color:#654e00;">
+                            <span class=" center  badge-lg rounded" style="background-color: #FDC501; color:#654e00; padding:2px 10px;">
                                 @(Model.FVenueType == true ? "實體" : "線上")
 
                             </span>
@@ -204,7 +205,7 @@
                                 <div class="content pb-20">
                                     <h5 class="title mb-20">課程要求</h5>
                                     <div class="row gl-xl-5 mt-20">
-                                        <div class="col-lg-6">
+                                        <div class="col-lg-12">
                                             <ul class="info-list list-unstyled mb-20">
                                                 <li>@Html.DisplayFor(m => m.FRequirement)</li>
                                             </ul>

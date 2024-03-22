@@ -27,10 +27,20 @@
             }
     </style>
 }
-<h1 class="d-inline display-6 me-3">檢視/修改課程</h1>
-<span class="badge-lg rounded bg-warning text-dark text-center align-self-center me-5">
-    @Html.DisplayFor(x => x.FStatus)@(!string.IsNullOrEmpty(Model.FStatusNote) ? "，原因: " + Model.FStatusNote : "")
-</span>
+<div class="row">
+    <div class="col-11 d-flex align-items-center">
+        <!-- Column for the h1 and span -->
+        <h1 class="d-inline display-6 me-3">檢視/修改課程</h1>
+        <span class="badge-lg rounded bg-warning text-dark text-center me-5" style="padding:2px 10px;">
+            @Html.DisplayFor(x => x.FStatus)@(!string.IsNullOrEmpty(Model.FStatusNote) ? "，原因: " + Model.FStatusNote : "")
+        </span>
+    </div>
+    <div class="col-1 d-flex justify-content-center align-items-center">
+        <!-- Column for the icon -->
+        <a asp-action="LessonList" asp-controller="TeacherAdmin"><i class="fa-solid fa-xmark fa-2xl"></i></a>
+    </div>
+</div>
+
 @* <a class="btn btn-secondary" asp-action="LessonList" asp-controller="TeacherAdmin"><i class="fa-solid fa-xmark"></i></a> *@
 <hr />
 <form asp-action="LessonEdit" id="EditLesson" asp-controller="TeacherAdmin" method="post" enctype="multipart/form-data">
@@ -82,7 +92,8 @@
                 <!--編輯器-->
                 <label for="FEditorDes">課程介紹</label>
                 <div class="form-floating mb-3">
-
+                    @* <input hidden type="text" value="@Model.FEditorDes" id="loadDesc" /> *@
+                    <input hidden type="text" value="@Model.FDescription" id="loadDesc" />
                     <textarea class="form-control" placeholder="Leave a comment here" style="height: 100px; resize: none;" asp-for="FEditorDes"></textarea>
                     <span asp-validation-for="FEditorDes" class="text-danger"></span>
 
@@ -241,10 +252,17 @@
         <!-- 按鈕 -->
         <div class="col-12 d-flex justify-content-end">
             <button type="button" class="btn btn-light me-2 text-light" id="demo1">demo1</button>
-            <p class="text-danger">*點擊儲存變更後，將改變課程狀態為開放報名 &nbsp;</p>
-          
-
-            <button type="submit" class="btn btn-primary me-2" name="status" value="Update" onclick="setCourseType('@ViewBag.courseType')">儲存變更</button>
+           @*  <p class="text-danger">*點擊儲存變更後，將改變課程狀態為開放報名 &nbsp;</p> *@
+            @if (Model.FStatus == "未開放")
+            {
+                <button type="submit" class="btn btn-primary me-2" name="openstatus" value="TempSave" onclick="setCourseType('@ViewBag.courseType')">暫存</button>
+            }
+            else
+            {
+                <button type="submit" class="btn btn-primary me-2" name="openstatus" value="TempSave" onclick="setCourseType('@ViewBag.courseType')" hidden>暫存</button>
+            }
+            
+            <button type="submit" class="btn btn-primary me-2" name="openstatus" value="Update" onclick="setCourseType('@ViewBag.courseType')">開放報名</button>
             <a class="btn btn-secondary" asp-action="LessonList" asp-controller="TeacherAdmin">取消</a>
             <div class="col-1"></div>
         </div>
@@ -254,7 +272,7 @@
     </div>
 
 
-    <!--彈跳視窗-->
+@*     <!--彈跳視窗-->
     <!-- Modal -->
     <div class="modal fade" id="cut" tabindex="-1" aria-labelledby="cutLabel" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered">
@@ -275,7 +293,7 @@
 
             </div>
         </div>
-    </div>
+    </div> *@
 
 </form>
 @section Scripts {
@@ -286,10 +304,10 @@
     <!--Image-->
     <script>
 
-        $("#FPhoto").on("change", function () {
-            console.log("Hello");
-            previewImage(this, $('#imgPreview'));
-        });
+        // $("#FPhoto").on("change", function () {
+        //     console.log("Hello");
+        //     previewImage(this, $('#imgPreview'));
+        // });
 
     </script>
     <!-- ====================TinyMCE==================== -->
@@ -303,6 +321,11 @@
 
             // 如果存在，则初始化 TinyMCE
             console.log(textarea)
+            const status = document.getElementById('FStatus').value;
+
+            const isReadOnly = status !== "未開放" && status !== "開放報名";
+            console.log(status)
+            console.log(isReadOnly)
             if (textarea) {
 
                 tinymce.init({
@@ -310,7 +333,15 @@
                     plugins: 'anchor autolink charmap codesample emoticons image link lists media searchreplace table visualblocks wordcount linkchecker',
                     toolbar: 'undo redo | blocks fontfamily fontsize | bold italic underline strikethrough | link image media table | align lineheight | numlist bullist indent outdent | emoticons charmap | removeformat',
                     language: 'zh_TW',
-                    placeholder: "請在這裡輸入..."
+                    placeholder: "請在這裡輸入...",
+                    readonly: isReadOnly,
+                    setup: function (editor) {
+                        editor.on('init', function () {
+                            // Set content of the editor
+                            console.log(document.getElementById('loadDesc').value)
+                            editor.setContent(document.getElementById('loadDesc').value);
+                        });
+                    }
                 });
                 // 在此添加其他 TinyMCE 配置选项
             }
@@ -325,7 +356,7 @@
     </script>
 
     <!--Croppie-->
-    <script>
+@*     <script>
         const cutPhoto = $('#cutPhoto').croppie({
             enableExif: true,
             viewport: {
@@ -347,8 +378,8 @@
         cutPhoto.croppie('result', 'html').then(function (html) {
             // html is div (overflow hidden)
             // with img positioned inside.
-        });
-    </script>
+        }); *@
+   @*  </script> *@
     <script>
         const districtid = document.querySelector("#districtid");
         const district = document.querySelector("#FDistrictId");
@@ -401,6 +432,7 @@
                 // 如果 FStatus 的值在 readOnlyValues 中，將該元素設置為唯讀
                 if (readOnlyValues.includes(fStatus)) {
                     element.readOnly = true;
+                    element.setAttribute('disabled', "");
                 }
             }
         });

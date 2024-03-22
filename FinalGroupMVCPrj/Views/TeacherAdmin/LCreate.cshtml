@@ -22,19 +22,36 @@
                 transform: scale(1.2); /* 在悬停时进行缩放 */
             }
 
-        .croppie-container {
+/*         .croppie-container {
             border-radius: 8px;
             width: 540px;
-            height: 361px;
-            background-color: #cfe2f3;
+            height: 370px;
+            background-color: #e7f2fc;
+        } */
+        #cropper{
+            padding-top: 10px;
+            border-radius: 8px;
+            width:510px;
         }
 
-          
+        .col-1 {
+            display: flex;
+        }
+
+
 
     </style>
 }
 
-<h1>新增課程</h1>
+<div class="row">
+    <div class="col-11">
+        <h1 class="d-inline display-6 me-3">新增課程</h1>
+    </div>
+    <div class="col-1 d-flex justify-content-center align-items-center">
+        <a asp-action="LessonList" asp-controller="TeacherAdmin"><i class="fa-solid fa-xmark fa-2xl"></i></a>
+    </div>
+</div>
+
 <hr />
 <form asp-action="LessonCreate" id="OpenLesson" asp-controller="TeacherAdmin" method="post" enctype="multipart/form-data">
     <div class="container col-12">
@@ -112,26 +129,26 @@
                     <label for="FHomeworkDescription">作業</label>
                 </div>
             </div>
-
+        
             <div class="col-6">
                 <div class="bg-warning-light text-center rounded-2 mb-2">其他資料</div>
                 <!--封面照 croppie裁切-->
-                <div class="container mb-3" style="position: relative;width:540px;height:361px;">
-                    <div class="row align-items-end">
+                <div class="container mb-3" style="position: relative;width:540px;height:370px;">
+                    <div class="row align-items-start">
                         <div class="col-12 d-flex justify-content-start align-items-end position-relative">
-                            <div style="border-radius: 8px; width: 540px; height: 361px; background-color: #cfe2f3; display: flex; justify-content: center; align-items: center;" class="pic ">
-                                <!-- 图片 -->
-                                <img src="~/images/defaultimage.png" alt="Image" id="imagePreview" class="rounded border border-secondary border-3 m-3" style="cursor: pointer; width:420px; height:280px; margin: auto;" onclick="openFileInput()" title="更換圖片">
-                                <!-- 文件上传输入元素，但被隐藏 -->
+                            <div style="border-radius: 8px; width: 536px; height: 365px; background-color: #e7f2fc; display: flex; justify-content: center; align-items: center;" class="pic ">
+                                <!-- 圖片 -->
+                                <img src="~/images/no-image.jpg" alt="Image" id="imagePreview" class="rounded border border-secondary border-3 m-3" style="cursor: pointer; width:420px; height:280px; margin: auto;" onclick="openFileInput()" title="更換圖片">
+                                <!-- 文件上傳輸入元素，但被隱藏 -->
                                 <input class="form-control" type="file" asp-for="FPhoto" accept="image/*" style="display: none;">
                             </div>
                         </div>
 
 
 
-                        <div id="cropper-container" style="position: absolute; top: 0; left: 0; visibility: " class="mb-3">
+                        <div id="cropper-container" style="position: absolute; top: 0; left: 0; visibility:hidden;width: 536px; height: 365px;" class="mb-3">
                             <div id="cropper" style="position: relative;hidden; "></div>
-                            <button id="crop-button" pe="button" class="btn btn-light " title="裁切" style="position: absolute; bottom: 10px; left: calc(100% ); transform: translateX(-50%);visibility: hidden;"> <i class="fa-solid fa-scissors fa-rotate-by" style="color: #6997e8;--fa-rotate-angle: 224deg;"></i> </button>
+                            <button id="crop-button" type="button" class="btn btn-light btn-sm" title="裁切" style="position: absolute; bottom: 10px; left: calc(100% ); transform: translateX(-50%);visibility: hidden;"> <i class="fa-solid fa-scissors fa-rotate-by" style="color: #6997e8;--fa-rotate-angle: 224deg;"></i> </button>
                         </div>
 
                       @*   <div class="col-4 d-flex justify-content-end align-items-end">
@@ -258,6 +275,8 @@
         </div>
     </div>
     <hr />
+
+    <!-- 按鈕 -->
     <div class="row r">
         <div class="col-1 ">
         </div>
@@ -267,7 +286,7 @@
         <div class="col-12 d-flex justify-content-end">
             <button type="button" class="btn btn-light me-2 text-light" id="demo1">demo1</button>
             <button type="submit" class="btn btn-primary me-2" name="status" value="TempSave" onclick="setCourseType('@ViewBag.courseType')">暫存</button>
-            <button type="submit" class="btn btn-primary me-2" name="status" value="Create" onclick="setCourseType('@ViewBag.courseType')">確定</button>
+            <button type="submit" class="btn btn-primary me-2" name="status" value="Create" onclick="setCourseType('@ViewBag.courseType')">開放報名</button>
             <a class="btn btn-secondary" asp-action="LessonList" asp-controller="TeacherAdmin">取消</a>
             <div class="col-1"></div>
         </div>

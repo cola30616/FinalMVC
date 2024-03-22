@@ -233,7 +233,7 @@ namespace FinalGroupMVCPrj.Controllers
         [RequestFormLimits(MultipartBodyLengthLimit = 10240000)]
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> LessonEdit(int? id, LessonCreateViewModel lesson)
+        public async Task<IActionResult> LessonEdit(int? id, LessonCreateViewModel lesson,string? openstatus)
         {
             try
             {
@@ -274,8 +274,11 @@ namespace FinalGroupMVCPrj.Controllers
                     {
                         course.FPhoto = await ReadUploadImage(lesson.FPhoto);
                     }
-                    //只要編輯後儲存，狀態全部從'未開放'變成'開始報名'
-                    course.FStatus = "開放報名";
+                   
+           
+                   course.FStatus = openstatus == "TempSave"? "未開放" : "開放報名";
+                  
+                   
                     _context.Update(course);
                     await _context.SaveChangesAsync();
                     TempData["Success"] = "成功儲存變更";
