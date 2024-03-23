@@ -101,8 +101,8 @@
                 <label for="FEditorDes">課程介紹</label>
                 <div class="form-floating mb-3">
                     @* <input hidden type="text" value="@Model.FEditorDes" id="loadDesc" /> *@
-                    <input hidden type="text" value="@Model.FDescription" id="loadDesc" />
-                    <textarea class="form-control" placeholder="Leave a comment here" style="height: 100px; resize: none;" asp-for="FEditorDes"></textarea>
+                    <input hidden type="text" value="@Model.FEditorDes" id="loadDesc" />
+                    <textarea class="form-control" placeholder="Leave a comment here" style="height: 100px; resize: none;" asp-for="FEditorDes">@Html.DisplayFor(x=>x.FEditorDes)</textarea>
                     <span asp-validation-for="FEditorDes" class="text-danger"></span>
 
                 </div>
@@ -178,8 +178,9 @@
                 <div class="input-group mb-3">
                     <span class="input-group-text">$</span>
                     <input type="text" class="form-control" aria-label="Amount (to the nearest dollar)" placeholder="售價" asp-for="FPrice">
-                    <span class="input-group-text">元</span>
+                    
                     <span asp-validation-for="FPrice" class="text-danger"></span>
+                    <span class="input-group-text">元</span>
                 </div>
                 <!--人數-->
 
@@ -253,33 +254,61 @@
                 </div>
 
                 <!--詳細場地資訊-->
-                <div id="onClassInfo">
-                    <div class="input-group mb-3">
-                        <input type="text" class="form-control" aria-label="Amount (to the nearest dollar)" placeholder="場地名稱" asp-for="FVenueName">
-                        <span asp-validation-for="FVenueName" class="text-danger"></span>
+                @if (Model.FVenueType==false)
+                {
+                    <div id="onClassInfo" hidden>
+                        <div class="input-group mb-3">
+                            <input type="text" class="form-control" aria-label="Amount (to the nearest dollar)" placeholder="場地名稱" asp-for="FVenueName">
+                            <span asp-validation-for="FVenueName" class="text-danger"></span>
+                        </div>
+                        <div class="row mb-3">
+                            <div class="col-sm-3">
+                                <select class="form-select" asp-items="ViewBag.CitySelectList" id="city"></select>
+                            </div>
+                            <div class="col-sm-3">
+                                <input class="form-control" type="text" id="districtid" value="@ViewBag.DistrictSelect" hidden>
+                                <select class="form-select" aria-label="Default select example" asp-for="FDistrictId">
+                                    <option selected>地區</option>
+                                </select>
+                            </div>
+                            <div class="col-sm-6">
+                                <input type="text" class="form-control" aria-label="Amount (to the nearest dollar)" placeholder="詳細地址" asp-for="FAddressDetail">
+                                <span asp-validation-for="FAddressDetail" class="text-danger"></span>
+                            </div>
+                        </div>
                     </div>
-                    <div class="row mb-3">
-                        <div class="col-sm-3">
-
-                            <select class="form-select" asp-items="ViewBag.CitySelectList" id="city"></select>
-
+                    <div id="onlineInfo">
+                        <p class="text-primary">會議室連結: @Html.DisplayFor(x => x.FOnlineLink)</p>
+                    </div>
+                }
+                else
+                {
+                    <div id="onClassInfo">
+                        <div class="input-group mb-3">
+                            <input type="text" class="form-control" aria-label="Amount (to the nearest dollar)" placeholder="場地名稱" asp-for="FVenueName">
+                            <span asp-validation-for="FVenueName" class="text-danger"></span>
                         </div>
-                        <div class="col-sm-3">
-
-                            <input class="form-control" type="text" id="districtid" value=@ViewBag.DistrictSelect hidden>
-                            <select class="form-select" aria-label="Default select example" asp-for="FDistrictId">
-                                <option selected>地區</option>
-                            </select>
-                        </div>
-                        <div class="col-sm-6">
-                            <input type="text" class="form-control" aria-label="Amount (to the nearest dollar)" placeholder="詳細地址" asp-for="FAddressDetail">
-                            <span asp-validation-for="FAddressDetail" class="text-danger"></span>
+                        <div class="row mb-3">
+                            <div class="col-sm-3">
+                                <select class="form-select" asp-items="ViewBag.CitySelectList" id="city"></select>
+                            </div>
+                            <div class="col-sm-3">
+                                <input class="form-control" type="text" id="districtid" value="@ViewBag.DistrictSelect" hidden>
+                                <select class="form-select" aria-label="Default select example" asp-for="FDistrictId">
+                                    <option selected>地區</option>
+                                </select>
+                            </div>
+                            <div class="col-sm-6">
+                                <input type="text" class="form-control" aria-label="Amount (to the nearest dollar)" placeholder="詳細地址" asp-for="FAddressDetail">
+                                <span asp-validation-for="FAddressDetail" class="text-danger"></span>
+                            </div>
                         </div>
                     </div>
-                </div>
-                <div id="onlineInfo" hidden>
-                    <p class="text-primary"> &#10132;將於成功開課後自動產生課程會議室連結</p>
-                </div>
+                    <div id="onlineInfo" hidden>
+                        <p class="text-primary">會議室連結: @Html.DisplayFor(x => x.FOnlineLink)</p>
+                    </div>
+                }
+
 
             </div>
         </div>
@@ -380,13 +409,7 @@
                     language: 'zh_TW',
                     placeholder: "請在這裡輸入...",
                     readonly: isReadOnly,
-                    setup: function (editor) {
-                        editor.on('init', function () {
-                            // Set content of the editor
-                            //console.log(document.getElementById('loadDesc').value)
-                            editor.setContent('Test123');
-                        });
-                    }
+                    
                 });
                 // 在此添加其他 TinyMCE 配置选项
             }

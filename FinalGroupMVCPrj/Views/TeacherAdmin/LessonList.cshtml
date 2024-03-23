@@ -6,126 +6,147 @@
     Layout = "~/Views/Shared/_LayoutTeacherAdmin.cshtml";
 }
 
-<partial name="_SweetAlertPartial" />
-<nav style="--bs-breadcrumb-divider: '|';">
-    <ol class="breadcrumb">
-        <li class="breadcrumb-item"><a asp-controller="TeacherAdmin" asp-action="LessonList"><i class="bi bi-house-door"></i>老師後台</a></li>
-        <li class="breadcrumb-item active">課程管理</li>
-        <li class="breadcrumb-item active">課程清單</li>
-    </ol>
-</nav>
-<h1>老師後台課程清單</h1>
-@* asp-controller="TeacherAdmin" asp-action="LessonCreate" *@
-<!--改成-->
-<button onclick="loadHistoryCourse()" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#open" data-bs-placement="right" title="點擊新增課程"><i class="fa-regular fa-square-plus"></i> 開課</button>
-
-<div class="row">
-    <div class="col-sm-6">
-        <div class="row mb-3">
-            <label class="col-sm-2  align-self-center">開課日期區間:</label>
-            <div class="col-sm-10">
-                <div class="row">
-                    <div class="col-sm-5">
-                        <input type="date" class="form-control" id="startDate">
-                    </div>
-                    <div class="col-sm-1 text-center align-self-center">
-                        ~
-                    </div>
-                    <div class="col-sm-5">
-                        <input type="date" class="form-control" id="endDate">
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <div class="col-sm-4">
-        <div class="col-sm-10">
-            <div class="row">
-                <label class="col-sm-4  align-self-center">課程狀態:</label>
-                <div class="col-sm-8">
-                    <select class="form-select" id="courseStatus">
-                        <option value="0" disabled selected hidden>狀態</option>
-                        <option value="0">全部</option>
-                        <option value="1">課程取消</option>
-                        <option value="2">尚未開放</option>
-                        <option value="3">開放報名</option>
-                        <option value="4">報名截止</option>
-                        <option value="5">課程結束</option>
-                    </select>
-                </div>
-            </div>
-        </div>
-    </div>
-    <div class="col-sm-2">
-        <button class="btn btn-secondary" id="clearall"> 清除條件</button>
-        <button class="btn btn-success"> 匯出CSV</button>
-    </div>
+<partial name="_SweetAlertViewBagVersionPartial" />
+<div class="pagetitle">
+    <h1>課程管理</h1>
+    <nav>
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a asp-controller="TeacherAdmin" asp-action="LessonList">老師後台</a></li>
+            <li class="breadcrumb-item active">課程管理</li>
+            <li class="breadcrumb-item active">課程清單</li>
+        </ol>
+    </nav>
 </div>
 
 
+<!--改成-->
+<section class="section">
+    <div class="row">
+        <div class="col-lg-12">
+        </div>
+        <div class="card">
+            <div class="card-body">
+                <h5 class="card-title">課程清單</h5>
+                <div>
+                    <!--篩選資料區-->
+                    <button onclick="loadHistoryCourse()" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#open" data-bs-placement="right" title="點擊新增課程"><i class="fa-regular fa-square-plus"></i> 開課</button>
 
+                    <div class="row">
+                        <div class="col-sm-6">
+                            <div class="row mb-3">
+                                <label class="col-sm-2  align-self-center">開課日期區間:</label>
+                                <div class="col-sm-10">
+                                    <div class="row">
+                                        <div class="col-sm-5">
+                                            <input type="date" class="form-control" id="startDate">
+                                        </div>
+                                        <div class="col-sm-1 text-center align-self-center">
+                                            ~
+                                        </div>
+                                        <div class="col-sm-5">
+                                            <input type="date" class="form-control" id="endDate">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
 
-<!-- Table with stripped rows -->
-<table id="lessonListTable" class="datatable row-border stripe hover">
-    <thead>
-        <tr>
-            <th>@Html.DisplayNameFor(m => m.Code)</th>
-            <th>@Html.DisplayNameFor(m => m.Name)</th>
-            <th>@Html.DisplayNameFor(m => m.Filed)</th>
-            <th>@Html.DisplayNameFor(m => m.Price)</th>
-            <th>@Html.DisplayNameFor(m => m.LessonDate)</th>
-            <th>@Html.DisplayNameFor(m => m.Time)</th>
-            <th>@Html.DisplayNameFor(m => m.MaxPeople)</th>
-            <th>@Html.DisplayNameFor(m => m.RegPeople)</th>
-            <th>@Html.DisplayNameFor(m => m.Status)</th>
-            <th>@Html.DisplayNameFor(m => m.VenueType)</th>
-            <th></th>
-        </tr>
-    </thead>
-
-</table>
-
-
-
-<!--彈跳視窗-->
-<!-- Modal -->
-<div class="modal fade" id="open" tabindex="-1" aria-labelledby="openLabel" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h1 class="modal-title fs-5" id="openLabel">請選擇開課類型</h1>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body">
-                <div class="d-flex justify-content-center">
-                    <div class="mt-3 mb-3">
-                        <h6>建立全新課程</h6>
-                        <a class="btn btn-warning" asp-controller="TeacherAdmin" asp-action="LessonCreate">開新課程</a>
+                        <div class="col-sm-4">
+                            <div class="col-sm-10">
+                                <div class="row">
+                                    <label class="col-sm-4  align-self-center">課程狀態:</label>
+                                    <div class="col-sm-8">
+                                        <select class="form-select" id="courseStatus">
+                                            <option value="0" disabled selected hidden>狀態</option>
+                                            <option value="0">全部</option>
+                                            <option value="1">課程取消</option>
+                                            <option value="2">尚未開放</option>
+                                            <option value="3">開放報名</option>
+                                            <option value="4">報名截止</option>
+                                            <option value="5">課程結束</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-sm-2">
+                            <button class="btn btn-secondary" id="clearall"> 清除條件</button>
+                            <button class="btn btn-success"> 匯出CSV</button>
+                        </div>
                     </div>
-                </div>
-                <div class="d-flex justify-content-center mb-3">
-                    <h6>或</h6>
-                </div>
-                <div class="row">
-                    <div class="col-12 mb-3 mb-md-0 me-md-3 mt-2">
-                        <div class="d-flex justify-content-center">
-                            <h6>重新開之前開過的課</h6>
+
+
+
+                    <div>
+                        <!-- 表格-->
+                        <table id="lessonListTable" class="datatable row-border stripe hover">
+                            <thead>
+                                <tr>
+                                    <th>@Html.DisplayNameFor(m => m.Code)</th>
+                                    <th>@Html.DisplayNameFor(m => m.Name)</th>
+                                    <th>@Html.DisplayNameFor(m => m.Filed)</th>
+                                    <th>@Html.DisplayNameFor(m => m.Price)</th>
+                                    <th>@Html.DisplayNameFor(m => m.LessonDate)</th>
+                                    <th>@Html.DisplayNameFor(m => m.Time)</th>
+                                    <th>@Html.DisplayNameFor(m => m.MaxPeople)</th>
+                                    <th>@Html.DisplayNameFor(m => m.RegPeople)</th>
+                                    <th>@Html.DisplayNameFor(m => m.Status)</th>
+                                    <th>@Html.DisplayNameFor(m => m.VenueType)</th>
+                                    <th></th>
+                                </tr>
+                            </thead>
+
+                        </table>
+                        <!--結束表格 -->
+                    </div>
+
+
+                    <!--彈跳視窗-->
+                    <!-- Modal -->
+                    <div class="modal fade" id="open" tabindex="-1" aria-labelledby="openLabel" aria-hidden="true">
+                        <div class="modal-dialog modal-dialog-centered">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h1 class="modal-title fs-5" id="openLabel">請選擇開課類型</h1>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                </div>
+                                <div class="modal-body">
+                                    <div>
+                                        <div class="d-flex justify-content-center mb-3">
+                                            <h3>建立全新課程</h3>
+                                        </div>
+                                        <div class="d-flex justify-content-center mb-3">
+                                            <a class="btn btn-warning " asp-controller="TeacherAdmin" asp-action="LessonCreate">開新課程</a>
+                                        </div>
+                                    </div>
+                                    <div class="d-flex justify-content-center mb-3">
+                                        <h4>或</h4>
+                                    </div>
+                                    <div class="row d-flex justify-content-center mb-3">
+                                        <div class="col-12 mb-3 mb-md-0 me-md-3 mt-2">
+                                            <div class="d-flex justify-content-center">
+                                                <h3>重新開之前開過的課</h3>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div>
+                                        <div class=" d-flex justify-content-center mb-3">
+                                            <select id="opendCourse" class="form-select mb-3 d-flex justify-content-center"></select>
+                                        </div>
+                                        <div class="d-flex justify-content-center mb-3">
+                                            <button onclick="goOpen()" type="button" class="btn btn-primary d-flex justify-content-center" name="code" value="" id="goToOpen">前往開課</button>
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
-                <div class="row">
-                    <div class="col-md-8">
-                        <select id="opendCourse" class="form-select mb-3" aria-label="Default select example"></select>
-                    </div>
-                    <div class="col-md-4">
-                        <button onclick="goOpen()" type="button" class="btn btn-primary" name="code" value="" id="goToOpen">前往開課</button>
-                    </div>
-                </div>
             </div>
         </div>
     </div>
-</div>
+</section>
 
 <!-- End Table with stripped rows -->
 @section Scripts {
@@ -294,18 +315,18 @@
                 text: `請填寫取消開課原因`,
                 icon: "info",
                 input: "text",
-                inputLabel: "填寫取消開課原因",
+                inputValue: "行程異動",
                 showCancelButton: true,
+
                 confirmButtonColor: "#30C2EC",
-                cancelButtonColor: "#d33",
                 confirmButtonText: "確定",
-                cancelButtonText: "取消"
+                cancelButtonColor: "#d33",
+                cancelButtonText: "取消",
+                
+
             }).then((result) => {
                 if (result.isConfirmed) {
-                    // console.log(formData);
-                    // 使用fetch API發送POST請求
-                    const url = `${location.origin}/TeacherAdmin/LessonCancel/${lessonid}`
-
+                    const url = `${location.origin}/TeacherAdmin/LessonCancel/${lessonid}`;
                     fetch(url, {
                         method: "POST",
                         headers: {
@@ -315,21 +336,20 @@
                         credentials: 'same-origin',
                         body: JSON.stringify({ reason: result.value }),
                     }).then((response) => {
-                        // 处理响应
                         if (response.ok) {
-                            location.reload();
+                            console.log(response.ok);
                             sweetMsg("課程已成功取消", "success");
-                    
+                            $('#lessonListTable').DataTable().ajax.reload();
                         } else {
                             sweetMsg("無法取消課程", "error");
                         }
                     }).catch((error) => {
-                        // 处理错误
                         sweetMsg("無法取消課程", "error");
                     });
-                }
+                } 
             });
         }
+
         function sweetMsg(msg, icon) {
             Swal.fire({
                 position: "center",
@@ -386,30 +406,30 @@
         const startDate = document.getElementById('startDate');
         const endDate = document.getElementById('endDate');
 
-      startDate.addEventListener('change', function () {
+        startDate.addEventListener('change', function () {
             //console.log(startDate.value)
-    if (startDate.value && endDate.value) {
-        // 如果開始日期和結束日期都有值，則執行查詢
-        performDateRangeSearch();
-    }
-});
+            if (startDate.value && endDate.value) {
+                // 如果開始日期和結束日期都有值，則執行查詢
+                performDateRangeSearch();
+            }
+        });
 
-endDate.addEventListener('change', function () {
-     //console.log(startDate.value)
-    if (startDate.value && endDate.value) {
-            
-        // 如果開始日期和結束日期都有值，則執行查詢
-        performDateRangeSearch();
-    }
-});
+        endDate.addEventListener('change', function () {
+            //console.log(startDate.value)
+            if (startDate.value && endDate.value) {
 
-function performDateRangeSearch() {
-    // 確保開始日期小於結束日期
-    if (startDate.value > endDate.value) {
-        // 如果開始日期大於結束日期，顯示錯誤提示
-        $('#dateRangeError').text('查詢日期的區間起始日期不能大於結束日期').css('color', 'red');
-       alert('查詢日期的區間起始日期不能大於結束日期');
-    } else {
+                // 如果開始日期和結束日期都有值，則執行查詢
+                performDateRangeSearch();
+            }
+        });
+
+        function performDateRangeSearch() {
+            // 確保開始日期小於結束日期
+            if (startDate.value > endDate.value) {
+                // 如果開始日期大於結束日期，顯示錯誤提示
+                $('#dateRangeError').text('查詢日期的區間起始日期不能大於結束日期').css('color', 'red');
+                alert('查詢日期的區間起始日期不能大於結束日期');
+            } else {
 
                 // const startDateParts = startDate.value.split('T')[0].split('-'); // 拆分為年、月、日
                 // const endDateParts = endDate.value.split('T')[0].split('-'); // 拆分為年、月、日
@@ -422,8 +442,8 @@ function performDateRangeSearch() {
                 // // 在 DataTable 中執行日期範圍查詢
                 // $('#lessonListTable').DataTable().column(4).search(searchValue, true, false).draw();
 
-    }
-}
+            }
+        }
 
     </script>
 }

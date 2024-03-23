@@ -1,0 +1,52 @@
+﻿@if (ViewBag.Success == "開課成功")
+{
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script>
+        Swal.fire({
+            position: "center",
+            icon: "success",
+            title: "@ViewBag.Success",
+            showConfirmButton: false,
+            timer: 1500
+        });
+    </script>
+}
+@if (ViewBag.Success == "暫存成功")
+{
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script>
+        Swal.fire({
+            position: "center",
+            icon: "info",
+            title: "@ViewBag.Success",
+            showConfirmButton: false,
+            timer: 1500
+        });
+    </script>
+}
+@if (ViewBag.Success == "開放報名資訊變更成功")
+{
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script>
+        Swal.fire({
+            position: "center",
+            icon: "success",
+            title: "@ViewBag.Success",
+            showConfirmButton: false,
+            timer: 1500
+        });
+    </script>
+}
+@if (ViewBag.Error != null)
+{
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script>
+        Swal.fire({
+            position: "center",
+            icon: "error",
+            title: "@ViewBag.Error",
+            showConfirmButton: false,
+            timer: 1500
+        });
+    </script>
+}
