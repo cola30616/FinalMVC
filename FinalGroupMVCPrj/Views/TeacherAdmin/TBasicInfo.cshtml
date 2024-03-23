@@ -26,20 +26,25 @@
 
     #profile-overview > h5 {
         font-size: 25px;
+       font-weight: bold;
     }
 
     .nav-item {
         font-size: 20px;
     }
+
+    .custom-size{
+        padding: 3px 7px; /* 自定義按鈕的內邊距 */
+    }
 </style>
 
 <div class="pagetitle">
-    <h1>Profile</h1>
+    <h1>基本資訊</h1>
     <nav>
         <ol class="breadcrumb">
-            <li class="breadcrumb-item"><a href="index.html">Home</a></li>
-            <li class="breadcrumb-item">Users</li>
-            <li class="breadcrumb-item active">Profile</li>
+            <li class="breadcrumb-item"><a href="index.html">老師後台</a></li>
+            <li class="breadcrumb-item">老師資料</li>
+            <li class="breadcrumb-item active">基本資訊</li>
         </ol>
     </nav>
 </div><!-- End Page Title -->
@@ -53,7 +58,7 @@
                     @foreach (TeacherBasicViewModel item in Model)
                     {
                         <!-- 老師頭像 -->
-                        <img id="Teacher-avatar1" src="@item.TeacherProfilePicURL" alt="Profile" class="rounded-circle" />
+                        <img id="Teacher-avatar1" src="@item.TeacherProfilePicURL" alt="Profile" class="rounded-circle"/>
                         <h2 id="Teacher-name1">@item.TeacherName</h2>
                         <h3> </h3>
                         <div class="pt-2">
@@ -61,7 +66,7 @@
                             @* <input type="hidden" name="id" value="@item.TeacherId" /> *@
                             <span class="file-input-container">
                                 <input type="file" id="InputUpladPicprofile" class="hidden" accept="image/gif, image/jpeg, image/png" multiple />
-                                <label for="InputUpladPicprofile" class="btn btn-primary btn-sm" title="Upload new profile image"><i class="bi bi-upload"></i></label>
+                                <label for="InputUpladPicprofile" class="btn btn-primary custom-size" title="Upload new profile image"><i class="bi bi-upload"></i></label>
                             </span>
                             <!-- 清除頭像btn -->
                             <button id="buttonDeletePicprofile" class="btn btn-danger btn-sm" title="Remove my profile image"><i class="bi bi-trash"></i></button>
@@ -101,23 +106,23 @@
                             <div class="tab-pane fade show active profile-overview" id="profile-overview">
                                 <!-- 標題1 老師名稱 -->
                                 <h5 class="card-title">@Html.DisplayNameFor(tr => tr.TeacherName)</h5>
-                                <p class="small fst-italic">@item.TeacherName</p>
+                                <p>@item.TeacherName</p>
 
                                 <!-- 標題2 可開課科目 -->
                                 <h5 class="card-title">@Html.DisplayNameFor(t => t.SubjectName)</h5>
-                                <p class="small fst-italic">@string.Join(", ", item.SubjectName)</p>
+                                <p>@string.Join(", ", item.SubjectName)</p>
 
                                 <!-- 標題3 關於我 -->
                                 <h5 class="card-title">@Html.DisplayNameFor(t => t.Introduction)</h5>
-                                <p class="small fst-italic">@item.Introduction</p>
+                                <p>@item.Introduction</p>
 
                                 <!-- 標題4 備註 -->
-                                <h5 class="card-title">@Html.DisplayNameFor(t => t.Note)</h5>
-                                <p class="small fst-italic">@item.Note</p>
+@*                                 <h5 class="card-title">@Html.DisplayNameFor(t => t.Note)</h5>
+                                <p>@item.Note</p> *@
 
                                 <!-- 標題5 聯絡方式 -->
                                 <h5 class="card-title">@Html.DisplayNameFor(t => t.ContactInfo)</h5>
-                                <p class="small fst-italic">@item.ContactInfo</p>
+                                <p>@item.ContactInfo</p>
                             </div>
                             <!-- ========== 編輯表單 ========== -->
                             <div class="tab-pane fade profile-edit pt-3" id="profile-edit">

@@ -6,6 +6,8 @@ namespace FinalGroupMVCPrj.Models.ViewModels
     public class AdminTCheckVM
     {
         public int TeacherId { get; set; }
+        [Display(Name = "加入時間")]
+        public string JoinTime { get; set; }
         [Display(Name = "可開課科目")]
         public string SubjectName { get; set; }
         [Display(Name = "老師頭像")]

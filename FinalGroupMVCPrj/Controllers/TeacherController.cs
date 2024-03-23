@@ -70,9 +70,13 @@ namespace FinalGroupMVCPrj.Controllers
             //根據老師多圖的科目fCategory搜尋
             if (!string.IsNullOrEmpty(_search.Keywordca))
             {
-                if (_search.Keywordca == "全部") 
+                if (_search.Keywordca == "全部")
                 {
-                    ti = ti.Where(t => t.FCategory.Contains("教育背景") || t.FCategory.Contains("證照證書") || t.FCategory.Contains("作品"));
+                    ti = ti.Where(t => t.FCategory.Contains("教育背景") || t.FCategory.Contains("證照證書") || t.FCategory.Contains("作品") || t.FCategory == null);
+                }
+                else if (_search.Keywordca == "其他")
+                {
+                    ti = ti.Where(t => t.FCategory==null);
                 }
                 else
                 {

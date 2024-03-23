@@ -171,6 +171,7 @@ namespace FinalGroupMVCPrj.Controllers
                 new List<AdminTCheckVM>(tCheckList.Select(a => new AdminTCheckVM
                 {
                     TeacherId = a.FTeacherId,
+                    JoinTime = a.FJoinDatetime.ToString("yyyy/MM/dd HH:mm"),
                     //SubjectName = a.TTeacherSubjects.Select(ts => ts.FSubject.FSubjectName),
                     SubjectName = string.Join("、", a.TTeacherSubjects.Select(ts => ts.FSubject.FSubjectName)),
                     TeacherProfilePic = a.FTeacherProfilePic,
