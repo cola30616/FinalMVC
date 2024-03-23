@@ -3,7 +3,47 @@
     ViewData["Title"] = "List";
     Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
 }
+@section Styles {
+    <style>
 
+        .demoDirect {
+            color: white;
+            background-color: white;
+            .btn
+
+        {
+            color: white;
+            background-color: white
+        }
+
+        h6 {
+            color: white
+        }
+
+        }
+
+        .demoDirect:hover {
+            .btn
+
+        {
+            background-color: lightgrey
+        }
+
+        .btn:hover {
+            background-color: #30C2EC
+        }
+
+        .btn:active {
+            background-color: black
+        }
+
+        h6 {
+            color: lightgrey
+        }
+
+        }
+    </style>
+}
 <div class="pagetitle">
     <h1>老師管理</h1>
     <nav>
@@ -179,10 +219,10 @@
             </div>
                 <!--審核區-->
             <div class="d-flex flex-column px-2" style ="height:200px">
-                <div class="d-flex justify-content-between align-items-center">
+                <div class="d-flex justify-content-between gap-3 align-items-center">
                     <div class="flex-grow-1 d-flex gap-2 align-items-center">
                         <h6 class="m-0">審核狀態：</h6>
-                        <div class="" style="width:25%">
+                        <div class="" style="width:30%">
                             <select id="curADprogressStatus" class="form-select" aria-label="Default select example">
                                 <option value="待審核" selected>待審核</option>
                                 <option value="請補件">請補件</option>
@@ -193,12 +233,15 @@
                         </div>
                         <button onclick="submitReview()" id="reviewBtn" class="btn btn-primary mx-2">送出</button>
                     </div>
+                    <div class="demoDirect">
+                        <button onclick="demoRequestFile()" class="btn btn-sm ">Demo 補件</button>
+                    </div>
+
                     <span>更新時間：<span id="curADreviewDatetime">2024/03/05 10:05</span></span>
                 </div>
 
                 <textarea id="curADnote" class="flex-grow-1 form-control my-3" placeholder="說明"></textarea>
                 <span id="warnNoNote" hidden class="">※需填寫說明</span>
-
                 </div>
 
         </div>
@@ -224,6 +267,12 @@ https://cdn.jsdelivr.net/npm/moment@2.30.1/moment.min.js
         function loadDataTable() {
             // html 欄位跟 ajax 的欄位務必相同
             dataTable = $('#tApplyListTable').DataTable({
+                columnDefs: [
+                    {
+                        targets: '_all',
+                        className: 'dt-body-left dt-head-left'
+                    }
+                ],
                 "ajax": { url: '/AdminTeacher/ListDataJson' },
                 "columns": [
                     { data: 'applyDatetime', "width": "12%" },
@@ -253,6 +302,9 @@ https://cdn.jsdelivr.net/npm/moment@2.30.1/moment.min.js
         }
     </script>
     <script>
+        function demoRequestFile() { 
+            document.querySelector('#curADnote').value = "完整申請文件連結有誤"
+                }
         // 載入單筆申請資料
         async function loadApplyDetail(applyLogId) {
 

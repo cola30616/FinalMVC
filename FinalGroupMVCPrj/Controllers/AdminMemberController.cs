@@ -248,5 +248,28 @@ namespace FinalGroupMVCPrj.Controllers
                 return StatusCode(500, "系統異常：" + ex);
             }
         }
+        //更改訂單時間
+        [HttpGet]
+        public IActionResult ChangeOrderTime(int courseId)
+        {
+            try
+            {
+               var toChange = _context.TOrderDetails.Include(od=>od.FOrder).Where(od=>od.FLessonCourseId == courseId&& od.FOrder.FOrderDate.Hour == 0).ToList();
+                foreach (var item in toChange)
+                {
+                    var order = item.FOrder;
+                    int toAddMin = new Random().Next(495,1315);
+                    order.FOrderDate = order.FOrderDate.AddMinutes(toAddMin);
+                    _context.TOrders.Update(order);
+                    _context.SaveChanges();
+                }
+                return Ok("成功");
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, "系統異常：" + ex);
+            }
+        }
+
     }
 }

@@ -420,9 +420,15 @@ https://cdn.jsdelivr.net/npm/moment@2.30.1/moment.min.js
         function loadDataTable() {
             // html 欄位跟 ajax 的欄位務必相同
             dataTable = $('#memberListTable').DataTable({
+                columnDefs: [
+                    {
+                        targets: '_all',
+                        className: 'dt-body-left dt-head-left'
+                    }
+                ],
                 "ajax": { url: '/AdminMember/ListDataJson' },
                 "columns": [
-                    { data: 'memberId', "width": "7%" },
+                    { data: 'memberId', "width": "5%" },
                     { data: 'registerDateTime', "width": "12%" },
                     { data: 'realName', "width": "8%" },
                     { data: 'showName', "width": "10%" },
