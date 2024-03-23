@@ -23,14 +23,14 @@
                     <div class="banner-content mb-40">
 
                         <h1 class="title mb-30" data-aos="fade-up" data-aos-delay="100">
-                            作品總覽
+                            心得總覽
                         </h1>
                         <p class="text-center" data-aos="fade-up" data-aos-delay="100">
-                            歡迎到來學樂，來看看同學的作品
+                            歡迎到來學樂，來看看同學的課程心得
                         </p>
                         <div class="banner-filter-form mt-40" data-aos="fade-up" data-aos-delay="150">
                             <div class="form-wrapper border rounded-pill">
-                                <form>
+                                <form method="post" id="selectForm">
                                     <div class="row align-items-center">
                                         <div class="col-xl-4 col-lg-5 col-md-4 col-sm-6">
                                             <div class="input-group">
@@ -44,17 +44,17 @@
                                                 <label for="search"><i class="fas fa-th-large"></i></label>
                                                 <select class="niceselect">
                                                     <option data-display="選擇課程">選擇課程種類...</option>
-                                                    <option value=1>烹飪</option>
-                                                    <option value=2>軟體工程</option>
-                                                    <option value=3>語言</option>
-                                                    <option value=4>投資理財</option>
-                                                    <option value=5>休閒運動</option>
+                                                    <option value="烹飪">烹飪</option>
+                                                    <option value="軟體工程">軟體工程</option>
+                                                    <option value="語言">語言</option>
+                                                    <option value="投資理財">投資理財</option>
+                                                    <option value="休閒運動">休閒運動</option>
                                                 </select>
                                                
                                             </div>
                                         </div>
                                         <div class="col-xl-4 col-lg-2 col-md-4 col-sm-6">
-                                            <button class="btn btn-lg btn-primary btn-gradient rounded-pill w-100" type="button" aria-label="Find Portfolio">
+                                            <button id="searchButton" class="btn btn-lg btn-primary btn-gradient rounded-pill w-100" type="button" aria-label="Find Portfolio">
                                                 <span>Find Portfolio</span>
                                                 <i class="fal fa-search"></i>
                                             </button>
@@ -118,13 +118,36 @@
             </div>
             <nav class="pagination-nav mt-15 mb-25" data-aos="fade-up">
                 <ul class="pagination justify-content-center" id="course-total-page">
+                    @for (var i = 1; i <= ViewBag.TotalPages; i++)
+                    {
+                        <li class="page-item @(i == ViewBag.CurrentPage ? "active" : "")">
+                            <a class="page-link" href="@Url.Action("Page", new { page = i })">@i</a>
+                        </li>
+                    }
+                    <li class="page-item"><a class="page-link" href="courses.html">1</a></li>
                 </ul>
             </nav>
         </div>
     </div>
     <!-- Blog-area end -->
-
-
+    <nav class="pagination-nav mt-15 mb-25" data-aos="fade-up">
+        <ul class="pagination justify-content-center">
+            @for (var i = 1; i <= ViewBag.TotalPages; i++)
+            {
+                <li class="page-item @(i == ViewBag.CurrentPage ? "active" : "")">
+                    <a class="page-link" href="@Url.Action("AllWorks", new { page = i })">@i</a>
+                </li>
+            }
+            @* <li class="page-item active"><a class="page-link" href="courses.html">1</a></li>
+            <li class="page-item"><a class="page-link" href="courses.html">2</a></li>
+            <li class="page-item"><a class="page-link" href="courses.html">3</a></li>
+            <li class="page-item">
+                <a class="page-link" href="courses.html" aria-label="Next">
+                    <i class="far fa-angle-right"></i>
+                </a>
+            </li> *@
+        </ul>
+    </nav>
 </body>
 
 </html>
@@ -145,5 +168,27 @@
             
         };a();
 
+        document.getElementById("searchButton").addEventListener("click", function () {
+            var category = document.getElementById("category").value;
+            window.location.href = '@Url.Action("Search", "Portfolio")?category=' + category;
+        });
+
+
+        console.log(commentForm)
+        selectForm.onsubmit = async (e) => {
+            alert('點擊')
+            e.preventDefault();
+
+            let response = await fetch('/Portfolio/Create', {
+                method: 'POST',
+                body: new FormData(commentForm)
+            });
+
+            let result = await response.json();
+
+            alert(result.message);
+            console.log(result)
+            console.log(result.message)
+        };
     </script>
 }

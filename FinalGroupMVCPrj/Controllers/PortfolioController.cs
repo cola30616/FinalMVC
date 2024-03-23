@@ -85,6 +85,63 @@ namespace FinalGroupMVCPrj.Controllers
                 })).ToList();
             return Json(portfolioList);
         }
+        public IActionResult Search(string category = null)
+        {
+            IQueryable<TCoursework> query = _context.TCourseworks.Include(c => c.FOrderDetail).ThenInclude(o => o.FOrder).ThenInclude(o => o.FMember).Include(c => c.FOrderDetail).ThenInclude(o => o.FLessonCourse).ThenInclude(c => c.FSubject).ThenInclude(t => t.FField).ThenInclude(a => a.TMemberWishFields);
+
+            if (!string.IsNullOrEmpty(category))
+            {
+                query = query.Where(c => c.FOrderDetail.FLessonCourse.FSubject.FField.FFieldName == category);
+            }
+
+            var portfolioList = query
+                .Select(c => new PortfolioListDTO
+                {
+                    FMemberId = c.FMemberId,
+                    FShowName = c.FOrderDetail.FOrder.FMember.FShowName,
+                    FName = c.FName,
+                    FComment = c.FComment,
+                    FDescrpition = c.FDescrpition,
+                    FLessonName = c.FOrderDetail.FLessonCourse.FName,
+                    FLastModifyTime = c.FLastModifyTime,
+                    FSubjectName = c.FOrderDetail.FLessonCourse.FSubject.FSubjectName,
+                    FFieldName = c.FOrderDetail.FLessonCourse.FSubject.FField.FFieldName,
+                    FLessonCourseDescrpition = c.FOrderDetail.FLessonCourse.FDescription,
+                })
+                .ToList();
+
+            return View("AllWorks", portfolioList);
+        }
+        public IActionResult Page(int page = 1, int pageSize = 10)
+        {
+            var totalCount = _context.TCourseworks.Count();
+            var totalPages = (int)Math.Ceiling(totalCount / (double)pageSize);
+
+            var portfolioList = _context.TCourseworks
+                .OrderBy(c => c.FCourseworkId)
+                .Skip((page - 1) * pageSize)
+                .Take(pageSize)
+                .Select(c => new PortfolioListDTO
+                {
+                    FMemberId = c.FMemberId,
+                    FShowName = c.FOrderDetail.FOrder.FMember.FShowName,
+                    FName = c.FName,
+                    FComment = c.FComment,
+                    FDescrpition = c.FDescrpition,
+                    FLessonName = c.FOrderDetail.FLessonCourse.FName,
+                    FLastModifyTime = c.FLastModifyTime,
+                    FSubjectName = c.FOrderDetail.FLessonCourse.FSubject.FSubjectName,
+                    FFieldName = c.FOrderDetail.FLessonCourse.FSubject.FField.FFieldName,
+                    FLessonCourseDescrpition = c.FOrderDetail.FLessonCourse.FDescription,
+                })
+                .ToList();
+
+            ViewBag.CurrentPage = page;
+            ViewBag.TotalPages = totalPages;
+
+            return View("AllWorks", portfolioList);
+        }
+
 
         //public IActionResult Create(string itemName, string itemDescription)
         //{
