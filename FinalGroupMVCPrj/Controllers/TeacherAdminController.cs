@@ -926,6 +926,23 @@ namespace FinalGroupMVCPrj.Controllers
             return Json(new { success = true, message = "刪除成功" });
         }
 
+        // 新增影片到資料庫
+        [HttpPost]
+        public async Task<IActionResult> SaveUrlToDb(VideoUrl data)
+        {
+            // 將 VideoUrl 轉換為 TVideoUploadUrl
+            var uploadToSave = new TVideoUploadUrl
+            {
+                FTeacherId = GetCurrentTeacherId(),
+                FVideoName = "新上傳的影片",
+                FVideoPath = data.FVideoPath,
+                FUploadTime = DateTime.Now
+                
+            };
+            var result = await _context.TVideoUploadUrls.AddAsync(uploadToSave);
+            await _context.SaveChangesAsync();
+            return Json(result.Entity);
+        }
         //■ ==========================     育蘋作業區      ==========================■
         public IActionResult OrderList()
         {
