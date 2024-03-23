@@ -41,8 +41,8 @@
                                         </div>
                                         <div class="col-xl-4 col-lg-5 col-md-4 col-sm-6">
                                             <div class="input-group">
-                                                <label for="search"><i class="fas fa-th-large"></i></label>
-                                                <select class="niceselect">
+                                                <label for="category"><i class="fas fa-th-large"></i></label>
+                                                <select id="category" class="niceselect">
                                                     <option data-display="選擇課程">選擇課程種類...</option>
                                                     <option value="烹飪">烹飪</option>
                                                     <option value="軟體工程">軟體工程</option>
@@ -168,9 +168,29 @@
             
         };a();
 
+        // document.getElementById("searchButton").addEventListener("click", function () {
+        //     var category = document.getElementById("category").value;
+        //     window.location.href = '@Url.Action("Search", "Portfolio")?category=' + category;
+        // });
+        // document.getElementById("searchButton").addEventListener("click", function () {
+        //     var keyword = document.getElementById("search").value; // 获取文本框中的关键字
+        //     window.location.href = '@Url.Action("Search", "Portfolio")?keyword=' + keyword;
+        // });
         document.getElementById("searchButton").addEventListener("click", function () {
             var category = document.getElementById("category").value;
-            window.location.href = '@Url.Action("Search", "Portfolio")?category=' + category;
+            var keyword = document.getElementById("search").value; // 获取文本框中的关键字
+            var url = '@Url.Action("Search", "Portfolio")';
+
+            // 如果类别和关键字都有值，则将它们作为参数添加到 URL 中
+            if (category && keyword) {
+                url += '?category=' + category + '&keyword=' + keyword;
+            } else if (category) {
+                url += '?category=' + category;
+            } else if (keyword) {
+                url += '?keyword=' + keyword;
+            }
+
+            window.location.href = url;
         });
 
 

@@ -60,7 +60,7 @@
                 <div class="row">
                     <div class="col-xl-10">
                         <div class="comments">
-                            <h4 class="mb-20">Comments</h4>
+                            <h4 class="mb-20">評論區</h4>
                             <div class="comment-box radius-md mb-40">
                                 <ol class="comment-list">
                                     <li class="comment">
@@ -123,26 +123,26 @@
                                 </ol>
                             </div>
                             <div class="comment-reply mb-40">
-                                <h4 class="mb-10">Post Your Comment</h4>
+                                <h4 class="mb-10">發表評論</h4>
                                 <p class="comment-notes">
-                                    <span id="email-notes">Your email address will not be published.</span>
-                                    Required fields are marked
+                                    <span id="email-notes">請記得填寫姓名</span>
+                                        必填欄位
                                     <span class="required text-danger">*</span>
                                 </p>
                                 <form method="post" id="commentForm" class="comment-form">
                                     <div class="row">
                                         <div class="col-sm-6">
                                             <div class="form-group mb-20">
-                                                <input type="text" class="form-control" name="name" id="inputName" placeholder="Name*" required>
+                                                <input type="text" class="form-control" name="name" id="inputName" placeholder="姓名*" required>
                                             </div>
                                         </div>
                                         <div class="col-12">
                                             <div class="form-group mb-30">
-                                                <textarea name="message" class="form-control" placeholder="Comment" id="textareaComment" required rows="6" ></textarea>
+                                                <textarea name="message" class="form-control" placeholder="評論" id="textareaComment" required rows="6" ></textarea>
                                             </div>
                                         </div>
                                     </div>
-                                    <button id="buttonPost" class="btn btn-lg btn-primary rounded-pill" type="submit" aria-label="Post Comment" asp-controller="Portfolio" asp-action="Create">Post Comment</button>
+                                        <button id="buttonPost" class="btn btn-lg btn-primary rounded-pill" type="submit" aria-label="發表" asp-controller="Portfolio" asp-action="Create">發表</button>
                                 </form>
                             </div>
                         </div>
@@ -152,7 +152,7 @@
             <div class="col-lg-4">
                 <aside class="widget-area border radius-md px-25" data-aos="fade-up">
                     <div class="widget widget-search py-25">
-                        <h5 class="title mb-15">Search Posts</h5>
+                        <h5 class="title mb-15">查詢心得</h5>
                         <div class="search-form">
                             <form id="searchForm">
                                 <div class="input-inline border rounded-pill">
@@ -167,7 +167,7 @@
                     <div class="widget widget-post py-25">
                         <h5 class="title">
                             <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#blogPost">
-                                Recent Post
+                                最近心得
                             </button>
                         </h5>
                         <div id="blogPost" class="collapse show">
@@ -193,17 +193,17 @@
                                 <article class="article-item mb-20">
                                     <div class="image">
                                         <a href="blog-single.html" target="_self" title="Link" class="lazy-container ratio ratio-1-1 radius-sm">
-                                            <img class="lazyload" src="/images/placeholder.png" data-src="/images/blog/blog-2.jpg" alt="blog Image">
+                                                <img class="lazyload" src="https://th.bing.com/th/id/OIG2.OQ6M3ZXxSj0fUZ3_9zVV?w=173&h=173&c=6&r=0&o=5&dpr=2&pid=ImgGn" data-src="https://th.bing.com/th/id/OIG2.OQ6M3ZXxSj0fUZ3_9zVV?w=173&h=173&c=6&r=0&o=5&dpr=2&pid=ImgGn" alt="blog Image">
                                         </a>
                                     </div>
                                     <div class="content">
                                         <ul class="info-list">
-                                            <li>John</li>
+                                            <li>大壯</li>
                                             <li>21/06/2023</li>
                                         </ul>
                                         <h6 class="lc-2 mb-0">
                                             <a href="blog-single.html" target="_self" title="blog">
-                                                Step-by-Step Instructions for Purchasing Computer Games from Our Website
+                                                    麻婆豆腐
                                             </a>
                                         </h6>
                                     </div>
@@ -211,17 +211,17 @@
                                 <article class="article-item mb-20">
                                     <div class="image">
                                         <a href="blog-single.html" target="_self" title="Link" class="lazy-container ratio ratio-1-1 radius-sm">
-                                            <img class="lazyload" src="/images/placeholder.png" data-src="/images/blog/blog-3.jpg" alt="blog Image">
+                                                <img class="lazyload" src="https://th.bing.com/th/id/OIG1.ZgghKhS83XsTYbxRKnBc?w=270&h=270&c=6&r=0&o=5&dpr=2&pid=ImgGn" data-src="https://th.bing.com/th/id/OIG1.ZgghKhS83XsTYbxRKnBc?w=270&h=270&c=6&r=0&o=5&dpr=2&pid=ImgGn" alt="blog Image">
                                         </a>
                                     </div>
                                     <div class="content">
                                         <ul class="info-list">
-                                            <li>Admin</li>
+                                            <li>小民</li>
                                             <li>02/11/2023</li>
                                         </ul>
                                         <h6 class="lc-2 mb-0">
                                             <a href="blog-single.html" target="_self" title="blog">
-                                                Professionals Might also Know How To Control Epic Games On Your Computer
+                                                    法語語音學
                                             </a>
                                         </h6>
                                     </div>
@@ -232,7 +232,7 @@
                     <div class="widget widget-blog-categories py-25">
                         <h5 class="title">
                             <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#blogCategory">
-                                Categories
+                                課程類別
                             </button>
                         </h5>
                         <div id="blogCategory" class="collapse show">
@@ -265,7 +265,7 @@
                     <div class="widget widget-tags py-25">
                         <h5 class="title">
                             <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#blogTags">
-                                Tags
+                                標籤
                             </button>
                         </h5>
                         <div id="blogTags" class="collapse show">
@@ -311,7 +311,7 @@
               <div class="comment-body">
             <div class="comment-author">
          <div class="lazy-container ratio ratio-1-1 rounded-circle">
-                 <img class="lazyload" src=""  alt="image">
+                     <img class="lazyload" src="https://themeforest.kreativdev.com/oppida/demo/assets/images/avatar-2.jpg"  alt="image">
          </div>
      </div>
      <div class="comment-content">

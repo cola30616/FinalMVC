@@ -85,15 +85,18 @@ namespace FinalGroupMVCPrj.Controllers
                 })).ToList();
             return Json(portfolioList);
         }
-        public IActionResult Search(string category = null)
+        public IActionResult Search(string category = null, string keyword = null)
         {
             IQueryable<TCoursework> query = _context.TCourseworks.Include(c => c.FOrderDetail).ThenInclude(o => o.FOrder).ThenInclude(o => o.FMember).Include(c => c.FOrderDetail).ThenInclude(o => o.FLessonCourse).ThenInclude(c => c.FSubject).ThenInclude(t => t.FField).ThenInclude(a => a.TMemberWishFields);
 
+            if (!string.IsNullOrEmpty(keyword))
+            {
+                query = query.Where(c => c.FDescrpition.Contains(keyword));
+            }
             if (!string.IsNullOrEmpty(category))
             {
-                query = query.Where(c => c.FOrderDetail.FLessonCourse.FSubject.FField.FFieldName == category);
+                query = query.Where(c => c.FOrderDetail.FLessonCourse.FSubject.FField.FFieldName == category); // 假设有一个名为 Category 的属性表示分类
             }
-
             var portfolioList = query
                 .Select(c => new PortfolioListDTO
                 {
@@ -107,6 +110,7 @@ namespace FinalGroupMVCPrj.Controllers
                     FSubjectName = c.FOrderDetail.FLessonCourse.FSubject.FSubjectName,
                     FFieldName = c.FOrderDetail.FLessonCourse.FSubject.FField.FFieldName,
                     FLessonCourseDescrpition = c.FOrderDetail.FLessonCourse.FDescription,
+                    FFileLink = c.TCourseworkFiles.FirstOrDefault(f => f.FCourseworkId == c.FCourseworkId).FFileLink
                 })
                 .ToList();
 
