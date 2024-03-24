@@ -36,6 +36,10 @@
                         data: 'fVideoUploadUrlId',
                         "render": function (data, type, row) {
                             var videoPath = row.fVideoPath; // 获取 fVideoPath 的值
+                            // const upload_widget = document.getElementById('upload_widget')
+                            // if (videoPath) {
+                            //     upload_widget.setAttribute('disabled', true); // 禁用上传按钮
+                            // }
                             return `<div class="w-75 btn-group" role="group">
                                                 <a href="${videoPath}" class="btn btn-primary mx-2"><i class="bi bi-pencil-square"></i> 預覽 </a>
                                                 <a onClick=Delete('/TeacherAdmin/DeleteVideoData/${data}') class="btn btn-danger mx-2"><i class="bi bi-trash"></i> 刪除 </a>
@@ -46,7 +50,7 @@
                 ],
                 language: {
                     url: "https://cdn.datatables.net/plug-ins/2.0.1/i18n/zh-HANT.json"
-                }
+                },               
             });
 
 
@@ -75,6 +79,8 @@
                 }
             });
         }
+
+        
 
     </script>
     <!--影片上傳用-->
@@ -116,8 +122,9 @@
 
         document.getElementById("upload_widget").addEventListener("click", function () {
             myWidget.open();
-        }, false);
-
+        }, false);       
+    </script>
+    <script>
         const saveVideoToDb = async (url) => {
             console.log(url);
             const response = await fetch('/TeacherAdmin/SaveUrlToDb', {
@@ -127,20 +134,16 @@
                 },
                 body: JSON.stringify({ FVideoPath: url }) // 使用 videoData.url
             });
-
+            dataTable.ajax.reload();
             if (!response.ok) {
                 console.error('Failed to save video to database');
                 // 这里可以添加适当的错误处理逻辑，例如显示错误消息给用户
                 return;
             }
 
-            const data = await response.json();           
+            const data = await response.json();
             console.log('Video saved to database:', data);
         };
-
-
-
-
     </script>
   
 }
