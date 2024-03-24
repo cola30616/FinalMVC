@@ -928,7 +928,7 @@ namespace FinalGroupMVCPrj.Controllers
 
         // 新增影片到資料庫
         [HttpPost]
-        public async Task<IActionResult> SaveUrlToDb(VideoUrl data)
+        public async Task<IActionResult> SaveUrlToDb([FromBody] VideoUrl data)
         {
             // 將 VideoUrl 轉換為 TVideoUploadUrl
             var uploadToSave = new TVideoUploadUrl
