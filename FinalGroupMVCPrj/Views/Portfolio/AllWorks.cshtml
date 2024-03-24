@@ -43,7 +43,7 @@
                                             <div class="input-group">
                                                 <label for="category"><i class="fas fa-th-large"></i></label>
                                                 <select id="category" class="niceselect">
-                                                    <option data-display="選擇課程">選擇課程種類...</option>
+                                                    <option value="" data-display="選擇課程">選擇課程種類...</option>
                                                     <option value="烹飪">烹飪</option>
                                                     <option value="軟體工程">軟體工程</option>
                                                     <option value="語言">語言</option>
@@ -89,7 +89,7 @@
                     <div class="col-md-6 col-xl-4" data-aos="fade-up">
                         <article class="card mb-25 border radius-md">
                             <div class="card-img">
-                                <a href="blog-single.html" target="_self" title="Link" class="lazy-container ratio ratio-2-3">
+                                <a asp-controller="Portfolio" asp-action="List" asp-route-id="@i.FCourseworkId" target="_self" title="Link" class="lazy-container ratio ratio-2-3">
                                     <img class="lazyload" src="@i.FFileLink" data-src="@i.FFileLink" alt="Blog Image">
                                 </a>
                             </div>
@@ -108,7 +108,7 @@
                                     @i.FDescrpition
                                 </p>
                                 <div class="cta-btn mt-15">
-                                    <a asp-controller="Portfolio" asp-action="List" asp-route-id="@i.FCourseworkId" class="btn-text color-primary" target="_self" title="Read More">READ MORE</a>
+                                    <a asp-controller="Portfolio" asp-action="List" asp-route-id="@i.FCourseworkId" class="btn-text color-primary" target="_self" title="閱讀更多">閱讀更多</a>
                                 </div>
                             </div>
                         </article>
@@ -124,7 +124,8 @@
                             <a class="page-link" href="@Url.Action("Page", new { page = i })">@i</a>
                         </li>
                     }
-                    <li class="page-item"><a class="page-link" href="courses.html">1</a></li>
+                    @* <li class="page-item"><a class="page-link" href="courses.html">1</a></li> *@
+                    
                 </ul>
             </nav>
         </div>
@@ -146,7 +147,10 @@
                     <i class="far fa-angle-right"></i>
                 </a>
             </li> *@
+            <li class="page-item"><a class="page-link" href="@Url.Action("AllWorks")"><i class="fa-solid fa-arrows-rotate"></i></a></li>
+            
         </ul>
+       
     </nav>
 </body>
 

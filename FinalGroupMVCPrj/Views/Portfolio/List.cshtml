@@ -1,4 +1,6 @@
 ﻿@model IEnumerable<FinalGroupMVCPrj.Models.DTO.PortfolioListDTO>
+@using FinalGroupMVCPrj.Models.DTO
+
 <body>
 <!-- Breadcrumb start -->
 <div class="breadcrumb-area bg-img bg-cover" data-bg-image="https://themeforest.kreativdev.com/oppida/demo/assets/images/newsletter-bg-1.jpg">
@@ -9,7 +11,7 @@
             <nav aria-label="breadcrumb">
                 <ol class="breadcrumb">
                     <li class="breadcrumb-item"><a href="index.html">Home</a></li>
-                    <li class="breadcrumb-item active" aria-current="page">Learning Portfolio</li>
+                        <li class="breadcrumb-item active" aria-current="page"><a href="@Url.Action("AllWorks")" title="Learning Portfolio">Learning Portfolio</a></li>
                 </ol>
             </nav>
         </div>
@@ -23,7 +25,7 @@
             <div class="col-lg-8">
                 <div class="blog-description mb-40">
                     <article class="item-single">
-                            @foreach (var i in Model)
+                            @foreach (var i in ViewBag.PortfolioList)
                             {
                         <div class="image">
                             <div class="lazy-container radius-md ratio ratio-16-9">
@@ -33,7 +35,7 @@
                         
                         <div class="content">
                             <ul class="info-list">
-                                <li><i class="fal fa-user"></i>@i.FName</li>
+                                <li><i class="fal fa-user"></i>@i.FShowName</li>
                                     <li><i class="fal fa-calendar"></i>@i.FLastModifyTime</li>
                                     <li><i class="fal fa-tag"></i>@i.FSubjectName</li>
                             </ul>
@@ -56,7 +58,12 @@
                             </div>
                         }
                     </article>
+                        <div class="btn-groups w-100 justify-content-start text-start gap-20 mb-30">
+
+                            <a href="@Url.Action("AllWorks")" class="btn btn-lg btn-outline rounded-pill" title="Proceed to checkout" target="_self">返回</a>
+                        </div>
                 </div>
+                    
                 <div class="row">
                     <div class="col-xl-10">
                         <div class="comments">
@@ -70,7 +77,7 @@
                                                     <img class="lazyload" src="https://themeforest.kreativdev.com/oppida/demo/assets/images/avatar-2.jpg" data-src="https://themeforest.kreativdev.com/oppida/demo/assets/images/avatar-2.jpg" alt="image">
                                                 </div>
                                             </div>
-                                            @foreach (var i in Model)
+                                                @foreach (var i in ViewBag.PortfolioList)
                                             {
                                                 <div class="comment-content">
                                                     <h6 class="name">老師</h6>
@@ -152,7 +159,7 @@
             <div class="col-lg-4">
                 <aside class="widget-area border radius-md px-25" data-aos="fade-up">
                     <div class="widget widget-search py-25">
-                        <h5 class="title mb-15">查詢心得</h5>
+                            <h5 class="title mb-15"><a href="@Url.Action("AllWorks")">返回心得總覽</a></h5>
                         <div class="search-form">
                             <form id="searchForm">
                                 <div class="input-inline border rounded-pill">
@@ -172,25 +179,52 @@
                         </h5>
                         <div id="blogPost" class="collapse show">
                             <div class="accordion-body mt-20 scroll-y">
+                                    
+                                    @foreach (var i in ViewBag.PortfolioList2)
+                                    {
+                                        <article class="article-item mb-20">
+                                            <div class="image">
+                                                <a asp-controller="Portfolio" asp-action="List" asp-route-id="@i.FCourseworkId" target="_self" title="Link" class="lazy-container ratio ratio-1-1 radius-sm">
+                                                    <img class="lazyload" src="@i.FFileLink" data-src="@i.FFileLink" alt="blog Image">
+                                                </a>
+                                            </div>
+                                            <div class="content">
+                                                <ul class="info-list">
+                                                    <a asp-controller="Portfolio" asp-action="List" asp-route-id="@i.FCourseworkId" target="_self" title="blog">
+                                                    <li>@i.FShowName</li>
+                                                    </a>
+                                                    
+                                                    <li>18/05/2023</li>
+                                                </ul>
+                                                <h6 class="lc-2 mb-0">
+                                                    <a asp-controller="Portfolio" asp-action="List" asp-route-id="@i.FCourseworkId" target="_self" title="blog">
+                                                        @i.FName
+                                                    </a>
+                                                </h6>
+                                            </div>
+                                        </article>
+                                    }
+                                    @* @foreach (var i in Model.Take(5)){
                                 <article class="article-item mb-20">
                                     <div class="image">
                                         <a href="blog-single.html" target="_self" title="Link" class="lazy-container ratio ratio-1-1 radius-sm">
-                                                <img class="lazyload" src="https://th.bing.com/th/id/OIG4.wN5J5yKc2n__hGS5jE0g?w=1024&h=1024&rs=1&pid=ImgDetMain" data-src="https://th.bing.com/th/id/OIG4.wN5J5yKc2n__hGS5jE0g?w=1024&h=1024&rs=1&pid=ImgDetMain" alt="blog Image">
+                                                    <img class="lazyload" src="@i.FFileLink" data-src="@i.FFileLink" alt="blog Image">
                                         </a>
                                     </div>
                                     <div class="content">
                                         <ul class="info-list">
-                                            <li>小美</li>
+                                            <li>@i.FShowName</li>
                                             <li>18/05/2023</li>
                                         </ul>
                                         <h6 class="lc-2 mb-0">
-                                            <a href="blog-single.html" target="_self" title="blog">
-                                                    法式馬卡龍
+                                                    <a asp-controller="Portfolio" asp-action="List" asp-route-id="@i.FCourseworkId"  target="_self" title="blog">
+                                                        @i.FName
                                             </a>
                                         </h6>
                                     </div>
-                                </article>
-                                <article class="article-item mb-20">
+                                        </article>
+                                    }} *@
+                               @*  <article class="article-item mb-20">
                                     <div class="image">
                                         <a href="blog-single.html" target="_self" title="Link" class="lazy-container ratio ratio-1-1 radius-sm">
                                                 <img class="lazyload" src="https://th.bing.com/th/id/OIG2.OQ6M3ZXxSj0fUZ3_9zVV?w=173&h=173&c=6&r=0&o=5&dpr=2&pid=ImgGn" data-src="https://th.bing.com/th/id/OIG2.OQ6M3ZXxSj0fUZ3_9zVV?w=173&h=173&c=6&r=0&o=5&dpr=2&pid=ImgGn" alt="blog Image">
@@ -225,7 +259,7 @@
                                             </a>
                                         </h6>
                                     </div>
-                                </article>
+                                </article> *@
                             </div>
                         </div>
                     </div>
@@ -237,7 +271,7 @@
                         </h5>
                         <div id="blogCategory" class="collapse show">
                             <div class="accordion-body mt-20 scroll-y">
-                                <ul class="list-unstyled m-0">
+                                <ul class="list-unstyled m-0">  
                                     <li class="d-flex align-items-center justify-content-between">
                                         <a href="blogs.html" target="_self" title="blogs"><i class="fal fa-folder"></i>烹飪</a>
                                         <span class="tqy">(11)</span>

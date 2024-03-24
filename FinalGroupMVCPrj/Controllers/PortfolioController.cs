@@ -12,7 +12,6 @@ namespace FinalGroupMVCPrj.Controllers
         {
             _context = context;
         }
-        PortfolioListDTO portfolioRead = new PortfolioListDTO();
 
         //回傳作品清單，https://localhost:7031/Portfolio/AllWorks
         [HttpGet]
@@ -61,10 +60,67 @@ namespace FinalGroupMVCPrj.Controllers
                     FFieldName = c.FOrderDetail.FLessonCourse.FSubject.FField.FFieldName,
                     FLessonCourseDescrpition = c.FOrderDetail.FLessonCourse.FDescription,
                     FFileLink = c.TCourseworkFiles.FirstOrDefault(f => f.FCourseworkId == c.FCourseworkId).FFileLink
-                }));
+                })).ToList();
 
-            return View(portfolioList);
+
+            IEnumerable<PortfolioListDTO> portfolioList2 = new List<PortfolioListDTO>(_context.TCourseworks.Include(c => c.FOrderDetail).ThenInclude(o => o.FOrder).ThenInclude(o => o.FMember).Include(c => c.FOrderDetail).ThenInclude(o => o.FLessonCourse).ThenInclude(c => c.FSubject).ThenInclude(t => t.FField).ThenInclude(a => a.TMemberWishFields).Include(c => c.TCourseworkFiles)
+
+
+                .Select(c => new PortfolioListDTO
+                {
+                    FCourseworkId = c.FCourseworkId,
+                    FMemberId = c.FMemberId,
+                    FShowName = c.FOrderDetail.FOrder.FMember.FShowName,
+                    FName = c.FName,
+                    FComment = c.FComment,
+                    FDescrpition = c.FDescrpition,
+                    FLessonName = c.FOrderDetail.FLessonCourse.FName,
+                    FLastModifyTime = c.FLastModifyTime,
+                    FSubjectName = c.FOrderDetail.FLessonCourse.FSubject.FSubjectName,
+                    FFieldName = c.FOrderDetail.FLessonCourse.FSubject.FField.FFieldName,
+                    FLessonCourseDescrpition = c.FOrderDetail.FLessonCourse.FDescription,
+                    FFileLink = c.TCourseworkFiles.FirstOrDefault(f => f.FCourseworkId == c.FCourseworkId).FFileLink
+                })).ToList();
+
+
+            ViewBag.PortfolioList = portfolioList;
+            ViewBag.PortfolioList2 = portfolioList2;
+
+
+            return View();
         }
+        //[HttpGet]
+        //public IActionResult List(int Id)
+        //{
+        //    var portfolioList = _context.TCourseworks
+        //        .Include(c => c.FOrderDetail).ThenInclude(o => o.FOrder).ThenInclude(o => o.FMember)
+        //        .Include(c => c.FOrderDetail).ThenInclude(o => o.FLessonCourse).ThenInclude(c => c.FSubject).ThenInclude(t => t.FField).ThenInclude(a => a.TMemberWishFields)
+        //        .Include(c => c.TCourseworkFiles)
+        //        .Where(c => c.FCourseworkId == Id)
+        //        .Select(c => new PortfolioListDTO
+        //        {
+        //            FCourseworkId = c.FCourseworkId,
+        //            FMemberId = c.FMemberId,
+        //            FShowName = c.FOrderDetail.FOrder.FMember.FShowName,
+        //            FName = c.FName,
+        //            FComment = c.FComment,
+        //            FDescrpition = c.FDescrpition,
+        //            FLessonName = c.FOrderDetail.FLessonCourse.FName,
+        //            FLastModifyTime = c.FLastModifyTime,
+        //            FSubjectName = c.FOrderDetail.FLessonCourse.FSubject.FSubjectName,
+        //            FFieldName = c.FOrderDetail.FLessonCourse.FSubject.FField.FFieldName,
+        //            FLessonCourseDescrpition = c.FOrderDetail.FLessonCourse.FDescription,
+        //            FFileLink = c.TCourseworkFiles.FirstOrDefault(f => f.FCourseworkId == c.FCourseworkId).FFileLink
+        //        }).ToList();
+
+        //    var portfolioList2 = portfolioList.Distinct().ToList();
+
+        //    ViewBag.PortfolioList = portfolioList;
+        //    ViewBag.PortfolioList2 = portfolioList2;
+
+        //    return View();
+        //}
+
         [HttpPost]
         public IActionResult data()
         {
@@ -97,6 +153,7 @@ namespace FinalGroupMVCPrj.Controllers
             {
                 query = query.Where(c => c.FOrderDetail.FLessonCourse.FSubject.FField.FFieldName == category); // 假设有一个名为 Category 的属性表示分类
             }
+            int totalCount = query.Count();
             var portfolioList = query
                 .Select(c => new PortfolioListDTO
                 {
@@ -113,7 +170,7 @@ namespace FinalGroupMVCPrj.Controllers
                     FFileLink = c.TCourseworkFiles.FirstOrDefault(f => f.FCourseworkId == c.FCourseworkId).FFileLink
                 })
                 .ToList();
-
+            ViewBag.TotalCount = totalCount;
             return View("AllWorks", portfolioList);
         }
         public IActionResult Page(int page = 1, int pageSize = 10)
