@@ -23,6 +23,8 @@
             margin-left: 5px; /* Adjust as needed */
         }
 
+      
+
     </style>
 }
 
@@ -119,16 +121,16 @@
 
                         <div class="tab-content">
                             <!-- 關於課程 -->
-                            <div class="tab-pane slide slide show active" id="tab1">
+                            <div class="tab-pane slide slide show active " id="tab1">
                                 @* 總覽 *@
-                                <div class="content pb-20">
-                                    <h5 class="title mb-20">總覽</h5>
+                                <div class="content pb-20 mb-4">
+                                    <h5 class="title mb-20 " >總覽</h5>
                                     <div class="container col-12">
                                         <div class="row gl-xl-5 mt-10 pt-10">
                                             <div class="col-lg-6">
 
                                                 <!--時數-->
-                                                <div class=" icon-start  mb-2">
+                                                <div class=" icon-start  mb-3">
                                                     <div class="row align-items-center">
                                                         <div class="col-auto">
                                                             <i class="fas fa-clock color-primary fa-xl"></i>
@@ -142,7 +144,7 @@
                                                     </div>
                                                 </div>
                                                 <!--名額-->
-                                                <div class="icon-start mb-2">
+                                                <div class="icon-start mb-3">
                                                     <div class="row align-items-center">
                                                         <div class="col-auto">
                                                             <i class="fas fa-users color-primary fa-xl"></i>
@@ -156,7 +158,7 @@
                                                     </div>
                                                 </div>
                                                 <!--最低人數下限-->
-                                                <div class=" icon-start mb-2">
+                                                <div class=" icon-start mb-3">
                                                     <div class="row align-items-center">
                                                         <div class="col-auto">
                                                             <i class="fa-solid fa-less-than-equal fa-xl fa-flip-horizontal color-primary"></i>
@@ -170,7 +172,7 @@
                                                     </div>
                                                 </div>
                                                 <!--場地-->
-                                                <div class=" icon-start ">
+                                                <div class=" icon-start mb-3">
                                                     <div class="row align-items-center">
                                                         <div class="col-auto">
                                                             <i class="fa-solid fa-location-dot fa-xl color-primary"></i>
@@ -213,7 +215,7 @@
 
                                                 <!--開課日期-->
 
-                                                <div class="icon-start mb-2">
+                                                <div class="icon-start mb-3">
                                                     <div class="row align-items-center">
                                                         <div class="col-auto">
                                                             <i class="fa-solid fa-calendar-days color-primary fa-xl"></i>
@@ -225,7 +227,7 @@
                                                     </div>
                                                 </div>
                                                 <!--開課時間-->
-                                                <div class="icon-start mb-2">
+                                                <div class="icon-start mb-3">
                                                     <div class="row align-items-center">
                                                         <div class="col-auto">
                                                             <i class="fa-solid fa-hourglass color-primary fa-xl"></i>
@@ -237,7 +239,7 @@
                                                     </div>
                                                 </div>
                                                 <!--報名截止日期-->
-                                                <div class="icon-start mb-2">
+                                                <div class="icon-start mb-3">
                                                     <div class="row align-items-center">
                                                         <div class="col-auto">
                                                             <i class="fa-regular fa-calendar-check color-primary fa-xl"></i></i>
@@ -258,7 +260,7 @@
                                 </div>
 
                                 @* 課程敘述 *@
-                                <div class="content pb-20">
+                                <div class="content pb-20 mb-4">
                                     <h5 class="title mb-20">課程敘述</h5>
                                     <div class="row gl-xl-5 mt-20">
                                         @Html.Raw(Model.FEditorDes)

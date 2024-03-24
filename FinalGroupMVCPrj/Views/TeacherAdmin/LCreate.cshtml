@@ -429,8 +429,6 @@
         const demo1 = document.querySelector("#demo1");
         
         const code = document.querySelector('#FCode');
-      
-
         const name = document.querySelector('#FName');
         const requirement = document.querySelector('#FRequirement');
         const desc = document.querySelector('#FEditorDes');
@@ -448,48 +446,38 @@
 
         name.getAttribute('value');
         demo1.addEventListener('click', () => {
-            name.value = '深入淺出（ETF）投資組合的實踐指南';
-            requirement.setAttribute('value', '本課程需要學生具備基礎的金融知識，以及相關學術背景或經驗。積極的學習態度是必要的，同時需要具備基本的電腦和互聯網技能。英語閱讀能力也是必須的，因為部分資料可能以英文提供。');
-            hw.innerHTML = '完成相關的作業，應用所學知識解決實際問題。';
+            name.value = '「華爾街策略：美股投資之道」';
+            requirement.setAttribute('value', '具備投資熱情，渴望探索華爾街的投資之道；擁有基本的金融市場知識和投資理念，對股市運作有基本了解；能夠閱讀和理解英文股市相關文獻和資訊，以獲取最新的投資資訊。');
+            hw.innerHTML = '學生需完成一項華爾街風格的投資策略案例分析作業，並提交相應的報告。作業將考察學生對投資策略的理解和應用能力。';
             price.setAttribute('value', 1200);
             start.setAttribute('value', '10:00');
             end.setAttribute('value', '13:00');
-            minpeo.setAttribute('value', 8);
-            maxpeo.setAttribute('value', 15);
-            
+            minpeo.setAttribute('value', 10);
+            maxpeo.setAttribute('value', 30);            
             lessondate.setAttribute('value', '2024-04-15');
             deadline.setAttribute('value', '2024-03-30');
-            vname.setAttribute('value', '數據科學實習室');
-            address.setAttribute('value', '雅潭路三段400號');
-            city.selectedIndex = 7;
-            district.selectedIndex = 19;
-            subject.selectedIndex = '0';
-            filed.selectedIndex = '0';
+            district.selectedIndex = 3;
+            vname.setAttribute('value', '投資理財實習室');
+            address.setAttribute('value', '延平路32號');
         });
 
 
         //demo2
         const demo2 = document.querySelector("#demo2");
 
-
-
-
         demo2.addEventListener('click', () => {
 
-            requirement.setAttribute('value', '學生需具備基本的Python程式設計知識，並需使用個人電腦或筆記本電腦完成課程內容。');
-            hw.innerHTML = '學生需完成指定的資料分析任務，並提交相應的報告。';
-            price.setAttribute('value', 1500);
-            start.setAttribute('value', '13:00');
-            end.setAttribute('value', '15:00');
+            requirement.setAttribute('value', '本課程需要學生具備基礎的金融知識，以及相關學術背景或經驗。積極的學習態度是必要的，同時需要具備基本的電腦和互聯網技能。英語閱讀能力也是必須的，因為部分資料可能以英文提供。');
+            hw.innerHTML = '學員將完成一系列作業，包括選擇並解釋個人投資組合中的 ETF，並提出一份投資計劃。作業將在課程期間指定並截止。';
+            price.setAttribute('value', 2500);
+            start.setAttribute('value', '07:00');
+            end.setAttribute('value', '09:00');
             minpeo.setAttribute('value', 10);
             maxpeo.setAttribute('value', 20);
 
-            lessondate.setAttribute('value', '2024-04-10');
+            lessondate.setAttribute('value', '2024-04-13');
             deadline.setAttribute('value', '2024-03-31');
-            vname.setAttribute('value', '程序設計工作坊');
-            address.setAttribute('value', '雅潭路三段400號');
-            city.selectedIndex = 7;
-            district.selectedIndex = 6;
+
     
         });
     </script>
