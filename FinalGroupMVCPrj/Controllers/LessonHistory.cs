@@ -70,8 +70,10 @@ namespace FinalGroupMVCPrj.Controllers
                     FOrderValid = od.FOrderValid,
                     FOrderDate = od.FOrder.FOrderDate,
                     FLessonDate = od.FLessonCourse.FLessonDate,
+                    FPhoto = od.FLessonCourse.FPhoto,
                     FLessonPrice = od.FLessonPrice,
                     FOrderDetailId = od.FOrderDetailId,
+                    FLessonCourseId = od.FLessonCourseId,
                     FModificationDescription = od.FModificationDescription,
                 }).ToList().FirstOrDefault();
          
@@ -91,6 +93,13 @@ namespace FinalGroupMVCPrj.Controllers
                 return Ok(orderDetail);
             }
             return NotFound();
+        }
+        [HttpGet]
+        public async Task<FileResult> showPicture(int id)
+        {
+            TLessonCourse? c = await _context.TLessonCourses.FindAsync(id);
+            byte[]? Content = c?.FPhoto;
+            return File(Content, "image/jpeg");
         }
     }
 }

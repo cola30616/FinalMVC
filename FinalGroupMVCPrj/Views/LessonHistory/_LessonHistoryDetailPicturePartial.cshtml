@@ -2,11 +2,11 @@
 
 @if (Model.FPhoto != null)
 {
-    
-        <figure class="course-img" style="border: thin #c0c0c0 solid;border-radius: 8px;  display: flex; flex-flow: column; padding: 8px;margin: auto; background-color: white;">
-            <img class="lazyload" style="border-radius:6px;" src="@Url.Action("showPicture", "Lesson", new { id = Model.FLessonCourseId })" alt="course" title="@Model.FName" />
-        </figure>
-     
+
+    <figure class="course-img" style="border: thin #c0c0c0 solid;border-radius: 8px;  display: flex; flex-flow: column; padding: 8px;margin: auto; background-color: white;">
+        <img class="lazyload" style="border-radius:6px;" src="@Url.Action("showPicture", "Lesson", new { id = Model.FLessonCourseId })" alt="course" title="@Model.FName" />
+    </figure>
+
 }
 else
 {
@@ -14,5 +14,5 @@ else
     <figure class="course-img" style="border: none; border-radius: 8px;  width: 420px; height: 280px;display: flex; flex-flow: column; padding: 8px; margin: auto; background-color: white; overflow: hidden;">
         <img class="lazyload" style="width: 150px; height: 150px; position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); border: 1px solid #000;border-radius: 15px;" src="~/images/no-image.jpg" alt="course" title="目前尚無內容" />
 
-        </figure>
+    </figure>
 }
