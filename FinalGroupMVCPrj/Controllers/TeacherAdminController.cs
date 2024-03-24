@@ -586,7 +586,7 @@ namespace FinalGroupMVCPrj.Controllers
                     {
                         TeacherId = id,
                         TeacherName = t.FTeacherName,
-                        TeacherProfilePicURL = (t.FTeacherProfilePic != null) ? GetImageDataURL(t.FTeacherProfilePic) : "https://upload.wikimedia.org/wikipedia/commons/thumb/6/65/No-Image-Placeholder.svg/1665px-No-Image-Placeholder.svg.png",
+                        TeacherProfilePicURL = (t.FTeacherProfilePic != null) ? GetImageDataURL(t.FTeacherProfilePic) : "https://i.imgur.com/xcZh1PZ.png",
                         Introduction = t.FIntroduction,
                         ContactInfo = t.FContactInfo,
                         Note = t.FNote,
@@ -613,9 +613,10 @@ namespace FinalGroupMVCPrj.Controllers
             }
             else
             {
+                //這裡絕對不會進來，回從前端處理
                 //return
                 //ModelState.IsValid = false ，參數(ProfilePic)=null 會有錯 errormessage: ProfilePic是必要項
-                HttpResponseMessage response =await _httpClient.GetAsync("https://as1.ftcdn.net/v2/jpg/02/59/39/46/1000_F_259394679_GGA8JJAEkukYJL9XXFH2JoC3nMguBPNH.jpg");
+                HttpResponseMessage response =await _httpClient.GetAsync("https://img.onl/eZD9Pm");
                 response.EnsureSuccessStatusCode();
                 // 读取图片数据并转换为字节数组
                 byte[] imageBytes =await response.Content.ReadAsByteArrayAsync();

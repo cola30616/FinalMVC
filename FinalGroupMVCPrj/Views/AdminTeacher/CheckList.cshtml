@@ -124,7 +124,7 @@
                 language: {
                     url: "https://cdn.datatables.net/plug-ins/1.13.7/i18n/zh-HANT.json"
                 },
-                order: [[1, 'dsc']]
+                order: [[0, 'dsc']]
 
 
             });
@@ -202,7 +202,7 @@
             const response2 = await fetch(`@Url.Content("~/AdminTeacher/trNameEmail")?TeacherId=${teacherId}`)
             const data = await response2.json();
             console.log("名子 : ",data[0])
-            document.querySelector('#labelTop').innerHTML = data[0].teacherName + ` : ` + data[0].email;
+            document.querySelector('#labelTop').innerHTML = `<label style="margin-left:20px;margin-top:20px;">${data[0].teacherName} : <br>${data[0].email} </label>`;
             document.querySelector('#ulSubjectResult').innerHTML = '';
             //console.log(teacherId)
             const response = await fetch(`@Url.Content("~/AdminTeacher/EditPartialViewInfo")?TeacherId=${teacherId}`)
