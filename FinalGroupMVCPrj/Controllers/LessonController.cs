@@ -77,6 +77,7 @@ namespace FinalGroupMVCPrj.Controllers
         public async Task<IActionResult> Search(string searchText)
         {
             var searchResults = await _context.TLessonCourses
+                                          .Where(u => u.FStatus == "開放報名")
                                           .Where(c => c.FName.Contains(searchText) || c.FTeacher.FTeacherName.Contains(searchText))
                                           .Select(data => new
                                           {
