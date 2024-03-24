@@ -23,13 +23,31 @@
     .dz-preview .dz-error-mark {
         display: none;
     }
+
+    #demoPic > button {
+        color: white;
+        background-color: white;
+        color: white;
+        background-color: white
+    }
+
+    #demoPic:hover > button {
+        background-color: lightgrey;
+        color: gray;
+    }
 </style>
 
 <div class="modal fade" id="exampleModal" tabindex="-100" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered modal-lg">
         <div class="modal-content">
             <div class="modal-header">
+                <div class="d-flex align-items-center" id="demoPic">
                 <h5 class="modal-title" id="exampleModalLabel">上傳圖片</h5>
+                    <button class="btn btn-sm rounded-pill">中餐證照</button>
+                    <button class="btn btn-sm rounded-pill">梅干獅子頭</button>
+                    <button class="btn btn-sm rounded-pill">碧玉百頁絲</button>
+                    <button class="btn btn-sm rounded-pill">生爆野鮮菇</button>
+                </div>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <form asp-controller="TeacherAdmin" asp-action="TAddtrimage" enctype="multipart/form-data">

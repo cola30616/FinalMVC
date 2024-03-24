@@ -12,6 +12,18 @@
     .row.mb-3 > div > input {
         font-size: 20px;
     }
+
+    #demoIntroduction {
+        color: white;
+        background-color: white;
+        color: white;
+        background-color: white
+    }
+
+        #demoIntroduction:hover {
+        background-color: lightgrey;
+        color: gray;
+    }
 </style>
 
 <form asp-controller="TeacherAdmin" asp-action="TEdittrbasicprofile" method="post">
@@ -28,6 +40,7 @@
     <div class="row mb-3">
         <!-- 標題2 關於我 -->
         <label  class="col-md-4 col-lg-3 col-form-label">@Html.DisplayNameFor(t => t.FIntroduction)</label>
+       
         <div class="col-md-8 col-lg-9">
             <!-- 內容2 關於我 -->
             <textarea asp-for="FIntroduction" class="form-control" style="height: 400px"></textarea>
@@ -55,6 +68,10 @@
     <div class="text-center">
         <!-- 提交 -->
         <input type="submit" class="btn btn-primary" value="儲存">
+        <button class="btn btn-sm rounded-pill" id="demoIntroduction">demo</button>
     </div>
 </form>
 <!-- End Profile Edit Form -->
+<script>
+
+</script>
