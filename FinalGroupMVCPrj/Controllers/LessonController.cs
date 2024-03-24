@@ -85,6 +85,7 @@ namespace FinalGroupMVCPrj.Controllers
                                               id = data.FLessonCourseId,
                                               teacherId = data.FTeacher.FTeacherId,
                                               teacherName = data.FTeacher.FTeacherName,
+                                              date = data.FLessonDate,
                                           })
                                           .Distinct() 
                                           .ToListAsync();

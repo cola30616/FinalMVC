@@ -16,7 +16,14 @@ const search = async (searchText) => {
         for (const item of data) {
             const lowerItemName = item.name.toLowerCase(); // 將item.name轉換成小寫
             if (lowerItemName.includes(lowerSearchText)) {
-                const itemHTML = `<a onclick="clickHandler('${item.name}')" class="list-group-item list-group-item-action" style="z-index: 100;margin-top: 0;" href="/Lesson/Details/${item.id}">${item.name}</a>`;
+                const date = new Date(item.date);
+                const dateFormatter = new Intl.DateTimeFormat('zh-TW', {
+                    year: 'numeric',
+                    month: '2-digit',
+                    day: '2-digit'
+                });
+                const formattedDate = dateFormatter.format(date);
+                const itemHTML = `<a onclick="clickHandler('${item.name}')" class="list-group-item list-group-item-action" style="z-index: 100;margin-top: 0;" href="/Lesson/Details/${item.id}">(課程)${item.name}    <i class="fa-solid fa-calendar-days color-primary"></i>${formattedDate}</a>`;
                 searchResults.insertAdjacentHTML('beforeend', itemHTML);
             }          
         }
@@ -24,7 +31,7 @@ const search = async (searchText) => {
             const lowerItemName = item.teacherName.toLowerCase(); // 將item.name轉換成小寫
             // 檢查老師名稱是否已經存在於陣列中
             if (!teacherNames.includes(item.teacherName) && lowerItemName.includes(lowerSearchText)) {
-                const itemHTML = `<a onclick="clickHandler('${item.teacherName}')" class="list-group-item list-group-item-action" style="z-index: 100;margin-top: 0;" href="/Teacher/Info/${item.teacherId}">${item.teacherName}</a>`;
+                const itemHTML = `<a onclick="clickHandler('${item.teacherName}')" class="list-group-item list-group-item-action" style="z-index: 100;margin-top: 0;" href="/Teacher/Info/${item.teacherId}">(老師)${item.teacherName}</a>`;
                 searchResults.insertAdjacentHTML('beforeend', itemHTML);
                 // 將老師名稱加入到陣列中
                 teacherNames.push(item.teacherName);
