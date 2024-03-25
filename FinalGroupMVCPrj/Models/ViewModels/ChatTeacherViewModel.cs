@@ -10,5 +10,7 @@ namespace FinalGroupMVCPrj.Models.ViewModels
         public int FTeacherId { get; set; }
         public string? FTeacherName { get; set; }
         public byte[]? FTeacherProfilePic { get; set; }
+        public int ? UnreadCount { get; set; }
+        public string? LastMessage {  get; set; }
     }
 }

@@ -6,21 +6,21 @@ using System.Collections.Generic;
 namespace FinalGroupMVCPrj.Models.DTO
 {
 public class TChatMessageDTO
-{
-    public int FMessageId { get; set; }
+    {
+        public int FMessageId { get; set; }
 
-    public int? FChatRoomId { get; set; }
+        public int? FChatRoomId { get; set; }
 
-    public int FTeacherId { get; set; }
+        public int FTeacherId { get; set; }
 
-    public int FMemberId { get; set; }
+        public int FMemberId { get; set; }
 
-    public string FMessage { get; set; }
+        public string FMessage { get; set; }
 
-    public DateTime FMessageTime { get; set; }
+        public DateTime FMessageTime { get; set; }
 
-    public bool FIsTeacherMsg { get; set; }
+        public bool FIsTeacherMsg { get; set; }
 
-    public bool isRead { get; set; }
-}
+        public bool FIsRead { get; set; }
+    }
 }

@@ -7,11 +7,11 @@
                 <div class="rate bg-img" data-bg-image="/images/rate-star-md.png">
                     <div class="rating-icon bg-img" data-bg-image="/images/rate-star-md.png"></div>
                 </div>
-                <span class="ratings-total">(@ViewBag.totalCount)</span>
+            <span class="ratings-total btn" id="showAllButton">全部(@ViewBag.totalCount)</span>
             </div>
         </div>
         <div class="review-progress mb-10 row align-items-center">
-            <div class="col-3 col-sm-2">5 星</div>
+        <div class="col-3 col-sm-2 btn" data-rating="5">5 星</div>
             <div class="progress-line col-6 col-sm-8">
                 <div class="progress">
                     <div class="progress-bar bg-primary" style="width: @ViewBag.percentStar5%" role="progressbar" aria-label="Basic example" aria-valuenow="90" aria-valuemin="0" aria-valuemax="100"></div>
@@ -20,7 +20,7 @@
             <div class="col-3 col-sm-2 text-end">@ViewBag.percentStar5%</div>
         </div>
         <div class="review-progress mb-10 row align-items-center">
-            <div class="col-3 col-sm-2">4 星</div>
+        <div class="col-3 col-sm-2 btn" data-rating="4">4 星</div>
             <div class="progress-line col-6 col-sm-8">
                 <div class="progress">
                     <div class="progress-bar bg-primary" style="width: @ViewBag.percentStar4%" role="progressbar" aria-label="Basic example" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100"></div>
@@ -29,7 +29,7 @@
             <div class="col-3 col-sm-2 text-end">@ViewBag.percentStar4%</div>
         </div>
         <div class="review-progress mb-10 row align-items-center">
-            <div class="col-3 col-sm-2">3 星</div>
+        <div class="col-3 col-sm-2 btn" data-rating="3">3 星</div>
             <div class="progress-line col-6 col-sm-8">
                 <div class="progress">
                     <div class="progress-bar bg-primary" style="width: @ViewBag.percentStar3%" role="progressbar" aria-label="Basic example" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100"></div>
@@ -38,7 +38,7 @@
             <div class="col-3 col-sm-2 text-end">@ViewBag.percentStar3%</div>
         </div>
         <div class="review-progress mb-10 row align-items-center">
-            <div class="col-3 col-sm-2">2 星</div>
+        <div class="col-3 col-sm-2 btn" data-rating="2">2 星</div>
             <div class="progress-line col-6 col-sm-8">
                 <div class="progress">
                     <div class="progress-bar bg-primary" style="width: @ViewBag.percentStar2%" role="progressbar" aria-label="Basic example" aria-valuenow="20" aria-valuemin="0" aria-valuemax="100"></div>
@@ -47,7 +47,7 @@
             <div class="col-3 col-sm-2 text-end">@ViewBag.percentStar2%</div>
         </div>
         <div class="review-progress mb-10 row align-items-center">
-            <div class="col-3 col-sm-2">1 星</div>
+        <div class="col-3 col-sm-2 btn" data-rating="1">1 星</div>
             <div class="progress-line col-6 col-sm-8">
                 <div class="progress">
                     <div class="progress-bar bg-primary" style="width: @ViewBag.percentStar1%" role="progressbar" aria-label="Basic example" aria-valuenow="10" aria-valuemin="0" aria-valuemax="100"></div>
