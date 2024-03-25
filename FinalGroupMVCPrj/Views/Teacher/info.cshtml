@@ -3,8 +3,8 @@
 @{
     ViewData["Title"] = "info";
 }
-@section Style{
-    <link href="~/css/tonyadd/tbasicinfostyle.css" rel="stylesheet" asp-append-version="true"/>
+@section Style {
+    <link href="~/css/tonyadd/tbasicinfostyle.css" rel="stylesheet" asp-append-version="true" />
 }
 <!-- Breadcrumb start -->
 <div class="breadcrumb-area bg-img bg-cover" data-bg-image="/images/owenadd/breadcrumb-bg.jpg">
@@ -20,20 +20,31 @@
 {
     <!-- 下方的ajax是利用這裡的老師ID來過濾對應的多圖片 -->
     <input type="hidden" id="buttonteacherid" value="@item.TeacherId">
-    <section class="mentor-details pt-100 pb-60" style="background-color:#f8ffff;">
+    <section class="mentor-details pt-60 pb-5" style="background-color:#f8ffff;">
         <div class="container">
             <div class="row gx-xl-5 align-items-center">
                 <!-- 老師頭像 -->
+
                 <div class="col-xl-4 col-lg-5">
                     <div class="content-img mb-40" data-aos="fade-up" style="position: relative;">
                         <div class="lazy-container ratio ratio-1-1 radius-md" style="position: relative;">
-                            <img class="lazyload blur-up" src="@item.TeacherProfilePicURL" alt="Mentor">                                                 
+                            <img class="lazyload blur-up" src="@item.TeacherProfilePicURL" alt="Mentor">
                         </div>
-                    </div>                                                         
+                    </div>
                 </div>
-                <div class="col-xl-4 col-lg-5 mb-40">                   
+                <div class="col-xl-4 col-lg-5 mb-40">
                     @await Component.InvokeAsync("VideoPlayer", new { id = item.TeacherId })
-               </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+
+    <section class="mentor-details pt-5 pb-60">
+        <div class="container">
+            <div class="row gx-xl-5 align-items-center">
+
+
                 <div class="col-xl-8 col-lg-7">
                     <div class="content-title mb-40" data-aos="fade-up">
                         <!-- 老師名稱 -->
@@ -47,11 +58,11 @@
                         </div>
                         <!-- 評價 -->
                         @* <div class="ratings mt-2">
-                            <div class="rate bg-img" data-bg-image="/images/rate-star.png">
-                                <div class="rating-icon bg-img" data-bg-image="/images/rate-star.png"></div>
-                            </div>
-                            <span class="ratings-total">(5)</span>
-                        </div> *@
+                    <div class="rate bg-img" data-bg-image="/images/rate-star.png">
+                    <div class="rating-icon bg-img" data-bg-image="/images/rate-star.png"></div>
+                    </div>
+                    <span class="ratings-total">(5)</span>
+                    </div> *@
                         <!-- 老師自我介紹 -->
                         <div id="teacherTitle" class="content-text mt-20"><b>自我介紹</b></div>
                         <div class="content-text mt-20" style="white-space: nowrap; ">
@@ -73,16 +84,16 @@
                             <a href="https://www.twitter.com/" target="_blank" title="twitter" class="color-primary"><i class="fab fa-twitter"></i></a>
                             <a href="https://www.youtube.com/" target="_blank" title="youtube" class="color-primary"><i class="fab fa-youtube"></i></a>
                         </div>
-                        
+
                     </div>
-                </div>               
+                </div>
             </div>
-           
+
         </div>
     </section>
 
-<!-- 老師多圖片開始 -->
-    <section class="course-area latest ptb-100">
+    <!-- 老師多圖片開始 -->
+    <section class="course-area latest pb-100">
         <div class="container">
             <div class="row">
                 <div class="col-12">
@@ -142,44 +153,36 @@
         </div>
     </section>
 
-<!-- 老師多圖片結束 -->
-<!-- Mentor-details-area end -->
-
-
-
-
-
-
-
-
-<!-- Course-area start -->
-<section class="course-area popular pb-100">
-    <div class="container">
-        <div class="row">
-            <div class="col-12">
-                <div class="section-title title-inline mb-50" data-aos="fade-up">
-                    <h2 class="title">現正<span>報名中</span></h2>
-                    <div class="cta-btn">
-                        <a href="courses.html" class="btn btn-lg btn-primary rounded-pill" title="See All Course" target="_self">所有課程</a>
+    <!-- 老師多圖片結束 -->
+    <!-- Mentor-details-area end -->
+    <!-- Course-area start -->
+    <section class="course-area popular pb-100">
+        <div class="container">
+            <div class="row">
+                <div class="col-12">
+                    <div class="section-title title-inline mb-50" data-aos="fade-up">
+                        <h2 class="title">現正<span>報名中</span></h2>
+                        <div class="cta-btn">
+                            <a href="courses.html" class="btn btn-lg btn-primary rounded-pill" title="See All Course" target="_self">所有課程</a>
+                        </div>
                     </div>
                 </div>
-            </div>
-            <div class="col-12">
-                <!-- Slider main container -->
-                <div class="swiper course-slider" id="course-slider-1" data-slides-per-view="4" data-swiper-loop="true" data-aos="fade-up">
-                    <!-- Additional required wrapper -->
-                    <div class="swiper-wrapper">
-                        <!-- Slides -->
-                        @await Component.InvokeAsync("CourseItemView", new { id = item.TeacherId})                   
+                <div class="col-12">
+                    <!-- Slider main container -->
+                    <div class="swiper course-slider" id="course-slider-1" data-slides-per-view="4" data-swiper-loop="true" data-aos="fade-up">
+                        <!-- Additional required wrapper -->
+                        <div class="swiper-wrapper">
+                            <!-- Slides -->
+                            @await Component.InvokeAsync("CourseItemView", new { id = item.TeacherId })
+                        </div>
+                        <!-- If we need pagination -->
+                        <div class="swiper-pagination position-static" id="course-slider-1-pagination"></div>
                     </div>
-                    <!-- If we need pagination -->
-                    <div class="swiper-pagination position-static" id="course-slider-1-pagination"></div>
                 </div>
             </div>
         </div>
-    </div>
-</section>
-<!-- Course-area end -->
+    </section>
+    <!-- Course-area end -->
 }
 
 @section Scripts {
@@ -204,24 +207,24 @@
             //console.log(datas);
             const divTrpics = datas.categoriesResult.map(ti => {
                 const { fImageName, fCategory, teacherImagesURL } = ti;
-                return(
+                return (
                     `
-                                    <div class="col-xl-3 col-lg-4 col-sm-6">
-                                        <div class="course-default border radius-md mb-30">
-                                            <figure class="course-img">
-                                                  <img style="width:360px;height:240px;" class="lazyload" src="${teacherImagesURL}">
-                                            </figure>
-                                            <div class="course-details">
-                                                <div class="p-3">
-                                                    <h6 class="course-title lc-2 mb-0">
-                                                              ${fImageName}
-                                                    </h6>
+                                            <div class="col-xl-3 col-lg-4 col-sm-6">
+                                                <div class="course-default border radius-md mb-30">
+                                                    <figure class="course-img">
+                                                          <img style="width:360px;height:240px;" class="lazyload" src="${teacherImagesURL}">
+                                                    </figure>
+                                                    <div class="course-details">
+                                                        <div class="p-3">
+                                                            <h6 class="course-title lc-2 mb-0">
+                                                                      ${fImageName}
+                                                            </h6>
+                                                        </div>
+                                                    </div>
                                                 </div>
                                             </div>
-                                        </div>
-                                    </div>          
-                                
-                    `
+
+                            `
                 )
             });
             content1.innerHTML = divTrpics.join("");

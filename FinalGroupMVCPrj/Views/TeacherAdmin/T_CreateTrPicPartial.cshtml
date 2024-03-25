@@ -43,10 +43,7 @@
             <div class="modal-header">
                 <div class="d-flex align-items-center" id="demoPic">
                 <h5 class="modal-title" id="exampleModalLabel">上傳圖片</h5>
-                    <button class="btn btn-sm rounded-pill">中餐證照</button>
-                    <button class="btn btn-sm rounded-pill">梅干獅子頭</button>
-                    <button class="btn btn-sm rounded-pill">碧玉百頁絲</button>
-                    <button class="btn btn-sm rounded-pill">生爆野鮮菇</button>
+                    <button id="demoCertificate" class="btn btn-sm rounded-pill">中餐證照</button>
                 </div>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
@@ -207,5 +204,15 @@
         for (const file of files) {
             formData.append('f', file);
         }
+    })
+</script>
+@* demo鍵 *@
+<script>
+    const floatingInput = document.querySelector('#floatingInput');
+    const FCategory = document.querySelector('#FCategory');
+    const demoCertificate = document.querySelector('#demoCertificate').addEventListener('click', (e) => {
+        e.preventDefault();
+        FCategory.value = '證照證書'; 
+        floatingInput.value = '中餐證照';
     })
 </script>

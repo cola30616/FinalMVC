@@ -38,20 +38,20 @@
     </div>
 
     <div class="row mb-3">
-        <!-- 標題2 關於我 -->
+        <!-- 標題2 自我介紹 -->
         <label class="col-md-4 col-lg-3 col-form-label" style="color:#012970">@Html.DisplayNameFor(t => t.FIntroduction)</label>
        
         <div class="col-md-8 col-lg-9">
-            <!-- 內容2 關於我 -->
+            <!-- 內容2 自我介紹 -->
             <textarea asp-for="FIntroduction" class="form-control" style="height: 400px"></textarea>
         </div>
     </div>
 
     <div class="row mb-3">
-        <!-- 標題3 聯絡方式 -->
+        <!-- 標題3 公開聯絡方式 -->
         <label class="col-md-4 col-lg-3 col-form-label" style="color:#012970">@Html.DisplayNameFor(t => t.FContactInfo)</label>
         <div class="col-md-8 col-lg-9">
-            <!-- 內容3 聯絡方式 -->
+            <!-- 內容3 公開聯絡方式 -->
             <textarea asp-for="FContactInfo" class="form-control" style="height: 100px"></textarea>
         </div>
     </div>
@@ -72,6 +72,11 @@
     </div>
 </form>
 <!-- End Profile Edit Form -->
+@* demo鍵 *@
 <script>
-
+    const FContactInfo = document.querySelector('#FContactInfo');
+    const demoIntroduction = document.querySelector('#demoIntroduction').addEventListener('click', (e) => {
+        e.preventDefault();
+        FContactInfo.value += ' ; FACEBOOK : ting2800928 ';
+    })
 </script>

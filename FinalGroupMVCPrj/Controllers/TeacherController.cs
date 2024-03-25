@@ -39,7 +39,7 @@ namespace FinalGroupMVCPrj.Controllers
                 {
                     TeacherId = t.FTeacherId,
                     TeacherName = t.FTeacherName,
-                    TeacherProfilePicURL = (t.FTeacherProfilePic != null) ? GetImageDataURL(t.FTeacherProfilePic) : "https://upload.wikimedia.org/wikipedia/commons/thumb/6/65/No-Image-Placeholder.svg/1665px-No-Image-Placeholder.svg.png",
+                    TeacherProfilePicURL = (t.FTeacherProfilePic != null) ? GetImageDataURL(t.FTeacherProfilePic) : "https://i.imgur.com/xcZh1PZ.png",
                     Introduction = t.FIntroduction,
                     ContactInfo = t.FContactInfo,
                     Note = t.FNote,
@@ -120,7 +120,7 @@ namespace FinalGroupMVCPrj.Controllers
             {
                 t.FTeacherId,
                 t.FTeacherName,
-                TeacherProfilePicURL = (t.FTeacherProfilePic != null) ? GetImageDataURL(t.FTeacherProfilePic) : "https://upload.wikimedia.org/wikipedia/commons/thumb/6/65/No-Image-Placeholder.svg/1665px-No-Image-Placeholder.svg.png",
+                TeacherProfilePicURL = (t.FTeacherProfilePic != null) ? GetImageDataURL(t.FTeacherProfilePic) : "https://i.imgur.com/xcZh1PZ.png",
                 SubjectNames = t.TTeacherSubjects.Select(ts => ts.FSubject.FSubjectName)
                 //SubjectName = t.TTeacherSubjects.Select(ts => ts.FSubject).Select(t => new { t.FSubjectName })
             });
