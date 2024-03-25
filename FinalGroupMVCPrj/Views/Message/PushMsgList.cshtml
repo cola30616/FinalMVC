@@ -46,8 +46,6 @@
                                 <option value="活動促銷">活動促銷</option>
                             </select>
                         </div>
-                        <button class="btn btn-secondary"> 清除條件</button>
-                        <button class="btn btn-success"> 匯出CSV</button>
                     </div>
 
                     <div>
@@ -113,16 +111,16 @@
                 </div>
                 <!--全選-->
                 <div class="mb-3">
-                    <button type="button" class="btn btn-primary mb-2" id="selectAllBtn" onclick="selectAllCheckboxes()">全部選擇</button>
-                    <button type="button" class="btn btn-secondary mb-2" id="cancelAllBtn" onclick="unselectAllCheckboxes()">取消選取</button>
-                    <button type="submit" class="btn btn-primary mb-2" id="searchBtn" onclick="searchMembers()">搜尋</button>
-                    <button type="button" class="btn btn-secondary mb-2" id="resetBtn" onclick="resetSearch()">重置條件</button>
+                    <button type="button" class="btn btn-primary btn-sm mb-2" id="selectAllBtn" onclick="selectAllCheckboxes()">全部選擇</button>
+                    <button type="button" class="btn btn-secondary btn-sm mb-2" id="cancelAllBtn" onclick="unselectAllCheckboxes()">取消選取</button>
+                    <button type="submit" class="btn btn-primary btn-sm mb-2" id="searchBtn" onclick="searchMembers()">搜尋</button>
+                    <button type="button" class="btn btn-secondary btn-sm mb-2" id="resetBtn" onclick="resetSearch()">重置條件</button>
                 </div>
                 <div class="mb-3">
                     <label for="pushDelaySelect" class="form-label">選擇推播時間：</label>
                     <select class="form-select" id="pushDelaySelect">
                         <option value="0">立即推播</option>
-                        <option value="5">10秒後</option>
+                        <option value="10">10秒後</option>
                         <option value="300">5 分鐘後</option>
                         <option value="600">10 分鐘後</option>
                         <option value="1800">30 分鐘後</option>
@@ -271,7 +269,7 @@ https://cdn.jsdelivr.net/npm/moment@2.30.1/moment.min.js
                             } else {
                                 Swal.fire({
                                     icon: 'error',
-                                    title: '出现错误',
+                                    title: '出現錯誤',
                                     text: '內容格式錯誤',
                                     timer: 1500,
                                     confirmButtonText: '確認'
@@ -447,7 +445,7 @@ https://cdn.jsdelivr.net/npm/moment@2.30.1/moment.min.js
                     const gender = row.getAttribute('data-gender');
                     const age = parseInt(row.getAttribute('data-age'));
 
-                    const genderMatch = (selectedGender === 'all' || gender === selectedGender);
+                    const genderMatch = (selectedGender === '全部' || gender === selectedGender);
                     const ageMatch = (age >= parseInt(minAge) && age <= parseInt(maxAge));
 
                     if (genderMatch && ageMatch) {
@@ -581,18 +579,18 @@ https://cdn.jsdelivr.net/npm/moment@2.30.1/moment.min.js
                         },
                         body: jsonData
                     });
-
+                    Swal.fire({
+                        icon: 'success',
+                        title: '推播訊息已成功發送',
+                        text: '已成功推播給所選會員！',
+                        confirmButtonColor: '#3085d6',
+                        confirmButtonText: '確認'
+                    });
                     if (response.ok) {
                         // 成功存到資料庫後開始處理推播
-                        connection.invoke("SendPushMsg", selectedMembers, pushDelay.toString());
+                     await   connection.invoke("SendPushMsg", selectedMembers, pushDelay.toString());
                         // 使用 SweetAlert 提示成功推送
-                        Swal.fire({
-                            icon: 'success',
-                            title: '推播訊息已成功發送',
-                            text: '已成功推播給所選會員！',
-                            confirmButtonColor: '#3085d6',
-                            confirmButtonText: '確認'
-                        });
+
                     } else {
                         console.error('Error:', response.statusText);
                     }
@@ -602,5 +600,24 @@ https://cdn.jsdelivr.net/npm/moment@2.30.1/moment.min.js
             }
 
 
+
+
+        </script>
+
+        <script>
+
+            function demoMsg(demoNumber) {
+                let message = "立即加入我們的ETF課程！掌握投資精髓，發現無限潛力！限時優惠等你來享！";
+                switch (demoNumber) {
+                    case 1:
+                        message = "立即加入我們的ETF課程！掌握投資精髓，發現無限潛力！限時優惠等你來享！";
+                        break;
+       
+                    default:
+                        message = "沒有選擇有效的 Demo 訊息。";
+                        break;
+                }
+                document.getElementById("FPushContent").value = message;
+            }
         </script>
     }

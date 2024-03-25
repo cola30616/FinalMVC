@@ -3,6 +3,34 @@
     const FOrderDetailId = document.querySelector('#FOrderDetailId').getAttribute('data-value');
     const detailPartial = document.querySelector('#evalDetailPartial');
 
+    //先檢查是否可評價
+    try {
+        const response = await fetch(`/LessonReview/canEvaluated?FOrderDetailId=${FOrderDetailId}`);
+        const data = await response.json();
+
+        if (!data.isValid) {
+            document.getElementById('createBtn').style.display = 'none';
+            document.getElementById('editBtn').style.display = 'none';
+        }
+        else {
+            try {
+                const response = await fetch(`/LessonReview/isEvaluated?FOrderDetailId=${FOrderDetailId}`);
+                const data = await response.json();
+
+                if (data.isExisting) {
+                    document.getElementById('createBtn').style.display = 'none';
+                }
+                else {
+                    document.getElementById('editBtn').style.display = 'none';
+                }
+            } catch (error) {
+                console.error('Error', error);
+            }
+        }
+    } catch (error) {
+        console.error('Error', error);
+    }
+
     const url = "/LessonReview/GetEvalDetail?FOrderDetailId=" + FOrderDetailId;
 
     try {

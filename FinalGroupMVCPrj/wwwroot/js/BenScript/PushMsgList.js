@@ -243,9 +243,6 @@ function createPushMessage() {
                     });
 
                     if (response.ok) {
-                        // 成功存到資料庫後開始處理推播
-                        connection.invoke("SendPushMsg", selectedMembers, pushDelay.toString());
-
                         Swal.fire({
                             icon: 'success',
                             title: '推播訊息已成功發送',
@@ -253,6 +250,8 @@ function createPushMessage() {
                             confirmButtonColor: '#3085d6',
                             confirmButtonText: '確認'
                         });
+                        // 成功存到資料庫後開始處理推播
+                        connection.invoke("SendPushMsg", selectedMembers, pushDelay.toString());
                     } else {
                         console.error('Error:', response.statusText);
                     }

@@ -1,4 +1,5 @@
 ﻿using FinalGroupMVCPrj.Models;
+using FinalGroupMVCPrj.Models.DTO;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.SignalR;
 using Newtonsoft.Json;
@@ -15,7 +16,7 @@ namespace FinalGroupMVCPrj.Hubs
         // 用戶連線 ID 列表
         public static List<string> ConList = new List<string>();
 
-        public static List<TChatMessageTeacher> MsgList =new List<TChatMessageTeacher>();
+        public static List<TChatMessageDTO> MsgList =new List<TChatMessageDTO>();
         
         public static Dictionary<string, string> teacherDict = new Dictionary<string, string>();
 
@@ -98,12 +99,85 @@ namespace FinalGroupMVCPrj.Hubs
             await Clients.Caller.SendAsync("ConnectionEstablished", "Connection established successfully!");
         }
 
-        public async Task<List<TChatMessageTeacher>> GetChatMessages(string teacherId,string memberId)
+        public async Task<List<TChatMessageDTO>> GetChatMessages(string teacherId,string memberId)
+        {
+            var messages = MsgList.Where(msg => msg.FTeacherId == Convert.ToInt32(teacherId) && msg.FMemberId == Convert.ToInt32(memberId)).ToList();
+            messages.ForEach(msg =>
+            {
+                if (msg.FIsRead == false)
+                {
+                    msg.FIsRead = true;
+                }
+            });
+            return messages;
+        }
+
+        public async Task<List<TChatMessageDTO>> GetMessagesByStudent(string teacherId, string memberId)
+        {
+            foreach (var item in MsgList.Where(msg => msg.FTeacherId == Convert.ToInt32(teacherId) && msg.FMemberId == Convert.ToInt32(memberId)))
+            {
+                if (item.FIsTeacherMsg == true && item.FIsRead == false)
+                {
+                    item.FIsRead = true;
+                }
+            };
+            var messages = MsgList.Where(msg => msg.FTeacherId == Convert.ToInt32(teacherId) && msg.FMemberId == Convert.ToInt32(memberId)).ToList();
+            return messages;
+        }
+
+        public async Task<List<TChatMessageDTO>> GetMessagesByStudentByRead(string teacherId, string memberId)
         {
             var messages = MsgList.Where(msg => msg.FTeacherId == Convert.ToInt32(teacherId) && msg.FMemberId == Convert.ToInt32(memberId)).ToList();
             return messages;
         }
-        public async Task<List<TChatMessageTeacher>> GetStudentChatMessages(string studentId)
+
+        public async Task<List<TChatMessageDTO>> GetMessagesByTeacher(string teacherId, string memberId)
+        {
+            foreach (var item in MsgList.Where(msg => msg.FTeacherId == Convert.ToInt32(teacherId) && msg.FMemberId == Convert.ToInt32(memberId)))
+            {
+                if (item.FIsTeacherMsg == false && item.FIsRead == false)
+                {
+                    item.FIsRead = true;
+                }
+            };
+            var messages = MsgList.Where(msg => msg.FTeacherId == Convert.ToInt32(teacherId) && msg.FMemberId == Convert.ToInt32(memberId)).ToList();
+            return messages;
+        }
+
+        public async Task<List<TChatMessageDTO>> GetMessagesByTeacherByRead(string teacherId, string memberId)
+        {
+            var messages = MsgList.Where(msg => msg.FTeacherId == Convert.ToInt32(teacherId) && msg.FMemberId == Convert.ToInt32(memberId)).ToList();
+            return messages;
+        }
+
+        public async Task UpdateTeacherMessages(string teacherId, string memberId)
+        {
+            var queryTeacher = teacherDict.Where(key => key.Value == teacherId);
+            string msg = "";
+            if (queryTeacher.Any())
+            {
+                foreach (var item in queryTeacher)
+                {
+                    await Clients.Client(item.Key).SendAsync("UpdContentByRead", msg, teacherId, memberId);
+                }
+            }
+        }
+
+        public async Task UpdateStudentMessages(string teacherId, string memberId)
+        {
+            var queryStudent = studentDict.Where(key => key.Value == memberId);
+            string msg = "";
+            if (queryStudent.Any())
+            {
+                foreach (var item in queryStudent)
+                {
+                    await Clients.Client(item.Key).SendAsync("UpdContentByRead", msg, teacherId, memberId);
+                }
+            }
+        }
+
+
+        public async Task<List<TChatMessageDTO>> GetStudentChatMessages(string studentId)
         {
             var messages = MsgList.Where(msg => msg.FMemberId == Convert.ToInt32(studentId)).ToList();
             return messages;
@@ -125,6 +199,28 @@ namespace FinalGroupMVCPrj.Hubs
             var isOnline =  teacherDict.ContainsValue(teacherId);
             return isOnline;
         }
+
+        public IEnumerable<ChatRoomInfoDTO> GetChatRoomInfo(string userId, bool isTeacher)
+        {
+            // 根據學生或老師的身份從 MsgList 中篩選對話資訊
+            var chatMessages = isTeacher ?
+                MsgList.Where(msg => msg.FTeacherId == int.Parse(userId)) :
+                MsgList.Where(msg => msg.FMemberId == int.Parse(userId));
+
+            // 找到每個聊天室的最後一條對話和未讀訊息數量
+            var chatRoomInfo = chatMessages
+                .GroupBy(msg => isTeacher ? msg.FMemberId : msg.FTeacherId)
+                .Select(group => new ChatRoomInfoDTO
+                {
+                    UserId = group.Key,
+                    LastMessage = group.OrderByDescending(msg => msg.FMessageTime).FirstOrDefault(),
+                    UnreadMessagesCount = group.Count(msg => (isTeacher && !msg.FIsTeacherMsg && !msg.FIsRead) || (!isTeacher && msg.FIsTeacherMsg && !msg.FIsRead))
+                });
+
+            // 發送聊天室資訊給客戶端
+            return chatRoomInfo;
+        }
+
 
         /// 離線事件
         public override async Task OnDisconnectedAsync(Exception ex)
@@ -164,40 +260,86 @@ namespace FinalGroupMVCPrj.Hubs
         /// <param name="message"></param>
         /// <param name="id"></param>
         /// <returns></returns>
-        public async Task SendMessage(string teacherId,  string memberId, string message, DateTime date, bool isteacher)
+        public async Task SaveMessage(string teacherId,  string memberId, string message, DateTime date, bool isteacher)
         {
-            TChatMessageTeacher msg = new TChatMessageTeacher();
+            TChatMessageDTO msg = new TChatMessageDTO();
 
             msg.FTeacherId = Convert.ToInt32(teacherId);
             msg.FMemberId = Convert.ToInt32(memberId);
             msg.FMessage = message;
             msg.FMessageTime = date;
             msg.FIsTeacherMsg = isteacher;
+            msg.FIsRead = false;
             MsgList.Add(msg);
 
-            _context.Add(msg);
-            _context.SaveChanges();
+            //_context.Add(msg);
+            //_context.SaveChanges();
 
-                // 接收人
-                var queryStudent = studentDict.Where(key => key.Value == memberId);
-                //await Clients.Client(memberId).SendAsync("UpdContent",msg);
-                if(queryStudent.Any())
-                {
-                    foreach (var item in queryStudent)
-                    {
-                        await Clients.Client(item.Key).SendAsync("UpdContent", msg, teacherId, memberId);
-                    }
-                }
-                // 發送人
-                var queryTeacher = teacherDict.Where(key => key.Value == teacherId);
-                if(queryTeacher.Any())
-                {
-                    foreach (var item in queryTeacher)
-                    {
-                        await Clients.Client(item.Key).SendAsync("UpdContent", msg,teacherId,memberId);
-                    }
-                }
+            if (isteacher)
+            {
+                await SendMessageToStudent(teacherId, memberId);
+            }
+            else
+            {
+                await SendMessageToTeacher(teacherId, memberId);
+            }
         }
+
+        public async Task SendMessageToStudent(string teacherId, string memberId)
+        {
+            var msg = MsgList.Where(msg =>msg.FTeacherId ==Convert.ToInt32(teacherId) && msg.FMemberId == Convert.ToInt32(memberId)).ToList();
+
+            // 接收人
+            var queryStudent = studentDict.Where(key => key.Value == memberId);
+            //await Clients.Client(memberId).SendAsync("UpdContent",msg);
+            if (queryStudent.Any())
+            {
+                foreach (var item in queryStudent)
+                {
+                    await Clients.Client(item.Key).SendAsync("UpdContent", msg, teacherId, memberId);
+                }
+            }
+
+            // 傳送人
+            var queryTeacher = teacherDict.Where(key => key.Value == teacherId);
+            //await Clients.Client(memberId).SendAsync("UpdContent",msg);
+            if (queryTeacher.Any())
+            {
+                foreach (var item in queryTeacher)
+                {
+                    await Clients.Client(item.Key).SendAsync("UpdContentByRead", msg, teacherId, memberId);
+                }
+            }
+        }
+
+        public async Task SendMessageToTeacher(string teacherId, string memberId)
+        {
+            var msg = MsgList.Where(msg => msg.FTeacherId == Convert.ToInt32(teacherId) && msg.FMemberId == Convert.ToInt32(memberId)).ToList();
+
+            // 接收人
+            var queryTeacher = teacherDict.Where(key => key.Value == teacherId);
+            //await Clients.Client(memberId).SendAsync("UpdContent",msg);
+            if (queryTeacher.Any())
+            {
+                foreach (var item in queryTeacher)
+                {
+                    await Clients.Client(item.Key).SendAsync("UpdContent", msg, teacherId, memberId);
+                }
+            }
+
+            // 傳送人
+            var queryStudent = studentDict.Where(key => key.Value == memberId);
+            //await Clients.Client(memberId).SendAsync("UpdContent",msg);
+            if (queryStudent.Any())
+            {
+                foreach (var item in queryStudent)
+                {
+                    await Clients.Client(item.Key).SendAsync("UpdContentByRead", msg, teacherId, memberId);
+                }
+            }
+        }
+
+
 
         public async Task SendPushMsg(List<int> selectedMembers, string pushDelay)
         {

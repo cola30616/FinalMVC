@@ -71,10 +71,10 @@ async function uploadPushMsg(memberIdString) {
 
             const header = document.createElement('li');
             header.classList.add('dropdown-header');
-            header.style.width = '400px';
-            header.style.height = '50px';
+            header.style.width = '340px';
+            header.style.height = '42px';
             header.innerHTML = `
-                    Your new notifications
+                    你的通知
                     <i class="fa-solid fa-bell" style="color: #74C0FC;"></i>`;
             notificationsMenu.appendChild(header);
 
@@ -123,10 +123,10 @@ async function uploadPushMsg(memberIdString) {
                         const notificationItem = document.createElement('li');
                         notificationItem.classList.add('notification-item');
                         notificationItem.innerHTML = `
-            <div style="overflow: auto;">
-                <img src="${imageUrl}" style="float: left; margin-right: 10px;" width="110" height="110" />
+            <div class="notification-container" style="overflow: auto; background-color: transparent;" onmouseover="this.style.backgroundColor='#f0f0f0';" onmouseout="this.style.backgroundColor='transparent';">
+                <img src="${imageUrl}" style="float: left; margin-right: 10px;" width="90" height="90" />
                 <div>
-                    <h5>${notification.fPushContent}</h5>
+                    <h6>${notification.fPushContent}</h6>
                     <p>${timeAgo}</p>
                 </div>
             </div>`;
@@ -138,8 +138,8 @@ async function uploadPushMsg(memberIdString) {
                         const notificationItem = document.createElement('li');
                         notificationItem.classList.add('notification-item');
                         notificationItem.innerHTML = `
-            <div style="overflow: auto;">
-                <img src="${imageUrl}" style="float: left; margin-right: 10px;" width="110" height="110" />
+            <div class="notification-container" style="overflow: auto; background-color: transparent;" onmouseover="this.style.backgroundColor='#f0f0f0';" onmouseout="this.style.backgroundColor='transparent';">
+                <img src="${imageUrl}" style="float: left; margin-right: 10px;" width="90" height="90" />
                 <div>
                     <h5>${notification.fPushContent}</h5>
                     <p>${daysDifference} 天前</p>
@@ -171,8 +171,11 @@ async function uploadPushMsg(memberIdString) {
             // 添加菜單 footer
             const footer = document.createElement('li');
             footer.classList.add('dropdown-footer');
-            footer.innerHTML = '<a href="#">Show all notifications</a>';
             notificationsMenu.appendChild(footer);
+
+            const circle = document.querySelector('#nfcircle');
+
+            circle.style.visibility = "visible";
         } else {
             console.error('Error:', responseNF.statusText);
         }

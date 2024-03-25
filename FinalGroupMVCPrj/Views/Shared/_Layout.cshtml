@@ -117,15 +117,7 @@
                             </ul>
                         </div>
 
-                        <!-- 推播Notification-->
-                        <li class="nav-item d-flex align-items-center justify-content-center dropdown">
-                            <a class="nav-link nav-icon" href="#" data-bs-toggle="dropdown">
-                                <i class="fa-solid fa-bell" id="bellicon" style="color: #74C0FC; font-size: 24px;"></i>
-                                <span class="badge bg-primary badge-number" style="margin-right:30px; visibility:hidden;">1</span>
-                            </a>
-                            <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow notifications"></ul>
-                        </li>
-                        <!-- 推播Notification End-->
+
 
                         <div class="more-option  ">
                             @* <div class="item">
@@ -229,13 +221,24 @@
         </div>
     </header>
     <!-- Header-area end -->
+
     @RenderBody()
     <!-- Go top -->
     <div class="go-top"><i class="fal fa-long-arrow-up"></i></div>
 
     <!-- Magic Cursor -->
     <div class="cursor"></div>
-
+    <div id="nfcircle" style="visibility:hidden; position: fixed; bottom: 0; right: 0; margin-right:45px; margin-bottom: 45px; z-index: 9999; width: 48px; height: 48px; border-radius: 50%; border: 2px solid 	#BEBEBE; background-color: #fff; display: flex; justify-content: center; align-items: center;">
+        <!-- 推播Notification-->
+        <li class="nav-item d-flex align-items-center justify-content-center dropdown">
+            <a class="nav-link nav-icon" href="#" data-bs-toggle="dropdown" style="position: relative; display: inline-block;">
+                <i class="fa-regular fa-bell " id="bellicon" style="font-size: 32px;"></i>
+                <span class="badge bg-primary badge-number" style="position: absolute; bottom: 0; right: 0; margin-right: -6px; font-size: 12px; visibility: hidden;">1</span>
+            </a>
+            <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow notifications"></ul>
+        </li>
+        <!-- 推播Notification End-->
+    </div>
     <!-- Footer-area start -->
     <footer class="footer-area bg-primary-light mt-50 p-0">
         <div class="footer-top pt-100 pb-70">

@@ -33,9 +33,8 @@ namespace FinalGroupMVCPrj.Controllers
                                                      FShowName = m.FShowName,
                                                      FMemberProfilePic = m.FMemberProfilePic,
                                                  })).SelectMany(m => m).Distinct().ToList();
-            var query2 = query;
 
-            ViewBag.teacherId = teacherId;
+            ViewBag.teacherId = teacherId.ToString();
             return View("ChatTeacher", query);
         }
 
@@ -55,7 +54,7 @@ namespace FinalGroupMVCPrj.Controllers
                     FMemberProfilePic = msg.FLessonCourse.FTeacher.FTeacherProfilePic
                 })
                 .Distinct();
-            ViewBag.memberId = studentId;
+            ViewBag.memberId = studentId.ToString();
             return View("ChatStudent", query);
         }
 
@@ -198,7 +197,7 @@ namespace FinalGroupMVCPrj.Controllers
             var query = await _context.TMemberGetPushes
                 .Include(m => m.FPushMessage)
                 .Where(m => m.FMemberId == memberId)
-                .OrderBy(m => m.FPushCreatedTime)
+                .OrderByDescending(m => m.FPushCreatedTime)
                 .Select(m => new PushMessageViewModel
                 {
                     FPushMessageId = m.FPushMessageId,

@@ -25,26 +25,26 @@
                     <ion-icon name="search-outline"></ion-icon>
                 </div>
             </div>
-            <div class="chatlist-container" style="overflow-y: auto; max-height: 620px;">
-            <!--chat list-->
-            @foreach (var item in Model)
-            {
-                <div class="chatlist" onclick="displaySelectMemberBox(@ViewBag.teacherId, @item.FMemberId)">
-                    <div class="block unread" data-chatbox-id="@item.FMemberId">
-                        <div class="imgbx">
-                            <img src="@Url.Action("GetStudentPicture", "Message", new { fMemberId = item.FMemberId })" class="cover" />
-                        </div>
-                        <div class="details">
-                            <div class="listHead">
-                                <h4 id="Chatmname">@item.FShowName</h4>
-                                <p class="time"></p>
+            <div class="chatlist-container row g-0" style="overflow-y: auto; max-height: 75vh;height:auto;">
+                <!--chat list-->
+                @foreach (var item in Model)
+                {
+                    <div class="chatlist" onclick="displaySelectMemberBox(@ViewBag.teacherId, @item.FMemberId)">
+                        <div class="block unread" data-chatbox-id="@item.FMemberId">
+                            <div class="imgbx">
+                                <img src="@Url.Action("GetStudentPicture", "Message", new { fMemberId = item.FMemberId })" class="cover" style="object-fit: cover;" />
                             </div>
-                            <div class="message_p">
+                            <div class="details">
+                                <div class="listHead">
+                                    <h4 id="Chatmname">@item.FShowName</h4>
+                                    <p class="time"></p>
+                                </div>
+                                <div class="message_p">
+                                </div>
                             </div>
                         </div>
                     </div>
-                </div>
-            }
+                }
             </div>
         </div>
     </div>
@@ -78,6 +78,14 @@
             </a>
             </a>
         </div>
+    </div>
+</div>
+
+<div class="d-flex flex-row  justify-content-start gap-2  pt-5" style="height:15%">
+    <div class="d-flex flex-row demoDirect  gap-3 ">
+        <h6>Demo訊息</h6>
+        <button onclick="demoMsg(1)" class="btn  btn-sm rounded-pill">demo1</button>
+        <button onclick="demoMsg(2)" class="btn  btn-sm rounded-pill">demo2</button>
     </div>
 </div>
 
@@ -138,25 +146,52 @@
             //     }).catch(function (error) {
             //         console.error("Error retrieving chat messages: ", error);
             //     });
+
+           updateChatListInfo(teacherId);
         });
 
         connection.on("UpdContent", function (msg, teacherId, memberId) {
             if (selectMemberId == memberId) {
-                connection.invoke("GetChatMessages", teacherId, memberId)
+                connection.invoke("GetMessagesByTeacher", teacherId, memberId)
                     .then(function (messages) {
-                        console.log("Received chat messages:", messages);
+                        // console.log("Received chat messages:", messages);
                         //獲得後將其展示
                         displayChatMessages(messages);
+
+                        connection.invoke("UpdateStudentMessages", teacherId, memberId)
+                            .then(function () {
+                                console.log("Successfully updated student's messages.");
+                            }).catch(function (error) {
+                                console.error("Error updating student's messages: ", error);
+                            });
+
                     }).catch(function (error) {
                         console.error("Error retrieving chat messages: ", error);
                     });
             }
             else {
-                const newMsg = document.querySelector(`[data-chatbox-id="${memberId}"] .message_p`)
-                newMsg.innerHTML = '<b>new</b>';
+                // const newMsg = document.querySelector(`[data-chatbox-id="${memberId}"] .message_p`)
+                // newMsg.innerHTML = '<b>new</b>';
             }
+            updateChatListInfo(teacherId);
             return;
         });
+
+        //讀取更新
+        connection.on("UpdContentByRead", function (msg, teacherId, memberId) {
+            if (selectMemberId == memberId) {
+                connection.invoke("GetMessagesByTeacherByRead", teacherId, memberId)
+                    .then(function (messages) {
+                        console.log("Received chat messages:", messages);
+                        //獲得後將其展示
+                        displayChatMessages(messages);
+
+                    }).catch(function (error) {
+                        console.error("Error retrieving chat messages: ", error);
+                    });
+            }
+        });
+
 
         //有人連線時要做的動作
         connection.on("UpdList", function (msg) {
@@ -198,16 +233,65 @@
 
     }
 
+    function updateChatListInfo(teacherId) {
+        connection.invoke("GetChatRoomInfo", teacherId, true)
+            .then(function (chatRoomInfo) {
+                // 在這裡處理接收到的聊天室資訊並更新聊天室的顯示
+                // 假設你有一個用於顯示聊天室的容器元素
+                var chatRoomContainer = document.querySelector(".chatlist-container");
+
+                
+                chatRoomInfo.forEach(function (roomInfo) {
+                    
+                    const chatRoomElement = document.querySelector(`[data-chatbox-id="${roomInfo.userId}"]`);
+                    if (chatRoomElement) {
+                      
+                        const messageContainer = chatRoomElement.querySelector('.message_p');
+                        if (messageContainer) {
+                            let unreadCountHTML = '';
+                            if (roomInfo.unreadMessagesCount > 0) {
+                                unreadCountHTML = `<b class="unread-count">${roomInfo.unreadMessagesCount}</b>`;
+                                const chatbox = document.querySelector(`[data-chatbox-id="${roomInfo.userId}"]`).closest('.chatlist');
+                                const chatlistContainer = document.querySelector(".chatlist-container");
+                                chatlistContainer.prepend(chatbox);
+                            }
+                          
+                            messageContainer.innerHTML = `
+                                        <span class="last-message">${truncateString(roomInfo.lastMessage.fMessage, 15)}</span>
+                                   ${unreadCountHTML}
+                                `;
+                        }
+                    }
+                });
+            });
+    }
+
+    function truncateString(str, maxLength) {
+        if (str.length > maxLength) {
+            return str.substring(0, maxLength) + '...';
+        }
+        return str;
+    }
+
     function displaySelectMemberBox(teacherId, memberId) {
-        const newMsg = document.querySelector(`[data-chatbox-id="${memberId}"] .message_p`)
-        newMsg.innerHTML = '';
+        const newMsg = document.querySelector(`[data-chatbox-id="${memberId}"] .message_p .unread-count`)
+        if (newMsg) {
+            newMsg.remove();
+        }
         memberWindowActive(memberId);
         updateSelectMemberHeader(memberId);
-        connection.invoke("GetChatMessages", teacherId.toString(), memberId.toString())
+        connection.invoke("GetMessagesByTeacher", teacherId.toString(), memberId.toString())
             .then(function (messages) {
                 console.log("Received chat messages:", messages);
                 //獲得後將其展示
                 displayChatMessages(messages);
+            }).catch(function (error) {
+                console.error("Error retrieving chat messages: ", error);
+            });
+
+        connection.invoke("UpdateStudentMessages", teacherId.toString(), memberId.toString())
+            .then(function () {
+                // console.log("Received chat messages:", messages);
             }).catch(function (error) {
                 console.error("Error retrieving chat messages: ", error);
             });
@@ -257,7 +341,7 @@
                 const online = document.querySelector('#headerContent');
                 online.innerHTML += isOnline == true ? '<span class=" bg-success border border-light rounded-circle chat-badge"></span>' : '<span class=" bg-danger border border-light rounded-circle chat-badge"></span>';
                 online.innerHTML += ' ';
-                online.innerHTML += isOnline == true ? '<span>Online</span>' : '<span>Offline</span>';
+                online.innerHTML += isOnline == true ? '<span>上線</span>' : '<span>離線</span>';
             }).catch(function (error) {
                 console.error("Error retrieving chat messages: ", error);
             });
@@ -276,7 +360,7 @@
         const teacherId = @ViewBag.teacherId;
         const memberId = selectMemberId;
 
-        connection.invoke("SendMessage", teacherId.toString(), memberId.toString(), message, date, true)
+        connection.invoke("SaveMessage", teacherId.toString(), memberId.toString(), message, date, true)
             .catch(function (err) {
                 alert('錯誤: ' + err.toString());
             });
@@ -293,50 +377,55 @@
             let messageDiv = document.createElement("div");
             const ImgSrc = "@Url.Action("GetTeacherPicture", "Message", new { FTeacherId = ViewBag.teacherId })"
             const ImgSrcInput = `@Url.Action("GetStudentPicture", "Message", new { fMemberId = "__memberId__" })`.replace("__memberId__", selectMemberId);
+            if (message.fIsRead) {
+                iconHtml = '<p style="font-size:15px;">已讀<p>';
+            }
+            else {
+                iconHtml = '';
+            }
+
             if (message.fIsTeacherMsg) {
                 messageDiv.className = "message my_message";
                 messageDiv.innerHTML = `
-                                                                        <div class="d-flex">
-                                                                    <div class="flex-shrink-0">
-                                                                        <ul class="list-inline ms-auto mb-0">
-                                                                            <li class="list-inline-item">
-                                                                                <a href="#" class="avtar avtar-xs btn-link-secondary" >
-                                                                                            <ion-icon name="checkmark-done-outline"style="margin-top: 25px;display:none;"></ion-icon>
-                                                                                </a>
-                                                                            </li>
-                                                                        </ul>
-                                                                    </div>
-                                                                    <div class="flex-grow-1 mx-3">
-                                                                        <div class="msg-content">
-                                                                                <p class="mb-0" id="msgtxt">${message.fMessage}</p>
+                                                                            <div class="d-flex">
+                                                                        <div class="flex-shrink-0">
+                                                                            <ul class="list-inline ms-auto mb-0">
+                                                                                <li class="list-inline-item" style="margin-top:20px;">
+                                                                                            ${iconHtml}
+                                                                                </li>
+                                                                            </ul>
                                                                         </div>
-                                                                            <p class="mb-0 text-muted text-sm msg_time" id="time">${time}</p>
-                                                                    </div>
-                                                                    <div class="flex-shrink-0">
-                                                                        <div class="chat-avtar">
-                                                                            <img class="rounded-circle img-fluid wid-40" style="max-width: 40px; max-height: 40px;" src=${ImgSrc} alt="User image">
+                                                                        <div class="flex-grow-1 mx-3">
+                                                                            <div class="msg-content">
+                                                                                    <p class="mb-0" id="msgtxt">${message.fMessage}</p>
+                                                                            </div>
+                                                                                <p class="mb-0 text-muted text-sm msg_time" id="time">${time}</p>
+                                                                        </div>
+                                                                        <div class="flex-shrink-0">
+                                                                            <div class="chat-avtar">
+                                                                                <img class="rounded-circle img-fluid wid-40" style="max-width: 40px; max-height: 40px;" src=${ImgSrc} alt="User image">
+                                                                            </div>
                                                                         </div>
                                                                     </div>
-                                                                </div>
-                                                            `;
+                                                                `;
                 chatBox.appendChild(messageDiv);
             } else {
                 messageDiv.className = "message std_message";
                 messageDiv.innerHTML = `
-                                                        <div class="d-flex">
-                                                            <div class="flex-shrink-0">
-                                                                <div class="chat-avtar">
-                                                                        <img class="rounded-circle img-fluid wid-40 " style="max-width: 40px; max-height: 40px;" src=${ImgSrcInput} alt="User image">
+                                                            <div class="d-flex">
+                                                                <div class="flex-shrink-0">
+                                                                    <div class="chat-avtar">
+                                                                            <img class="rounded-circle img-fluid wid-40 " style="max-width: 40px; max-height: 40px;" src=${ImgSrcInput} alt="User image">
+                                                                    </div>
+                                                                </div>
+                                                                <div class="flex-grow-1 mx-3">
+                                                                    <div class="msg-content">
+                                                                            <p class="mb-0" id="msgtxt">${message.fMessage}</p>
+                                                                    </div>
+                                                                        <p class="mb-0 text-muted text-sm msg_time" id="time">${time}</p>
                                                                 </div>
                                                             </div>
-                                                            <div class="flex-grow-1 mx-3">
-                                                                <div class="msg-content">
-                                                                        <p class="mb-0" id="msgtxt">${message.fMessage}</p>
-                                                                </div>
-                                                                    <p class="mb-0 text-muted text-sm msg_time" id="time">${time}</p>
-                                                            </div>
-                                                        </div>
-                                                                `;
+                                                                    `;
                 chatBox.appendChild(messageDiv);
             }
 
@@ -365,4 +454,28 @@
         return strTime;
     }
 
+    function demoMsg(demoNumber) {
+        let message = "";
+        switch (demoNumber) {
+            case 1:
+                message = "當然！ETF 的構建方法是指該 ETF 如何建立其投資組合的方式。一般來說，ETF 的構建方法包括兩種：物理複製和合成複製。";
+                break;
+            case 2:
+                message = "不客氣，小君！如果你還有其他問題或需要進一步的幫助，隨時都可以向我提問。";
+                break;
+            case 3:
+                message = "";
+                break;
+            case 4:
+                message = "";
+                break;
+            case 5:
+                message = "";
+                break;
+            default:
+                message = "沒有選擇有效的 Demo 訊息。";
+                break;
+        }
+        document.getElementById("messageInput").value = message;
+    }
 </script>

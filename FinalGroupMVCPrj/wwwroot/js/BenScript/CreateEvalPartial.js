@@ -131,4 +131,9 @@
         });
     });
 
+    const demo = document.querySelector('#createdemo');
+    demo.addEventListener('click', function () {
+        let message = "參加這個課程是我投資生涯中最正確的決定之一。課程內容豐富而實用，讓我徹底理解了ETF的運作原理和投資策略。專業的教學團隊不僅給予了我們深入的理論知識，還通過案例分析和實戰演練幫助我們更好地應用所學知識。";
+        document.getElementById("evalContent").value = message;
+    });
 });

@@ -25,14 +25,14 @@
                     <ion-icon name="search-outline"></ion-icon>
                 </div>
             </div>
-            <div class="chatlist-container" style="overflow-y: auto; max-height: 620px;">
+            <div class="chatlist-container" style="overflow-y: auto; max-height: 75vh;height:auto;">
                 <!--chat list-->
                 @foreach (var item in Model)
                 {
                     <div class="chatlist" onclick="displaySelectTeacherBox(@item.FTeacherId, @ViewBag.memberId)">
                         <div class="block unread" data-chatbox-id="@item.FTeacherId">
                             <div class="imgbx">
-                                <img src="@Url.Action("GetTeacherPicture", "Message", new { FTeacherId = item.FTeacherId })" class="cover" />
+                                <img src="@Url.Action("GetTeacherPicture", "Message", new { FTeacherId = item.FTeacherId })" class="cover" style="object-fit: cover;" />
                             </div>
                             <div class="details">
                                 <div class="listHead">
@@ -77,6 +77,15 @@
                 <ion-icon name="send-outline"></ion-icon>
             </a>
         </div>
+    </div>
+</div>
+
+<div class="d-flex flex-row  justify-content-start gap-2  pt-5" style="height:15%">
+    <div class="d-flex flex-row demoDirect  gap-3 ">
+        <h6>Demo訊息</h6>
+        <button onclick="demoMsg(1)" class="btn  btn-sm rounded-pill">demo1</button>
+        <button onclick="demoMsg(2)" class="btn  btn-sm rounded-pill">demo2-1</button>
+        <button onclick="demoMsg(3)" class="btn  btn-sm rounded-pill">demo2-2</button>
     </div>
 </div>
 
@@ -135,24 +144,51 @@
             //     }).catch(function (error) {
             //         console.error("Error retrieving chat messages: ", error);
             //     });
+            updateChatListInfo(memberId);
         });
 
         connection.on("UpdContent", function (msg, teacherId, memberId) {
             if (selectTeacherId == teacherId) {
-                connection.invoke("GetChatMessages", teacherId, memberId)
+                connection.invoke("GetMessagesByStudent", teacherId, memberId)
                     .then(function (messages) {
-                        console.log("Received chat messages:", messages);
+                        // console.log("Received chat messages:", messages);
                         //獲得後將其展示
                         displayChatMessages(messages);
+                        // connection.invoke("UpdateTeacherMessages", teacherId, memberId)
+                        //     .then(function () {
+                        //         console.log("Successfully updated teacher's messages.");
+                        //     }).catch(function (error) {
+                        //         console.error("Error updating teacher's messages: ", error);
+                        //     });
+
                     }).catch(function (error) {
                         console.error("Error retrieving chat messages: ", error);
                     });
             }
             else {
-                const newMsg = document.querySelector(`[data-chatbox-id="${teacherId}"] .message_p`)
-                newMsg.innerHTML = '<b>new</b>';
+                // const newMsg = document.querySelector(`[data-chatbox-id="${teacherId}"] .message_p`)
+                // newMsg.innerHTML = '<b>new</b>';
             }
+            // const chatbox = document.querySelector(`[data-chatbox-id="${teacherId}"]`).closest('.chatlist');
+            // const chatlistContainer = document.querySelector(".chatlist-container");
+            // chatlistContainer.prepend(chatbox);
+            updateChatListInfo(memberId);
             return;
+        });
+
+        //讀取更新
+        connection.on("UpdContentByRead", function (msg, teacherId, memberId) {
+            if (selectTeacherId == teacherId) {
+                connection.invoke("GetMessagesByStudentByRead", teacherId, memberId)
+                    .then(function (messages) {
+                        console.log("Received chat messages:", messages);
+                        //獲得後將其展示
+                        displayChatMessages(messages);
+
+                    }).catch(function (error) {
+                        console.error("Error retrieving chat messages: ", error);
+                    });
+            }
         });
 
         //有人連線時要做的動作
@@ -191,16 +227,65 @@
         }
     }
 
+    function updateChatListInfo(memberId) {
+        connection.invoke("GetChatRoomInfo", memberId, false)
+            .then(function (chatRoomInfo) {
+                // 在這裡處理接收到的聊天室資訊並更新聊天室的顯示
+                // 假設你有一個用於顯示聊天室的容器元素
+                var chatRoomContainer = document.querySelector(".chatlist-container");
+
+                // 遍歷每個聊天室資訊
+                chatRoomInfo.forEach(function (roomInfo) {
+                    // 找到对应的聊天室元素
+                    const chatRoomElement = document.querySelector(`[data-chatbox-id="${roomInfo.userId}"]`);
+                    if (chatRoomElement) {
+                        // 找到消息容器
+                        const messageContainer = chatRoomElement.querySelector('.message_p');
+                        if (messageContainer) {
+                            // 更新消息容器中的内容
+                            let unreadCountHTML = '';
+                            if (roomInfo.unreadMessagesCount > 0) {
+                                unreadCountHTML = `<b class="unread-count">${roomInfo.unreadMessagesCount}</b>`;
+                                const chatbox = document.querySelector(`[data-chatbox-id="${roomInfo.userId}"]`).closest('.chatlist');
+                                const chatlistContainer = document.querySelector(".chatlist-container");
+                                chatlistContainer.prepend(chatbox);
+                            }
+                            messageContainer.innerHTML = `
+                                <span class="last-message">${truncateString(roomInfo.lastMessage.fMessage, 15)}</span>
+                                ${unreadCountHTML}
+                        `;
+                        }
+                    }
+                });
+            });
+    }
+
+    function truncateString(str, maxLength) {
+        if (str.length > maxLength) {
+            return str.substring(0, maxLength) + '...';
+        }
+        return str;
+    }
+
     function displaySelectTeacherBox(teacherId, memberId) {
-        const newMsg = document.querySelector(`[data-chatbox-id="${teacherId}"] .message_p`)
-        newMsg.innerHTML = '';
+        const newMsg = document.querySelector(`[data-chatbox-id="${memberId}"] .message_p .unread-count`)
+        if (newMsg) {
+            newMsg.remove();
+        }
         teacherWindowActive(teacherId);
         updateSelectTeacherHeader(teacherId);
-        connection.invoke("GetChatMessages", teacherId.toString(), memberId.toString())
+        connection.invoke("GetMessagesByStudent", teacherId.toString(), memberId.toString())
             .then(function (messages) {
                 console.log("Received chat messages:", messages);
 
                 displayChatMessages(messages);
+            }).catch(function (error) {
+                console.error("Error retrieving chat messages: ", error);
+            });
+
+        connection.invoke("UpdateTeacherMessages", teacherId.toString(), memberId.toString())
+            .then(function () {
+                // console.log("Received chat messages:", messages);
             }).catch(function (error) {
                 console.error("Error retrieving chat messages: ", error);
             });
@@ -250,7 +335,7 @@
                 const online = document.querySelector('#headerContent');
                 online.innerHTML += isOnline == true ? '<span class=" bg-success border border-light rounded-circle chat-badge"></span>' : '<span class=" bg-danger border border-light rounded-circle chat-badge"></span>';
                 online.innerHTML += ' ';
-                online.innerHTML += isOnline == true ? '<span>Online</span>' : '<span>Offline</span>';
+                online.innerHTML += isOnline == true ? '<span>上線</span>' : '<span>離線</span>';
             }).catch(function (error) {
                 console.error("Error retrieving chat messages: ", error);
             });
@@ -269,7 +354,7 @@
         const memberId = @ViewBag.memberId;
         const teacherId = selectTeacherId
 
-        connection.invoke("SendMessage", teacherId.toString(), memberId.toString(), message, date, false)
+        connection.invoke("SaveMessage", teacherId.toString(), memberId.toString(), message, date, false)
             .catch(function (err) {
                 alert('錯誤: ' + err.toString());
             });
@@ -286,15 +371,21 @@
             let messageDiv = document.createElement("div");
             const ImgSrc = "@Url.Action("GetStudentPicture", "Message", new { fMemberId = ViewBag.memberId })"
             const ImgSrcInput = `@Url.Action("GetTeacherPicture", "Message", new { FTeacherId = "__teacherId__" })`.replace("__teacherId__", selectTeacherId);
+            if (message.fIsRead) {
+                iconHtml = '<p style="font-size:15px;">已讀<p>';
+            }
+            else {
+                iconHtml = '';
+            }
+            
             if (!message.fIsTeacherMsg) {
                 messageDiv.className = "message my_message";
                 messageDiv.innerHTML = `
                                                                                 <div class="d-flex">
                                                                                     <div class="flex-shrink-0">
                                                                                         <ul class="list-inline ms-auto mb-0">
-                                                                                            <li class="list-inline-item">
-                                                                                                <a href="#" class="avtar avtar-xs btn-link-secondary">
-                                                                                                </a>
+                                                                                                <li class="list-inline-item" style="margin-top:20px;">
+                                                                                                        ${iconHtml}
                                                                                             </li>
                                                                                         </ul>
                                                                                     </div>
@@ -357,4 +448,28 @@
         return strTime;
     }
 
+    function demoMsg(demoNumber) {
+        let message = "";
+        switch (demoNumber) {
+            case 1:
+                message = "嗨，大成老師！我是參加你的 ETF 課程的小君。我在課程中學到了很多有關 ETF 的知識，但對其中一個概念仍感到困惑。";
+                break;
+            case 2:
+                message = "在課程中你提到了 ETF 的構建方法，我不太明白這個概念。你能給我解釋一下嗎？";
+                break;
+            case 3:
+                message = "原來如此，謝謝你的解釋，大成老師！這幫助我更好地理解了 ETF 的構建方法。";
+                break;
+            case 4:
+                message = "";
+                break;
+            case 5:
+                message = "";
+                break;
+            default:
+                message = "沒有選擇有效的 Demo 訊息。";
+                break;
+        }
+        document.getElementById("messageInput").value = message;
+    }
 </script>
