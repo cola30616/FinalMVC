@@ -52,6 +52,13 @@ namespace FinalGroupMVCPrj.Controllers
             };
             return View("Detail", checkoutDetailViewModel);
         }
+        [HttpGet]
+        public async Task<FileResult> showPicture(int id)
+        {
+            TLessonCourse? c = await _context.TLessonCourses.FindAsync(id);
+            byte[]? Content = c?.FPhoto;
+            return File(Content, "image/jpeg");
+        }
 
         [HttpPost]
         public IActionResult CheckOrder(CheckoutDetailViewModel checkoutDetailViewModel)
