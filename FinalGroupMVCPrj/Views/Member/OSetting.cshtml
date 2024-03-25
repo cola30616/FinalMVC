@@ -12,6 +12,43 @@
             left: -200px; /* 負數代表向左偏移，可以根據需求調整 */
             transform: scale(1.5);
         }
+
+        .demoDirect {
+            color: white;
+            background-color: white;
+            .btn
+
+        {
+            color: white;
+            background-color: white
+        }
+
+        h6 {
+            color: white
+        }
+
+        }
+
+        .demoDirect:hover {
+            .btn
+
+        {
+            background-color: lightgrey
+        }
+
+        .btn:hover {
+            background-color: #30C2EC
+        }
+
+        .btn:active {
+            background-color: black
+        }
+
+        h6 {
+            color: lightgrey
+        }
+
+        }
     </style>
 }
 <partial name="_SweetAlertPartial" />
@@ -24,6 +61,7 @@
     </div>
 </div>
 <!-- Breadcrumb end -->
+
 <!-- Checkout-area start -->
 <div class="shopping-area pt-60 pb-60">
     <div class="container">
@@ -94,8 +132,11 @@
                 </div>
             </div>
             <!--第二區-->
-            <div class=" form-block border radius-md px-5 py-5" data-aos="fade-up">
-
+            <div class=" form-block border radius-md px-5 pb-5 pt-1" data-aos="fade-up">
+                <div class="d-flex align-items-center justify-content-end  demoDirect  gap-3 pt-1">
+                    <h6 class="m-0">Demo 操作</h6>
+                    <button onclick="inputValue()" class="btn btn-sm  px-3 radius-sm">填寫部分資料</button>
+                </div>
                 <form asp-controller="Member" asp-action="SettingSave" method="post">
                     <h4 class="mb-20 color-primary">基本資訊</h4>
                     <div class="row gx-xl-5">
@@ -225,6 +266,11 @@
                     console.log(xhr);
                 }
             });
+        }
+        function inputValue(){
+            document.getElementById('Member_FShowName').value = "小歐"
+            document.getElementById('Member_FPhone').value = "0977777818"
+            document.getElementById('Member_FBirthDate').value = "1996-12-03"
         }
         function cancelLineLogin() {
             Swal.fire({

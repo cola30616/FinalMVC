@@ -54,11 +54,11 @@
                 <div class="d-flex flex-column  justify-content-start gap-2  pt-5" style="width:15%">
                     <div class="d-flex flex-column demoDirect  gap-3 ">
                         <h6>Demo註冊</h6>
-                        <button class="btn btn-sm rounded-pill">重複註冊</button>
-                        <button class="btn btn-sm rounded-pill">密碼不一致</button>
+                        <button onclick="demoRepeatSignUp()" class="btn btn-sm rounded-pill">重複註冊</button>
+                        <button onclick="demoIncorrectInput()" class="btn btn-sm rounded-pill">input 有誤</button>
+                        <button onclick="demoCorrectInput()" class="btn btn-sm rounded-pill">input 正確</button>
                         <a href="https://outlook.live.com/mail/0/" target="_blank" class="btn btn-sm rounded-pill">Outlook信箱</a>
                         <a href="https://jwt.io/" target="_blank" class="btn btn-sm rounded-pill">jwt.io 解碼查看</a>
-                        <button class="btn btn-sm rounded-pill">登入新註冊會員</button>
                     </div>
                     <div class="d-flex flex-column demoDirect  gap-3 ">
                         <h6>Demo超連結</h6>
@@ -131,12 +131,12 @@
                                 <div class="col-12">
                                     <div class="form-group mb-20">
                                         <div class="position-relative">
-                                        <input asp-for="FPassword" type="password" class="pageFormText form-control" placeholder="密碼 至少8個字英數混合" value="">
+                                        <input asp-for="FPassword" type="password" class="pageFormText form-control" placeholder="密碼 至少8個英數字混合" value="">
                                             <span class="show-password-field">
                                             <i class="show-icon"></i>
                                             </span>
-                                        <span asp-validation-for="FPassword" class=" text-danger"></span>
                                         </div>
+                                    <span asp-validation-for="FPassword" class=" text-danger"></span>
                                     </div>
                                 <div class="signupTogle col-12" style="display:none">
                                     <div class="form-group mb-20" >
@@ -145,9 +145,8 @@
                                             <span class="show-password-field">
                                                 <i class="show-icon"></i>
                                             </span>
-                                            <span class="text-danger"></span>
-                                            <span id="cPwMsg" class=" text-danger"></span>
                                         </div>
+                                        <span id="cPwMsg" class=" text-danger"></span>
                                     </div>
                                 </div>
                                 <div class="signupTogle col-12" style="display:none">
@@ -180,7 +179,7 @@
                     </div>
                 <div class="d-flex flex-column  justify-content-start gap-2  pt-5" style="width:15%">
                     <div class="d-flex flex-column demoDirect  gap-3 ">
-                        <h6>Demo腳色登入</h6>
+                        <h6>Demo角色登入</h6>
                         <button onclick="demoLogin('liuyijun@email.com')" class="btn  btn-sm rounded-pill">〈 學生 〉  小君</button>
                         <button onclick="demoLogin('wen2024113@outlook.com')" class="btn  btn-sm rounded-pill">〈 新學生 〉  小歐</button>
                         <button onclick="demoLogin('tinachen@email.com')" class="btn  btn-sm rounded-pill">〈 申請老師 〉  婷婷</button>
@@ -265,9 +264,10 @@
 
             //判斷確認密碼是否一致
         document.getElementById('confirmPW').addEventListener('change', checkConfirmPW);
-    function checkConfirmPW(e) {
+    function checkConfirmPW() {
         let pw = document.getElementById('FPassword').value;
-        if (e.target.value !== pw) {
+            let e = document.getElementById('confirmPW').value
+        if (e!== pw) {
             document.getElementById('cPwMsg').innerHTML = "密碼不一致";
         } else {
                 document.getElementById('cPwMsg').innerHTML = "";
@@ -322,8 +322,9 @@
                 if (confirmPW.value !== pw) {
                     document.getElementById('cPwMsg').innerHTML = "密碼不一致";
                     return;
+                } else {
+                    document.getElementById('cPwMsg').innerHTML = "";
                 }
-                if (document.getElementById("cPwMsg").innerHTML !== "") { return; }
 
                 const agreeCheckbox = document.getElementById("agreeCheckbox")
                 if (agreeCheckbox.checked == false) {
@@ -559,5 +560,28 @@
             }
         }
 
+    </script>
+    <script>
+        function demoRepeatSignUp() {
+            document.getElementById('FRealName').value = "劉怡君"
+            document.getElementById('FEmail').value = "liuyijun@email.com"
+            document.getElementById('FPassword').value = "asd123456"
+            document.getElementById('confirmPW').value = "asd123456"
+        }
+        function demoIncorrectInput() {
+            document.getElementById('FRealName').value = ""
+            document.getElementById('FEmail').value = "wen2024113outlook.com"
+            document.getElementById('FPassword').value = "asd1234"
+            document.getElementById('confirmPW').value = "asd123456"
+            checkConfirmPW()
+            document.getElementById('submitBtn').click()
+        }
+        function demoCorrectInput() {
+            document.getElementById('FRealName').value = "歐文"
+            document.getElementById('FEmail').value = "wen2024113@outlook.com"
+            document.getElementById('FPassword').value = "asd123456"
+            document.getElementById('confirmPW').value = "asd123456"
+            document.getElementById('submitBtn').click()
+        }
     </script>
     }
