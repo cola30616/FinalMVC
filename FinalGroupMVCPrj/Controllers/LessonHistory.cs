@@ -63,7 +63,6 @@ namespace FinalGroupMVCPrj.Controllers
                 .Where(od => od.FOrderId == id)
                 .Select(od => new LessonHistoryDetailViewModel
                 {
-                    FLessonCourseId = od.FLessonCourseId,
                     FName = od.FLessonCourse.FName,
                     FDescription = od.FLessonCourse.FDescription,
                     FOrderId = od.FOrderId,
@@ -76,7 +75,6 @@ namespace FinalGroupMVCPrj.Controllers
                     FOrderDetailId = od.FOrderDetailId,
                     FLessonCourseId = od.FLessonCourseId,
                     FModificationDescription = od.FModificationDescription,
-                    FPhoto = od.FLessonCourse.FPhoto
                 }).ToList().FirstOrDefault();
          
             return View("Detail", order);
