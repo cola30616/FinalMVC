@@ -56,8 +56,16 @@
                                                         <a asp-controller="LessonHistory" asp-action="Detail" asp-route-id="@course.Key" target="_self" title="Link">
                                                             @course.Value.FName
                                                         </a>
-                                                    </h6>
-                                                    
+                                                    </h6>                                                    
+                                                </div>
+                                                <div class="course-bottom-info px-3 py-2">
+                                                    @{
+                                                        if (course.Value.FLessonDate != null)
+                                                        {
+                                                            var lessonDateStr = course.Value.FLessonDate.Value.ToString("yyyy/MM/dd");
+                                                            <span class="font-sm icon-start"><i class="fa-solid fa-calendar-days color-primary"></i>@lessonDateStr</span>
+                                                        }
+                                                    }
                                                 </div>
                                                
                                             </div>
@@ -102,7 +110,15 @@
                                                     </h6>
                                                   
                                                 </div>
-
+                                                <div class="course-bottom-info px-3 py-2">
+                                                    @{
+                                                        if (course.Value.FLessonDate != null)
+                                                        {
+                                                            var lessonDateStr = course.Value.FLessonDate.Value.ToString("yyyy/MM/dd");
+                                                            <span class="font-sm icon-start"><i class="fa-solid fa-calendar-days color-primary"></i>@lessonDateStr</span>
+                                                        }
+                                                    }
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
@@ -144,7 +160,15 @@
                                                     </h6>
                                              
                                                 </div>
-
+                                            <div class="course-bottom-info px-3 py-2">
+                                                @{
+                                                    if (course.Value.FLessonDate != null)
+                                                    {
+                                                        var lessonDateStr = course.Value.FLessonDate.Value.ToString("yyyy/MM/dd");
+                                                        <span class="font-sm icon-start"><i class="fa-solid fa-calendar-days color-primary"></i>@lessonDateStr</span>
+                                                    }
+                                                }
+                                            </div>
                                             </div>
                                         </div>
                                     </div>

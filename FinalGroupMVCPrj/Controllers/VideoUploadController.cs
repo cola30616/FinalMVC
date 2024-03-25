@@ -12,20 +12,14 @@ namespace FinalGroupMVCPrj.Controllers
     public class VideoUploadController : ControllerBase
     {
         private IVideoUploadService _videoUploadService;
-        private readonly LifeShareLearnContext _lifeShareLearnContext;
+        private readonly LifeShareLearnContext _context;
         public VideoUploadController(IVideoUploadService videoUploadService, LifeShareLearnContext lifeShareLearnContext)
         {
             _videoUploadService = videoUploadService;
-            _lifeShareLearnContext = lifeShareLearnContext;
+            _context = lifeShareLearnContext;
         }
 
-        [HttpPost]
-        public async Task<IActionResult> UploadVideo(IFormFile file)
-        {
-            var result = await _videoUploadService.AddVideoAsync(file);
-
-            return Ok(result);
-        }
+        
 
        
 
