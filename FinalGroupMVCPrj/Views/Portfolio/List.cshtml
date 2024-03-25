@@ -1,18 +1,13 @@
-﻿@using FinalGroupMVCPrj.Models.DTO
-@model IEnumerable<PortfolioListDTO>
+﻿@model IEnumerable<FinalGroupMVCPrj.Models.DTO.PortfolioListDTO>
+@using FinalGroupMVCPrj.Models.DTO
 
+<body>
 <!-- Breadcrumb start -->
-<div class="breadcrumb-area bg-img bg-cover" data-bg-image="/images/breadcrumb-bg.jpg">
+<div class="breadcrumb-area bg-img bg-cover" data-bg-image="https://themeforest.kreativdev.com/oppida/demo/assets/images/newsletter-bg-1.jpg">
     <div class="container">
         <div class="content text-center">
-            <h2>Life Share Learn 實作</h2>
-            <h2>Side Project</h2>
-            <nav aria-label="breadcrumb">
-                <ol class="breadcrumb">
-                    <li class="breadcrumb-item"><a href="index.html">Home</a></li>
-                    <li class="breadcrumb-item active" aria-current="page">Learning Portfolio</li>
-                </ol>
-            </nav>
+                <h2><a href="@Url.Action("AllWorks")" title="Learning Portfolio">課程心得</a></h2>
+            
         </div>
     </div>
 </div>
@@ -24,66 +19,75 @@
             <div class="col-lg-8">
                 <div class="blog-description mb-40">
                     <article class="item-single">
+                            @foreach (var i in ViewBag.PortfolioList)
+                            {
                         <div class="image">
                             <div class="lazy-container radius-md ratio ratio-16-9">
-                                <img class="lazyload" src="/images/placeholder.png" data-src="/images/blog/blog-1.jpg" alt="blog Image">
+                                        <img class="lazyload" src="@i.FFileLink" data-src="@i.FFileLink" alt="blog Image">
                             </div>
                         </div>
+                        
                         <div class="content">
                             <ul class="info-list">
-                                <li><i class="fal fa-user"></i>Oppido</li>
-                                <li><i class="fal fa-calendar"></i>18 JULY 2023</li>
-                                <li><i class="fal fa-tag"></i>App Development</li>
+                                <li><i class="fal fa-user"></i>@i.FShowName</li>
+                                    <li><i class="fal fa-calendar"></i>@i.FLastModifyTime</li>
+                                    <li><i class="fal fa-tag"></i>@i.FSubjectName</li>
                             </ul>
-                            
-                                <h4 class="title">                                    
-                                @Html.DisplayFor(m => m.FirstOrDefault().FName)                                 
-                            </h4>                           
+
+                            <h4 class="title">
+                                    @i.FName
+                            </h4>
                             <p>
-                                @Html.DisplayFor(m => m.FirstOrDefault().FDescrpition)
-                          
+                                    @i.FLessonCourseDescrpition
+                                    
                             </p>
-                            <blockquote class="blockquote mb-30">
+                                    <blockquote class="blockquote mb-30" >
                                 <i class="fas fa-quote-left"></i>
-                                <p>
-                                    這款令人垂涎的馬卡龍甜點呈現出一種令人難以置信的視覺和味覺享受。首先，這款馬卡龍以柔軟的外皮包覆，外觀如彩虹般繽紛，各種色彩交織出一幅美不勝收的畫面。
+                                        <p id="tab">
+                                          @i.FDescrpition
                                 </p>
                             </blockquote>
                             <p class="m-0">
-                                All the Lorem Ipsum generators on the Internet tend to repeat predefined
-                                chunks as necessary, making this the first true generator on the Internet. It uses a
-                                dictionary of over 200 Latin words, combined with a handful model sentence
-                                structures, to generate Lorem Ipsum which looks reasonable. The generated Lorem
-                                Ipsum is therefore always free from. Lorem ipsum dolor sit amet consectetur
-                                adipisicing elit. Accusantium, optio!
                             </p>
-                        </div>
+                            </div>
+                        }
                     </article>
+                        <div class="btn-groups w-100 justify-content-start text-start gap-20 mb-30">
+
+                            <a href="@Url.Action("AllWorks")" class="btn btn-lg btn-outline rounded-pill" title="Proceed to checkout" target="_self">返回</a>
+                        </div>
                 </div>
+                    
                 <div class="row">
                     <div class="col-xl-10">
                         <div class="comments">
-                            <h4 class="mb-20">Comments</h4>
+                            <h4 class="mb-20">評論區</h4>
                             <div class="comment-box radius-md mb-40">
                                 <ol class="comment-list">
                                     <li class="comment">
                                         <div class="comment-body">
                                             <div class="comment-author">
                                                 <div class="lazy-container ratio ratio-1-1 rounded-circle">
-                                                    <img class="lazyload" src="/images/placeholder.png" data-src="/images/avatar-1.jpg" alt="image">
+                                                    <img class="lazyload" src="https://themeforest.kreativdev.com/oppida/demo/assets/images/avatar-2.jpg" data-src="https://themeforest.kreativdev.com/oppida/demo/assets/images/avatar-2.jpg" alt="image">
                                                 </div>
                                             </div>
-                                            <div class="comment-content">
-                                                <h6 class="name">Adam Haul</h6>
+                                                @foreach (var i in ViewBag.PortfolioList)
+                                            {
+                                                <div class="comment-content">
+                                                    <h6 class="name">老師</h6>
                                                 <p>
-                                                    @Html.DisplayFor(m => m.FirstOrDefault().FComment)
+                                                    @i.FComment
                                                 </p>
-                                                <a href="blog-single.html" class="font-sm color-primary" target="_self" title="Reply">Reply</a>
+                                                        <a href="blog-single.html" class="font-sm color-primary" target="_self" title="Reply">回覆</a>
                                             </div>
+                                            }
                                         </div>
                                     </li>
-                                    <li class="comment">
-                                        <div class="comment-body">
+                                    <li id="li1" class="comment">
+                                            <div class="comment-body">
+                                       
+                                            </div>
+                                        @* <div class="comment-body">
                                             <div class="comment-author">
                                                 <div class="lazy-container ratio ratio-1-1 rounded-circle">
                                                     <img class="lazyload" src="/images/placeholder.png" data-src="/images/avatar-2.jpg" alt="image">
@@ -96,8 +100,8 @@
                                                 </p>
                                                 <a href="blog-single.html" class="font-sm color-primary" target="_self" title="Reply">Reply</a>
                                             </div>
-                                        </div>
-                                        <ol class="children">
+                                        </div> *@
+@*                                         <ol class="children">
                                             <li class="comment">
                                                 <div class="comment-body">
                                                     <div class="comment-author">
@@ -105,7 +109,7 @@
                                                             <img class="lazyload" src="/images/placeholder.png" data-src="/images/avatar-3.jpg" alt="image">
                                                         </div>
                                                     </div>
-                                                    <div class="comment-content">
+                                                        <div class="comment-content" id="comment">
                                                         <h6 class="name">Harry jain</h6>
                                                         <p>
                                                             完全同意！這款法式馬卡龍看起來就像是藝術品一般，色彩搭配得恰到好處，每一口都是味蕾的享受。這位學生的手藝真是了不起，期待他未來更多的烹飪驚喜！
@@ -114,36 +118,32 @@
                                                     </div>
                                                 </div>
                                             </li>
-                                        </ol>
+
+                                        </ol> *@
                                     </li>
                                 </ol>
                             </div>
                             <div class="comment-reply mb-40">
-                                <h4 class="mb-10">Post Your Comment</h4>
+                                <h4 class="mb-10">發表評論</h4>
                                 <p class="comment-notes">
-                                    <span id="email-notes">Your email address will not be published.</span>
-                                    Required fields are marked
+                                    <span id="email-notes">請記得填寫姓名</span>
+                                        必填欄位
                                     <span class="required text-danger">*</span>
                                 </p>
-                                <form id="commentForm" class="comment-form">
+                                <form method="post" id="commentForm" class="comment-form">
                                     <div class="row">
                                         <div class="col-sm-6">
                                             <div class="form-group mb-20">
-                                                <input type="text" class="form-control" name="name" placeholder="Name*" required>
-                                            </div>
-                                        </div>
-                                        <div class="col-sm-6">
-                                            <div class="form-group mb-20">
-                                                <input type="email" class="form-control" name="email" placeholder="Email*" required>
+                                                    <input type="text" class="form-control" name="name" id="inputName" placeholder="姓名*" value="小明" required>
                                             </div>
                                         </div>
                                         <div class="col-12">
                                             <div class="form-group mb-30">
-                                                <textarea name="message" class="form-control" placeholder="Comment" required rows="6"></textarea>
+                                                    <textarea name="message" class="form-control" placeholder="評論" id="textareaComment" required rows="6">課程受益良多，讓我有很大的啟發，很感謝老師的指點，同學的互動</textarea>
                                             </div>
                                         </div>
                                     </div>
-                                    <button class="btn btn-lg btn-primary rounded-pill" type="button" aria-label="Post Comment">Post Comment</button>
+                                        <button id="buttonPost" class="btn btn-lg btn-primary rounded-pill" type="submit" aria-label="發表" asp-controller="Portfolio" asp-action="Create">發表</button>
                                 </form>
                             </div>
                         </div>
@@ -153,11 +153,11 @@
             <div class="col-lg-4">
                 <aside class="widget-area border radius-md px-25" data-aos="fade-up">
                     <div class="widget widget-search py-25">
-                        <h5 class="title mb-15">Search Posts</h5>
+                            <h5 class="title mb-15"><a href="@Url.Action("AllWorks")">返回心得總覽</a></h5>
                         <div class="search-form">
                             <form id="searchForm">
                                 <div class="input-inline border rounded-pill">
-                                    <input class="form-control border-0" placeholder="Search here..." type="text" name="SEARCH" required="">
+                                    <input class="form-control border-0" placeholder="查詢" type="text" name="SEARCH" required="">
                                     <button class="btn-icon rounded-pill" type="submit" aria-label="Search button">
                                         <i class="far fa-search"></i>
                                     </button>
@@ -168,43 +168,70 @@
                     <div class="widget widget-post py-25">
                         <h5 class="title">
                             <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#blogPost">
-                                Recent Post
+                                最近心得
                             </button>
                         </h5>
                         <div id="blogPost" class="collapse show">
                             <div class="accordion-body mt-20 scroll-y">
+                                    
+                                    @foreach (var i in ViewBag.PortfolioList2)
+                                    {
+                                        <article class="article-item mb-20">
+                                            <div class="image">
+                                                <a asp-controller="Portfolio" asp-action="List" asp-route-id="@i.FCourseworkId" target="_self" title="Link" class="lazy-container ratio ratio-1-1 radius-sm">
+                                                    <img class="lazyload" src="@i.FFileLink" data-src="@i.FFileLink" alt="blog Image">
+                                                </a>
+                                            </div>
+                                            <div class="content">
+                                                <ul class="info-list">
+                                                    <a asp-controller="Portfolio" asp-action="List" asp-route-id="@i.FCourseworkId" target="_self" title="blog">
+                                                    <li>@i.FShowName</li>
+                                                    </a>
+                                                    
+                                                    <li>18/05/2023</li>
+                                                </ul>
+                                                <h6 class="lc-2 mb-0">
+                                                    <a asp-controller="Portfolio" asp-action="List" asp-route-id="@i.FCourseworkId" target="_self" title="blog">
+                                                        @i.FName
+                                                    </a>
+                                                </h6>
+                                            </div>
+                                        </article>
+                                    }
+                                    @* @foreach (var i in Model.Take(5)){
                                 <article class="article-item mb-20">
                                     <div class="image">
                                         <a href="blog-single.html" target="_self" title="Link" class="lazy-container ratio ratio-1-1 radius-sm">
-                                            <img class="lazyload" src="/images/placeholder.png" data-src="/images/blog/blog-1.jpg" alt="blog Image">
+                                                    <img class="lazyload" src="@i.FFileLink" data-src="@i.FFileLink" alt="blog Image">
                                         </a>
                                     </div>
                                     <div class="content">
                                         <ul class="info-list">
-                                            <li>Admin</li>
+                                            <li>@i.FShowName</li>
                                             <li>18/05/2023</li>
                                         </ul>
                                         <h6 class="lc-2 mb-0">
-                                            <a href="blog-single.html" target="_self" title="blog">
-                                                Clients may provide feedback on the overall user experience, including the website's design
+                                                    <a asp-controller="Portfolio" asp-action="List" asp-route-id="@i.FCourseworkId"  target="_self" title="blog">
+                                                        @i.FName
                                             </a>
                                         </h6>
                                     </div>
-                                </article>
-                                <article class="article-item mb-20">
+                                        </article>
+                                    }} *@
+                               @*  <article class="article-item mb-20">
                                     <div class="image">
                                         <a href="blog-single.html" target="_self" title="Link" class="lazy-container ratio ratio-1-1 radius-sm">
-                                            <img class="lazyload" src="/images/placeholder.png" data-src="/images/blog/blog-2.jpg" alt="blog Image">
+                                                <img class="lazyload" src="https://th.bing.com/th/id/OIG2.OQ6M3ZXxSj0fUZ3_9zVV?w=173&h=173&c=6&r=0&o=5&dpr=2&pid=ImgGn" data-src="https://th.bing.com/th/id/OIG2.OQ6M3ZXxSj0fUZ3_9zVV?w=173&h=173&c=6&r=0&o=5&dpr=2&pid=ImgGn" alt="blog Image">
                                         </a>
                                     </div>
                                     <div class="content">
                                         <ul class="info-list">
-                                            <li>John</li>
+                                            <li>大壯</li>
                                             <li>21/06/2023</li>
                                         </ul>
                                         <h6 class="lc-2 mb-0">
                                             <a href="blog-single.html" target="_self" title="blog">
-                                                Step-by-Step Instructions for Purchasing Computer Games from Our Website
+                                                    麻婆豆腐
                                             </a>
                                         </h6>
                                     </div>
@@ -212,51 +239,51 @@
                                 <article class="article-item mb-20">
                                     <div class="image">
                                         <a href="blog-single.html" target="_self" title="Link" class="lazy-container ratio ratio-1-1 radius-sm">
-                                            <img class="lazyload" src="/images/placeholder.png" data-src="/images/blog/blog-3.jpg" alt="blog Image">
+                                                <img class="lazyload" src="https://th.bing.com/th/id/OIG1.ZgghKhS83XsTYbxRKnBc?w=270&h=270&c=6&r=0&o=5&dpr=2&pid=ImgGn" data-src="https://th.bing.com/th/id/OIG1.ZgghKhS83XsTYbxRKnBc?w=270&h=270&c=6&r=0&o=5&dpr=2&pid=ImgGn" alt="blog Image">
                                         </a>
                                     </div>
                                     <div class="content">
                                         <ul class="info-list">
-                                            <li>Admin</li>
+                                            <li>小民</li>
                                             <li>02/11/2023</li>
                                         </ul>
                                         <h6 class="lc-2 mb-0">
                                             <a href="blog-single.html" target="_self" title="blog">
-                                                Professionals Might also Know How To Control Epic Games On Your Computer
+                                                    法語語音學
                                             </a>
                                         </h6>
                                     </div>
-                                </article>
+                                </article> *@
                             </div>
                         </div>
                     </div>
                     <div class="widget widget-blog-categories py-25">
                         <h5 class="title">
                             <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#blogCategory">
-                                Categories
+                                課程類別
                             </button>
                         </h5>
                         <div id="blogCategory" class="collapse show">
                             <div class="accordion-body mt-20 scroll-y">
-                                <ul class="list-unstyled m-0">
+                                <ul class="list-unstyled m-0">  
                                     <li class="d-flex align-items-center justify-content-between">
-                                        <a href="blogs.html" target="_self" title="blogs"><i class="fal fa-folder"></i>Technology</a>
+                                        <a href="blogs.html" target="_self" title="blogs"><i class="fal fa-folder"></i>烹飪</a>
                                         <span class="tqy">(11)</span>
                                     </li>
                                     <li class="d-flex align-items-center justify-content-between">
-                                        <a href="blogs.html" target="_self" title="blogs"><i class="fal fa-folder"></i>Business</a>
+                                        <a href="blogs.html" target="_self" title="blogs"><i class="fal fa-folder"></i>軟體工程</a>
                                         <span class="tqy">(02)</span>
                                     </li>
                                     <li class="d-flex align-items-center justify-content-between">
-                                        <a href="blogs.html" target="_self" title="blogs"><i class="fal fa-folder"></i>Android</a>
+                                        <a href="blogs.html" target="_self" title="blogs"><i class="fal fa-folder"></i>語言</a>
                                         <span class="tqy">(45)</span>
                                     </li>
                                     <li class="d-flex align-items-center justify-content-between">
-                                        <a href="blogs.html" target="_self" title="blogs"><i class="fal fa-folder"></i>iOS</a>
+                                        <a href="blogs.html" target="_self" title="blogs"><i class="fal fa-folder"></i>投資理財</a>
                                         <span class="tqy">(26)</span>
                                     </li>
                                     <li class="d-flex align-items-center justify-content-between">
-                                        <a href="blogs.html" target="_self" title="blogs"><i class="fal fa-folder"></i>Watch</a>
+                                        <a href="blogs.html" target="_self" title="blogs"><i class="fal fa-folder"></i>休閒運動</a>
                                         <span class="tqy">(45)</span>
                                     </li>
                                 </ul>
@@ -266,20 +293,28 @@
                     <div class="widget widget-tags py-25">
                         <h5 class="title">
                             <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#blogTags">
-                                Tags
+                                標籤
                             </button>
                         </h5>
                         <div id="blogTags" class="collapse show">
                             <div class="accordion-body mt-20 scroll-y">
                                 <div class="tags-group d-flex flex-wrap gap-2">
-                                    <a href="blogs.html" class="px-3 py-2 bg-light radius-sm font-xsm" title="Link" target="_self">Design</a>
-                                    <a href="blogs.html" class="px-3 py-2 bg-light radius-sm font-xsm" title="Link" target="_self">SEO</a>
-                                    <a href="blogs.html" class="px-3 py-2 bg-light radius-sm font-xsm" title="Link" target="_self">Figma</a>
-                                    <a href="blogs.html" class="px-3 py-2 bg-light radius-sm font-xsm" title="Link" target="_self">Android</a>
-                                    <a href="blogs.html" class="px-3 py-2 bg-light radius-sm font-xsm" title="Link" target="_self">Marketing</a>
-                                    <a href="blogs.html" class="px-3 py-2 bg-light radius-sm font-xsm" title="Link" target="_self">Software</a>
-                                    <a href="blogs.html" class="px-3 py-2 bg-light radius-sm font-xsm" title="Link" target="_self">Office</a>
-                                    <a href="blogs.html" class="px-3 py-2 bg-light radius-sm font-xsm" title="Link" target="_self">Affiliate</a>
+                                    <a href="blogs.html" class="px-3 py-2 bg-light radius-sm font-xsm" title="Link" target="_self">日式料理</a>
+                                    <a href="blogs.html" class="px-3 py-2 bg-light radius-sm font-xsm" title="Link" target="_self">法式料理</a>
+                                    <a href="blogs.html" class="px-3 py-2 bg-light radius-sm font-xsm" title="Link" target="_self">中式料理</a>
+                                    <a href="blogs.html" class="px-3 py-2 bg-light radius-sm font-xsm" title="Link" target="_self">SQL</a>
+                                    <a href="blogs.html" class="px-3 py-2 bg-light radius-sm font-xsm" title="Link" target="_self">C#</a>
+                                    <a href="blogs.html" class="px-3 py-2 bg-light radius-sm font-xsm" title="Link" target="_self">Python</a>
+                                    <a href="blogs.html" class="px-3 py-2 bg-light radius-sm font-xsm" title="Link" target="_self">法文</a>
+                                    <a href="blogs.html" class="px-3 py-2 bg-light radius-sm font-xsm" title="Link" target="_self">韓文</a>
+                                    <a href="blogs.html" class="px-3 py-2 bg-light radius-sm font-xsm" title="Link" target="_self">西班牙文</a>
+                                    <a href="blogs.html" class="px-3 py-2 bg-light radius-sm font-xsm" title="Link" target="_self">英文</a>
+                                    <a href="blogs.html" class="px-3 py-2 bg-light radius-sm font-xsm" title="Link" target="_self">日文</a>
+                                    <a href="blogs.html" class="px-3 py-2 bg-light radius-sm font-xsm" title="Link" target="_self">ETF</a>
+                                    <a href="blogs.html" class="px-3 py-2 bg-light radius-sm font-xsm" title="Link" target="_self">美股</a>
+                                    <a href="blogs.html" class="px-3 py-2 bg-light radius-sm font-xsm" title="Link" target="_self">瑜珈</a>
+                                    <a href="blogs.html" class="px-3 py-2 bg-light radius-sm font-xsm" title="Link" target="_self">籃球</a>
+                                    <a href="blogs.html" class="px-3 py-2 bg-light radius-sm font-xsm" title="Link" target="_self">羽球</a>
                                 </div>
                             </div>
                         </div>
@@ -291,4 +326,70 @@
         </div>
     </div>
 </div>
-<!-- blog-details-area end -->
+</body>
+<script>
+    const btnPost =  document.querySelector('#buttonPost');
+    const iptName = document.querySelector('#inputName');
+    const txtComment = document.querySelector('#textareaComment');
+    const li1 = document.querySelector('#li1');
+    btnPost.addEventListener('click', ()=>{ 
+        //console.log("Name : ", iptName.value, "Comment : ", txtComment.value)
+        li1.innerHTML +=
+            `
+              <div class="comment-body">
+            <div class="comment-author">
+         <div class="lazy-container ratio ratio-1-1 rounded-circle">
+                             <img class="lazyload" src="/images/OwenAdd/memberNoPhoto.jpg"  alt="image">
+         </div>
+     </div>
+     <div class="comment-content">
+             <h6 class="name">${iptName.value}</h6>
+         <p>
+             ${txtComment.value}
+         </p>
+                 <a href="blog-single.html" class="font-sm color-primary" target="_self" title="Reply">回覆</a>
+     </div> </div>
+
+        `
+    })
+</script>
+<script>
+    // 获取引用块元素
+    var blockquote = document.getElementById('tab');
+
+    // 获取引用块内的文本内容
+    var text = blockquote.textContent;
+
+    // 检查文本内容中是否包含句号
+    if (text.includes("<br>")) {
+        // 将句号替换为句号和换行符的组合
+        var newText = text.replace(/<br>/g, '<br><br>');
+        blockquote.innerHTML = newText; // 将替换后的文本内容设置回引用块元素中
+    }
+
+
+    console.log("測試")
+</script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script>
+    console.log(commentForm)
+    commentForm.onsubmit = async (e) => {
+       
+            e.preventDefault();
+          
+            let response = await fetch('/Portfolio/Create', {
+                method: 'POST',
+            body: new FormData(commentForm)
+            });
+
+            let result = await response.json();
+
+            alert(result.message);
+        console.log(result)
+        console.log(result.message)
+        };
+    
+
+        let i =111
+        console.log(i)
+</script>

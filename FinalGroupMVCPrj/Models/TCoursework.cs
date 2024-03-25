@@ -22,6 +22,7 @@ public partial class TCoursework
     public string FShareAudience { get; set; }
 
     public string FComment { get; set; }
+    public string FCommentPerson { get; set; }
 
     public DateTime? FCommentTime { get; set; }
 

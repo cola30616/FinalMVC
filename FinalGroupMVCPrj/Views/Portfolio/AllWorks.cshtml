@@ -1,0 +1,218 @@
+﻿@model IEnumerable<FinalGroupMVCPrj.Models.DTO.PortfolioListDTO>
+
+<body class="theme-color-1">
+    <!-- Breadcrumb start -->
+  @*   <div class="breadcrumb-area" >
+        <div class="container">
+            <div class="content text-left">
+                <nav aria-label="breadcrumb">
+                    <ol class="breadcrumb text-left">
+                        <li class="breadcrumb-item"><a href="index.html">Home</a></li>
+                        <li class="breadcrumb-item active" aria-current="page">Blogs</li>
+                    </ol>
+                </nav>
+            </div>
+        </div>
+    </div> *@
+    <!-- Breadcrumb end -->
+    <!-- Home-area start-->
+    <section class="hero-banner hero-banner_v3 header-next pb-60">
+        <div class="container">
+            <div class="row align-items-center gx-xl-5">
+                <div class="col-lg-6">
+                    <div class="banner-content mb-40">
+
+                        <h1 class="title mb-30" data-aos="fade-up" data-aos-delay="100">
+                            心得總覽
+                        </h1>
+                        <p class="text-center" data-aos="fade-up" data-aos-delay="100">
+                            歡迎到來學樂，來看看同學的課程心得
+                        </p>
+                        <div class="banner-filter-form mt-40" data-aos="fade-up" data-aos-delay="150">
+                            <div class="form-wrapper border rounded-pill">
+                                <form method="post" id="selectForm">
+                                    <div class="row align-items-center">
+                                        <div class="col-xl-4 col-lg-5 col-md-4 col-sm-6">
+                                            <div class="input-group">
+                                                <label for="search"><i class="fas fa-search"></i></label>
+                                                <input type="text" id="search" class="form-control" placeholder="輸入關鍵字">
+                                                <div class="vr"></div>
+                                            </div>
+                                        </div>
+                                        <div class="col-xl-4 col-lg-5 col-md-4 col-sm-6">
+                                            <div class="input-group">
+                                                <label for="category"><i class="fas fa-th-large"></i></label>
+                                                <select id="category" class="niceselect">
+                                                    <option value="" data-display="選擇課程類別">選擇課程種類...</option>
+                                                    <option value="烹飪">烹飪</option>
+                                                    <option value="軟體工程">軟體工程</option>
+                                                    <option value="語言">語言</option>
+                                                    <option value="投資理財">投資理財</option>
+                                                    <option value="休閒運動">休閒運動</option>
+                                                </select>
+                                               
+                                            </div>
+                                        </div>
+                                        <div class="col-xl-4 col-lg-2 col-md-4 col-sm-6">
+                                            <button id="searchButton" class="btn btn-lg btn-primary btn-gradient rounded-pill w-100" type="button" aria-label="Find Portfolio">
+                                                <span>搜尋心得</span>
+                                                <i class="fal fa-search"></i>
+                                            </button>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-6" data-aos="fade-up">
+                    <div class="banner-image mb-40">
+                        <img class="lazyload blur-up" src="https://themeforest.kreativdev.com/oppida/demo/assets/images/banner/hero-banner-1.png" data-src="https://themeforest.kreativdev.com/oppida/demo/assets/images/banner/hero-banner-1.png" alt="Banner Image">
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Bg shapes -->
+        <div class="shapes">
+            <span class="shape"></span>
+            <span class="shape"></span>
+            <span class="shape"></span>
+        </div>
+    </section>
+    <!-- Home-area end -->
+    <!-- Blog-area start -->
+    <div class="blog-area pt-100 pb-75">
+        <div class="container">
+            <div class="row">
+                @foreach (var i in Model)
+                {
+                    <div class="col-md-6 col-xl-4" data-aos="fade-up">
+                        <article class="card mb-25 border radius-md">
+                            <div class="card-img">
+                                <a asp-controller="Portfolio" asp-action="List" asp-route-id="@i.FCourseworkId" target="_self" title="Link" class="lazy-container ratio ratio-2-3">
+                                    <img class="lazyload" src="@i.FFileLink" data-src="@i.FFileLink" alt="Blog Image">
+                                </a>
+                            </div>
+                            <div class="card-content p-25">
+                                <div class="card-info mb-10">
+                                    <span>@i.FFieldName</span>
+                                    <span> @i.FLastModifyTime</span>
+                                </div>
+                                <h5 class="card-title lc-2 mb-15">
+                                    <a asp-controller="Portfolio" asp-action="List" asp-route-id="@i.FCourseworkId" target="_self" title="Link">
+                                        @i.FName
+                                    </a>
+                                    
+                                </h5>
+                                <p class="card-text lc-2">
+                                    @i.FDescrpition
+                                </p>
+                                <div class="cta-btn mt-15">
+                                    <a asp-controller="Portfolio" asp-action="List" asp-route-id="@i.FCourseworkId" class="btn-text color-primary" target="_self" title="閱讀更多">閱讀更多</a>
+                                </div>
+                            </div>
+                        </article>
+                    </div>
+                }
+                    
+            </div>
+            <nav class="pagination-nav mt-15 mb-25" data-aos="fade-up">
+                <ul class="pagination justify-content-center" id="course-total-page">
+                    @for (var i = 1; i <= ViewBag.TotalPages; i++)
+                    {
+                        <li class="page-item @(i == ViewBag.CurrentPage ? "active" : "")">
+                            <a class="page-link" href="@Url.Action("Page", new { page = i })">@i</a>
+                        </li>
+                    }
+                    @* <li class="page-item"><a class="page-link" href="courses.html">1</a></li> *@
+                    
+                </ul>
+            </nav>
+        </div>
+    </div>
+    <!-- Blog-area end -->
+    <nav class="pagination-nav mt-15 mb-25" data-aos="fade-up">
+        <ul class="pagination justify-content-center">
+            @for (var i = 1; i <= ViewBag.TotalPages; i++)
+            {
+                <li class="page-item @(i == ViewBag.CurrentPage ? "active" : "")">
+                    <a class="page-link" href="@Url.Action("AllWorks", new { page = i })">@i</a>
+                </li>
+            }
+            @* <li class="page-item active"><a class="page-link" href="courses.html">1</a></li>
+            <li class="page-item"><a class="page-link" href="courses.html">2</a></li>
+            <li class="page-item"><a class="page-link" href="courses.html">3</a></li>
+            <li class="page-item">
+                <a class="page-link" href="courses.html" aria-label="Next">
+                    <i class="far fa-angle-right"></i>
+                </a>
+            </li> *@
+            <li class="page-item"><a class="page-link" href="@Url.Action("AllWorks")"><i class="fa-solid fa-arrows-rotate"></i></a></li>
+            
+        </ul>
+       
+    </nav>
+</body>
+
+</html>
+@section Scripts {
+    <!--篩選功能-->
+    @* <script src="~/js/TomScript/searchPortfolio.js" asp-append-version="true"></script> *@
+    <script>
+        const select = document.querySelector('.niceselect');
+        const a = async () => {
+            const c = await fetch('@Url.Content("~/Portfolio/Field")');
+            const data = await c.json();
+            console.log(data);
+            //console.log(data.count());
+            //console.log(data.count);
+            // data.foreach(){ }            
+             const html = data.map(t => `<option>${t}</option>`);
+             select.innerHTML += html.join("");
+            
+        };a();
+
+        // document.getElementById("searchButton").addEventListener("click", function () {
+        //     var category = document.getElementById("category").value;
+        //     window.location.href = '@Url.Action("Search", "Portfolio")?category=' + category;
+        // });
+        // document.getElementById("searchButton").addEventListener("click", function () {
+        //     var keyword = document.getElementById("search").value; // 获取文本框中的关键字
+        //     window.location.href = '@Url.Action("Search", "Portfolio")?keyword=' + keyword;
+        // });
+        document.getElementById("searchButton").addEventListener("click", function () {
+            var category = document.getElementById("category").value;
+            var keyword = document.getElementById("search").value; // 获取文本框中的关键字
+            var url = '@Url.Action("Search", "Portfolio")';
+
+            // 如果类别和关键字都有值，则将它们作为参数添加到 URL 中
+            if (category && keyword) {
+                url += '?category=' + category + '&keyword=' + keyword;
+            } else if (category) {
+                url += '?category=' + category;
+            } else if (keyword) {
+                url += '?keyword=' + keyword;
+            } 
+
+            window.location.href = url;
+        });
+
+
+        console.log(commentForm)
+        selectForm.onsubmit = async (e) => {
+            alert('點擊')
+            e.preventDefault();
+
+            let response = await fetch('/Portfolio/Create', {
+                method: 'POST',
+                body: new FormData(commentForm)
+            });
+
+            let result = await response.json();
+
+            alert(result.message);
+            console.log(result)
+            console.log(result.message)
+        };
+    </script>
+}
