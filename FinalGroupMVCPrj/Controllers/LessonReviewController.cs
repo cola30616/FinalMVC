@@ -140,10 +140,17 @@ namespace FinalGroupMVCPrj.Controllers
         public async Task<IActionResult> canEvaluated(int FOrderDetailId)
         {
 
-            var od = await _context.TOrderDetails.FirstOrDefaultAsync(od => od.FOrderDetailId == FOrderDetailId);
+            var od = await _context.TOrderDetails
+                .Include(od =>od.FLessonCourse)
+                .FirstOrDefaultAsync(od => od.FOrderDetailId == FOrderDetailId);
             var isValid = od.FOrderValid;
+            if(od.FLessonCourse.FLessonDate > DateTime.Now)
+            {
+                isValid = false;
+            }
             return Json(new { isValid = isValid });
         }
+
 
         [HttpGet]
         public async Task<IActionResult> CreateEvaluation(int FOrderDetailId)
