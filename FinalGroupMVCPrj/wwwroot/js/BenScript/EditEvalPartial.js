@@ -215,8 +215,7 @@
 
     const demo = document.querySelector('#editdemo');
     demo.addEventListener('click', function () {
-        let message = "
-        今天在家嘗試煮麻婆豆腐時，發現實際操作起來比課堂上學到的困難許多。結果並不如預期那麼美味，但這讓我意識到還有很多需要學習的地方。我會繼續努力改進廚藝，並對這門課程的價值持有肯定的態度。感謝老師的教導，讓我更深入地了解了麻婆豆腐的故事和文化背景。";
+        let message = "今天在家嘗試煮麻婆豆腐時，發現實際操作起來比課堂上學到的困難許多。結果並不如預期那麼美味，但這讓我意識到還有很多需要學習的地方。我會繼續努力改進廚藝，並對這門課程的價值持有肯定的態度。感謝老師的教導，讓我更深入地了解了麻婆豆腐的故事和文化背景。";
         document.getElementById("editComment").value = message;
     });
 
