@@ -18,9 +18,9 @@
     <div class="container">
         <div class="row gx-xl-5 align-items-center">
             <div class="col-xl-4 col-lg-5">
-                <div class="content-img mb-40" data-aos="fade-up">
-                    <div class="lazy-container ">
-                        <partial name="_LessonHistoryDetailPicturePartial" />
+                <div class="mb-40" data-aos="fade-up">
+                    <div >
+                        <partial name="_LessonHistoryDetailPicturePartial" model="Model" />
                     </div>
                 </div>
             </div>
@@ -37,10 +37,10 @@
                     <div style="margin-top: 20px">
                         <i class="fa-solid fa-calendar-days fa-1.5x color-primary"></i>
                         <span class="fs-5 fw-bold" style="font-weight: bold; color: black;">
-                            課程時間：
+                            課程日期：
                         </span>
                         <span class="fs-5 ">
-                            @Html.DisplayFor(model => model.FLessonDate)
+                           @(Model.FLessonDate?.ToString("yyyy/MM/dd"))
                         </span>
                     </div>
                 </div>

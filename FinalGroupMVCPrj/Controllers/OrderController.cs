@@ -52,6 +52,13 @@ namespace FinalGroupMVCPrj.Controllers
             };
             return View("Detail", checkoutDetailViewModel);
         }
+        [HttpGet]
+        public async Task<FileResult> showPicture(int id)
+        {
+            TLessonCourse? c = await _context.TLessonCourses.FindAsync(id);
+            byte[]? Content = c?.FPhoto;
+            return File(Content, "image/jpeg");
+        }
 
         [HttpPost]
         public IActionResult CheckOrder(CheckoutDetailViewModel checkoutDetailViewModel)
@@ -104,7 +111,7 @@ namespace FinalGroupMVCPrj.Controllers
         {
             DateTime start = DateTime.Now.Date;
             DateTime end = DateTime.Now.Date.AddDays(1);
-            int no = _context.TOrders.Where(o=>o.FOrderDate < end && o.FOrderDate > start).Count() + 1;
+            int no = _context.TOrders.Where(o=>o.FOrderDate < end && o.FOrderDate >= start).Count() + 1;
             string orderNumber = "LSL" +start.ToString("yyMMdd") + $"{no:D4}";
             return orderNumber;
         }  
