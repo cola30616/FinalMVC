@@ -23,13 +23,28 @@
     .dz-preview .dz-error-mark {
         display: none;
     }
+
+    #demoPic > button {
+        color: white;
+        background-color: white;
+        color: white;
+        background-color: white
+    }
+
+    #demoPic:hover > button {
+        background-color: lightgrey;
+        color: gray;
+    }
 </style>
 
 <div class="modal fade" id="exampleModal" tabindex="-100" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered modal-lg">
         <div class="modal-content">
             <div class="modal-header">
+                <div class="d-flex align-items-center" id="demoPic">
                 <h5 class="modal-title" id="exampleModalLabel">上傳圖片</h5>
+                    <button id="demoCertificate" class="btn btn-sm rounded-pill">中餐證照</button>
+                </div>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <form asp-controller="TeacherAdmin" asp-action="TAddtrimage" enctype="multipart/form-data">
@@ -73,7 +88,7 @@
                     </div>
                 </div>
                 <!-- 這個容器用來裝dropzone預設的預覽圖片 -->
-                <div id="previews" style="display:flex;"></div>
+                <div id="previews" style="display:flex;">  </div>
                 <div class="modal-footer">
                     <input id="inpSubmit" type="button" name="file" class="btn btn-primary" value="上傳">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">關閉</button>
@@ -189,5 +204,15 @@
         for (const file of files) {
             formData.append('f', file);
         }
+    })
+</script>
+@* demo鍵 *@
+<script>
+    const floatingInput = document.querySelector('#floatingInput');
+    const FCategory = document.querySelector('#FCategory');
+    const demoCertificate = document.querySelector('#demoCertificate').addEventListener('click', (e) => {
+        e.preventDefault();
+        FCategory.value = '證照證書'; 
+        floatingInput.value = '中餐證照';
     })
 </script>

@@ -4,10 +4,15 @@
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel">編輯照片資訊</h5>
+                <div class="d-flex align-items-center" id="demoPic">
+                    <h5 class="modal-title" id="exampleModalLabel">編輯照片資訊</h5>
+                    <button class="btn btn-sm rounded-pill" id="demoFood1">梅干獅子頭</button>
+                    <button class="btn btn-sm rounded-pill" id="demoFood2">碧玉百頁絲</button>
+                    <button class="btn btn-sm rounded-pill" id="demoFood3">生爆野鮮菇</button>
+                </div>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
-            <form asp-controller="TeacherAdmin" asp-action="TeditPic" >
+            <form asp-controller="TeacherAdmin" asp-action="TeditPic">
                 <input id="inputeditimageid" type="hidden" asp-for="FTeacherImagesId" />
                 <div style="text-align: center;padding:100px">
                     <div class="form-floating mb-3">
@@ -52,4 +57,24 @@
         });
     });
 
+</script>
+@* demo鍵 *@
+<script>
+    const editselect = document.querySelector('#editselect');
+    const editfloatingInput = document.querySelector('#editfloatingInput');
+    const demoFood1 = document.querySelector('#demoFood1').addEventListener('click', (e) => {
+        e.preventDefault();
+        editselect.value = '作品';
+        editfloatingInput.value = '梅干獅子頭';
+    })
+    const demoFood2 = document.querySelector('#demoFood2').addEventListener('click', (e) => {
+        e.preventDefault();
+        editselect.value = '作品';
+        editfloatingInput.value = '碧玉百頁絲';
+    })
+    const demoFood3 = document.querySelector('#demoFood3').addEventListener('click', (e) => {
+        e.preventDefault();
+        editselect.value = '作品';
+        editfloatingInput.value = '生爆野鮮菇';
+    })
 </script>

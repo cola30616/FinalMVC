@@ -88,6 +88,16 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.2.5/jquery.fancybox.min.css" />
 <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet">
 <!-- html畫面start -->
+<div class="pagetitle" style="margin-left:25px;">
+    <h1>相關圖片</h1>
+    <nav>
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="index.html">老師後台</a></li>
+            <li class="breadcrumb-item">老師資料</li>
+            <li class="breadcrumb-item active">相關圖片</li>
+        </ol>
+    </nav>
+</div><!-- End Page Title -->
 <div class="container-fluid">
     <div class="row">
         <!-- 新增圖片的按鈕 -->
@@ -189,10 +199,12 @@
         //             var reader = new FileReader();
         //             //檔案讀取完成後處理load事件//函式參數e抓事件發生的內容
         //             reader.onload = function (e) {
+        //                 //console.log(e.target.result)
         //                 //替換頁面檔案，prev():前一個//讀到的檔案內容(e.target.result)丟給src
-        //                 img.attr("src", e.target.result);
+        //                 //img.attr("src", e.target.result);
         //                 //改title內容，改成name屬性
-        //                 img.attr("title", inputFile.files[0].name);
+        //                 //img.attr("title", inputFile.files[0].name);
+        //                 img.innerHTML += `<img src="${e.target.result}" style="width:110px;">`;
         //                 //class選擇器:依據樣式選擇器找到btn
         //                 $("#inpSubmit").prop('disabled', false);
         //                 //id選擇器:依據樣式選擇器找到div
@@ -211,8 +223,9 @@
         // }
         // $("#Inputfile").change(function () {
         //     // alert("change");
-        //     previewImage(this, $("#imgPreview"));
+        //     previewImage(this, $("#previews"));
         // });
+       
 
     </script>
     @* script功能 : 編輯的partialview欄位顯示 *@

@@ -12,12 +12,24 @@
     .row.mb-3 > div > input {
         font-size: 20px;
     }
+
+    #demoIntroduction {
+        color: white;
+        background-color: white;
+        color: white;
+        background-color: white
+    }
+
+        #demoIntroduction:hover {
+        background-color: lightgrey;
+        color: gray;
+    }
 </style>
 
 <form asp-controller="TeacherAdmin" asp-action="TEdittrbasicprofile" method="post">
     <div class="row mb-3">
         <!-- 標題1 老師名稱 -->
-        <label  class="col-md-4 col-lg-3 col-form-label">@Html.DisplayNameFor(t => t.FTeacherName)</label>
+        <label class="col-md-4 col-lg-3 col-form-label" style="color:#012970">@Html.DisplayNameFor(t => t.FTeacherName)</label>
         <div class="col-md-8 col-lg-9">
             <!-- 內容1 老師名稱 -->
             <input asp-for="FTeacherName" class="form-control" >
@@ -26,19 +38,20 @@
     </div>
 
     <div class="row mb-3">
-        <!-- 標題2 關於我 -->
-        <label  class="col-md-4 col-lg-3 col-form-label">@Html.DisplayNameFor(t => t.FIntroduction)</label>
+        <!-- 標題2 自我介紹 -->
+        <label class="col-md-4 col-lg-3 col-form-label" style="color:#012970">@Html.DisplayNameFor(t => t.FIntroduction)</label>
+       
         <div class="col-md-8 col-lg-9">
-            <!-- 內容2 關於我 -->
-            <textarea asp-for="FIntroduction" class="form-control" style="height: 100px"></textarea>
+            <!-- 內容2 自我介紹 -->
+            <textarea asp-for="FIntroduction" class="form-control" style="height: 400px"></textarea>
         </div>
     </div>
 
     <div class="row mb-3">
-        <!-- 標題3 聯絡方式 -->
-        <label  class="col-md-4 col-lg-3 col-form-label">@Html.DisplayNameFor(t => t.FContactInfo)</label>
+        <!-- 標題3 公開聯絡方式 -->
+        <label class="col-md-4 col-lg-3 col-form-label" style="color:#012970">@Html.DisplayNameFor(t => t.FContactInfo)</label>
         <div class="col-md-8 col-lg-9">
-            <!-- 內容3 聯絡方式 -->
+            <!-- 內容3 公開聯絡方式 -->
             <textarea asp-for="FContactInfo" class="form-control" style="height: 100px"></textarea>
         </div>
     </div>
@@ -54,7 +67,16 @@
 
     <div class="text-center">
         <!-- 提交 -->
-        <input type="submit" class="btn btn-primary" value="確定">
+        <input type="submit" class="btn btn-primary" value="儲存">
+        <button class="btn btn-sm rounded-pill" id="demoIntroduction">demo</button>
     </div>
 </form>
 <!-- End Profile Edit Form -->
+@* demo鍵 *@
+<script>
+    const FContactInfo = document.querySelector('#FContactInfo');
+    const demoIntroduction = document.querySelector('#demoIntroduction').addEventListener('click', (e) => {
+        e.preventDefault();
+        FContactInfo.value += ' ; FACEBOOK : ting2800928 ';
+    })
+</script>

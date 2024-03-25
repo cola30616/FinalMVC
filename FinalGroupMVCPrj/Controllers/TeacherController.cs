@@ -39,7 +39,7 @@ namespace FinalGroupMVCPrj.Controllers
                 {
                     TeacherId = t.FTeacherId,
                     TeacherName = t.FTeacherName,
-                    TeacherProfilePicURL = (t.FTeacherProfilePic != null) ? GetImageDataURL(t.FTeacherProfilePic) : "https://upload.wikimedia.org/wikipedia/commons/thumb/6/65/No-Image-Placeholder.svg/1665px-No-Image-Placeholder.svg.png",
+                    TeacherProfilePicURL = (t.FTeacherProfilePic != null) ? GetImageDataURL(t.FTeacherProfilePic) : "https://i.imgur.com/xcZh1PZ.png",
                     Introduction = t.FIntroduction,
                     ContactInfo = t.FContactInfo,
                     Note = t.FNote,
@@ -70,9 +70,13 @@ namespace FinalGroupMVCPrj.Controllers
             //根據老師多圖的科目fCategory搜尋
             if (!string.IsNullOrEmpty(_search.Keywordca))
             {
-                if (_search.Keywordca == "全部") 
+                if (_search.Keywordca == "全部")
                 {
-                    ti = ti.Where(t => t.FCategory.Contains("教育背景") || t.FCategory.Contains("證照證書") || t.FCategory.Contains("作品"));
+                    ti = ti.Where(t => t.FCategory.Contains("教育背景") || t.FCategory.Contains("證照證書") || t.FCategory.Contains("作品") || t.FCategory == null);
+                }
+                else if (_search.Keywordca == "其他")
+                {
+                    ti = ti.Where(t => t.FCategory==null);
                 }
                 else
                 {
@@ -116,7 +120,7 @@ namespace FinalGroupMVCPrj.Controllers
             {
                 t.FTeacherId,
                 t.FTeacherName,
-                TeacherProfilePicURL = (t.FTeacherProfilePic != null) ? GetImageDataURL(t.FTeacherProfilePic) : "https://upload.wikimedia.org/wikipedia/commons/thumb/6/65/No-Image-Placeholder.svg/1665px-No-Image-Placeholder.svg.png",
+                TeacherProfilePicURL = (t.FTeacherProfilePic != null) ? GetImageDataURL(t.FTeacherProfilePic) : "https://i.imgur.com/xcZh1PZ.png",
                 SubjectNames = t.TTeacherSubjects.Select(ts => ts.FSubject.FSubjectName)
                 //SubjectName = t.TTeacherSubjects.Select(ts => ts.FSubject).Select(t => new { t.FSubjectName })
             });
@@ -128,7 +132,7 @@ namespace FinalGroupMVCPrj.Controllers
             //根據科目搜尋
             if (!string.IsNullOrEmpty(_search.Keywordsb))
             {
-                if (_search.Keywordsb == "顯示所有")
+                if (_search.Keywordsb == "所有老師")
                 {
                     tr = tr.Select(t => t);
                 }

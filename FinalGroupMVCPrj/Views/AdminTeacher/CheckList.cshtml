@@ -14,7 +14,7 @@
     <h1>老師管理</h1>
     <nav>
         <ol class="breadcrumb">
-            <li class="breadcrumb-item"><a href="index.html">管理員後台</a></li>
+            <li class="breadcrumb-item">管理員後台</li>
             <li class="breadcrumb-item">老師管理</li>
             <li class="breadcrumb-item active">老師清單</li>
         </ol>
@@ -32,17 +32,7 @@
                     <!--篩選資料區-->
                     <div class="d-flex align-items-center gap-4 mb-3">
                         <div class="d-flex align-items-center gap-2 ">
-                            <label for="inputDate" class="">申請日期</label>
-                            <div class="">
-                                <input type="date" class="form-control">
-                            </div>
-                            <span>~</span>
-                            <div class="">
-                                <input type="date" class="form-control">
-                            </div>
-                        </div>
-                        <div class="d-flex align-items-center gap-2 ">
-                            <label for="inputDate" class="">更新日期</label>
+                            <label for="inputDate" class="">加入日期</label>
                             <div class="">
                                 <input type="date" class="form-control">
                             </div>
@@ -68,10 +58,11 @@
                         <table id="tApplyListTable" class="datatable row-border stripe hover">
                             <thead>
                                 <tr>
-
+                                    <th>@Html.DisplayNameFor(m => m.JoinTime)</th>
                                     <th>@Html.DisplayNameFor(m => m.TeacherName)</th>
                                     <th>@Html.DisplayNameFor(m => m.RealName)</th>
                                     <th>@Html.DisplayNameFor(m => m.SubjectName)</th>
+                                    <th></th>
                                     <th>@Html.DisplayNameFor(m => m.Note)</th>
                                     <th>操作</th>
                                 </tr>
@@ -102,29 +93,44 @@
         function loadDataTable() {
             // html 欄位跟 ajax 的欄位務必相同
             dataTable = $('#tApplyListTable').DataTable({
+                    columnDefs: [
+                    {
+                        targets: '_all',
+                        className: 'dt-body-left dt-head-left'
+                    }
+                ],
                 "ajax": { url: '/AdminTeacher/CheckListDataJson' },
                 "columns": [
-                    //  { data: 'SubjectName', "width": "12%" },
-                    // { data: 'TeacherProfilePic', "width": "8%" },
+                    { data: 'joinTime', "width": "10%" },
                     { data: 'teacherName', "width": "10%" },
                     { data: 'realName', "width": "10%" },
                     { data: 'subjectName', "width": "15%" },
-                    { data: 'note', "width": "15%" },
-                    {
+                     {
                         // 這段是新增及刪除按鈕 ， 刪除用到onclick 事件，觸發下方的Delete
                         data: 'teacherId',
                         "render": function (data) {
                             return `<div class="" role="">
-                                                         <button onclick="editSubject(${data})" class="btn btn-primary mx-2" data-bs-toggle="modal" data-bs-target="#staticBackdrop"><i class="fa-solid fa-list"></i></button>
+                                                                   <button onclick="editSubject(${data})" class="btn btn-primary mx-2" data-bs-toggle="modal" data-bs-target="#staticBackdrop"style="background-color:#30c2ec;border-color:#30c2ec"><i class="fa-solid fa-plus-minus"></i></button>
                                             </div>`
                         },
                         "width": "5%"
                     },
+                    { data: 'note', "width": "15%" },
+                    {
+                        data: null,
+                        "render": function (data) {
+                            return `<div class="" role="">
+                                                    <button  class="btn btn-primary mx-2" data-bs-toggle="modal" data-bs-target="#staticBackdrop"style="background-color:#30c2ec;border-color:#30c2ec"><i class="fa-solid fa-gear"></i></button>
+                                    </div>`
+                        },
+                        "width": "5%"
+                    },
+                 
                 ],
                 language: {
                     url: "https://cdn.datatables.net/plug-ins/1.13.7/i18n/zh-HANT.json"
                 },
-                order: [[1, 'dsc']]
+                order: [[0, 'dsc']]
 
 
             });
@@ -202,7 +208,7 @@
             const response2 = await fetch(`@Url.Content("~/AdminTeacher/trNameEmail")?TeacherId=${teacherId}`)
             const data = await response2.json();
             console.log("名子 : ",data[0])
-            document.querySelector('#labelTop').innerHTML = data[0].teacherName + ` : ` + data[0].email;
+            document.querySelector('#labelTop').innerHTML = `<label style="margin-left:20px;margin-top:20px;">${data[0].teacherName} : <br>${data[0].email} </label>`;
             document.querySelector('#ulSubjectResult').innerHTML = '';
             //console.log(teacherId)
             const response = await fetch(`@Url.Content("~/AdminTeacher/EditPartialViewInfo")?TeacherId=${teacherId}`)
