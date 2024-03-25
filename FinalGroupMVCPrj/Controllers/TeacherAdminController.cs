@@ -159,14 +159,30 @@ namespace FinalGroupMVCPrj.Controllers
                 }
                 _context.Add(course);
                 await _context.SaveChangesAsync();
-                TempData["Success"] = "開課成功";
+                if (status == "TempSave")
+                {
+                    ViewBag.Success = "暫存成功";
+                }
+                else
+                {
+                    ViewBag.Success = "開課成功";
+                }
+                return View("LessonList");
+                
             }
             catch (Exception e)
             {
-
-                TempData["Error"] = "開課失敗";
+                if (status == "TempSave")
+                {
+                    ViewBag.Error = "暫存失敗";
+                }
+                else
+                {
+                    ViewBag.Error = "開課失敗";
+                }
+              
             }
-            return RedirectToAction(nameof(LessonList));
+            return View("LessonList");
 
         }
 
@@ -217,7 +233,7 @@ namespace FinalGroupMVCPrj.Controllers
                 lesson.FRegDeadline = course.FRegDeadline;
                 lesson.FEditorDes = course.FEditorDes;
                 lesson.FHomeworkDescription = course.FHomeworkDescription;
-                lesson.FPrice = course.FPrice;
+                lesson.FPrice = Convert.ToInt32(course.FPrice);
                 lesson.FMinPeople = course.FMinPeople;
                 lesson.FMaxPeople = course.FMaxPeople;
                 lesson.FStartTime = course.FStartTime;
@@ -259,6 +275,7 @@ namespace FinalGroupMVCPrj.Controllers
                     course.FSubjectId = _context.TCourseSubjects.Where(x => x.FSubjectName == lesson.FSubject).Select(x => x.FSubjectId).FirstOrDefault();
                     course.FName = lesson.FName;
                     course.FDescription = lesson.FDescription;
+                    course.FEditorDes = lesson.FEditorDes;
                     course.FRequirement = lesson.FRequirement;
                     course.FPrice = lesson.FPrice;
                     course.FHomeworkDescription = lesson.FHomeworkDescription;
@@ -289,17 +306,33 @@ namespace FinalGroupMVCPrj.Controllers
                    
                     _context.Update(course);
                     await _context.SaveChangesAsync();
-                    TempData["Success"] = "成功儲存變更";
-
+                   
+                    if (openstatus == "TempSave")
+                    {
+                        ViewBag.Success = "暫存成功";
+                    }
+                    else
+                    {
+                        //和partailView的判斷ViewBag.Success = "開放報名資訊變更成功";string有關
+                        ViewBag.Success = "變更成功";
+                    }
+                    return View("LessonList");
                 }
             }
             catch (Exception ex)
             {
-                TempData["Error"] = "儲存變更失敗";
-                return View("LEdit");
+                if (openstatus == "TempSave")
+                {
+                    ViewBag.Error = "暫存變更失敗";
+                }
+                else
+                {
+                    ViewBag.Error = "開放報名資訊變更失敗";
+                }
+                return View("LessonList");
             }
-            return RedirectToAction(nameof(LessonList));
 
+            return View("LessonList");
         }
         [HttpPost]  
         public async Task<IActionResult> LessonCancel(int? id, [FromBody] CancelLessonData cancelData)
@@ -334,14 +367,22 @@ namespace FinalGroupMVCPrj.Controllers
 
 
         [HttpGet]
-        public  IActionResult LessonTestPhoto()
+        public  IActionResult LessonDemo1()
         {
 
-            return View();
+            return View("Demo1");
+
+        }
+        [HttpGet]
+        public IActionResult LessonDemo2()
+        {
+
+            return View("Demo2");
 
         }
 
-      
+
+
 
         public IFormFile ConvertByteArrayToIFormFile(byte[] fileBytes, string fileName)
         {

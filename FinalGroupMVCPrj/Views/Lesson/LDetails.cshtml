@@ -1,5 +1,5 @@
 ﻿@model LessonDetailViewModel
-
+@using System.Globalization
 
 @section Style {
     <style>
@@ -22,6 +22,8 @@
             display: inline-block;
             margin-left: 5px; /* Adjust as needed */
         }
+
+      
 
     </style>
 }
@@ -72,9 +74,11 @@
                                 <i class="fas fa-usd-circle"></i>
                                 @* @Html.DisplayFor(m => m.FPrice) *@
                                 @{
-                                    int price = Convert.ToInt32(Model.FPrice);
-                                                    @price
+                                    string formattedPrice = Convert.ToInt32( Model.FPrice).ToString("N0", CultureInfo.InvariantCulture);
                                 }
+
+                                @formattedPrice
+
                             </li>
                         </ul>
                         <hr>
@@ -118,86 +122,152 @@
 
                         <div class="tab-content">
                             <!-- 關於課程 -->
-                            <div class="tab-pane slide slide show active" id="tab1">
+                            <div class="tab-pane slide slide show active " id="tab1">
                                 @* 總覽 *@
-                                <div class="content pb-20">
-                                    <h5 class="title mb-20">總覽</h5>
-                                    <form>
-                                        <fieldset>
-                                            <div class="row gl-xl-5 mt-10 pt-10" style="border:2px #bfbfbf solid;border-radius:8px">
-                                                <div class="col-lg-6">
-                                                    <ul class="list-group list-unstyled mb-20">
-                                                        <!--時數-->
-                                                        <li class="d-inline-block icon-start font-sm">
-                                                            <i class="fas fa-clock color-primary"></i>
-                                                            <span class="align-text">&nbsp;總時數:@Html.DisplayFor(m => m.FTime) hr</span>
-                                                        </li>
-                                                        <!--名額-->
-                                                        <li class="d-inline-block icon-start font-sm">
-                                                            <i class="fas fa-users color-primary"></i>
-                                                            <span class="align-text">名額:@Html.DisplayFor(m => m.FMaxPeople)人</span>
-                                                        </li>
-                                                        <!--最低人數下限-->
-                                                        <li class="d-inline-block icon-start font-sm">
-                                                            <i class="fa-solid fa-less-than-equal fa-flip-horizontal color-primary"></i>
-                                                            <span class="align-text">&nbsp;開課人數下限:@Html.DisplayFor(m => m.FMinPeople)人</span>
-                                                        </li>
-                                                        <!--場地-->
-                                                        <li class="icon-start font-sm">
-                                                            <i class="fa-solid fa-location-dot color-primary"></i>
-                                                            <span class="align-text">
-                                                                &nbsp;
+                                <div class="content pb-20 mb-4">
+                                    <h5 class="title mb-20 " >總覽</h5>
+                                    <div class="container col-12">
+                                        <div class="row gl-xl-5 mt-10 pt-10">
+                                            <div class="col-lg-6">
+
+                                                <!--時數-->
+                                                <div class=" icon-start  mb-3">
+                                                    <div class="row align-items-center">
+                                                        <div class="col-auto">
+                                                            <i class="fas fa-clock color-primary fa-xl"></i>
+                                                        </div>
+                                                        <div class="col  flex-column">
+                                                            <div class="ml-0">
+                                                            <p class=" ml-0 mb-0  text-secondary">總時數 </p>
+                                                            <p class="mb-0"><strong>@Html.DisplayFor(m => m.FTime) 小時</strong></p>
+                                                        </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <!--名額-->
+                                                <div class="icon-start mb-3">
+                                                    <div class="row align-items-center">
+                                                        <div class="col-auto">
+                                                            <i class="fas fa-users color-primary fa-xl"></i>
+                                                        </div>
+                                                        <div class="col ">
+                                                            <div class="ml-0">
+                                                            <p class=" ml-0 mb-0  text-secondary">名額</p>
+                                                            <p class="mb-0"><strong>@Html.DisplayFor(m => m.FMaxPeople)人</strong></p>
+                                                        </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <!--最低人數下限-->
+                                                <div class=" icon-start mb-3">
+                                                    <div class="row align-items-center">
+                                                        <div class="col-auto">
+                                                            <i class="fa-solid fa-less-than-equal fa-xl fa-flip-horizontal color-primary"></i>
+                                                        </div>
+                                                        <div class="col">
+                                                            <div class="ml-0">
+                                                            <p class="ml-0 mb-0  text-secondary">開課人數下限</p>
+                                                            <p class="mb-0"><strong>@Html.DisplayFor(m => m.FMinPeople)人</strong></p>
+                                                        </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <!--場地-->
+                                                <div class=" icon-start mb-3">
+                                                    <div class="row align-items-center">
+                                                        <div class="col-auto">
+                                                            <i class="fa-solid fa-location-dot fa-xl color-primary"></i>
+                                                        </div>
+                                                        <div class="col">
+                                                            <div class="ml-0">
+                                                            <p class=" ml-0 mb-0  text-secondary">
                                                                 場地類型:
                                                                 @(Model.FVenueType == true ? "實體" : "線上")
-                                                                &#124;
-                                                                場地名稱:
-                                                                @Html.DisplayFor(m => m.FVenueName)
-                                                                &#124;
-                                                                詳細地址:
-                                                                @{
-                                                                    string alladdress = Model.FCity + Model.FDistrict + Model.FAddressDetail;
-                                                                                    @alladdress
+                                                                @if (Model.FVenueType == true)
+                                                                {
+                                                                    string place = " | 場地名稱:";
+                                                                    @place ;
+                                                                    @Html.DisplayFor(m => m.FVenueName)
+                                                                    ;
                                                                 }
+                                                            </p>
 
+                                                            <p class="mb-0">
+                                                              
+                                                                    @if (Model.FVenueType == true)
+                                                                    {
+                                                                        string alladdress = Model.FCity + Model.FDistrict + Model.FAddressDetail;
+                                                                        string t = "詳細地址:";
+                                                                        @t
+                                                                        @alladdress
+                                                                    }
 
-
-                                                            </span>
-                                                        </li>
-                                                    </ul>
-
+                                                                
+                                                            </p>
+                                                        </div>
+                                                        </div>
+                                                    </div>
                                                 </div>
-                                                <div class="col-lg-6">
-                                                    <ul class="list-group list-unstyled mb-20">
-                                                        <!--開課日期-->
-                                                        <li class=" icon-start font-sm"><i class="fa-solid fa-calendar-days color-primary"></i>&nbsp;開課日期: @Html.DisplayFor(m => m.FLessonDate)</li>
-                                                        <!--開課時間-->
-                                                        <li class="icon-start font-sm">
-                                                            <i class="fa-solid fa-hourglass color-primary"></i>
-                                                            開課時間:
-                                                            @Html.DisplayFor(m => m.FStartTime)~@Html.DisplayFor(m => m.FEndTime)
-                                                        </li>
-                                                        <!--報名截止日期-->
-                                                        <li class="icon-start font-sm"><i class="fa-regular fa-calendar-check color-primary"></i></i> 報名截止日期:@Html.DisplayFor(m => m.FRegDeadline)</li>
 
 
-                                                    </ul>
-                                                </div>
                                             </div>
 
-                                        </fieldset>
+                                            <div class="col-lg-6">
 
-                                    </form>
+                                                <!--開課日期-->
 
+                                                <div class="icon-start mb-3">
+                                                    <div class="row align-items-center">
+                                                        <div class="col-auto">
+                                                            <i class="fa-solid fa-calendar-days color-primary fa-xl"></i>
+                                                        </div>
+                                                        <div class="col">
+                                                            <p class=" ml-0 mb-0  text-secondary">開課日期</p>
+                                                            <p class="mb-0"><strong>@Html.DisplayFor(m => m.FLessonDate)</strong></p>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <!--開課時間-->
+                                                <div class="icon-start mb-3">
+                                                    <div class="row align-items-center">
+                                                        <div class="col-auto">
+                                                            <i class="fa-solid fa-hourglass color-primary fa-xl"></i>
+                                                        </div>
+                                                        <div class="col">
+                                                            <p class=" ml-0 mb-0  text-secondary">開課時間</p>
+                                                            <p class="mb-0"><strong>@Html.DisplayFor(m => m.FStartTime)~@Html.DisplayFor(m => m.FEndTime)</strong></p>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <!--報名截止日期-->
+                                                <div class="icon-start mb-3">
+                                                    <div class="row align-items-center">
+                                                        <div class="col-auto">
+                                                            <i class="fa-regular fa-calendar-check color-primary fa-xl"></i></i>
+                                                        </div>
+                                                        <div class="col">
+                                                            <p class=" ml-0 mb-0  text-secondary">報名截止日期</p>
+                                                            <p class="mb-0"><strong>@Html.DisplayFor(m => m.FRegDeadline)</strong></p>
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+
+
+                                            </div>
+                                        </div>
+
+                                    </div>
                                 </div>
+
                                 @* 課程敘述 *@
-                                <div class="content pb-20">
+                                <div class="content pb-20 mb-4">
                                     <h5 class="title mb-20">課程敘述</h5>
                                     <div class="row gl-xl-5 mt-20">
-                                        
-                                            @Html.Raw(Model.FEditorDes)
-                                                
-                                                                              
-                                        
+                                        @Html.Raw(Model.FEditorDes)
+
+
+
                                     </div>
                                 </div>
                                 @* 課程要求 *@
@@ -216,60 +286,60 @@
                                         </div> *@
                                     </div>
 
-                            </div>
-                        </div>
-                        <!-- 評價 -->
-
-                                <div class="tab-pane slide" id="tab5"></div>
-                                
                                 </div>
                             </div>
-                        </div>
-                    </div>
-                </div>
-                </div>
-            </div>
+                            <!-- 評價 -->
 
-    <!-- Course-details-area start -->
-    <!-- Course-area start -->
-    <section class="course-area pb-100">
-        <div class="container">
-            <div class="row">
-                <div class="col-12">
-                    <div class="section-title title-inline mb-50" data-aos="fade-up">
-                        <h2 class="title">相似的 <span>課程</span></h2>                       
-                    </div>
-                </div>
-                <div class="col-12">
-                    <!-- Slider main container -->
-                    <div class="swiper course-slider" id="course-slider-1" data-slides-per-view="4" data-swiper-loop="true" data-aos="fade-up">
-                        <!-- Additional required wrapper -->
-                        <div class="swiper-wrapper">
-                            <!-- Slides -->                       
-                        @await Component.InvokeAsync("CourseItemView", new { id = Model.FTeacherId })
-                    </div>
-                        <!-- If we need pagination -->
-                        <div class="swiper-pagination position-static" id="course-slider-1-pagination"></div>
+                            <div class="tab-pane slide" id="tab5"></div>
+
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
-    </section>
-    <!-- Course-area end -->
+    </div>
+</div>
+
+<!-- Course-details-area start -->
+<!-- Course-area start -->
+<section class="course-area pb-100">
+    <div class="container">
+        <div class="row">
+            <div class="col-12">
+                <div class="section-title title-inline mb-50" data-aos="fade-up">
+                    <h2 class="title">相似的 <span>課程</span></h2>
+                </div>
+            </div>
+            <div class="col-12">
+                <!-- Slider main container -->
+                <div class="swiper course-slider" id="course-slider-1" data-slides-per-view="4" data-swiper-loop="true" data-aos="fade-up">
+                    <!-- Additional required wrapper -->
+                    <div class="swiper-wrapper">
+                        <!-- Slides -->
+                        @await Component.InvokeAsync("CourseItemView", new { id = Model.FTeacherId })
+                    </div>
+                    <!-- If we need pagination -->
+                    <div class="swiper-pagination position-static" id="course-slider-1-pagination"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- Course-area end -->
 
 <script src="~/js/BenScript/LessonEvalList.js"></script>
 <script src="~/js/BenScript/LessonAvg.js"></script>
 </div>
 
 
-@section Scripts{
+@section Scripts {
     <!--帶入老師頭像-->
     <script>
         const img = document.querySelector("#avatorimg");
         console.log(img);
         const id = parseInt(img.getAttribute('teacherid'));
         console.log(id);
-        (async() => {
+        (async () => {
             const url = `@Url.Content("~/Teacher/TeacherPhoto")?id=${id}`;
             const response = await fetch(url);
             const data = await response.text();
@@ -279,7 +349,7 @@
             } else {
                 img.setAttribute('src', data);
             }
-           
+
         })();
     </script>
 }

@@ -42,7 +42,7 @@
 
     </style>
 }
-
+<partial name="_SweetAlertViewBagVersionPartial" />
 <div class="row">
     <div class="col-11">
         <h1 class="d-inline display-6 me-3">新增課程</h1>
@@ -147,16 +147,12 @@
 
 
                         <div id="cropper-container" style="position: absolute; top: 0; left: 0; visibility:hidden;width: 536px; height: 365px;" class="mb-3">
-                            <div id="cropper" style="position: relative;hidden; "></div>
-                            <button id="crop-button" type="button" class="btn btn-light btn-sm" title="裁切" style="position: absolute; bottom: 10px; left: calc(100% ); transform: translateX(-50%);visibility: hidden;"> <i class="fa-solid fa-scissors fa-rotate-by" style="color: #6997e8;--fa-rotate-angle: 224deg;"></i> </button>
+                            <div id="cropper" style="position: relative;"></div>
+                            <button id="crop-button" type="button" class="btn btn-light btn-lg" title="裁切" style="position: absolute; bottom: 5px; left: 100%; transform: translateX(-100%-10px); visibility: hidden;"> <i class="fa-solid fa-scissors fa-rotate-by" style="color: #6997e8;--fa-rotate-angle: 224deg;"></i> </button>
                         </div>
 
-                      @*   <div class="col-4 d-flex justify-content-end align-items-end">
-                            <!-- 裁剪按鈕 -->
-                            <button type="button" class="btn btn-primary btn-lg" data-bs-toggle="modal" data-bs-target="#cut" onclick="openCutPhoto()">
-                                <i class="fa-solid fa-scissors fa-rotate-by" style="--fa-rotate-angle: 224deg;"></i> 編輯圖片
-                            </button>
-                        </div> *@
+
+
                     </div>
                 </div>
 
@@ -164,9 +160,9 @@
 
                 <div class="input-group mb-3">
                     <span class="input-group-text">$</span>
-                    <input type="text" class="form-control" aria-label="Amount (to the nearest dollar)" placeholder="售價" asp-for="FPrice">
-                    <span class="input-group-text">元</span>
+                    <input type="text" class="form-control" placeholder="售價" asp-for="FPrice">                   
                     <span asp-validation-for="FPrice" class="text-danger"></span>
+                    <span class="input-group-text">元</span>
                 </div>
 
                 <!--人數-->
@@ -284,6 +280,9 @@
 
         <!-- 按鈕 -->
         <div class="col-12 d-flex justify-content-end">
+            <a type="button" class="btn btn-light me-2 text-light" asp-action="LessonDemo2" asp-controller="TeacherAdmin">ETF課程介紹</a>
+            <a type="button" class="btn btn-light me-2 text-light" asp-action="LessonDemo1" asp-controller="TeacherAdmin">美股課程介紹</a>
+            <button type="button" class="btn btn-light me-2 text-light" id="demo2">demo2</button>
             <button type="button" class="btn btn-light me-2 text-light" id="demo1">demo1</button>
             <button type="submit" class="btn btn-primary me-2" name="status" value="TempSave" onclick="setCourseType('@ViewBag.courseType')">暫存</button>
             <button type="submit" class="btn btn-primary me-2" name="status" value="Create" onclick="setCourseType('@ViewBag.courseType')">開放報名</button>
@@ -430,9 +429,8 @@
     <!--Demo Button-->
     <script>
         const demo1 = document.querySelector("#demo1");
-
+        
         const code = document.querySelector('#FCode');
-
         const name = document.querySelector('#FName');
         const requirement = document.querySelector('#FRequirement');
         const desc = document.querySelector('#FEditorDes');
@@ -450,22 +448,39 @@
 
         name.getAttribute('value');
         demo1.addEventListener('click', () => {
-            name.value = '台灣味道探索：手工製作台式鹹豆漿';
-            requirement.setAttribute('value', '參加者需要有基本的烹飪知識和技巧，對台灣文化和飲食有興趣。');
-            hw.innerHTML = '在課堂中，您將親自參與從黃豆的浸泡、研磨到烹煮的過程，並且學習調配不同的調味料，製作出獨特風味的鹹豆漿。';
-            price.setAttribute('value', 900);
+            name.value = '「華爾街策略：美股投資之道」';
+            requirement.setAttribute('value', '具備投資熱情，渴望探索華爾街的投資之道；擁有基本的金融市場知識和投資理念，對股市運作有基本了解；能夠閱讀和理解英文股市相關文獻和資訊，以獲取最新的投資資訊。');
+            hw.innerHTML = '學生需完成一項華爾街風格的投資策略案例分析作業，並提交相應的報告。作業將考察學生對投資策略的理解和應用能力。';
+            price.setAttribute('value', '1,200');
             start.setAttribute('value', '10:00');
             end.setAttribute('value', '13:00');
-            minpeo.setAttribute('value', 8);
-            maxpeo.setAttribute('value', 15);
-            desc.innerHTML = '這門課程將帶領您學習製作台灣傳統的鹹豆漿，這是一道兼具營養與美味的台灣早餐。我們將從基礎的黃豆處理開始，到鹹豆漿的製作，讓您了解其中的技巧與妙處。';
-            lessondate.setAttribute('value', '2024-03-29');
-            deadline.setAttribute('value', '2024-03-27');
-            vname.setAttribute('value', '食之藝術工作坊');
-            address.setAttribute('value', '和平巷456弄78號');
-            city.selectedIndex = 0;
-            district.selectedIndex = 11;
-            subject.selectedIndex = '1';
+            minpeo.setAttribute('value', 10);
+            maxpeo.setAttribute('value', 30);            
+            lessondate.setAttribute('value', '2024-04-15');
+            deadline.setAttribute('value', '2024-03-30');
+            district.selectedIndex = 3;
+            vname.setAttribute('value', '投資理財實習室');
+            address.setAttribute('value', '延平路32號');
+        });
+
+
+        //demo2
+        const demo2 = document.querySelector("#demo2");
+
+        demo2.addEventListener('click', () => {
+
+            requirement.setAttribute('value', '本課程需要學生具備基礎的金融知識，以及相關學術背景或經驗。積極的學習態度是必要的，同時需要具備基本的電腦和互聯網技能。英語閱讀能力也是必須的，因為部分資料可能以英文提供。');
+            hw.innerHTML = '學員將完成一系列作業，包括選擇並解釋個人投資組合中的 ETF，並提出一份投資計劃。作業將在課程期間指定並截止。';
+            price.setAttribute('value', '2,500');
+            start.setAttribute('value', '07:00');
+            end.setAttribute('value', '09:00');
+            minpeo.setAttribute('value', 10);
+            maxpeo.setAttribute('value', 20);
+
+            lessondate.setAttribute('value', '2024-04-13');
+            deadline.setAttribute('value', '2024-03-31');
+
+    
         });
     </script>
 
@@ -677,5 +692,15 @@
             cropButton.style.visibility = 'hidden';
             
         }
+    </script>
+    <!--千分號-->
+    <script>
+        $(document).ready(function () {
+            $('#FPrice').on('change', function () {
+                var number = $(this).val().replace(/\D/g, '');
+                $(this).val(number.replace(/\B(?=(\d{3})+(?!\d))/g, ','));
+                console.log(this.value);
+            });
+        });
     </script>
 } 
