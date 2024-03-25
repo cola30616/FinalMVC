@@ -1,5 +1,5 @@
 ﻿@model LessonDetailViewModel
-
+@using System.Globalization
 
 @section Style {
     <style>
@@ -74,9 +74,10 @@
                                 <i class="fas fa-usd-circle"></i>
                                 @* @Html.DisplayFor(m => m.FPrice) *@
                                 @{
-                                    int price = Convert.ToInt32(Model.FPrice);
-                                    @price
+                                    string formattedPrice = Convert.ToInt32( Model.FPrice).ToString("N0", CultureInfo.InvariantCulture);
                                 }
+
+                                @formattedPrice
 
                             </li>
                         </ul>
@@ -192,7 +193,7 @@
                                                             </p>
 
                                                             <p class="mb-0">
-                                                                <strong>
+                                                              
                                                                     @if (Model.FVenueType == true)
                                                                     {
                                                                         string alladdress = Model.FCity + Model.FDistrict + Model.FAddressDetail;
@@ -201,7 +202,7 @@
                                                                         @alladdress
                                                                     }
 
-                                                                </strong>
+                                                                
                                                             </p>
                                                         </div>
                                                         </div>

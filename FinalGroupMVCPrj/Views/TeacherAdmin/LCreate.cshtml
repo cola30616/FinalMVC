@@ -160,9 +160,9 @@
 
                 <div class="input-group mb-3">
                     <span class="input-group-text">$</span>
-                    <input type="text" class="form-control" aria-label="Amount (to the nearest dollar)" placeholder="售價" asp-for="FPrice">
-                    <span class="input-group-text">元</span>
+                    <input type="text" class="form-control" placeholder="售價" asp-for="FPrice">                   
                     <span asp-validation-for="FPrice" class="text-danger"></span>
+                    <span class="input-group-text">元</span>
                 </div>
 
                 <!--人數-->
@@ -280,6 +280,8 @@
 
         <!-- 按鈕 -->
         <div class="col-12 d-flex justify-content-end">
+            <a type="button" class="btn btn-light me-2 text-light" asp-action="LessonDemo2" asp-controller="TeacherAdmin">ETF課程介紹</a>
+            <a type="button" class="btn btn-light me-2 text-light" asp-action="LessonDemo1" asp-controller="TeacherAdmin">美股課程介紹</a>
             <button type="button" class="btn btn-light me-2 text-light" id="demo2">demo2</button>
             <button type="button" class="btn btn-light me-2 text-light" id="demo1">demo1</button>
             <button type="submit" class="btn btn-primary me-2" name="status" value="TempSave" onclick="setCourseType('@ViewBag.courseType')">暫存</button>
@@ -449,7 +451,7 @@
             name.value = '「華爾街策略：美股投資之道」';
             requirement.setAttribute('value', '具備投資熱情，渴望探索華爾街的投資之道；擁有基本的金融市場知識和投資理念，對股市運作有基本了解；能夠閱讀和理解英文股市相關文獻和資訊，以獲取最新的投資資訊。');
             hw.innerHTML = '學生需完成一項華爾街風格的投資策略案例分析作業，並提交相應的報告。作業將考察學生對投資策略的理解和應用能力。';
-            price.setAttribute('value', 1200);
+            price.setAttribute('value', '1,200');
             start.setAttribute('value', '10:00');
             end.setAttribute('value', '13:00');
             minpeo.setAttribute('value', 10);
@@ -469,7 +471,7 @@
 
             requirement.setAttribute('value', '本課程需要學生具備基礎的金融知識，以及相關學術背景或經驗。積極的學習態度是必要的，同時需要具備基本的電腦和互聯網技能。英語閱讀能力也是必須的，因為部分資料可能以英文提供。');
             hw.innerHTML = '學員將完成一系列作業，包括選擇並解釋個人投資組合中的 ETF，並提出一份投資計劃。作業將在課程期間指定並截止。';
-            price.setAttribute('value', 2500);
+            price.setAttribute('value', '2,500');
             start.setAttribute('value', '07:00');
             end.setAttribute('value', '09:00');
             minpeo.setAttribute('value', 10);
@@ -690,5 +692,15 @@
             cropButton.style.visibility = 'hidden';
             
         }
+    </script>
+    <!--千分號-->
+    <script>
+        $(document).ready(function () {
+            $('#FPrice').on('change', function () {
+                var number = $(this).val().replace(/\D/g, '');
+                $(this).val(number.replace(/\B(?=(\d{3})+(?!\d))/g, ','));
+                console.log(this.value);
+            });
+        });
     </script>
 } 

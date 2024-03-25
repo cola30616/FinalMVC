@@ -233,7 +233,7 @@ namespace FinalGroupMVCPrj.Controllers
                 lesson.FRegDeadline = course.FRegDeadline;
                 lesson.FEditorDes = course.FEditorDes;
                 lesson.FHomeworkDescription = course.FHomeworkDescription;
-                lesson.FPrice = course.FPrice;
+                lesson.FPrice = Convert.ToInt32(course.FPrice);
                 lesson.FMinPeople = course.FMinPeople;
                 lesson.FMaxPeople = course.FMaxPeople;
                 lesson.FStartTime = course.FStartTime;
@@ -367,14 +367,22 @@ namespace FinalGroupMVCPrj.Controllers
 
 
         [HttpGet]
-        public  IActionResult LessonTestPhoto()
+        public  IActionResult LessonDemo1()
         {
 
-            return View();
+            return View("Demo1");
+
+        }
+        [HttpGet]
+        public IActionResult LessonDemo2()
+        {
+
+            return View("Demo2");
 
         }
 
-      
+
+
 
         public IFormFile ConvertByteArrayToIFormFile(byte[] fileBytes, string fileName)
         {

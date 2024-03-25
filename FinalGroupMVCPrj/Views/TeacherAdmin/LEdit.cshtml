@@ -177,8 +177,7 @@
 
                 <div class="input-group mb-3">
                     <span class="input-group-text">$</span>
-                    <input type="text" class="form-control" aria-label="Amount (to the nearest dollar)" placeholder="售價" asp-for="FPrice">
-                    
+                    <input type="text" class="form-control" placeholder="售價" asp-for="FPrice" >
                     <span asp-validation-for="FPrice" class="text-danger"></span>
                     <span class="input-group-text">元</span>
                 </div>
@@ -579,5 +578,23 @@
             cropButton.style.visibility = 'hidden';
 
         }
+    </script>
+    <!--千分位-->
+    <script>
+        // 定義函數將價格轉換為千分位格式
+        function formatPrice(input) {
+            return input.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+        }
+
+        // 在頁面載入時將輸入欄位的值轉換為千分位格式
+        window.onload = function () {
+            var inputField = document.getElementById("FPrice");
+            // 取得輸入的值
+            var inputVal = inputField.value;
+            // 移除逗號後再重新轉換為千分位格式
+            var formattedVal = formatPrice(inputVal.replace(/,/g, ""));
+            // 更新輸入欄位的值
+            inputField.value = formattedVal;
+        };
     </script>
 }
