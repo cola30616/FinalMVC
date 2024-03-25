@@ -6,14 +6,8 @@
 <div class="breadcrumb-area bg-img bg-cover" data-bg-image="https://themeforest.kreativdev.com/oppida/demo/assets/images/newsletter-bg-1.jpg">
     <div class="container">
         <div class="content text-center">
-            <h2>Life Share Learn 實作</h2>
-            <h2>Side Project</h2>
-            <nav aria-label="breadcrumb">
-                <ol class="breadcrumb">
-                    <li class="breadcrumb-item"><a href="index.html">Home</a></li>
-                        <li class="breadcrumb-item active" aria-current="page"><a href="@Url.Action("AllWorks")" title="Learning Portfolio">Learning Portfolio</a></li>
-                </ol>
-            </nav>
+                <h2><a href="@Url.Action("AllWorks")" title="Learning Portfolio">課程心得</a></h2>
+            
         </div>
     </div>
 </div>
@@ -84,7 +78,7 @@
                                                 <p>
                                                     @i.FComment
                                                 </p>
-                                                <a href="blog-single.html" class="font-sm color-primary" target="_self" title="Reply">Reply</a>
+                                                        <a href="blog-single.html" class="font-sm color-primary" target="_self" title="Reply">回覆</a>
                                             </div>
                                             }
                                         </div>
@@ -140,12 +134,12 @@
                                     <div class="row">
                                         <div class="col-sm-6">
                                             <div class="form-group mb-20">
-                                                <input type="text" class="form-control" name="name" id="inputName" placeholder="姓名*" required>
+                                                    <input type="text" class="form-control" name="name" id="inputName" placeholder="姓名*" value="小明" required>
                                             </div>
                                         </div>
                                         <div class="col-12">
                                             <div class="form-group mb-30">
-                                                <textarea name="message" class="form-control" placeholder="評論" id="textareaComment" required rows="6" ></textarea>
+                                                    <textarea name="message" class="form-control" placeholder="評論" id="textareaComment" required rows="6">課程受益良多，讓我有很大的啟發，很感謝老師的指點，同學的互動</textarea>
                                             </div>
                                         </div>
                                     </div>
@@ -163,7 +157,7 @@
                         <div class="search-form">
                             <form id="searchForm">
                                 <div class="input-inline border rounded-pill">
-                                    <input class="form-control border-0" placeholder="Search here..." type="text" name="SEARCH" required="">
+                                    <input class="form-control border-0" placeholder="查詢" type="text" name="SEARCH" required="">
                                     <button class="btn-icon rounded-pill" type="submit" aria-label="Search button">
                                         <i class="far fa-search"></i>
                                     </button>
@@ -345,7 +339,7 @@
               <div class="comment-body">
             <div class="comment-author">
          <div class="lazy-container ratio ratio-1-1 rounded-circle">
-                         <img class="lazyload" src="https://themeforest.kreativdev.com/oppida/demo/assets/images/avatar-1.jpg"  alt="image">
+                             <img class="lazyload" src="/images/OwenAdd/memberNoPhoto.jpg"  alt="image">
          </div>
      </div>
      <div class="comment-content">
@@ -353,7 +347,7 @@
          <p>
              ${txtComment.value}
          </p>
-         <a href="blog-single.html" class="font-sm color-primary" target="_self" title="Reply">Reply</a>
+                 <a href="blog-single.html" class="font-sm color-primary" target="_self" title="Reply">回覆</a>
      </div> </div>
 
         `

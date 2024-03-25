@@ -143,6 +143,10 @@ namespace FinalGroupMVCPrj.Controllers
         }
         public IActionResult Search(string category = null, string keyword = null)
         {
+            if (string.IsNullOrEmpty(category) && string.IsNullOrEmpty(keyword))
+            {
+                return View("AllWorks");
+            };
             IQueryable<TCoursework> query = _context.TCourseworks.Include(c => c.FOrderDetail).ThenInclude(o => o.FOrder).ThenInclude(o => o.FMember).Include(c => c.FOrderDetail).ThenInclude(o => o.FLessonCourse).ThenInclude(c => c.FSubject).ThenInclude(t => t.FField).ThenInclude(a => a.TMemberWishFields);
 
             if (!string.IsNullOrEmpty(keyword))
@@ -153,10 +157,12 @@ namespace FinalGroupMVCPrj.Controllers
             {
                 query = query.Where(c => c.FOrderDetail.FLessonCourse.FSubject.FField.FFieldName == category); // 假设有一个名为 Category 的属性表示分类
             }
+
             int totalCount = query.Count();
             var portfolioList = query
                 .Select(c => new PortfolioListDTO
                 {
+                    FCourseworkId = c.FCourseworkId,
                     FMemberId = c.FMemberId,
                     FShowName = c.FOrderDetail.FOrder.FMember.FShowName,
                     FName = c.FName,

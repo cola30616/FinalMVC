@@ -35,7 +35,7 @@
                                         <div class="col-xl-4 col-lg-5 col-md-4 col-sm-6">
                                             <div class="input-group">
                                                 <label for="search"><i class="fas fa-search"></i></label>
-                                                <input type="text" id="search" class="form-control" placeholder="Search course">
+                                                <input type="text" id="search" class="form-control" placeholder="輸入關鍵字">
                                                 <div class="vr"></div>
                                             </div>
                                         </div>
@@ -43,7 +43,7 @@
                                             <div class="input-group">
                                                 <label for="category"><i class="fas fa-th-large"></i></label>
                                                 <select id="category" class="niceselect">
-                                                    <option value="" data-display="選擇課程">選擇課程種類...</option>
+                                                    <option value="" data-display="選擇課程類別">選擇課程種類...</option>
                                                     <option value="烹飪">烹飪</option>
                                                     <option value="軟體工程">軟體工程</option>
                                                     <option value="語言">語言</option>
@@ -55,7 +55,7 @@
                                         </div>
                                         <div class="col-xl-4 col-lg-2 col-md-4 col-sm-6">
                                             <button id="searchButton" class="btn btn-lg btn-primary btn-gradient rounded-pill w-100" type="button" aria-label="Find Portfolio">
-                                                <span>Find Portfolio</span>
+                                                <span>搜尋心得</span>
                                                 <i class="fal fa-search"></i>
                                             </button>
                                         </div>
@@ -192,7 +192,7 @@
                 url += '?category=' + category;
             } else if (keyword) {
                 url += '?keyword=' + keyword;
-            }
+            } 
 
             window.location.href = url;
         });
