@@ -135,18 +135,7 @@ namespace FinalGroupMVCPrj.Controllers
             {
                 query = query.Where(course => course.FPrice <= courseListDTO.MaxPrice);
             }
-            // 評價
-            //if (courseListDTO.MinRating.HasValue)
-            //{
-            //    query = query.Where(course => course.TOrderDetails.Where(s => s.TLessonEvaluations.SelectMany(u => u.FScore)) >= courseListDTO.MinRating);
-            //}
-
-            //if (courseListDTO.MaxRating.HasValue)
-            //{
-            //    query = query.Where(course => course.FRating <= courseListDTO.MaxRating);
-            //}
-
-            // 
+          
             if (!string.IsNullOrEmpty(courseListDTO.SortBy))
             {
                 switch (courseListDTO.SortType)
@@ -154,7 +143,10 @@ namespace FinalGroupMVCPrj.Controllers
                     case "newest":
                         query = query.OrderByDescending(course => course.FLessonDate);
                         break;
-                    
+                    case "old":
+                        query = query.OrderBy(course => course.FLessonDate);
+                        break;
+
                     case "PriceDesc":
                         query = query.OrderByDescending(course => course.FPrice);
                         break;

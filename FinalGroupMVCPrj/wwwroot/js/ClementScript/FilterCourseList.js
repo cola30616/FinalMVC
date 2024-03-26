@@ -44,7 +44,10 @@ const handleSorting = (value) => {
         FilterSortData.sortType = 'PriceDesc';
         FilterSortData.page = 1;
     } else if (value === 'PriceAsc') {
-        FilterSortData.sortType = 'PriceAsc';   
+        FilterSortData.sortType = 'PriceAsc';
+        FilterSortData.page = 1;
+    } else if (value == 'old') {
+        FilterSortData.sortType = 'old';
         FilterSortData.page = 1;
     }
 
