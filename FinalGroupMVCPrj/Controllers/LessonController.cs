@@ -98,23 +98,13 @@ namespace FinalGroupMVCPrj.Controllers
         [HttpGet]
         public async Task<IActionResult> CourseList(CourseListDTO courseListDTO)
         {
-            int pageSize = courseListDTO.PageSize ?? 9;
+            int pageSize = courseListDTO.PageSize ?? 6;
             int skip = (courseListDTO.Page - 1) * pageSize;
             
             // 全部資料
             var query = _context.TLessonCourses.AsQueryable();
             // 只選開放報名的課
-            query = query.Where(u => u.FStatus == "開放報名");
-            // 關鍵字查詢
-            if (!string.IsNullOrEmpty(courseListDTO.Keyword))
-            {
-                query = query.Where(course =>
-                    course.FName.Contains(courseListDTO.Keyword) ||                   
-                    course.FTeacher.FTeacherName.Contains(courseListDTO.Keyword) ||
-                    course.FSubject.FSubjectName.Contains(courseListDTO.Keyword) ||
-                    course.FSubject.FField.FFieldName.Contains(courseListDTO.Keyword)
-                );
-            }
+            query = query.Where(u => u.FStatus == "開放報名");           
             // 領域篩選
             if (courseListDTO.FieldId.HasValue)
             {
