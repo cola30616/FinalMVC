@@ -5,6 +5,14 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using NuGet.DependencyResolver;
+using OpenAI_API.Completions;
+using OpenAI_API;
+using System.Text;
+using System.Text.RegularExpressions;
+using static Microsoft.EntityFrameworkCore.DbLoggerCategory;
+using CloudinaryDotNet;
+using OpenAI_API.Chat;
+using Org.BouncyCastle.Asn1.Crmf;
 
 namespace FinalGroupMVCPrj.Controllers
 {
@@ -207,6 +215,65 @@ namespace FinalGroupMVCPrj.Controllers
                 })
                 .ToListAsync();
             return Json(new { data = query });
+        }
+
+        //GPT部分
+        [HttpPost]
+        public async Task<IActionResult> GetReplyByGPT([FromBody] string message)
+        {
+            string processedMessage = PreprocessInputMessage(message);
+
+            string response = await GenerateResponse(processedMessage);
+
+            return Ok(response);
+        }
+
+        private string PreprocessInputMessage(string message)
+        {
+            message = Regex.Replace(message, @"[^\p{IsCJKUnifiedIdeographs}\p{L}\s]", "");
+
+            message = "用戶提到：" + message;
+
+            // 如果消息包含投資理財相關的關鍵詞，則推薦大成老師的新手 ETF 選股課程
+            if (message.Contains("投資理財") || message.Contains("理財課程"))
+            {
+                message = "請推薦以下課程給用戶，大成老師的課程：新手ETF選股課程，課程簡介：本課程旨在協助投資新手了解 ETF，選擇適合自己的 ETF，並學習有效的投資策略和選股技巧，以建立多元化的投資組合。 網址以<a href=\"https://localhost:7031/Lesson/Details/10041\">點此前往課程</a>呈現，請有條理的呈現，課程介紹不要太多，並將連結放在最後";
+            }
+
+
+            if (message.Contains("網站功能") || message.Contains("這個網站是做什麼的") || message.Contains("這個網站做甚麼"))
+            {
+                message += "\n\n回答：來學樂是一個多元化課程媒合的第三方整合平台，Life Share & Learn的發音與「來學樂」相似，學習使人快樂，我們期許為使用者創造便利又完善的學習環境。";
+            }
+
+
+            //if (message.Length > 500)
+            //{
+            //    message = message.Substring(0, 500);
+            //}
+
+
+            return message;
+        }
+
+
+        private async Task<string> GenerateResponse(string message)
+        {
+            var api = new OpenAIAPI("");
+
+            var result = await api.Chat.CreateChatCompletionAsync(new ChatRequest()
+            {
+                Model = OpenAI_API.Models.Model.GPT4,
+                Temperature = 0.1,
+                MaxTokens = 1000,
+                Messages = new ChatMessage[] {
+            new ChatMessage(ChatMessageRole.User, message)
+                },
+            });
+
+            var reply = result.Choices[0].Message;
+
+            return result.ToString();
         }
     }
 }

@@ -24,7 +24,7 @@ namespace FinalGroupMVCPrj.Controllers
         [HttpGet]
         public async Task<IActionResult> GetAvgEvalScore(int CourseId)
         {
-            var FCode = _context.TLessonCourses.FirstOrDefault(l =>l.FLessonCourseId == CourseId).FCode ;
+            var FCode = _context.TLessonCourses.FirstOrDefault(l => l.FLessonCourseId == CourseId).FCode;
             var detail = await _context.TLessonEvaluations
             .Include(order => order.FOrderDetail)
                 .ThenInclude(evaluation => evaluation.FLessonCourse)
@@ -34,7 +34,7 @@ namespace FinalGroupMVCPrj.Controllers
                 FAvgScore = querystring.FScore
             }).ToListAsync();
 
-            double averageScore = Math.Round(detail.Select(x => x.FAvgScore).DefaultIfEmpty(0).Average(),1);
+            double averageScore = Math.Round(detail.Select(x => x.FAvgScore).DefaultIfEmpty(0).Average(), 1);
 
             var avgScore = new LessonAvgEvalViewModel();
             avgScore.FAvgScore = averageScore;
@@ -50,7 +50,7 @@ namespace FinalGroupMVCPrj.Controllers
                         .Include(order => order.FOrderDetail)
                              .ThenInclude(course => course.FLessonCourse)
                          .Include(order => order.FOrderDetail)
-                            .ThenInclude(od =>od.FOrder)
+                            .ThenInclude(od => od.FOrder)
                             .ThenInclude(o => o.FMember)
                         .Where(eval => eval.FOrderDetail.FLessonCourse.FCode == FCode)
                         .Select(evaluation => new LessonEvaluationsViewModel
@@ -66,7 +66,7 @@ namespace FinalGroupMVCPrj.Controllers
                             FCommentDate = evaluation.FCommentDate,
                             FCommentUpdateDate = evaluation.FCommentUpdateDate,
                             FDisplayStatus = evaluation.FDisplayStatus
-                        }).OrderByDescending(eval=>eval.FCommentDate).ToListAsync();
+                        }).OrderByDescending(eval => eval.FCommentDate).ToListAsync();
             int star1 = 0, star2 = 0, star3 = 0, star4 = 0, star5 = 0;
 
             foreach (var item in query)
@@ -141,10 +141,11 @@ namespace FinalGroupMVCPrj.Controllers
         {
 
             var od = await _context.TOrderDetails
-                .Include(od =>od.FLessonCourse)
+                .Include(od => od.FLessonCourse)
                 .FirstOrDefaultAsync(od => od.FOrderDetailId == FOrderDetailId);
+
             var isValid = od.FOrderValid;
-            if(od.FLessonCourse.FLessonDate > DateTime.Now)
+            if (od.FLessonCourse.FLessonDate > DateTime.Now)
             {
                 isValid = false;
             }

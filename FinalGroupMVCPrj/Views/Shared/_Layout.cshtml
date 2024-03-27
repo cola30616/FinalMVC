@@ -13,7 +13,6 @@
     <title>來學樂-多元課程預約平台</title>
     <!-- Favicon -->
     <link rel="shortcut icon" href="/images/logo/frontlogo.png" type="image/x-icon">
-
     <!-- Google font -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -51,7 +50,10 @@
     <link href="~/css/adjustdropdown.css" rel="stylesheet" />
     <link rel="stylesheet" href="//cdn.datatables.net/2.0.1/css/dataTables.dataTables.min.css" />
     <link href="https://vjs.zencdn.net/8.10.0/video-js.css" rel="stylesheet" />
-    <link href="~/css/video.css" rel="stylesheet" asp-append-version="true" />    
+    <link href="~/css/video.css" rel="stylesheet" asp-append-version="true" />
+    <!--推播客服樣式-->
+    <link href="~/css/BenAdd/LayoutAIC.css" rel="stylesheet" asp-append-version="true" />
+
     @RenderSection("Styles", required: false)
 
     @await RenderSectionAsync("Style", required: false)
@@ -136,7 +138,7 @@
                             </a>
                             </div> *@
                             <div id="toLogin" style="display:block" class="item">
-                                <a asp-controller="Home" asp-action="Login" class="btn-icon-text" target="_self" aria-label="User" >
+                                <a asp-controller="Home" asp-action="Login" class="btn-icon-text" target="_self" aria-label="User">
                                     <i class="fa-solid fa-user"></i>
                                     <span id="testspan">登入／註冊</span>
                                 </a>
@@ -174,11 +176,11 @@
                                             </a>
                                         </li>
 
-@*                                         <li>
-                                            <a asp-controller="Member" asp-action="Fav" class="dropdown-item d-flex align-items-center">
-                                                <i class="fa-solid fa-bookmark"></i>
-                                                <span>我的收藏</span>
-                                            </a>
+                                        @*                                         <li>
+                                        <a asp-controller="Member" asp-action="Fav" class="dropdown-item d-flex align-items-center">
+                                        <i class="fa-solid fa-bookmark"></i>
+                                        <span>我的收藏</span>
+                                        </a>
                                         </li> *@
 
                                         <li>
@@ -194,11 +196,11 @@
                                                 <span>課程紀錄</span>
                                             </a>
                                         </li>
-@*                                         <li>
-                                            <a asp-controller="Portfolio" asp-action="List" class="dropdown-item d-flex align-items-center">
-                                                <i class="fa-solid fa-puzzle-piece"></i>
-                                                <span>我的作品</span>
-                                            </a>
+                                        @*                                         <li>
+                                        <a asp-controller="Portfolio" asp-action="List" class="dropdown-item d-flex align-items-center">
+                                        <i class="fa-solid fa-puzzle-piece"></i>
+                                        <span>我的作品</span>
+                                        </a>
                                         </li> *@
                                         <li>
                                             <hr class="dropdown-divider">
@@ -221,24 +223,41 @@
         </div>
     </header>
     <!-- Header-area end -->
-
     @RenderBody()
     <!-- Go top -->
     <div class="go-top"><i class="fal fa-long-arrow-up"></i></div>
 
     <!-- Magic Cursor -->
     <div class="cursor"></div>
-    <div id="nfcircle" style="visibility:hidden; position: fixed; bottom: 0; right: 0; margin-right:45px; margin-bottom: 45px; z-index: 1; width: 48px; height: 48px; border-radius: 50%; border: 2px solid 	#BEBEBE; background-color: #fff; display: flex; justify-content: center; align-items: center;">
+    <div class="cursor"></div>
+    <div id="nfcircle" style="visibility:hidden; position: fixed; bottom: 0; right: 0; margin-right:120px; margin-bottom: 45px; z-index: 9999; width: 48px; height: 48px; border-radius: 50%; border: 2px solid #BEBEBE; background-color: #fff; display: flex; justify-content: center; align-items: center;">
         <!-- 推播Notification-->
         <li class="nav-item d-flex align-items-center justify-content-center dropdown">
             <a class="nav-link nav-icon" href="#" data-bs-toggle="dropdown" style="position: relative; display: inline-block;">
-                <i class="fa-regular fa-bell " id="bellicon" style="font-size: 32px;"></i>
-                <span class="badge bg-primary badge-number" style="position: absolute; bottom: 0; right: 0; margin-right: -6px; font-size: 12px; visibility: hidden;">1</span>
+                <i class="fa-regular fa-bell" id="bellicon" style="font-size: 32px; color: #000;"></i>
+                <span class="badge bg-primary badge-number" style="position: absolute; bottom: -6px; right: -8px; font-size: 12px; visibility: hidden;">1</span>
             </a>
             <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow notifications"></ul>
         </li>
         <!-- 推播Notification End-->
     </div>
+
+    <!-- AI客服 Start-->
+    <div id="aicircle">
+        <a href="#" id="chatButton">
+            <i class="fa-regular fa-comment" id="chatRoomIcon" style="font-size: 32px;"></i>
+        </a>
+    </div>
+
+    <div class="chat-room" id="chatRoom" style="width: 350px; height: 350px;">
+        <div class="chat-container" style="position: relative;"></div>
+        <div class="chat-input" style="position: absolute; bottom: 0; left: 0; width: 100%;">
+            <button id="demoAIButton">demo</button>
+            <input type="text" id="messageInputAI" placeholder="輸入訊息">
+            <button id="sendAIButton">送出</button>
+        </div>
+    </div>
+    <!-- AI客服 End-->
     <!-- Footer-area start -->
     <footer class="footer-area bg-primary-light mt-50 p-0">
         <div class="footer-top pt-100 pb-70">
@@ -343,8 +362,8 @@
     <!-- Footer-area end-->
     @await RenderSectionAsync("LessonScripts", required: false)
     <!--首頁搜尋bar-->
-    <script src="~/js/clementscript/search.js" asp-append-version="true"></script> 
-    <!-- Lazysizes --> 
+    <script src="~/js/clementscript/search.js" asp-append-version="true"></script>
+    <!-- Lazysizes -->
     <script src="~/js/vendors/lazysizes.min.js"></script>
     <!-- Jquery JS -->
     <script src="~/js/vendors/jquery.min.js"></script>
@@ -374,9 +393,9 @@
     <!--SignalR-->
     <script src="~/js/BenScript/signalr.js"></script>
     <!--推播-->
-    <script src="~/js/BenScript/LayoutPushMsg.js"></script>
-    
-
+    <script src="~/js/BenScript/LayoutPushMsg.js" asp-append-version="true"></script>
+    <!--AI客服-->
+    <script src="~/js/BenScript/LayoutAIC.js" asp-append-version="true"> </script>
 
     <!--Sweet alert-->
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
