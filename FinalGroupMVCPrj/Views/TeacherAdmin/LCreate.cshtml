@@ -280,10 +280,10 @@
 
         <!-- 按鈕 -->
         <div class="col-12 d-flex justify-content-end">
-            <a type="button" class="btn btn-light me-2 text-light" asp-action="LessonDemo2" asp-controller="TeacherAdmin">ETF課程介紹</a>
-            <a type="button" class="btn btn-light me-2 text-light" asp-action="LessonDemo1" asp-controller="TeacherAdmin">美股課程介紹</a>
+            <a type="button" class="btn btn-light me-2 text-light" asp-action="LessonDemo2" asp-controller="TeacherAdmin" target="_blank">ETF課程介紹</a>
+           @*  <a type="button" class="btn btn-light me-2 text-light" asp-action="LessonDemo1" asp-controller="TeacherAdmin" target="_blank">美股課程介紹</a> *@
             <button type="button" class="btn btn-light me-2 text-light" id="demo2">demo2</button>
-            <button type="button" class="btn btn-light me-2 text-light" id="demo1">demo1</button>
+            <button type="button" class="btn btn-light me-2 text-light" hidden id="demo1">demo1</button>
             <button type="submit" class="btn btn-primary me-2" name="status" value="TempSave" onclick="setCourseType('@ViewBag.courseType')">暫存</button>
             <button type="submit" class="btn btn-primary me-2" name="status" value="Create" onclick="setCourseType('@ViewBag.courseType')">開放報名</button>
             <a class="btn btn-secondary" asp-action="LessonList" asp-controller="TeacherAdmin">取消</a>
