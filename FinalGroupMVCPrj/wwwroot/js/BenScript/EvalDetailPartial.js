@@ -19,8 +19,7 @@
 
                 if (data.isExisting) {
                     document.getElementById('createBtn').style.display = 'none';
-                }
-                else {
+                } else {
                     document.getElementById('editBtn').style.display = 'none';
                 }
             } catch (error) {
